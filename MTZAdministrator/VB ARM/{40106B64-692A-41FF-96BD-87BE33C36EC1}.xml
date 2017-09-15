@@ -1,0 +1,1619 @@
+<?xml version="1.0"?>
+<root><AttributeHolder Name="Type" Value="exe"/><AttributeHolder Name="Template" Value="c:\bami\MTZ\Generators L4\VB6ARMGEN\Template\Template.vbp"/><AttributeHolder Name="Name" Value="olimpic"/><AttributeHolder Name="ProjectName" Value="olimpic"/><AttributeHolder Name="Description" Value="olimpic"/><AttributeHolder Name="ExeName" Value="olimpic.Exe"/><ModuleHolder ModuleName="frmMain" File=""><AttributeHolder Name="Type" Value="form"/><BlockHolder BlockName="'form" BlockCode=""><AttributeHolder Name="Type" Value="form"/><FormData Name=""><ControlData Name="mnuJRNL" ControlIndex="0" PROGID="VB.Menu"><Properties Name="Caption" PropValue="Журналы"/><Properties Name="Name" PropValue="mnuJRNL"/><ControlData Name="mnuosCLI" ControlIndex="0" PROGID="VB.Menu"><Properties Name="Caption" PropValue="Клиент"/><Properties Name="Name" PropValue="mnuosCLI"/><ControlData Name="mnuAllosCLI" ControlIndex="0" PROGID="VB.Menu"><Properties Name="Caption" PropValue="Клиент - все состояния"/><Properties Name="Name" PropValue="mnuAllosCLI"/></ControlData><ControlData Name="mnuosCLI_1" ControlIndex="0" PROGID="VB.Menu"><Properties Name="Caption" PropValue="Клиент :Активен"/><Properties Name="Name" PropValue="mnuosCLI_1"/></ControlData><ControlData Name="mnuosCLI_2" ControlIndex="0" PROGID="VB.Menu"><Properties Name="Caption" PropValue="Клиент :Нет абонементов"/><Properties Name="Name" PropValue="mnuosCLI_2"/></ControlData><ControlData Name="mnuosCLI_3" ControlIndex="0" PROGID="VB.Menu"><Properties Name="Caption" PropValue="Клиент :В черном списке"/><Properties Name="Name" PropValue="mnuosCLI_3"/></ControlData></ControlData><ControlData Name="mnuosReg" ControlIndex="0" PROGID="VB.Menu"><Properties Name="Caption" PropValue="Регистр посещений"/><Properties Name="Name" PropValue="mnuosReg"/><ControlData Name="mnuAllosReg" ControlIndex="0" PROGID="VB.Menu"><Properties Name="Caption" PropValue="Регистр посещений - все состояния"/><Properties Name="Name" PropValue="mnuAllosReg"/></ControlData><ControlData Name="mnuosReg_1" ControlIndex="0" PROGID="VB.Menu"><Properties Name="Caption" PropValue="Регистр посещений :Ушел"/><Properties Name="Name" PropValue="mnuosReg_1"/></ControlData><ControlData Name="mnuosReg_2" ControlIndex="0" PROGID="VB.Menu"><Properties Name="Caption" PropValue="Регистр посещений :В клубе"/><Properties Name="Name" PropValue="mnuosReg_2"/></ControlData></ControlData><ControlData Name="mnuosEmp" ControlIndex="0" PROGID="VB.Menu"><Properties Name="Caption" PropValue="Сотрудник"/><Properties Name="Name" PropValue="mnuosEmp"/></ControlData></ControlData><ControlData Name="mnuDictionary" ControlIndex="0" PROGID="VB.Menu"><Properties Name="Caption" PropValue="Справочники"/><Properties Name="Name" PropValue="mnuDictionary"/><ControlData Name="mnuosDic" ControlIndex="0" PROGID="VB.Menu"><Properties Name="Caption" PropValue="Справочники"/><Properties Name="Name" PropValue="mnuosDic"/></ControlData></ControlData></FormData></BlockHolder><BlockHolder BlockName="'description" BlockCode="dim withevents jfmnuAllosCLI as frmJournalShow
+
+dim withevents jfmnuosCLI_1 as frmJournalShow
+
+dim withevents jfmnuosCLI_2 as frmJournalShow
+
+dim withevents jfmnuosCLI_3 as frmJournalShow
+
+
+
+dim withevents jfmnuAllosReg as frmJournalShow
+
+dim withevents jfmnuosReg_1 as frmJournalShow
+
+dim withevents jfmnuosReg_2 as frmJournalShow
+
+
+
+dim withevents jfmnuosEmp as frmJournalShow
+
+
+
+
+
+
+
+
+
+"><AttributeHolder Name="Type" Value="description"/><FormData Name=""/></BlockHolder><BlockHolder BlockName="'codebody" BlockCode="
+private sub mnuAllosCLI_Click()
+    Dim journal As Object
+    On Error Resume Next
+    If jfmnuAllosCLI Is Nothing Then
+      Set jfmnuAllosCLI = New frmJournalShow
+      Set journal = Manager.GetInstanceObject(&quot;{0AB326B9-677B-4F34-ACCF-443B98286DAC}&quot;)
+      Manager.LockInstanceObject journal.ID
+      Set jfmnuAllosCLI.jv.journal = journal
+      jfmnuAllosCLI.jv.OpenModal = False
+      jfmnuAllosCLI.Caption = &quot;Клиент - все состояния&quot;
+      Me.MousePointer = vbHourglass
+      DoEvents
+      Dim f As String
+    f=&quot;1=1&quot;
+    Dim fltr As frmosCLI
+    set fltr = new frmosCLI
+    fltr.show vbmodal
+    if fltr.ok then 
+    ' build flter expression 
+      if fltr.lblFamilyName.Value=vbChecked then
+        f=f &amp;  &quot; and osCli_def_FamilyName like '%&quot; &amp; fltr.txtFamilyName.Text &amp; &quot;%'&quot; 
+      end if
+      if fltr.lblMedicalCheck_LE.Value=vbChecked then
+        f=f &amp;  &quot; and osCli_def_MedicalCheck&lt;=&quot; &amp; MakeMSSQLDate(fltr.dtpMedicalCheck_LE.value)
+      end if
+      if fltr.lblSurName.Value=vbChecked then
+        f=f &amp;  &quot; and osCli_def_SurName like '%&quot; &amp; fltr.txtSurName.Text &amp; &quot;%'&quot; 
+      end if
+      if fltr.lblbDate_LE.Value=vbChecked then
+        f=f &amp;  &quot; and osCli_def_bDate&lt;=&quot; &amp; MakeMSSQLDate(fltr.dtpbDate_LE.value)
+      end if
+      if fltr.lblChipCard.Value=vbChecked then
+        f=f &amp;  &quot; and osCli_def_ChipCard like '%&quot; &amp; fltr.txtChipCard.Text &amp; &quot;%'&quot; 
+      end if
+      if fltr.lblbDate_GE.Value=vbChecked then
+        f=f &amp;  &quot; and osCli_def_bDate&gt;=&quot; &amp; MakeMSSQLDate(fltr.dtpbDate_GE.value)
+      end if
+      if fltr.lblPhone.Value=vbChecked then
+        f=f &amp;  &quot; and osCli_def_Phone like '%&quot; &amp; fltr.txtPhone.Text &amp; &quot;%'&quot; 
+      end if
+      if fltr.lblemail.Value=vbChecked then
+        f=f &amp;  &quot; and osCli_def_email like '%&quot; &amp; fltr.txtemail.Text &amp; &quot;%'&quot; 
+      end if
+      if fltr.lblpostAddr.Value=vbChecked then
+        f=f &amp;  &quot; and osCli_def_postAddr like '%&quot; &amp; fltr.txtpostAddr.Text &amp; &quot;%'&quot; 
+      end if
+      if fltr.lblMedicalCheck_GE.Value=vbChecked then
+        f=f &amp;  &quot; and osCli_def_MedicalCheck&gt;=&quot; &amp; MakeMSSQLDate(fltr.dtpMedicalCheck_GE.value)
+      end if
+      if fltr.lblFirstName.Value=vbChecked then
+        f=f &amp;  &quot; and osCli_def_FirstName like '%&quot; &amp; fltr.txtFirstName.Text &amp; &quot;%'&quot; 
+      end if
+      if fltr.lblSex.Value=vbChecked then
+        f=f &amp;  &quot; and osCli_def_Sex='&quot; &amp; fltr.cmbSex.Text &amp; &quot;'&quot; 
+      end if
+      if fltr.lblEnsurence.Value=vbChecked then
+        f=f &amp;  &quot; and osCli_def_Ensurence like '%&quot; &amp; fltr.txtEnsurence.Text &amp; &quot;%'&quot; 
+      end if
+      if fltr.lblPassport.Value=vbChecked then
+        f=f &amp;  &quot; and osCli_def_Passport like '%&quot; &amp; fltr.txtPassport.Text &amp; &quot;%'&quot; 
+      end if
+    jfmnuAllosCLI.jv.Filter.Add &quot;AUTOosCli_def&quot;, f
+    end if 
+      jfmnuAllosCLI.jv.Refresh
+      Me.MousePointer = vbNormal
+    End If
+    jfmnuAllosCLI.Show
+    jfmnuAllosCLI.WindowState = 0
+    jfmnuAllosCLI.ZOrder 0
+end sub 
+private sub   jfmnuAllosCLI_OnFilter( usedefault as boolean)  
+    Dim fltr As frmosCLI
+    Dim f as string
+    set fltr = new frmosCLI
+    fltr.show vbmodal
+    if fltr.ok then 
+    ' build flter expression 
+    f=&quot;1=1&quot;
+      if fltr.lblFamilyName.Value=vbChecked then
+        f=f &amp;  &quot; and osCli_def_FamilyName like '%&quot; &amp; fltr.txtFamilyName.Text &amp; &quot;%'&quot; 
+      end if
+      if fltr.lblMedicalCheck_LE.Value=vbChecked then
+        f=f &amp;  &quot; and osCli_def_MedicalCheck&lt;=&quot; &amp; MakeMSSQLDate(fltr.dtpMedicalCheck_LE.value)
+      end if
+      if fltr.lblSurName.Value=vbChecked then
+        f=f &amp;  &quot; and osCli_def_SurName like '%&quot; &amp; fltr.txtSurName.Text &amp; &quot;%'&quot; 
+      end if
+      if fltr.lblbDate_LE.Value=vbChecked then
+        f=f &amp;  &quot; and osCli_def_bDate&lt;=&quot; &amp; MakeMSSQLDate(fltr.dtpbDate_LE.value)
+      end if
+      if fltr.lblChipCard.Value=vbChecked then
+        f=f &amp;  &quot; and osCli_def_ChipCard like '%&quot; &amp; fltr.txtChipCard.Text &amp; &quot;%'&quot; 
+      end if
+      if fltr.lblbDate_GE.Value=vbChecked then
+        f=f &amp;  &quot; and osCli_def_bDate&gt;=&quot; &amp; MakeMSSQLDate(fltr.dtpbDate_GE.value)
+      end if
+      if fltr.lblPhone.Value=vbChecked then
+        f=f &amp;  &quot; and osCli_def_Phone like '%&quot; &amp; fltr.txtPhone.Text &amp; &quot;%'&quot; 
+      end if
+      if fltr.lblemail.Value=vbChecked then
+        f=f &amp;  &quot; and osCli_def_email like '%&quot; &amp; fltr.txtemail.Text &amp; &quot;%'&quot; 
+      end if
+      if fltr.lblpostAddr.Value=vbChecked then
+        f=f &amp;  &quot; and osCli_def_postAddr like '%&quot; &amp; fltr.txtpostAddr.Text &amp; &quot;%'&quot; 
+      end if
+      if fltr.lblMedicalCheck_GE.Value=vbChecked then
+        f=f &amp;  &quot; and osCli_def_MedicalCheck&gt;=&quot; &amp; MakeMSSQLDate(fltr.dtpMedicalCheck_GE.value)
+      end if
+      if fltr.lblFirstName.Value=vbChecked then
+        f=f &amp;  &quot; and osCli_def_FirstName like '%&quot; &amp; fltr.txtFirstName.Text &amp; &quot;%'&quot; 
+      end if
+      if fltr.lblSex.Value=vbChecked then
+        f=f &amp;  &quot; and osCli_def_Sex='&quot; &amp; fltr.cmbSex.Text &amp; &quot;'&quot; 
+      end if
+      if fltr.lblEnsurence.Value=vbChecked then
+        f=f &amp;  &quot; and osCli_def_Ensurence like '%&quot; &amp; fltr.txtEnsurence.Text &amp; &quot;%'&quot; 
+      end if
+      if fltr.lblPassport.Value=vbChecked then
+        f=f &amp;  &quot; and osCli_def_Passport like '%&quot; &amp; fltr.txtPassport.Text &amp; &quot;%'&quot; 
+      end if
+    jfmnuAllosCLI.jv.Filter.Add &quot;AUTOosCli_def&quot;, f
+    end if 
+    unload fltr 
+    usedefault = false
+end sub 
+private sub   jfmnuAllosCLI_OnClearFilter()  
+end sub 
+Private Sub jfmnuAllosCLI_OnAdd(usedefaut As Boolean, Refesh As Boolean)
+  Dim objGui  As Object
+  Dim o As Object
+  Dim ID As String
+  ID = CreateGUID2
+  Manager.NewInstance ID, &quot;osCLI&quot;, &quot;Клиент&quot; &amp; Now, Site
+  Set o = Manager.GetInstanceObject(ID)
+  If IsDocDenied(o) Then
+    MsgBox &quot;Не разрешен доступ к документам такого типа&quot;
+    Exit Sub
+  End If
+
+  Dim g  As Object
+  Set g = Manager.GetInstanceGUI(o.ID)
+  If Not g Is Nothing Then
+    g.Show GetDocumentMode(o), o, False
+  End If
+  usedefaut = False
+  Refesh = False
+End Sub
+
+
+private sub mnuosCLI_1_Click()
+    Dim journal As Object
+    On Error Resume Next
+    If jfmnuosCLI_1 Is Nothing Then
+      Set jfmnuosCLI_1 = New frmJournalShow
+      Set journal = Manager.GetInstanceObject(&quot;{0AB326B9-677B-4F34-ACCF-443B98286DAC}&quot;)
+      Manager.LockInstanceObject journal.ID
+      Set jfmnuosCLI_1.jv.journal = journal
+      jfmnuosCLI_1.jv.OpenModal = False
+      jfmnuosCLI_1.Caption = &quot;Клиент :Активен&quot;
+      Me.MousePointer = vbHourglass
+      DoEvents
+      Dim f As String
+    f=&quot;1=1&quot;
+   f=&quot; INTSANCEStatusID='{54B96FFF-F483-4118-8783-48BE044162E0}'&quot; 
+    jfmnuosCLI_1.jv.Filter.Add &quot;AUTOosCli_def&quot;, f
+    Dim fltr As frmosCLI
+    set fltr = new frmosCLI
+    fltr.show vbmodal
+    if fltr.ok then 
+    ' build flter expression 
+      if fltr.lblMedicalCheck_LE.Value=vbChecked then
+        f=f &amp;  &quot; and osCli_def_MedicalCheck&lt;=&quot; &amp; MakeMSSQLDate(fltr.dtpMedicalCheck_LE.value)
+      end if
+      if fltr.lblMedicalCheck_GE.Value=vbChecked then
+        f=f &amp;  &quot; and osCli_def_MedicalCheck&gt;=&quot; &amp; MakeMSSQLDate(fltr.dtpMedicalCheck_GE.value)
+      end if
+      if fltr.lblemail.Value=vbChecked then
+        f=f &amp;  &quot; and osCli_def_email like '%&quot; &amp; fltr.txtemail.Text &amp; &quot;%'&quot; 
+      end if
+      if fltr.lblSurName.Value=vbChecked then
+        f=f &amp;  &quot; and osCli_def_SurName like '%&quot; &amp; fltr.txtSurName.Text &amp; &quot;%'&quot; 
+      end if
+      if fltr.lblSex.Value=vbChecked then
+        f=f &amp;  &quot; and osCli_def_Sex='&quot; &amp; fltr.cmbSex.Text &amp; &quot;'&quot; 
+      end if
+      if fltr.lblChipCard.Value=vbChecked then
+        f=f &amp;  &quot; and osCli_def_ChipCard like '%&quot; &amp; fltr.txtChipCard.Text &amp; &quot;%'&quot; 
+      end if
+      if fltr.lblbDate_GE.Value=vbChecked then
+        f=f &amp;  &quot; and osCli_def_bDate&gt;=&quot; &amp; MakeMSSQLDate(fltr.dtpbDate_GE.value)
+      end if
+      if fltr.lblEnsurence.Value=vbChecked then
+        f=f &amp;  &quot; and osCli_def_Ensurence like '%&quot; &amp; fltr.txtEnsurence.Text &amp; &quot;%'&quot; 
+      end if
+      if fltr.lblbDate_LE.Value=vbChecked then
+        f=f &amp;  &quot; and osCli_def_bDate&lt;=&quot; &amp; MakeMSSQLDate(fltr.dtpbDate_LE.value)
+      end if
+      if fltr.lblpostAddr.Value=vbChecked then
+        f=f &amp;  &quot; and osCli_def_postAddr like '%&quot; &amp; fltr.txtpostAddr.Text &amp; &quot;%'&quot; 
+      end if
+      if fltr.lblPhone.Value=vbChecked then
+        f=f &amp;  &quot; and osCli_def_Phone like '%&quot; &amp; fltr.txtPhone.Text &amp; &quot;%'&quot; 
+      end if
+      if fltr.lblPassport.Value=vbChecked then
+        f=f &amp;  &quot; and osCli_def_Passport like '%&quot; &amp; fltr.txtPassport.Text &amp; &quot;%'&quot; 
+      end if
+      if fltr.lblFirstName.Value=vbChecked then
+        f=f &amp;  &quot; and osCli_def_FirstName like '%&quot; &amp; fltr.txtFirstName.Text &amp; &quot;%'&quot; 
+      end if
+      if fltr.lblFamilyName.Value=vbChecked then
+        f=f &amp;  &quot; and osCli_def_FamilyName like '%&quot; &amp; fltr.txtFamilyName.Text &amp; &quot;%'&quot; 
+      end if
+    jfmnuosCLI_1.jv.Filter.Add &quot;AUTOosCli_def&quot;, f
+    end if 
+      jfmnuosCLI_1.jv.Refresh
+      Me.MousePointer = vbNormal
+    End If
+    jfmnuosCLI_1.Show
+    jfmnuosCLI_1.WindowState = 0
+    jfmnuosCLI_1.ZOrder 0
+end sub 
+private sub   jfmnuosCLI_1_OnFilter( usedefault as boolean)  
+    Dim fltr As frmosCLI
+    Dim f as string
+    set fltr = new frmosCLI
+    fltr.show vbmodal
+    if fltr.ok then 
+    ' build flter expression 
+    f=&quot;1=1&quot;
+   f=&quot; INTSANCEStatusID='{54B96FFF-F483-4118-8783-48BE044162E0}'&quot; 
+      if fltr.lblMedicalCheck_LE.Value=vbChecked then
+        f=f &amp;  &quot; and osCli_def_MedicalCheck&lt;=&quot; &amp; MakeMSSQLDate(fltr.dtpMedicalCheck_LE.value)
+      end if
+      if fltr.lblMedicalCheck_GE.Value=vbChecked then
+        f=f &amp;  &quot; and osCli_def_MedicalCheck&gt;=&quot; &amp; MakeMSSQLDate(fltr.dtpMedicalCheck_GE.value)
+      end if
+      if fltr.lblemail.Value=vbChecked then
+        f=f &amp;  &quot; and osCli_def_email like '%&quot; &amp; fltr.txtemail.Text &amp; &quot;%'&quot; 
+      end if
+      if fltr.lblSurName.Value=vbChecked then
+        f=f &amp;  &quot; and osCli_def_SurName like '%&quot; &amp; fltr.txtSurName.Text &amp; &quot;%'&quot; 
+      end if
+      if fltr.lblSex.Value=vbChecked then
+        f=f &amp;  &quot; and osCli_def_Sex='&quot; &amp; fltr.cmbSex.Text &amp; &quot;'&quot; 
+      end if
+      if fltr.lblChipCard.Value=vbChecked then
+        f=f &amp;  &quot; and osCli_def_ChipCard like '%&quot; &amp; fltr.txtChipCard.Text &amp; &quot;%'&quot; 
+      end if
+      if fltr.lblbDate_GE.Value=vbChecked then
+        f=f &amp;  &quot; and osCli_def_bDate&gt;=&quot; &amp; MakeMSSQLDate(fltr.dtpbDate_GE.value)
+      end if
+      if fltr.lblEnsurence.Value=vbChecked then
+        f=f &amp;  &quot; and osCli_def_Ensurence like '%&quot; &amp; fltr.txtEnsurence.Text &amp; &quot;%'&quot; 
+      end if
+      if fltr.lblbDate_LE.Value=vbChecked then
+        f=f &amp;  &quot; and osCli_def_bDate&lt;=&quot; &amp; MakeMSSQLDate(fltr.dtpbDate_LE.value)
+      end if
+      if fltr.lblpostAddr.Value=vbChecked then
+        f=f &amp;  &quot; and osCli_def_postAddr like '%&quot; &amp; fltr.txtpostAddr.Text &amp; &quot;%'&quot; 
+      end if
+      if fltr.lblPhone.Value=vbChecked then
+        f=f &amp;  &quot; and osCli_def_Phone like '%&quot; &amp; fltr.txtPhone.Text &amp; &quot;%'&quot; 
+      end if
+      if fltr.lblPassport.Value=vbChecked then
+        f=f &amp;  &quot; and osCli_def_Passport like '%&quot; &amp; fltr.txtPassport.Text &amp; &quot;%'&quot; 
+      end if
+      if fltr.lblFirstName.Value=vbChecked then
+        f=f &amp;  &quot; and osCli_def_FirstName like '%&quot; &amp; fltr.txtFirstName.Text &amp; &quot;%'&quot; 
+      end if
+      if fltr.lblFamilyName.Value=vbChecked then
+        f=f &amp;  &quot; and osCli_def_FamilyName like '%&quot; &amp; fltr.txtFamilyName.Text &amp; &quot;%'&quot; 
+      end if
+    jfmnuosCLI_1.jv.Filter.Add &quot;AUTOosCli_def&quot;, f
+    end if 
+    unload fltr 
+    usedefault = false
+end sub 
+private sub   jfmnuosCLI_1_OnClearFilter()  
+   jfmnuosCLI_1.jv.Filter.Add  &quot;AUTOosCli_def&quot;,&quot; INTSANCEStatusID='{54B96FFF-F483-4118-8783-48BE044162E0}'&quot; 
+end sub 
+Private Sub jfmnuosCLI_1_OnAdd(usedefaut As Boolean, Refesh As Boolean)
+  Dim objGui  As Object
+  Dim o As Object
+  Dim ID As String
+  ID = CreateGUID2
+  Manager.NewInstance ID, &quot;osCLI&quot;, &quot;Клиент&quot; &amp; Now, Site
+  Set o = Manager.GetInstanceObject(ID)
+  If IsDocDenied(o) Then
+    MsgBox &quot;Не разрешен доступ к документам такого типа&quot;
+    Exit Sub
+  End If
+
+  Dim g  As Object
+  Set g = Manager.GetInstanceGUI(o.ID)
+  If Not g Is Nothing Then
+    g.Show GetDocumentMode(o), o, False
+  End If
+  usedefaut = False
+  Refesh = False
+End Sub
+
+
+private sub mnuosCLI_2_Click()
+    Dim journal As Object
+    On Error Resume Next
+    If jfmnuosCLI_2 Is Nothing Then
+      Set jfmnuosCLI_2 = New frmJournalShow
+      Set journal = Manager.GetInstanceObject(&quot;{0AB326B9-677B-4F34-ACCF-443B98286DAC}&quot;)
+      Manager.LockInstanceObject journal.ID
+      Set jfmnuosCLI_2.jv.journal = journal
+      jfmnuosCLI_2.jv.OpenModal = False
+      jfmnuosCLI_2.Caption = &quot;Клиент :Нет абонементов&quot;
+      Me.MousePointer = vbHourglass
+      DoEvents
+      Dim f As String
+    f=&quot;1=1&quot;
+   f=&quot; INTSANCEStatusID='{D79BE24C-1585-4398-B834-ED601FBDE2E1}'&quot; 
+    jfmnuosCLI_2.jv.Filter.Add &quot;AUTOosCli_def&quot;, f
+    Dim fltr As frmosCLI
+    set fltr = new frmosCLI
+    fltr.show vbmodal
+    if fltr.ok then 
+    ' build flter expression 
+      if fltr.lblMedicalCheck_GE.Value=vbChecked then
+        f=f &amp;  &quot; and osCli_def_MedicalCheck&gt;=&quot; &amp; MakeMSSQLDate(fltr.dtpMedicalCheck_GE.value)
+      end if
+      if fltr.lblemail.Value=vbChecked then
+        f=f &amp;  &quot; and osCli_def_email like '%&quot; &amp; fltr.txtemail.Text &amp; &quot;%'&quot; 
+      end if
+      if fltr.lblSurName.Value=vbChecked then
+        f=f &amp;  &quot; and osCli_def_SurName like '%&quot; &amp; fltr.txtSurName.Text &amp; &quot;%'&quot; 
+      end if
+      if fltr.lblSex.Value=vbChecked then
+        f=f &amp;  &quot; and osCli_def_Sex='&quot; &amp; fltr.cmbSex.Text &amp; &quot;'&quot; 
+      end if
+      if fltr.lblMedicalCheck_LE.Value=vbChecked then
+        f=f &amp;  &quot; and osCli_def_MedicalCheck&lt;=&quot; &amp; MakeMSSQLDate(fltr.dtpMedicalCheck_LE.value)
+      end if
+      if fltr.lblbDate_LE.Value=vbChecked then
+        f=f &amp;  &quot; and osCli_def_bDate&lt;=&quot; &amp; MakeMSSQLDate(fltr.dtpbDate_LE.value)
+      end if
+      if fltr.lblChipCard.Value=vbChecked then
+        f=f &amp;  &quot; and osCli_def_ChipCard like '%&quot; &amp; fltr.txtChipCard.Text &amp; &quot;%'&quot; 
+      end if
+      if fltr.lblbDate_GE.Value=vbChecked then
+        f=f &amp;  &quot; and osCli_def_bDate&gt;=&quot; &amp; MakeMSSQLDate(fltr.dtpbDate_GE.value)
+      end if
+      if fltr.lblPhone.Value=vbChecked then
+        f=f &amp;  &quot; and osCli_def_Phone like '%&quot; &amp; fltr.txtPhone.Text &amp; &quot;%'&quot; 
+      end if
+      if fltr.lblPassport.Value=vbChecked then
+        f=f &amp;  &quot; and osCli_def_Passport like '%&quot; &amp; fltr.txtPassport.Text &amp; &quot;%'&quot; 
+      end if
+      if fltr.lblEnsurence.Value=vbChecked then
+        f=f &amp;  &quot; and osCli_def_Ensurence like '%&quot; &amp; fltr.txtEnsurence.Text &amp; &quot;%'&quot; 
+      end if
+      if fltr.lblFirstName.Value=vbChecked then
+        f=f &amp;  &quot; and osCli_def_FirstName like '%&quot; &amp; fltr.txtFirstName.Text &amp; &quot;%'&quot; 
+      end if
+      if fltr.lblFamilyName.Value=vbChecked then
+        f=f &amp;  &quot; and osCli_def_FamilyName like '%&quot; &amp; fltr.txtFamilyName.Text &amp; &quot;%'&quot; 
+      end if
+      if fltr.lblpostAddr.Value=vbChecked then
+        f=f &amp;  &quot; and osCli_def_postAddr like '%&quot; &amp; fltr.txtpostAddr.Text &amp; &quot;%'&quot; 
+      end if
+    jfmnuosCLI_2.jv.Filter.Add &quot;AUTOosCli_def&quot;, f
+    end if 
+      jfmnuosCLI_2.jv.Refresh
+      Me.MousePointer = vbNormal
+    End If
+    jfmnuosCLI_2.Show
+    jfmnuosCLI_2.WindowState = 0
+    jfmnuosCLI_2.ZOrder 0
+end sub 
+private sub   jfmnuosCLI_2_OnFilter( usedefault as boolean)  
+    Dim fltr As frmosCLI
+    Dim f as string
+    set fltr = new frmosCLI
+    fltr.show vbmodal
+    if fltr.ok then 
+    ' build flter expression 
+    f=&quot;1=1&quot;
+   f=&quot; INTSANCEStatusID='{D79BE24C-1585-4398-B834-ED601FBDE2E1}'&quot; 
+      if fltr.lblMedicalCheck_GE.Value=vbChecked then
+        f=f &amp;  &quot; and osCli_def_MedicalCheck&gt;=&quot; &amp; MakeMSSQLDate(fltr.dtpMedicalCheck_GE.value)
+      end if
+      if fltr.lblemail.Value=vbChecked then
+        f=f &amp;  &quot; and osCli_def_email like '%&quot; &amp; fltr.txtemail.Text &amp; &quot;%'&quot; 
+      end if
+      if fltr.lblSurName.Value=vbChecked then
+        f=f &amp;  &quot; and osCli_def_SurName like '%&quot; &amp; fltr.txtSurName.Text &amp; &quot;%'&quot; 
+      end if
+      if fltr.lblSex.Value=vbChecked then
+        f=f &amp;  &quot; and osCli_def_Sex='&quot; &amp; fltr.cmbSex.Text &amp; &quot;'&quot; 
+      end if
+      if fltr.lblMedicalCheck_LE.Value=vbChecked then
+        f=f &amp;  &quot; and osCli_def_MedicalCheck&lt;=&quot; &amp; MakeMSSQLDate(fltr.dtpMedicalCheck_LE.value)
+      end if
+      if fltr.lblbDate_LE.Value=vbChecked then
+        f=f &amp;  &quot; and osCli_def_bDate&lt;=&quot; &amp; MakeMSSQLDate(fltr.dtpbDate_LE.value)
+      end if
+      if fltr.lblChipCard.Value=vbChecked then
+        f=f &amp;  &quot; and osCli_def_ChipCard like '%&quot; &amp; fltr.txtChipCard.Text &amp; &quot;%'&quot; 
+      end if
+      if fltr.lblbDate_GE.Value=vbChecked then
+        f=f &amp;  &quot; and osCli_def_bDate&gt;=&quot; &amp; MakeMSSQLDate(fltr.dtpbDate_GE.value)
+      end if
+      if fltr.lblPhone.Value=vbChecked then
+        f=f &amp;  &quot; and osCli_def_Phone like '%&quot; &amp; fltr.txtPhone.Text &amp; &quot;%'&quot; 
+      end if
+      if fltr.lblPassport.Value=vbChecked then
+        f=f &amp;  &quot; and osCli_def_Passport like '%&quot; &amp; fltr.txtPassport.Text &amp; &quot;%'&quot; 
+      end if
+      if fltr.lblEnsurence.Value=vbChecked then
+        f=f &amp;  &quot; and osCli_def_Ensurence like '%&quot; &amp; fltr.txtEnsurence.Text &amp; &quot;%'&quot; 
+      end if
+      if fltr.lblFirstName.Value=vbChecked then
+        f=f &amp;  &quot; and osCli_def_FirstName like '%&quot; &amp; fltr.txtFirstName.Text &amp; &quot;%'&quot; 
+      end if
+      if fltr.lblFamilyName.Value=vbChecked then
+        f=f &amp;  &quot; and osCli_def_FamilyName like '%&quot; &amp; fltr.txtFamilyName.Text &amp; &quot;%'&quot; 
+      end if
+      if fltr.lblpostAddr.Value=vbChecked then
+        f=f &amp;  &quot; and osCli_def_postAddr like '%&quot; &amp; fltr.txtpostAddr.Text &amp; &quot;%'&quot; 
+      end if
+    jfmnuosCLI_2.jv.Filter.Add &quot;AUTOosCli_def&quot;, f
+    end if 
+    unload fltr 
+    usedefault = false
+end sub 
+private sub   jfmnuosCLI_2_OnClearFilter()  
+   jfmnuosCLI_2.jv.Filter.Add  &quot;AUTOosCli_def&quot;,&quot; INTSANCEStatusID='{D79BE24C-1585-4398-B834-ED601FBDE2E1}'&quot; 
+end sub 
+Private Sub jfmnuosCLI_2_OnAdd(usedefaut As Boolean, Refesh As Boolean)
+  Dim objGui  As Object
+  Dim o As Object
+  Dim ID As String
+  ID = CreateGUID2
+  Manager.NewInstance ID, &quot;osCLI&quot;, &quot;Клиент&quot; &amp; Now, Site
+  Set o = Manager.GetInstanceObject(ID)
+  If IsDocDenied(o) Then
+    MsgBox &quot;Не разрешен доступ к документам такого типа&quot;
+    Exit Sub
+  End If
+
+  Dim g  As Object
+  Set g = Manager.GetInstanceGUI(o.ID)
+  If Not g Is Nothing Then
+    g.Show GetDocumentMode(o), o, False
+  End If
+  usedefaut = False
+  Refesh = False
+End Sub
+
+
+private sub mnuosCLI_3_Click()
+    Dim journal As Object
+    On Error Resume Next
+    If jfmnuosCLI_3 Is Nothing Then
+      Set jfmnuosCLI_3 = New frmJournalShow
+      Set journal = Manager.GetInstanceObject(&quot;{0AB326B9-677B-4F34-ACCF-443B98286DAC}&quot;)
+      Manager.LockInstanceObject journal.ID
+      Set jfmnuosCLI_3.jv.journal = journal
+      jfmnuosCLI_3.jv.OpenModal = False
+      jfmnuosCLI_3.Caption = &quot;Клиент :В черном списке&quot;
+      Me.MousePointer = vbHourglass
+      DoEvents
+      Dim f As String
+    f=&quot;1=1&quot;
+   f=&quot; INTSANCEStatusID='{70BA4816-34A5-4F7B-9A93-FAC2C1DF8FDB}'&quot; 
+    jfmnuosCLI_3.jv.Filter.Add &quot;AUTOosCli_def&quot;, f
+    Dim fltr As frmosCLI
+    set fltr = new frmosCLI
+    fltr.show vbmodal
+    if fltr.ok then 
+    ' build flter expression 
+      if fltr.lblPhone.Value=vbChecked then
+        f=f &amp;  &quot; and osCli_def_Phone like '%&quot; &amp; fltr.txtPhone.Text &amp; &quot;%'&quot; 
+      end if
+      if fltr.lblbDate_LE.Value=vbChecked then
+        f=f &amp;  &quot; and osCli_def_bDate&lt;=&quot; &amp; MakeMSSQLDate(fltr.dtpbDate_LE.value)
+      end if
+      if fltr.lblEnsurence.Value=vbChecked then
+        f=f &amp;  &quot; and osCli_def_Ensurence like '%&quot; &amp; fltr.txtEnsurence.Text &amp; &quot;%'&quot; 
+      end if
+      if fltr.lblemail.Value=vbChecked then
+        f=f &amp;  &quot; and osCli_def_email like '%&quot; &amp; fltr.txtemail.Text &amp; &quot;%'&quot; 
+      end if
+      if fltr.lblSex.Value=vbChecked then
+        f=f &amp;  &quot; and osCli_def_Sex='&quot; &amp; fltr.cmbSex.Text &amp; &quot;'&quot; 
+      end if
+      if fltr.lblFamilyName.Value=vbChecked then
+        f=f &amp;  &quot; and osCli_def_FamilyName like '%&quot; &amp; fltr.txtFamilyName.Text &amp; &quot;%'&quot; 
+      end if
+      if fltr.lblPassport.Value=vbChecked then
+        f=f &amp;  &quot; and osCli_def_Passport like '%&quot; &amp; fltr.txtPassport.Text &amp; &quot;%'&quot; 
+      end if
+      if fltr.lblChipCard.Value=vbChecked then
+        f=f &amp;  &quot; and osCli_def_ChipCard like '%&quot; &amp; fltr.txtChipCard.Text &amp; &quot;%'&quot; 
+      end if
+      if fltr.lblSurName.Value=vbChecked then
+        f=f &amp;  &quot; and osCli_def_SurName like '%&quot; &amp; fltr.txtSurName.Text &amp; &quot;%'&quot; 
+      end if
+      if fltr.lblMedicalCheck_GE.Value=vbChecked then
+        f=f &amp;  &quot; and osCli_def_MedicalCheck&gt;=&quot; &amp; MakeMSSQLDate(fltr.dtpMedicalCheck_GE.value)
+      end if
+      if fltr.lblFirstName.Value=vbChecked then
+        f=f &amp;  &quot; and osCli_def_FirstName like '%&quot; &amp; fltr.txtFirstName.Text &amp; &quot;%'&quot; 
+      end if
+      if fltr.lblpostAddr.Value=vbChecked then
+        f=f &amp;  &quot; and osCli_def_postAddr like '%&quot; &amp; fltr.txtpostAddr.Text &amp; &quot;%'&quot; 
+      end if
+      if fltr.lblbDate_GE.Value=vbChecked then
+        f=f &amp;  &quot; and osCli_def_bDate&gt;=&quot; &amp; MakeMSSQLDate(fltr.dtpbDate_GE.value)
+      end if
+      if fltr.lblMedicalCheck_LE.Value=vbChecked then
+        f=f &amp;  &quot; and osCli_def_MedicalCheck&lt;=&quot; &amp; MakeMSSQLDate(fltr.dtpMedicalCheck_LE.value)
+      end if
+    jfmnuosCLI_3.jv.Filter.Add &quot;AUTOosCli_def&quot;, f
+    end if 
+      jfmnuosCLI_3.jv.Refresh
+      Me.MousePointer = vbNormal
+    End If
+    jfmnuosCLI_3.Show
+    jfmnuosCLI_3.WindowState = 0
+    jfmnuosCLI_3.ZOrder 0
+end sub 
+private sub   jfmnuosCLI_3_OnFilter( usedefault as boolean)  
+    Dim fltr As frmosCLI
+    Dim f as string
+    set fltr = new frmosCLI
+    fltr.show vbmodal
+    if fltr.ok then 
+    ' build flter expression 
+    f=&quot;1=1&quot;
+   f=&quot; INTSANCEStatusID='{70BA4816-34A5-4F7B-9A93-FAC2C1DF8FDB}'&quot; 
+      if fltr.lblPhone.Value=vbChecked then
+        f=f &amp;  &quot; and osCli_def_Phone like '%&quot; &amp; fltr.txtPhone.Text &amp; &quot;%'&quot; 
+      end if
+      if fltr.lblbDate_LE.Value=vbChecked then
+        f=f &amp;  &quot; and osCli_def_bDate&lt;=&quot; &amp; MakeMSSQLDate(fltr.dtpbDate_LE.value)
+      end if
+      if fltr.lblEnsurence.Value=vbChecked then
+        f=f &amp;  &quot; and osCli_def_Ensurence like '%&quot; &amp; fltr.txtEnsurence.Text &amp; &quot;%'&quot; 
+      end if
+      if fltr.lblemail.Value=vbChecked then
+        f=f &amp;  &quot; and osCli_def_email like '%&quot; &amp; fltr.txtemail.Text &amp; &quot;%'&quot; 
+      end if
+      if fltr.lblSex.Value=vbChecked then
+        f=f &amp;  &quot; and osCli_def_Sex='&quot; &amp; fltr.cmbSex.Text &amp; &quot;'&quot; 
+      end if
+      if fltr.lblFamilyName.Value=vbChecked then
+        f=f &amp;  &quot; and osCli_def_FamilyName like '%&quot; &amp; fltr.txtFamilyName.Text &amp; &quot;%'&quot; 
+      end if
+      if fltr.lblPassport.Value=vbChecked then
+        f=f &amp;  &quot; and osCli_def_Passport like '%&quot; &amp; fltr.txtPassport.Text &amp; &quot;%'&quot; 
+      end if
+      if fltr.lblChipCard.Value=vbChecked then
+        f=f &amp;  &quot; and osCli_def_ChipCard like '%&quot; &amp; fltr.txtChipCard.Text &amp; &quot;%'&quot; 
+      end if
+      if fltr.lblSurName.Value=vbChecked then
+        f=f &amp;  &quot; and osCli_def_SurName like '%&quot; &amp; fltr.txtSurName.Text &amp; &quot;%'&quot; 
+      end if
+      if fltr.lblMedicalCheck_GE.Value=vbChecked then
+        f=f &amp;  &quot; and osCli_def_MedicalCheck&gt;=&quot; &amp; MakeMSSQLDate(fltr.dtpMedicalCheck_GE.value)
+      end if
+      if fltr.lblFirstName.Value=vbChecked then
+        f=f &amp;  &quot; and osCli_def_FirstName like '%&quot; &amp; fltr.txtFirstName.Text &amp; &quot;%'&quot; 
+      end if
+      if fltr.lblpostAddr.Value=vbChecked then
+        f=f &amp;  &quot; and osCli_def_postAddr like '%&quot; &amp; fltr.txtpostAddr.Text &amp; &quot;%'&quot; 
+      end if
+      if fltr.lblbDate_GE.Value=vbChecked then
+        f=f &amp;  &quot; and osCli_def_bDate&gt;=&quot; &amp; MakeMSSQLDate(fltr.dtpbDate_GE.value)
+      end if
+      if fltr.lblMedicalCheck_LE.Value=vbChecked then
+        f=f &amp;  &quot; and osCli_def_MedicalCheck&lt;=&quot; &amp; MakeMSSQLDate(fltr.dtpMedicalCheck_LE.value)
+      end if
+    jfmnuosCLI_3.jv.Filter.Add &quot;AUTOosCli_def&quot;, f
+    end if 
+    unload fltr 
+    usedefault = false
+end sub 
+private sub   jfmnuosCLI_3_OnClearFilter()  
+   jfmnuosCLI_3.jv.Filter.Add  &quot;AUTOosCli_def&quot;,&quot; INTSANCEStatusID='{70BA4816-34A5-4F7B-9A93-FAC2C1DF8FDB}'&quot; 
+end sub 
+Private Sub jfmnuosCLI_3_OnAdd(usedefaut As Boolean, Refesh As Boolean)
+  Dim objGui  As Object
+  Dim o As Object
+  Dim ID As String
+  ID = CreateGUID2
+  Manager.NewInstance ID, &quot;osCLI&quot;, &quot;Клиент&quot; &amp; Now, Site
+  Set o = Manager.GetInstanceObject(ID)
+  If IsDocDenied(o) Then
+    MsgBox &quot;Не разрешен доступ к документам такого типа&quot;
+    Exit Sub
+  End If
+
+  Dim g  As Object
+  Set g = Manager.GetInstanceGUI(o.ID)
+  If Not g Is Nothing Then
+    g.Show GetDocumentMode(o), o, False
+  End If
+  usedefaut = False
+  Refesh = False
+End Sub
+
+
+
+
+private sub mnuAllosReg_Click()
+    Dim journal As Object
+    On Error Resume Next
+    If jfmnuAllosReg Is Nothing Then
+      Set jfmnuAllosReg = New frmJournalShow
+      Set journal = Manager.GetInstanceObject(&quot;{FDFBF5F4-5109-4357-AA10-69A88CCF72AC}&quot;)
+      Manager.LockInstanceObject journal.ID
+      Set jfmnuAllosReg.jv.journal = journal
+      jfmnuAllosReg.jv.OpenModal = False
+      jfmnuAllosReg.Caption = &quot;Регистр посещений - все состояния&quot;
+      Me.MousePointer = vbHourglass
+      DoEvents
+      Dim f As String
+    f=&quot;1=1&quot;
+    Dim fltr As frmosReg
+    set fltr = new frmosReg
+    fltr.show vbmodal
+    if fltr.ok then 
+    ' build flter expression 
+      if fltr.lblEnterTime_LE.Value=vbChecked then
+        f=f &amp;  &quot; and Запись о посещении_EnterTime&lt;=&quot; &amp; MakeMSSQLDate(fltr.dtpEnterTime_LE.value)
+      end if
+      if fltr.lblChipNumber.Value=vbChecked then
+        f=f &amp;  &quot; and Запись о посещении_ChipNumber like '%&quot; &amp; fltr.txtChipNumber.Text &amp; &quot;%'&quot; 
+      end if
+      if fltr.lblExitTime_GE.Value=vbChecked then
+        f=f &amp;  &quot; and Запись о посещении_ExitTime&gt;=&quot; &amp; MakeMSSQLDate(fltr.dtpExitTime_GE.value)
+      end if
+      if fltr.lblExitTime_LE.Value=vbChecked then
+        f=f &amp;  &quot; and Запись о посещении_ExitTime&lt;=&quot; &amp; MakeMSSQLDate(fltr.dtpExitTime_LE.value)
+      end if
+      if fltr.lblEnterTime_GE.Value=vbChecked then
+        f=f &amp;  &quot; and Запись о посещении_EnterTime&gt;=&quot; &amp; MakeMSSQLDate(fltr.dtpEnterTime_GE.value)
+      end if
+      if fltr.lblTheClient.Value=vbChecked then
+        f=f &amp;  &quot; and Запись о посещении_TheClient_ID='&quot; &amp; fltr.txtTheClient.Tag &amp; &quot;'&quot; 
+      end if
+    jfmnuAllosReg.jv.Filter.Add &quot;AUTOЗапись о посещении&quot;, f
+    end if 
+      jfmnuAllosReg.jv.Refresh
+      Me.MousePointer = vbNormal
+    End If
+    jfmnuAllosReg.Show
+    jfmnuAllosReg.WindowState = 0
+    jfmnuAllosReg.ZOrder 0
+end sub 
+private sub   jfmnuAllosReg_OnFilter( usedefault as boolean)  
+    Dim fltr As frmosReg
+    Dim f as string
+    set fltr = new frmosReg
+    fltr.show vbmodal
+    if fltr.ok then 
+    ' build flter expression 
+    f=&quot;1=1&quot;
+      if fltr.lblEnterTime_LE.Value=vbChecked then
+        f=f &amp;  &quot; and Запись о посещении_EnterTime&lt;=&quot; &amp; MakeMSSQLDate(fltr.dtpEnterTime_LE.value)
+      end if
+      if fltr.lblChipNumber.Value=vbChecked then
+        f=f &amp;  &quot; and Запись о посещении_ChipNumber like '%&quot; &amp; fltr.txtChipNumber.Text &amp; &quot;%'&quot; 
+      end if
+      if fltr.lblExitTime_GE.Value=vbChecked then
+        f=f &amp;  &quot; and Запись о посещении_ExitTime&gt;=&quot; &amp; MakeMSSQLDate(fltr.dtpExitTime_GE.value)
+      end if
+      if fltr.lblExitTime_LE.Value=vbChecked then
+        f=f &amp;  &quot; and Запись о посещении_ExitTime&lt;=&quot; &amp; MakeMSSQLDate(fltr.dtpExitTime_LE.value)
+      end if
+      if fltr.lblEnterTime_GE.Value=vbChecked then
+        f=f &amp;  &quot; and Запись о посещении_EnterTime&gt;=&quot; &amp; MakeMSSQLDate(fltr.dtpEnterTime_GE.value)
+      end if
+      if fltr.lblTheClient.Value=vbChecked then
+        f=f &amp;  &quot; and Запись о посещении_TheClient_ID='&quot; &amp; fltr.txtTheClient.Tag &amp; &quot;'&quot; 
+      end if
+    jfmnuAllosReg.jv.Filter.Add &quot;AUTOЗапись о посещении&quot;, f
+    end if 
+    unload fltr 
+    usedefault = false
+end sub 
+private sub   jfmnuAllosReg_OnClearFilter()  
+end sub 
+Private Sub jfmnuAllosReg_OnAdd(usedefaut As Boolean, Refesh As Boolean)
+  Dim objGui  As Object
+  Dim o As Object
+  Dim ID As String
+  ID = CreateGUID2
+  Manager.NewInstance ID, &quot;osReg&quot;, &quot;Регистр посещений&quot; &amp; Now, Site
+  Set o = Manager.GetInstanceObject(ID)
+  If IsDocDenied(o) Then
+    MsgBox &quot;Не разрешен доступ к документам такого типа&quot;
+    Exit Sub
+  End If
+
+  Dim g  As Object
+  Set g = Manager.GetInstanceGUI(o.ID)
+  If Not g Is Nothing Then
+    g.Show GetDocumentMode(o), o, False
+  End If
+  usedefaut = False
+  Refesh = False
+End Sub
+
+
+private sub mnuosReg_1_Click()
+    Dim journal As Object
+    On Error Resume Next
+    If jfmnuosReg_1 Is Nothing Then
+      Set jfmnuosReg_1 = New frmJournalShow
+      Set journal = Manager.GetInstanceObject(&quot;{FDFBF5F4-5109-4357-AA10-69A88CCF72AC}&quot;)
+      Manager.LockInstanceObject journal.ID
+      Set jfmnuosReg_1.jv.journal = journal
+      jfmnuosReg_1.jv.OpenModal = False
+      jfmnuosReg_1.Caption = &quot;Регистр посещений :Ушел&quot;
+      Me.MousePointer = vbHourglass
+      DoEvents
+      Dim f As String
+    f=&quot;1=1&quot;
+   f=&quot; INTSANCEStatusID='{D8128DAC-60AB-47FF-9760-472C94776044}'&quot; 
+    jfmnuosReg_1.jv.Filter.Add &quot;AUTOЗапись о посещении&quot;, f
+    Dim fltr As frmosReg
+    set fltr = new frmosReg
+    fltr.show vbmodal
+    if fltr.ok then 
+    ' build flter expression 
+      if fltr.lblEnterTime_LE.Value=vbChecked then
+        f=f &amp;  &quot; and Запись о посещении_EnterTime&lt;=&quot; &amp; MakeMSSQLDate(fltr.dtpEnterTime_LE.value)
+      end if
+      if fltr.lblEnterTime_GE.Value=vbChecked then
+        f=f &amp;  &quot; and Запись о посещении_EnterTime&gt;=&quot; &amp; MakeMSSQLDate(fltr.dtpEnterTime_GE.value)
+      end if
+      if fltr.lblExitTime_GE.Value=vbChecked then
+        f=f &amp;  &quot; and Запись о посещении_ExitTime&gt;=&quot; &amp; MakeMSSQLDate(fltr.dtpExitTime_GE.value)
+      end if
+      if fltr.lblExitTime_LE.Value=vbChecked then
+        f=f &amp;  &quot; and Запись о посещении_ExitTime&lt;=&quot; &amp; MakeMSSQLDate(fltr.dtpExitTime_LE.value)
+      end if
+      if fltr.lblChipNumber.Value=vbChecked then
+        f=f &amp;  &quot; and Запись о посещении_ChipNumber like '%&quot; &amp; fltr.txtChipNumber.Text &amp; &quot;%'&quot; 
+      end if
+      if fltr.lblTheClient.Value=vbChecked then
+        f=f &amp;  &quot; and Запись о посещении_TheClient_ID='&quot; &amp; fltr.txtTheClient.Tag &amp; &quot;'&quot; 
+      end if
+    jfmnuosReg_1.jv.Filter.Add &quot;AUTOЗапись о посещении&quot;, f
+    end if 
+      jfmnuosReg_1.jv.Refresh
+      Me.MousePointer = vbNormal
+    End If
+    jfmnuosReg_1.Show
+    jfmnuosReg_1.WindowState = 0
+    jfmnuosReg_1.ZOrder 0
+end sub 
+private sub   jfmnuosReg_1_OnFilter( usedefault as boolean)  
+    Dim fltr As frmosReg
+    Dim f as string
+    set fltr = new frmosReg
+    fltr.show vbmodal
+    if fltr.ok then 
+    ' build flter expression 
+    f=&quot;1=1&quot;
+   f=&quot; INTSANCEStatusID='{D8128DAC-60AB-47FF-9760-472C94776044}'&quot; 
+      if fltr.lblEnterTime_LE.Value=vbChecked then
+        f=f &amp;  &quot; and Запись о посещении_EnterTime&lt;=&quot; &amp; MakeMSSQLDate(fltr.dtpEnterTime_LE.value)
+      end if
+      if fltr.lblEnterTime_GE.Value=vbChecked then
+        f=f &amp;  &quot; and Запись о посещении_EnterTime&gt;=&quot; &amp; MakeMSSQLDate(fltr.dtpEnterTime_GE.value)
+      end if
+      if fltr.lblExitTime_GE.Value=vbChecked then
+        f=f &amp;  &quot; and Запись о посещении_ExitTime&gt;=&quot; &amp; MakeMSSQLDate(fltr.dtpExitTime_GE.value)
+      end if
+      if fltr.lblExitTime_LE.Value=vbChecked then
+        f=f &amp;  &quot; and Запись о посещении_ExitTime&lt;=&quot; &amp; MakeMSSQLDate(fltr.dtpExitTime_LE.value)
+      end if
+      if fltr.lblChipNumber.Value=vbChecked then
+        f=f &amp;  &quot; and Запись о посещении_ChipNumber like '%&quot; &amp; fltr.txtChipNumber.Text &amp; &quot;%'&quot; 
+      end if
+      if fltr.lblTheClient.Value=vbChecked then
+        f=f &amp;  &quot; and Запись о посещении_TheClient_ID='&quot; &amp; fltr.txtTheClient.Tag &amp; &quot;'&quot; 
+      end if
+    jfmnuosReg_1.jv.Filter.Add &quot;AUTOЗапись о посещении&quot;, f
+    end if 
+    unload fltr 
+    usedefault = false
+end sub 
+private sub   jfmnuosReg_1_OnClearFilter()  
+   jfmnuosReg_1.jv.Filter.Add  &quot;AUTOЗапись о посещении&quot;,&quot; INTSANCEStatusID='{D8128DAC-60AB-47FF-9760-472C94776044}'&quot; 
+end sub 
+Private Sub jfmnuosReg_1_OnAdd(usedefaut As Boolean, Refesh As Boolean)
+  Dim objGui  As Object
+  Dim o As Object
+  Dim ID As String
+  ID = CreateGUID2
+  Manager.NewInstance ID, &quot;osReg&quot;, &quot;Регистр посещений&quot; &amp; Now, Site
+  Set o = Manager.GetInstanceObject(ID)
+  If IsDocDenied(o) Then
+    MsgBox &quot;Не разрешен доступ к документам такого типа&quot;
+    Exit Sub
+  End If
+
+  Dim g  As Object
+  Set g = Manager.GetInstanceGUI(o.ID)
+  If Not g Is Nothing Then
+    g.Show GetDocumentMode(o), o, False
+  End If
+  usedefaut = False
+  Refesh = False
+End Sub
+
+
+private sub mnuosReg_2_Click()
+    Dim journal As Object
+    On Error Resume Next
+    If jfmnuosReg_2 Is Nothing Then
+      Set jfmnuosReg_2 = New frmJournalShow
+      Set journal = Manager.GetInstanceObject(&quot;{FDFBF5F4-5109-4357-AA10-69A88CCF72AC}&quot;)
+      Manager.LockInstanceObject journal.ID
+      Set jfmnuosReg_2.jv.journal = journal
+      jfmnuosReg_2.jv.OpenModal = False
+      jfmnuosReg_2.Caption = &quot;Регистр посещений :В клубе&quot;
+      Me.MousePointer = vbHourglass
+      DoEvents
+      Dim f As String
+    f=&quot;1=1&quot;
+   f=&quot; INTSANCEStatusID='{24E77850-58BC-442E-96F5-F2221450BDC0}'&quot; 
+    jfmnuosReg_2.jv.Filter.Add &quot;AUTOЗапись о посещении&quot;, f
+    Dim fltr As frmosReg
+    set fltr = new frmosReg
+    fltr.show vbmodal
+    if fltr.ok then 
+    ' build flter expression 
+      if fltr.lblTheClient.Value=vbChecked then
+        f=f &amp;  &quot; and Запись о посещении_TheClient_ID='&quot; &amp; fltr.txtTheClient.Tag &amp; &quot;'&quot; 
+      end if
+      if fltr.lblExitTime_LE.Value=vbChecked then
+        f=f &amp;  &quot; and Запись о посещении_ExitTime&lt;=&quot; &amp; MakeMSSQLDate(fltr.dtpExitTime_LE.value)
+      end if
+      if fltr.lblExitTime_GE.Value=vbChecked then
+        f=f &amp;  &quot; and Запись о посещении_ExitTime&gt;=&quot; &amp; MakeMSSQLDate(fltr.dtpExitTime_GE.value)
+      end if
+      if fltr.lblEnterTime_GE.Value=vbChecked then
+        f=f &amp;  &quot; and Запись о посещении_EnterTime&gt;=&quot; &amp; MakeMSSQLDate(fltr.dtpEnterTime_GE.value)
+      end if
+      if fltr.lblEnterTime_LE.Value=vbChecked then
+        f=f &amp;  &quot; and Запись о посещении_EnterTime&lt;=&quot; &amp; MakeMSSQLDate(fltr.dtpEnterTime_LE.value)
+      end if
+      if fltr.lblChipNumber.Value=vbChecked then
+        f=f &amp;  &quot; and Запись о посещении_ChipNumber like '%&quot; &amp; fltr.txtChipNumber.Text &amp; &quot;%'&quot; 
+      end if
+    jfmnuosReg_2.jv.Filter.Add &quot;AUTOЗапись о посещении&quot;, f
+    end if 
+      jfmnuosReg_2.jv.Refresh
+      Me.MousePointer = vbNormal
+    End If
+    jfmnuosReg_2.Show
+    jfmnuosReg_2.WindowState = 0
+    jfmnuosReg_2.ZOrder 0
+end sub 
+private sub   jfmnuosReg_2_OnFilter( usedefault as boolean)  
+    Dim fltr As frmosReg
+    Dim f as string
+    set fltr = new frmosReg
+    fltr.show vbmodal
+    if fltr.ok then 
+    ' build flter expression 
+    f=&quot;1=1&quot;
+   f=&quot; INTSANCEStatusID='{24E77850-58BC-442E-96F5-F2221450BDC0}'&quot; 
+      if fltr.lblTheClient.Value=vbChecked then
+        f=f &amp;  &quot; and Запись о посещении_TheClient_ID='&quot; &amp; fltr.txtTheClient.Tag &amp; &quot;'&quot; 
+      end if
+      if fltr.lblExitTime_LE.Value=vbChecked then
+        f=f &amp;  &quot; and Запись о посещении_ExitTime&lt;=&quot; &amp; MakeMSSQLDate(fltr.dtpExitTime_LE.value)
+      end if
+      if fltr.lblExitTime_GE.Value=vbChecked then
+        f=f &amp;  &quot; and Запись о посещении_ExitTime&gt;=&quot; &amp; MakeMSSQLDate(fltr.dtpExitTime_GE.value)
+      end if
+      if fltr.lblEnterTime_GE.Value=vbChecked then
+        f=f &amp;  &quot; and Запись о посещении_EnterTime&gt;=&quot; &amp; MakeMSSQLDate(fltr.dtpEnterTime_GE.value)
+      end if
+      if fltr.lblEnterTime_LE.Value=vbChecked then
+        f=f &amp;  &quot; and Запись о посещении_EnterTime&lt;=&quot; &amp; MakeMSSQLDate(fltr.dtpEnterTime_LE.value)
+      end if
+      if fltr.lblChipNumber.Value=vbChecked then
+        f=f &amp;  &quot; and Запись о посещении_ChipNumber like '%&quot; &amp; fltr.txtChipNumber.Text &amp; &quot;%'&quot; 
+      end if
+    jfmnuosReg_2.jv.Filter.Add &quot;AUTOЗапись о посещении&quot;, f
+    end if 
+    unload fltr 
+    usedefault = false
+end sub 
+private sub   jfmnuosReg_2_OnClearFilter()  
+   jfmnuosReg_2.jv.Filter.Add  &quot;AUTOЗапись о посещении&quot;,&quot; INTSANCEStatusID='{24E77850-58BC-442E-96F5-F2221450BDC0}'&quot; 
+end sub 
+Private Sub jfmnuosReg_2_OnAdd(usedefaut As Boolean, Refesh As Boolean)
+  Dim objGui  As Object
+  Dim o As Object
+  Dim ID As String
+  ID = CreateGUID2
+  Manager.NewInstance ID, &quot;osReg&quot;, &quot;Регистр посещений&quot; &amp; Now, Site
+  Set o = Manager.GetInstanceObject(ID)
+  If IsDocDenied(o) Then
+    MsgBox &quot;Не разрешен доступ к документам такого типа&quot;
+    Exit Sub
+  End If
+
+  Dim g  As Object
+  Set g = Manager.GetInstanceGUI(o.ID)
+  If Not g Is Nothing Then
+    g.Show GetDocumentMode(o), o, False
+  End If
+  usedefaut = False
+  Refesh = False
+End Sub
+
+
+
+
+private sub mnuosEmp_Click()
+    Dim journal As Object
+    On Error Resume Next
+    If jfmnuosEmp Is Nothing Then
+      Set jfmnuosEmp = New frmJournalShow
+      Set journal = Manager.GetInstanceObject(&quot;{8B51B053-4400-499A-A3A7-F40DD50B9244}&quot;)
+      Manager.LockInstanceObject journal.ID
+      Set jfmnuosEmp.jv.journal = journal
+      jfmnuosEmp.jv.OpenModal = False
+      jfmnuosEmp.Caption = &quot;Сотрудник&quot;
+      Me.MousePointer = vbHourglass
+      DoEvents
+      Dim f As String
+    f=&quot;1=1&quot;
+    Dim fltr As frmosEmp
+    set fltr = new frmosEmp
+    fltr.show vbmodal
+    if fltr.ok then 
+    ' build flter expression 
+      if fltr.lblChipNumber.Value=vbChecked then
+        f=f &amp;  &quot; and osemp_def_ChipNumber like '%&quot; &amp; fltr.txtChipNumber.Text &amp; &quot;%'&quot; 
+      end if
+      if fltr.lblFIO.Value=vbChecked then
+        f=f &amp;  &quot; and osemp_def_FIO like '%&quot; &amp; fltr.txtFIO.Text &amp; &quot;%'&quot; 
+      end if
+      if fltr.lblEmpPosition.Value=vbChecked then
+        f=f &amp;  &quot; and osemp_def_EmpPosition like '%&quot; &amp; fltr.txtEmpPosition.Text &amp; &quot;%'&quot; 
+      end if
+    jfmnuosEmp.jv.Filter.Add &quot;AUTOosemp_def&quot;, f
+    end if 
+      jfmnuosEmp.jv.Refresh
+      Me.MousePointer = vbNormal
+    End If
+    jfmnuosEmp.Show
+    jfmnuosEmp.WindowState = 0
+    jfmnuosEmp.ZOrder 0
+end sub 
+private sub   jfmnuosEmp_OnFilter( usedefault as boolean)  
+    Dim fltr As frmosEmp
+    Dim f as string
+    set fltr = new frmosEmp
+    fltr.show vbmodal
+    if fltr.ok then 
+    ' build flter expression 
+    f=&quot;1=1&quot;
+      if fltr.lblChipNumber.Value=vbChecked then
+        f=f &amp;  &quot; and osemp_def_ChipNumber like '%&quot; &amp; fltr.txtChipNumber.Text &amp; &quot;%'&quot; 
+      end if
+      if fltr.lblFIO.Value=vbChecked then
+        f=f &amp;  &quot; and osemp_def_FIO like '%&quot; &amp; fltr.txtFIO.Text &amp; &quot;%'&quot; 
+      end if
+      if fltr.lblEmpPosition.Value=vbChecked then
+        f=f &amp;  &quot; and osemp_def_EmpPosition like '%&quot; &amp; fltr.txtEmpPosition.Text &amp; &quot;%'&quot; 
+      end if
+    jfmnuosEmp.jv.Filter.Add &quot;AUTOosemp_def&quot;, f
+    end if 
+    unload fltr 
+    usedefault = false
+end sub 
+private sub   jfmnuosEmp_OnClearFilter()  
+end sub 
+Private Sub jfmnuosEmp_OnAdd(usedefaut As Boolean, Refesh As Boolean)
+  Dim objGui  As Object
+  Dim o As Object
+  Dim ID As String
+  ID = CreateGUID2
+  Manager.NewInstance ID, &quot;osEmp&quot;, &quot;Сотрудник&quot; &amp; Now, Site
+  Set o = Manager.GetInstanceObject(ID)
+  If IsDocDenied(o) Then
+    MsgBox &quot;Не разрешен доступ к документам такого типа&quot;
+    Exit Sub
+  End If
+
+  Dim g  As Object
+  Set g = Manager.GetInstanceGUI(o.ID)
+  If Not g Is Nothing Then
+    g.Show GetDocumentMode(o), o, False
+  End If
+  usedefaut = False
+  Refesh = False
+End Sub
+
+
+
+
+private sub mnuosDic_Click()
+ Dim o As Object
+ Dim rs  As ADODB.Recordset
+ Dim ID as string
+  Set rs = Manager.ListInstances(&quot;&quot;,&quot;osDic&quot;)
+  if not  rs.eof then
+    id =rs!Instanceid 
+  else
+    id =createguid2
+    Manager.NewInstance id, &quot;osDic&quot;, &quot;Справочники&quot; 
+  End If
+    Set o = Manager.GetInstanceObject( id)
+    If IsDocDenied(o) Then
+      MsgBox &quot;Не разрешен доступ к документам такого типа&quot;
+      Exit Sub
+    End If
+
+    Dim g  As Object
+    Set g = Manager.GetInstanceGUI(o.ID)
+    If Not g Is Nothing Then
+      g.Show GetDocumentMode(o), o, False
+    End If
+  set rs = nothing
+end sub 
+
+
+
+
+private sub UnloadObjects() 
+
+
+
+unload  jfmnuAllosCLI
+set  jfmnuAllosCLI = nothing
+
+unload  jfmnuosCLI_1
+set  jfmnuosCLI_1 = nothing
+
+unload  jfmnuosCLI_2
+set  jfmnuosCLI_2 = nothing
+
+unload  jfmnuosCLI_3
+set  jfmnuosCLI_3 = nothing
+
+
+unload  jfmnuAllosReg
+set  jfmnuAllosReg = nothing
+
+unload  jfmnuosReg_1
+set  jfmnuosReg_1 = nothing
+
+unload  jfmnuosReg_2
+set  jfmnuosReg_2 = nothing
+
+unload  jfmnuosEmp
+set  jfmnuosEmp = nothing
+
+
+
+end sub
+
+"><AttributeHolder Name="Type" Value="code"/><FormData Name=""/></BlockHolder></ModuleHolder><ModuleHolder ModuleName="RoleSupport" File=""><AttributeHolder Name="Type" Value="module"/><BlockHolder BlockName="'description" BlockCode="
+
+"><AttributeHolder Name="Type" Value="description"/><FormData Name=""/></BlockHolder><BlockHolder BlockName="'codebody" BlockCode="
+public function ARMID() as string
+   ARMID=&quot;{40106B64-692A-41FF-96BD-87BE33C36EC1}&quot;
+end function
+
+"><AttributeHolder Name="Type" Value="code"/><FormData Name=""/></BlockHolder></ModuleHolder><ModuleHolder ModuleName="Module1" File=""><AttributeHolder Name="Type" Value="module"/><BlockHolder BlockName="'description" BlockCode="
+
+"><AttributeHolder Name="Type" Value="description"/><FormData Name=""/></BlockHolder><BlockHolder BlockName="'codebody" BlockCode="
+private sub RegisterMDIGUI()
+ Dim g As GUI
+Set g = New GUI
+g.Init &quot;osDic&quot;
+Manager.RegisterGUI g, &quot;osDic&quot;
+Set g = New GUI
+g.Init &quot;osReg&quot;
+Manager.RegisterGUI g, &quot;osReg&quot;
+Set g = New GUI
+g.Init &quot;osCLI&quot;
+Manager.RegisterGUI g, &quot;osCLI&quot;
+Set g = New GUI
+g.Init &quot;osEmp&quot;
+Manager.RegisterGUI g, &quot;osEmp&quot;
+
+end sub
+
+"><AttributeHolder Name="Type" Value="code"/><FormData Name=""/></BlockHolder></ModuleHolder><ModuleHolder ModuleName="frmosCLI" File=""><AttributeHolder Name="Type" Value="form"/><BlockHolder BlockName="'form" BlockCode=""><AttributeHolder Name="Type" Value="form"/><FormData Name=""><ControlData Name="cmdOK" ControlIndex="0" PROGID="VB.CommandButton"><Properties Name="Name" PropValue="cmdOK"/><Properties Name="Caption" PropValue="OK"/><Properties Name="Tag" PropValue=""/><Properties Name="ToolTipText" PropValue="Применить фильтр"/><Properties Name="UseMaskColor" PropValue="True"/><Properties Name="Height" PropValue="330"/><Properties Name="Width" PropValue="750"/><Properties Name="Top" PropValue="0"/><Properties Name="Left" PropValue="0"/></ControlData><ControlData Name="cmdCancel" ControlIndex="0" PROGID="VB.CommandButton"><Properties Name="Name" PropValue="cmdCancel"/><Properties Name="Caption" PropValue="Отмена"/><Properties Name="Tag" PropValue=""/><Properties Name="ToolTipText" PropValue="Отказ от задания фильтра"/><Properties Name="UseMaskColor" PropValue="True"/><Properties Name="Height" PropValue="330"/><Properties Name="Width" PropValue="750"/><Properties Name="Top" PropValue="0"/><Properties Name="Left" PropValue="0"/></ControlData><ControlData Name="mnuCtl" ControlIndex="0" PROGID="VB.Menu"><Properties Name="Caption" PropValue="mnuCtl"/><Properties Name="Name" PropValue="mnuCtl"/><Properties Name="Visible" PropValue="False"/><ControlData Name="mnuSetup" ControlIndex="0" PROGID="VB.Menu"><Properties Name="Caption" PropValue="Настройка"/><Properties Name="Name" PropValue="mnuSetup"/><Properties Name="Enabled" PropValue="True"/><Properties Name="Visible" PropValue="True"/></ControlData></ControlData><ControlData Name="ts" ControlIndex="0" PROGID="mscomctllib.tabstrip"><Properties Name="Name" PropValue="ts"/><Properties Name="Top" PropValue="0"/><Properties Name="Left" PropValue="0"/><Properties Name="Width" PropValue="1500"/><Properties Name="Height" PropValue="1500"/></ControlData><ControlData Name="PanelfGroup" ControlIndex="0" PROGID="MTZ_panel.Scrolledwindow"><Properties Name="BackStyle" PropValue="0"/><Properties Name="NAME" PropValue="PanelfGroup"/><Properties Name="Top" PropValue="0"/><Properties Name="Left" PropValue="0"/><Properties Name="Height" PropValue="1000"/><Properties Name="Width" PropValue="1000"/><ControlData Name="" ControlIndex="0" PROGID="VB.CheckBox"><Properties Name="BackStyle" PropValue="0"/><Properties Name="NAME" PropValue="lblFamilyName"/><Properties Name="Caption" PropValue="Фамилия:"/><Properties Name="Top" PropValue="75"/><Properties Name="Left" PropValue="300"/><Properties Name="Height" PropValue="300"/><Properties Name="Width" PropValue="3000"/><Properties Name="ForeColor" PropValue="0"/></ControlData><ControlData Name="" ControlIndex="0" PROGID="VB.textbox"><Properties Name="NAME" PropValue="txtFamilyName"/><Properties Name="Text" PropValue=""/><Properties Name="Top" PropValue="405"/><Properties Name="Left" PropValue="300"/><Properties Name="Height" PropValue="300"/><Properties Name="Width" PropValue="3000"/><Properties Name="MaxLength" PropValue="255"/><Properties Name="ToolTipText" PropValue="Фамилия"/><Properties Name="Locked" PropValue="False"/><Properties Name="Enabled" PropValue="True"/></ControlData><ControlData Name="" ControlIndex="0" PROGID="VB.CheckBox"><Properties Name="BackStyle" PropValue="0"/><Properties Name="NAME" PropValue="lblFirstName"/><Properties Name="Caption" PropValue="Имя:"/><Properties Name="Top" PropValue="780"/><Properties Name="Left" PropValue="300"/><Properties Name="Height" PropValue="300"/><Properties Name="Width" PropValue="3000"/><Properties Name="ForeColor" PropValue="0"/></ControlData><ControlData Name="" ControlIndex="0" PROGID="VB.textbox"><Properties Name="NAME" PropValue="txtFirstName"/><Properties Name="Text" PropValue=""/><Properties Name="Top" PropValue="1110"/><Properties Name="Left" PropValue="300"/><Properties Name="Height" PropValue="300"/><Properties Name="Width" PropValue="3000"/><Properties Name="MaxLength" PropValue="255"/><Properties Name="ToolTipText" PropValue="Имя"/><Properties Name="Locked" PropValue="False"/><Properties Name="Enabled" PropValue="True"/></ControlData><ControlData Name="" ControlIndex="0" PROGID="VB.CheckBox"><Properties Name="BackStyle" PropValue="0"/><Properties Name="NAME" PropValue="lblSurName"/><Properties Name="Caption" PropValue="Отчество:"/><Properties Name="Top" PropValue="1485"/><Properties Name="Left" PropValue="300"/><Properties Name="Height" PropValue="300"/><Properties Name="Width" PropValue="3000"/><Properties Name="ForeColor" PropValue="0"/></ControlData><ControlData Name="" ControlIndex="0" PROGID="VB.textbox"><Properties Name="NAME" PropValue="txtSurName"/><Properties Name="Text" PropValue=""/><Properties Name="Top" PropValue="1815"/><Properties Name="Left" PropValue="300"/><Properties Name="Height" PropValue="300"/><Properties Name="Width" PropValue="3000"/><Properties Name="MaxLength" PropValue="255"/><Properties Name="ToolTipText" PropValue="Отчество"/><Properties Name="Locked" PropValue="False"/><Properties Name="Enabled" PropValue="True"/></ControlData><ControlData Name="" ControlIndex="0" PROGID="VB.CheckBox"><Properties Name="BackStyle" PropValue="0"/><Properties Name="NAME" PropValue="lblPassport"/><Properties Name="Caption" PropValue="Паспорт:"/><Properties Name="Top" PropValue="2190"/><Properties Name="Left" PropValue="300"/><Properties Name="Height" PropValue="300"/><Properties Name="Width" PropValue="3000"/><Properties Name="ForeColor" PropValue="0"/></ControlData><ControlData Name="" ControlIndex="0" PROGID="VB.textbox"><Properties Name="NAME" PropValue="txtPassport"/><Properties Name="Text" PropValue=""/><Properties Name="Top" PropValue="2520"/><Properties Name="Left" PropValue="300"/><Properties Name="Height" PropValue="300"/><Properties Name="Width" PropValue="3000"/><Properties Name="MaxLength" PropValue="255"/><Properties Name="ToolTipText" PropValue="Паспорт"/><Properties Name="Locked" PropValue="False"/><Properties Name="Enabled" PropValue="True"/></ControlData><ControlData Name="" ControlIndex="0" PROGID="VB.CheckBox"><Properties Name="BackStyle" PropValue="0"/><Properties Name="NAME" PropValue="lblSex"/><Properties Name="Caption" PropValue="Пол:"/><Properties Name="Top" PropValue="2895"/><Properties Name="Left" PropValue="300"/><Properties Name="Height" PropValue="300"/><Properties Name="Width" PropValue="3000"/><Properties Name="ForeColor" PropValue="0"/></ControlData><ControlData Name="" ControlIndex="0" PROGID="VB.ComboBox"><Properties Name="NAME" PropValue="cmbSex"/><Properties Name="Style" PropValue="2"/><Properties Name="Sorted" PropValue="True"/><Properties Name="Top" PropValue="3225"/><Properties Name="Left" PropValue="300"/><Properties Name="ToolTipText" PropValue="Пол"/><Properties Name="Width" PropValue="3000"/><Properties Name="Enabled" PropValue="True"/></ControlData><ControlData Name="" ControlIndex="0" PROGID="VB.CheckBox"><Properties Name="BackStyle" PropValue="0"/><Properties Name="NAME" PropValue="lblpostAddr"/><Properties Name="Caption" PropValue="Адрес:"/><Properties Name="Top" PropValue="3600"/><Properties Name="Left" PropValue="300"/><Properties Name="Height" PropValue="300"/><Properties Name="Width" PropValue="3000"/><Properties Name="ForeColor" PropValue="0"/></ControlData><ControlData Name="" ControlIndex="0" PROGID="VB.textbox"><Properties Name="NAME" PropValue="txtpostAddr"/><Properties Name="Text" PropValue=""/><Properties Name="Top" PropValue="3930"/><Properties Name="Left" PropValue="300"/><Properties Name="Height" PropValue="1200"/><Properties Name="Width" PropValue="3000"/><Properties Name="Multiline" PropValue="True"/><Properties Name="Scrollbars" PropValue="2"/><Properties Name="ToolTipText" PropValue="Адрес"/><Properties Name="Locked" PropValue="False"/><Properties Name="Enabled" PropValue="True"/></ControlData><ControlData Name="" ControlIndex="0" PROGID="VB.CheckBox"><Properties Name="BackStyle" PropValue="0"/><Properties Name="NAME" PropValue="lblPhone"/><Properties Name="Caption" PropValue="Телефон:"/><Properties Name="Top" PropValue="5205"/><Properties Name="Left" PropValue="300"/><Properties Name="Height" PropValue="300"/><Properties Name="Width" PropValue="3000"/><Properties Name="ForeColor" PropValue="0"/></ControlData><ControlData Name="" ControlIndex="0" PROGID="VB.textbox"><Properties Name="NAME" PropValue="txtPhone"/><Properties Name="Text" PropValue=""/><Properties Name="Top" PropValue="5535"/><Properties Name="Left" PropValue="300"/><Properties Name="Height" PropValue="300"/><Properties Name="Width" PropValue="3000"/><Properties Name="MaxLength" PropValue="80"/><Properties Name="ToolTipText" PropValue="Телефон"/><Properties Name="Locked" PropValue="False"/><Properties Name="Enabled" PropValue="True"/></ControlData><ControlData Name="" ControlIndex="0" PROGID="VB.CheckBox"><Properties Name="BackStyle" PropValue="0"/><Properties Name="NAME" PropValue="lblTheFax"/><Properties Name="Caption" PropValue="Фото:"/><Properties Name="Top" PropValue="5910"/><Properties Name="Left" PropValue="300"/><Properties Name="Height" PropValue="300"/><Properties Name="Width" PropValue="3000"/><Properties Name="ForeColor" PropValue="0"/></ControlData><ControlData Name="" ControlIndex="0" PROGID="VB.CheckBox"><Properties Name="BackStyle" PropValue="0"/><Properties Name="NAME" PropValue="lblemail"/><Properties Name="Caption" PropValue="E-MAIL:"/><Properties Name="Top" PropValue="6240"/><Properties Name="Left" PropValue="300"/><Properties Name="Height" PropValue="300"/><Properties Name="Width" PropValue="3000"/><Properties Name="ForeColor" PropValue="0"/></ControlData><ControlData Name="" ControlIndex="0" PROGID="VB.textbox"><Properties Name="NAME" PropValue="txtemail"/><Properties Name="Text" PropValue=""/><Properties Name="Top" PropValue="6570"/><Properties Name="Left" PropValue="300"/><Properties Name="Height" PropValue="300"/><Properties Name="Width" PropValue="3000"/><Properties Name="MaxLength" PropValue="80"/><Properties Name="ToolTipText" PropValue="E-MAIL"/><Properties Name="Locked" PropValue="False"/><Properties Name="Enabled" PropValue="True"/></ControlData><ControlData Name="" ControlIndex="0" PROGID="VB.CheckBox"><Properties Name="BackStyle" PropValue="0"/><Properties Name="NAME" PropValue="lblbDate_GE"/><Properties Name="Caption" PropValue="Дата рождения C:"/><Properties Name="Top" PropValue="75"/><Properties Name="Left" PropValue="3450"/><Properties Name="Height" PropValue="300"/><Properties Name="Width" PropValue="3000"/><Properties Name="ForeColor" PropValue="0"/></ControlData><ControlData Name="" ControlIndex="0" PROGID="MSComCtl2.DTPicker"><Properties Name="NAME" PropValue="dtpbDate_GE"/><Properties Name="Top" PropValue="405"/><Properties Name="Left" PropValue="3450"/><Properties Name="Height" PropValue="300"/><Properties Name="Format" PropValue="3"/><Properties Name="Enabled" PropValue="True"/><Properties Name="ToolTipText" PropValue="Дата рождения C"/><Properties Name="CustomFormat" PropValue="dd/MM/yyyy"/><Properties Name="Width" PropValue="1800"/><Properties Name="CheckBox" PropValue="False"/></ControlData><ControlData Name="" ControlIndex="0" PROGID="VB.CheckBox"><Properties Name="BackStyle" PropValue="0"/><Properties Name="NAME" PropValue="lblbDate_LE"/><Properties Name="Caption" PropValue="Дата рождения по:"/><Properties Name="Top" PropValue="780"/><Properties Name="Left" PropValue="3450"/><Properties Name="Height" PropValue="300"/><Properties Name="Width" PropValue="3000"/><Properties Name="ForeColor" PropValue="0"/></ControlData><ControlData Name="" ControlIndex="0" PROGID="MSComCtl2.DTPicker"><Properties Name="NAME" PropValue="dtpbDate_LE"/><Properties Name="Top" PropValue="1110"/><Properties Name="Left" PropValue="3450"/><Properties Name="Height" PropValue="300"/><Properties Name="Format" PropValue="3"/><Properties Name="Enabled" PropValue="True"/><Properties Name="ToolTipText" PropValue="Дата рождения по"/><Properties Name="CustomFormat" PropValue="dd/MM/yyyy"/><Properties Name="Width" PropValue="1800"/><Properties Name="CheckBox" PropValue="False"/></ControlData><ControlData Name="" ControlIndex="0" PROGID="VB.CheckBox"><Properties Name="BackStyle" PropValue="0"/><Properties Name="NAME" PropValue="lblEnsurence"/><Properties Name="Caption" PropValue="Страховка:"/><Properties Name="Top" PropValue="1485"/><Properties Name="Left" PropValue="3450"/><Properties Name="Height" PropValue="300"/><Properties Name="Width" PropValue="3000"/><Properties Name="ForeColor" PropValue="0"/></ControlData><ControlData Name="" ControlIndex="0" PROGID="VB.textbox"><Properties Name="NAME" PropValue="txtEnsurence"/><Properties Name="Text" PropValue=""/><Properties Name="Top" PropValue="1815"/><Properties Name="Left" PropValue="3450"/><Properties Name="Height" PropValue="300"/><Properties Name="Width" PropValue="3000"/><Properties Name="MaxLength" PropValue="255"/><Properties Name="ToolTipText" PropValue="Страховка"/><Properties Name="Locked" PropValue="False"/><Properties Name="Enabled" PropValue="True"/></ControlData><ControlData Name="" ControlIndex="0" PROGID="VB.CheckBox"><Properties Name="BackStyle" PropValue="0"/><Properties Name="NAME" PropValue="lblMedicalCheck_GE"/><Properties Name="Caption" PropValue="Дата медосмотра C:"/><Properties Name="Top" PropValue="2190"/><Properties Name="Left" PropValue="3450"/><Properties Name="Height" PropValue="300"/><Properties Name="Width" PropValue="3000"/><Properties Name="ForeColor" PropValue="0"/></ControlData><ControlData Name="" ControlIndex="0" PROGID="MSComCtl2.DTPicker"><Properties Name="NAME" PropValue="dtpMedicalCheck_GE"/><Properties Name="Top" PropValue="2520"/><Properties Name="Left" PropValue="3450"/><Properties Name="Height" PropValue="300"/><Properties Name="Format" PropValue="3"/><Properties Name="Enabled" PropValue="True"/><Properties Name="ToolTipText" PropValue="Дата медосмотра C"/><Properties Name="CustomFormat" PropValue="dd/MM/yyyy"/><Properties Name="Width" PropValue="1800"/><Properties Name="CheckBox" PropValue="False"/></ControlData><ControlData Name="" ControlIndex="0" PROGID="VB.CheckBox"><Properties Name="BackStyle" PropValue="0"/><Properties Name="NAME" PropValue="lblMedicalCheck_LE"/><Properties Name="Caption" PropValue="Дата медосмотра по:"/><Properties Name="Top" PropValue="2895"/><Properties Name="Left" PropValue="3450"/><Properties Name="Height" PropValue="300"/><Properties Name="Width" PropValue="3000"/><Properties Name="ForeColor" PropValue="0"/></ControlData><ControlData Name="" ControlIndex="0" PROGID="MSComCtl2.DTPicker"><Properties Name="NAME" PropValue="dtpMedicalCheck_LE"/><Properties Name="Top" PropValue="3225"/><Properties Name="Left" PropValue="3450"/><Properties Name="Height" PropValue="300"/><Properties Name="Format" PropValue="3"/><Properties Name="Enabled" PropValue="True"/><Properties Name="ToolTipText" PropValue="Дата медосмотра по"/><Properties Name="CustomFormat" PropValue="dd/MM/yyyy"/><Properties Name="Width" PropValue="1800"/><Properties Name="CheckBox" PropValue="False"/></ControlData><ControlData Name="" ControlIndex="0" PROGID="VB.CheckBox"><Properties Name="BackStyle" PropValue="0"/><Properties Name="NAME" PropValue="lblChipCard"/><Properties Name="Caption" PropValue="Номер карты:"/><Properties Name="Top" PropValue="3600"/><Properties Name="Left" PropValue="3450"/><Properties Name="Height" PropValue="300"/><Properties Name="Width" PropValue="3000"/><Properties Name="ForeColor" PropValue="0"/></ControlData><ControlData Name="" ControlIndex="0" PROGID="VB.textbox"><Properties Name="NAME" PropValue="txtChipCard"/><Properties Name="Text" PropValue=""/><Properties Name="Top" PropValue="3930"/><Properties Name="Left" PropValue="3450"/><Properties Name="Height" PropValue="300"/><Properties Name="Width" PropValue="3000"/><Properties Name="MaxLength" PropValue="128"/><Properties Name="ToolTipText" PropValue="Номер карты"/><Properties Name="Locked" PropValue="False"/><Properties Name="Enabled" PropValue="True"/></ControlData></ControlData><PropertyData Name="tag" PropValue="Card.ICO"/><PropertyData Name="caption" PropValue="Фильтр для Клиент"/><PropertyData Name="ShowInTaskBar" PropValue="True"/></FormData></BlockHolder><BlockHolder BlockName="'description" BlockCode="Public Item as object
+public OK as boolean
+private OnInit as boolean
+public event Changed
+Private TSCustom As MTZ_CUSTOMTAB.TabStripCustomizer
+
+
+
+"><AttributeHolder Name="Type" Value="description"/><FormData Name=""/></BlockHolder><BlockHolder BlockName="'codebody" BlockCode="
+Private Sub cmdOK_Click()
+    on error resume next 
+    OK = true
+    me.hide
+End Sub
+Private Sub cmdCancel_Click()
+    on error resume next 
+    OK = false
+    me.hide
+End Sub
+public sub Init( ObjItem as object)
+ set Item = objItem
+ if Item is nothing then set Item =Myuser.application
+ TInit
+end sub
+Private Sub Form_Load()
+  on error resume next
+  Dim ff As Long, buf As String
+  LoadFromSkin me
+  ts.Move 0,0,Me.ScaleWidth,Me.ScaleHeight-cmdOK.height
+  cmdOK.Move Me.ScaleWidth - 110 * screen.twipsperpixelx,Me.ScaleHeight-cmdOK.height,cmdok.width,cmdok.height
+  cmdCancel.Move Me.ScaleWidth - 55 * screen.twipsperpixelx,Me.ScaleHeight-cmdOK.height,cmdcancel.width,cmdok.height
+  if Item is nothing then Init Myuser.Application
+End Sub
+Private Sub Form_Unload(Cancel As Integer)
+  on error resume next
+  set item=nothing
+  Set TSCustom = Nothing
+  SaveToSkin me
+  exit sub
+bye:
+  msgbox err.description,vbokonly
+  cancel = -1
+End Sub
+private sub Form_Resize()
+ if me.windowstate =1 then exit sub
+ on error resume next
+  ts.Move 0,0,Me.ScaleWidth,Me.ScaleHeight-cmdOK.height
+  cmdOK.Move Me.ScaleWidth - 110 * screen.twipsperpixelx,Me.ScaleHeight-cmdOK.height,cmdok.width,cmdok.height
+  cmdCancel.Move Me.ScaleWidth - 55 * screen.twipsperpixelx,Me.ScaleHeight-cmdOK.height,cmdcancel.width,cmdok.height
+  ts_click
+end sub
+Private Sub mnuSetup_Click()
+TSCustom.Setup ts
+End Sub
+Private Sub ts_MouseUp(Button As Integer, Shift As Integer, X As Single, Y As Single)
+  If Button = 2 And Shift = 0 Then
+    PopupMenu mnuCtl
+  End If
+End Sub
+private sub ts_click()
+  on error resume next
+  panelfGroup.Visible = False
+
+   Select Case ts.SelectedItem.Key
+   Case &quot;fGroup&quot;
+     With panelfGroup
+     .Top = ts.ClientTop
+     .Left = ts.ClientLeft
+     .Width = ts.ClientWidth
+     .Height = ts.ClientHeight
+     .Visible = True
+     .ZOrder 0
+     End With
+     End select
+end sub
+private sub TInit()
+  on error resume next
+  Dim ff As Long, buf As String
+
+ts.Tabs.Item(1).Caption = &quot;Описание&quot;
+ts.Tabs.Item(1).key = &quot;fGroup&quot;
+panelfGroupInit
+  Set TSCustom = New MTZ_CUSTOMTAB.TabStripCustomizer
+  TSCustom.Init ts, &quot;osCLI&quot;, &quot;fctlosCLI&quot;
+  TSCustom.SetupFromRegistry ts
+ ts_click
+end sub
+
+
+private sub Changing
+if OnInit then exit sub
+ raiseevent Changed()
+end sub
+private sub txtFamilyName_Change()
+  Changing
+end sub
+private sub txtFirstName_Change()
+  Changing
+end sub
+private sub txtSurName_Change()
+  Changing
+end sub
+private sub txtPassport_Change()
+  Changing
+end sub
+private sub cmbSex_Click()
+  on error resume next
+  Changing
+end sub
+private sub txtpostAddr_Change()
+  Changing
+end sub
+private sub txtPhone_Change()
+  Changing
+end sub
+private sub txtemail_Change()
+  Changing
+end sub
+private sub dtpbDate_GE_Change()
+  Changing
+end sub
+private sub dtpbDate_LE_Change()
+  Changing
+end sub
+private sub txtEnsurence_Change()
+  Changing
+end sub
+private sub dtpMedicalCheck_GE_Change()
+  Changing
+end sub
+private sub dtpMedicalCheck_LE_Change()
+  Changing
+end sub
+private sub txtChipCard_Change()
+  Changing
+end sub
+private sub PanelfGroupInit()
+OnInit = true
+dim iii as long ' for combo only
+
+txtFamilyName = &quot;&quot;
+txtFirstName = &quot;&quot;
+txtSurName = &quot;&quot;
+txtPassport = &quot;&quot;
+cmbSex.Clear
+cmbSex.additem &quot;Мужской&quot;
+cmbSex.itemdata(cmbSex.newindex)= 1
+cmbSex.additem &quot;Не существенно&quot;
+cmbSex.itemdata(cmbSex.newindex)= 0
+cmbSex.additem &quot;Женский&quot;
+cmbSex.itemdata(cmbSex.newindex)= -1
+txtPhone = &quot;&quot;
+txtemail = &quot;&quot;
+dtpbDate_GE = date
+dtpbDate_LE = date
+txtEnsurence = &quot;&quot;
+dtpMedicalCheck_GE = date
+dtpMedicalCheck_LE = date
+txtChipCard = &quot;&quot;
+OnInit = false
+end sub
+
+"><AttributeHolder Name="Type" Value="code"/><FormData Name=""/></BlockHolder></ModuleHolder><ModuleHolder ModuleName="frmosReg" File=""><AttributeHolder Name="Type" Value="form"/><BlockHolder BlockName="'form" BlockCode=""><AttributeHolder Name="Type" Value="form"/><FormData Name=""><ControlData Name="cmdOK" ControlIndex="0" PROGID="VB.CommandButton"><Properties Name="Name" PropValue="cmdOK"/><Properties Name="Caption" PropValue="OK"/><Properties Name="Tag" PropValue=""/><Properties Name="ToolTipText" PropValue="Применить фильтр"/><Properties Name="UseMaskColor" PropValue="True"/><Properties Name="Height" PropValue="330"/><Properties Name="Width" PropValue="750"/><Properties Name="Top" PropValue="0"/><Properties Name="Left" PropValue="0"/></ControlData><ControlData Name="cmdCancel" ControlIndex="0" PROGID="VB.CommandButton"><Properties Name="Name" PropValue="cmdCancel"/><Properties Name="Caption" PropValue="Отмена"/><Properties Name="Tag" PropValue=""/><Properties Name="ToolTipText" PropValue="Отказ от задания фильтра"/><Properties Name="UseMaskColor" PropValue="True"/><Properties Name="Height" PropValue="330"/><Properties Name="Width" PropValue="750"/><Properties Name="Top" PropValue="0"/><Properties Name="Left" PropValue="0"/></ControlData><ControlData Name="mnuCtl" ControlIndex="0" PROGID="VB.Menu"><Properties Name="Caption" PropValue="mnuCtl"/><Properties Name="Name" PropValue="mnuCtl"/><Properties Name="Visible" PropValue="False"/><ControlData Name="mnuSetup" ControlIndex="0" PROGID="VB.Menu"><Properties Name="Caption" PropValue="Настройка"/><Properties Name="Name" PropValue="mnuSetup"/><Properties Name="Enabled" PropValue="True"/><Properties Name="Visible" PropValue="True"/></ControlData></ControlData><ControlData Name="ts" ControlIndex="0" PROGID="mscomctllib.tabstrip"><Properties Name="Name" PropValue="ts"/><Properties Name="Top" PropValue="0"/><Properties Name="Left" PropValue="0"/><Properties Name="Width" PropValue="1500"/><Properties Name="Height" PropValue="1500"/></ControlData><ControlData Name="PanelfGroup" ControlIndex="0" PROGID="MTZ_panel.Scrolledwindow"><Properties Name="BackStyle" PropValue="0"/><Properties Name="NAME" PropValue="PanelfGroup"/><Properties Name="Top" PropValue="0"/><Properties Name="Left" PropValue="0"/><Properties Name="Height" PropValue="1000"/><Properties Name="Width" PropValue="1000"/><ControlData Name="" ControlIndex="0" PROGID="VB.CheckBox"><Properties Name="BackStyle" PropValue="0"/><Properties Name="NAME" PropValue="lblChipNumber"/><Properties Name="Caption" PropValue="Номер карты:"/><Properties Name="Top" PropValue="75"/><Properties Name="Left" PropValue="300"/><Properties Name="Height" PropValue="300"/><Properties Name="Width" PropValue="3000"/><Properties Name="ForeColor" PropValue="0"/></ControlData><ControlData Name="" ControlIndex="0" PROGID="VB.textbox"><Properties Name="NAME" PropValue="txtChipNumber"/><Properties Name="Text" PropValue=""/><Properties Name="Top" PropValue="405"/><Properties Name="Left" PropValue="300"/><Properties Name="Height" PropValue="300"/><Properties Name="Width" PropValue="3000"/><Properties Name="MaxLength" PropValue="128"/><Properties Name="ToolTipText" PropValue="Номер карты"/><Properties Name="Locked" PropValue="False"/><Properties Name="Enabled" PropValue="True"/></ControlData><ControlData Name="" ControlIndex="0" PROGID="VB.CheckBox"><Properties Name="BackStyle" PropValue="0"/><Properties Name="NAME" PropValue="lblEnterTime_GE"/><Properties Name="Caption" PropValue="Дата и время входа C:"/><Properties Name="Top" PropValue="780"/><Properties Name="Left" PropValue="300"/><Properties Name="Height" PropValue="300"/><Properties Name="Width" PropValue="3000"/><Properties Name="ForeColor" PropValue="0"/></ControlData><ControlData Name="" ControlIndex="0" PROGID="MSComCtl2.DTPicker"><Properties Name="NAME" PropValue="dtpEnterTime_GE"/><Properties Name="Top" PropValue="1110"/><Properties Name="Left" PropValue="300"/><Properties Name="Height" PropValue="300"/><Properties Name="Format" PropValue="3"/><Properties Name="Enabled" PropValue="True"/><Properties Name="ToolTipText" PropValue="Дата и время входа C"/><Properties Name="CustomFormat" PropValue="dd/MM/yyyy HH:mm:ss"/><Properties Name="Width" PropValue="2250"/><Properties Name="CheckBox" PropValue="False"/></ControlData><ControlData Name="" ControlIndex="0" PROGID="VB.CheckBox"><Properties Name="BackStyle" PropValue="0"/><Properties Name="NAME" PropValue="lblEnterTime_LE"/><Properties Name="Caption" PropValue="Дата и время входа по:"/><Properties Name="Top" PropValue="1485"/><Properties Name="Left" PropValue="300"/><Properties Name="Height" PropValue="300"/><Properties Name="Width" PropValue="3000"/><Properties Name="ForeColor" PropValue="0"/></ControlData><ControlData Name="" ControlIndex="0" PROGID="MSComCtl2.DTPicker"><Properties Name="NAME" PropValue="dtpEnterTime_LE"/><Properties Name="Top" PropValue="1815"/><Properties Name="Left" PropValue="300"/><Properties Name="Height" PropValue="300"/><Properties Name="Format" PropValue="3"/><Properties Name="Enabled" PropValue="True"/><Properties Name="ToolTipText" PropValue="Дата и время входа по"/><Properties Name="CustomFormat" PropValue="dd/MM/yyyy HH:mm:ss"/><Properties Name="Width" PropValue="2250"/><Properties Name="CheckBox" PropValue="False"/></ControlData><ControlData Name="" ControlIndex="0" PROGID="VB.CheckBox"><Properties Name="BackStyle" PropValue="0"/><Properties Name="NAME" PropValue="lblExitTime_GE"/><Properties Name="Caption" PropValue="Дата и вермя выхода C:"/><Properties Name="Top" PropValue="2190"/><Properties Name="Left" PropValue="300"/><Properties Name="Height" PropValue="300"/><Properties Name="Width" PropValue="3000"/><Properties Name="ForeColor" PropValue="0"/></ControlData><ControlData Name="" ControlIndex="0" PROGID="MSComCtl2.DTPicker"><Properties Name="NAME" PropValue="dtpExitTime_GE"/><Properties Name="Top" PropValue="2520"/><Properties Name="Left" PropValue="300"/><Properties Name="Height" PropValue="300"/><Properties Name="Format" PropValue="3"/><Properties Name="Enabled" PropValue="True"/><Properties Name="ToolTipText" PropValue="Дата и вермя выхода C"/><Properties Name="CustomFormat" PropValue="dd/MM/yyyy HH:mm:ss"/><Properties Name="Width" PropValue="2250"/><Properties Name="CheckBox" PropValue="False"/></ControlData><ControlData Name="" ControlIndex="0" PROGID="VB.CheckBox"><Properties Name="BackStyle" PropValue="0"/><Properties Name="NAME" PropValue="lblExitTime_LE"/><Properties Name="Caption" PropValue="Дата и вермя выхода по:"/><Properties Name="Top" PropValue="2895"/><Properties Name="Left" PropValue="300"/><Properties Name="Height" PropValue="300"/><Properties Name="Width" PropValue="3000"/><Properties Name="ForeColor" PropValue="0"/></ControlData><ControlData Name="" ControlIndex="0" PROGID="MSComCtl2.DTPicker"><Properties Name="NAME" PropValue="dtpExitTime_LE"/><Properties Name="Top" PropValue="3225"/><Properties Name="Left" PropValue="300"/><Properties Name="Height" PropValue="300"/><Properties Name="Format" PropValue="3"/><Properties Name="Enabled" PropValue="True"/><Properties Name="ToolTipText" PropValue="Дата и вермя выхода по"/><Properties Name="CustomFormat" PropValue="dd/MM/yyyy HH:mm:ss"/><Properties Name="Width" PropValue="2250"/><Properties Name="CheckBox" PropValue="False"/></ControlData><ControlData Name="" ControlIndex="0" PROGID="VB.CheckBox"><Properties Name="BackStyle" PropValue="0"/><Properties Name="NAME" PropValue="lblTheClient"/><Properties Name="Caption" PropValue="Клиент:"/><Properties Name="Top" PropValue="3600"/><Properties Name="Left" PropValue="300"/><Properties Name="Height" PropValue="300"/><Properties Name="Width" PropValue="3000"/><Properties Name="ForeColor" PropValue="0"/></ControlData><ControlData Name="" ControlIndex="0" PROGID="VB.textbox"><Properties Name="NAME" PropValue="txtTheClient"/><Properties Name="Text" PropValue=""/><Properties Name="Locked" PropValue="True"/><Properties Name="Enabled" PropValue="True"/><Properties Name="Top" PropValue="3930"/><Properties Name="Left" PropValue="300"/><Properties Name="Height" PropValue="300"/><Properties Name="Width" PropValue="2550"/><Properties Name="ToolTipText" PropValue="Клиент"/></ControlData><ControlData Name="" ControlIndex="0" PROGID="MTZ_PANEL.DropButton"><Properties Name="NAME" PropValue="cmdTheClient"/><Properties Name="Caption" PropValue=""/><Properties Name="Tag" PropValue="refopen.ico"/><Properties Name="Top" PropValue="3930"/><Properties Name="Enabled" PropValue="True"/><Properties Name="Left" PropValue="2850"/><Properties Name="Height" PropValue="300"/><Properties Name="Width" PropValue="450"/><Properties Name="ToolTipText" PropValue="Клиент"/></ControlData></ControlData><PropertyData Name="tag" PropValue="Card.ICO"/><PropertyData Name="caption" PropValue="Фильтр для Регистр посещений"/><PropertyData Name="ShowInTaskBar" PropValue="True"/></FormData></BlockHolder><BlockHolder BlockName="'description" BlockCode="Public Item as object
+public OK as boolean
+private OnInit as boolean
+public event Changed
+Private TSCustom As MTZ_CUSTOMTAB.TabStripCustomizer
+
+
+
+"><AttributeHolder Name="Type" Value="description"/><FormData Name=""/></BlockHolder><BlockHolder BlockName="'codebody" BlockCode="
+Private Sub cmdOK_Click()
+    on error resume next 
+    OK = true
+    me.hide
+End Sub
+Private Sub cmdCancel_Click()
+    on error resume next 
+    OK = false
+    me.hide
+End Sub
+public sub Init( ObjItem as object)
+ set Item = objItem
+ if Item is nothing then set Item =Myuser.application
+ TInit
+end sub
+Private Sub Form_Load()
+  on error resume next
+  Dim ff As Long, buf As String
+  LoadFromSkin me
+  ts.Move 0,0,Me.ScaleWidth,Me.ScaleHeight-cmdOK.height
+  cmdOK.Move Me.ScaleWidth - 110 * screen.twipsperpixelx,Me.ScaleHeight-cmdOK.height,cmdok.width,cmdok.height
+  cmdCancel.Move Me.ScaleWidth - 55 * screen.twipsperpixelx,Me.ScaleHeight-cmdOK.height,cmdcancel.width,cmdok.height
+  if Item is nothing then Init Myuser.Application
+End Sub
+Private Sub Form_Unload(Cancel As Integer)
+  on error resume next
+  set item=nothing
+  Set TSCustom = Nothing
+  SaveToSkin me
+  exit sub
+bye:
+  msgbox err.description,vbokonly
+  cancel = -1
+End Sub
+private sub Form_Resize()
+ if me.windowstate =1 then exit sub
+ on error resume next
+  ts.Move 0,0,Me.ScaleWidth,Me.ScaleHeight-cmdOK.height
+  cmdOK.Move Me.ScaleWidth - 110 * screen.twipsperpixelx,Me.ScaleHeight-cmdOK.height,cmdok.width,cmdok.height
+  cmdCancel.Move Me.ScaleWidth - 55 * screen.twipsperpixelx,Me.ScaleHeight-cmdOK.height,cmdcancel.width,cmdok.height
+  ts_click
+end sub
+Private Sub mnuSetup_Click()
+TSCustom.Setup ts
+End Sub
+Private Sub ts_MouseUp(Button As Integer, Shift As Integer, X As Single, Y As Single)
+  If Button = 2 And Shift = 0 Then
+    PopupMenu mnuCtl
+  End If
+End Sub
+private sub ts_click()
+  on error resume next
+  panelfGroup.Visible = False
+
+   Select Case ts.SelectedItem.Key
+   Case &quot;fGroup&quot;
+     With panelfGroup
+     .Top = ts.ClientTop
+     .Left = ts.ClientLeft
+     .Width = ts.ClientWidth
+     .Height = ts.ClientHeight
+     .Visible = True
+     .ZOrder 0
+     End With
+     End select
+end sub
+private sub TInit()
+  on error resume next
+  Dim ff As Long, buf As String
+
+ts.Tabs.Item(1).Caption = &quot;osReg_info&quot;
+ts.Tabs.Item(1).key = &quot;fGroup&quot;
+panelfGroupInit
+  Set TSCustom = New MTZ_CUSTOMTAB.TabStripCustomizer
+  TSCustom.Init ts, &quot;osReg&quot;, &quot;fctlosReg&quot;
+  TSCustom.SetupFromRegistry ts
+ ts_click
+end sub
+
+
+private sub Changing
+if OnInit then exit sub
+ raiseevent Changed()
+end sub
+private sub txtChipNumber_Change()
+  Changing
+end sub
+private sub dtpEnterTime_GE_Change()
+  Changing
+end sub
+private sub dtpEnterTime_LE_Change()
+  Changing
+end sub
+private sub dtpExitTime_GE_Change()
+  Changing
+end sub
+private sub dtpExitTime_LE_Change()
+  Changing
+end sub
+private sub txtTheClient_Change()
+  Changing
+end sub
+private sub cmdTheClient_CLick()
+  on error resume next
+       cmdTheClient_MenuClick &quot;Выбрать&quot; 
+end sub
+private sub cmdTheClient_MenuClick(ByVal sCaption As String)
+  on error resume next
+    dim inst as object
+    dim obj as object
+    Dim OK As boolean
+    Dim id As string
+    Dim brief As string
+  if sCaption =&quot;Очистить&quot; then
+          txtTheClient.Tag = &quot;&quot;
+          txtTheClient = &quot;&quot;
+  end if
+  if sCaption =&quot;Открыть&quot; then
+    if txtTheClient.tag =&quot;&quot; then exit sub
+    set inst  = item.Application.Manager.GetInstanceObject(txtTheClient.tag)
+    if inst is nothing then exit sub
+    set obj = item.Application.Manager.GetInstanceGUI(txtTheClient.tag)
+    obj.show &quot;&quot;, inst,true
+    set obj =nothing
+    set inst =nothing
+  end if
+  if sCaption =&quot;Выбрать&quot; then
+        OK=Item.Application.Manager.GetObjectListDialog2(id,brief,&quot;&quot;,&quot;&quot;)
+        If OK Then
+          txtTheClient.Tag = left(ID,38)
+          txtTheClient = brief
+        End If
+  end if
+End sub
+private sub PanelfGroupInit()
+OnInit = true
+dim iii as long ' for combo only
+
+txtChipNumber = &quot;&quot;
+dtpEnterTime_GE = now
+dtpEnterTime_LE = now
+dtpExitTime_GE = now
+dtpExitTime_LE = now
+  txtTheClient.Tag = &quot;&quot; 
+  txtTheClient = &quot;&quot; 
+ LoadBtnPictures cmdTheClient,cmdTheClient.tag
+  cmdTheClient.RemoveAllMenu
+  cmdTheClient.AddMenu &quot;Выбрать&quot; 
+OnInit = false
+end sub
+
+"><AttributeHolder Name="Type" Value="code"/><FormData Name=""/></BlockHolder></ModuleHolder><ModuleHolder ModuleName="frmosEmp" File=""><AttributeHolder Name="Type" Value="form"/><BlockHolder BlockName="'form" BlockCode=""><AttributeHolder Name="Type" Value="form"/><FormData Name=""><ControlData Name="cmdOK" ControlIndex="0" PROGID="VB.CommandButton"><Properties Name="Name" PropValue="cmdOK"/><Properties Name="Caption" PropValue="OK"/><Properties Name="Tag" PropValue=""/><Properties Name="ToolTipText" PropValue="Применить фильтр"/><Properties Name="UseMaskColor" PropValue="True"/><Properties Name="Height" PropValue="330"/><Properties Name="Width" PropValue="750"/><Properties Name="Top" PropValue="0"/><Properties Name="Left" PropValue="0"/></ControlData><ControlData Name="cmdCancel" ControlIndex="0" PROGID="VB.CommandButton"><Properties Name="Name" PropValue="cmdCancel"/><Properties Name="Caption" PropValue="Отмена"/><Properties Name="Tag" PropValue=""/><Properties Name="ToolTipText" PropValue="Отказ от задания фильтра"/><Properties Name="UseMaskColor" PropValue="True"/><Properties Name="Height" PropValue="330"/><Properties Name="Width" PropValue="750"/><Properties Name="Top" PropValue="0"/><Properties Name="Left" PropValue="0"/></ControlData><ControlData Name="mnuCtl" ControlIndex="0" PROGID="VB.Menu"><Properties Name="Caption" PropValue="mnuCtl"/><Properties Name="Name" PropValue="mnuCtl"/><Properties Name="Visible" PropValue="False"/><ControlData Name="mnuSetup" ControlIndex="0" PROGID="VB.Menu"><Properties Name="Caption" PropValue="Настройка"/><Properties Name="Name" PropValue="mnuSetup"/><Properties Name="Enabled" PropValue="True"/><Properties Name="Visible" PropValue="True"/></ControlData></ControlData><ControlData Name="ts" ControlIndex="0" PROGID="mscomctllib.tabstrip"><Properties Name="Name" PropValue="ts"/><Properties Name="Top" PropValue="0"/><Properties Name="Left" PropValue="0"/><Properties Name="Width" PropValue="1500"/><Properties Name="Height" PropValue="1500"/></ControlData><ControlData Name="PanelfGroup" ControlIndex="0" PROGID="MTZ_panel.Scrolledwindow"><Properties Name="BackStyle" PropValue="0"/><Properties Name="NAME" PropValue="PanelfGroup"/><Properties Name="Top" PropValue="0"/><Properties Name="Left" PropValue="0"/><Properties Name="Height" PropValue="1000"/><Properties Name="Width" PropValue="1000"/><ControlData Name="" ControlIndex="0" PROGID="VB.CheckBox"><Properties Name="BackStyle" PropValue="0"/><Properties Name="NAME" PropValue="lblFIO"/><Properties Name="Caption" PropValue="ФИО:"/><Properties Name="Top" PropValue="75"/><Properties Name="Left" PropValue="300"/><Properties Name="Height" PropValue="300"/><Properties Name="Width" PropValue="3000"/><Properties Name="ForeColor" PropValue="0"/></ControlData><ControlData Name="" ControlIndex="0" PROGID="VB.textbox"><Properties Name="NAME" PropValue="txtFIO"/><Properties Name="Text" PropValue=""/><Properties Name="Top" PropValue="405"/><Properties Name="Left" PropValue="300"/><Properties Name="Height" PropValue="300"/><Properties Name="Width" PropValue="3000"/><Properties Name="MaxLength" PropValue="255"/><Properties Name="ToolTipText" PropValue="ФИО"/><Properties Name="Locked" PropValue="False"/><Properties Name="Enabled" PropValue="True"/></ControlData><ControlData Name="" ControlIndex="0" PROGID="VB.CheckBox"><Properties Name="BackStyle" PropValue="0"/><Properties Name="NAME" PropValue="lblEmpPosition"/><Properties Name="Caption" PropValue="Должность:"/><Properties Name="Top" PropValue="780"/><Properties Name="Left" PropValue="300"/><Properties Name="Height" PropValue="300"/><Properties Name="Width" PropValue="3000"/><Properties Name="ForeColor" PropValue="0"/></ControlData><ControlData Name="" ControlIndex="0" PROGID="VB.textbox"><Properties Name="NAME" PropValue="txtEmpPosition"/><Properties Name="Text" PropValue=""/><Properties Name="Top" PropValue="1110"/><Properties Name="Left" PropValue="300"/><Properties Name="Height" PropValue="300"/><Properties Name="Width" PropValue="3000"/><Properties Name="MaxLength" PropValue="255"/><Properties Name="ToolTipText" PropValue="Должность"/><Properties Name="Locked" PropValue="False"/><Properties Name="Enabled" PropValue="True"/></ControlData><ControlData Name="" ControlIndex="0" PROGID="VB.CheckBox"><Properties Name="BackStyle" PropValue="0"/><Properties Name="NAME" PropValue="lblChipNumber"/><Properties Name="Caption" PropValue="Номер карты:"/><Properties Name="Top" PropValue="1485"/><Properties Name="Left" PropValue="300"/><Properties Name="Height" PropValue="300"/><Properties Name="Width" PropValue="3000"/><Properties Name="ForeColor" PropValue="0"/></ControlData><ControlData Name="" ControlIndex="0" PROGID="VB.textbox"><Properties Name="NAME" PropValue="txtChipNumber"/><Properties Name="Text" PropValue=""/><Properties Name="Top" PropValue="1815"/><Properties Name="Left" PropValue="300"/><Properties Name="Height" PropValue="300"/><Properties Name="Width" PropValue="3000"/><Properties Name="MaxLength" PropValue="128"/><Properties Name="ToolTipText" PropValue="Номер карты"/><Properties Name="Locked" PropValue="False"/><Properties Name="Enabled" PropValue="True"/></ControlData></ControlData><PropertyData Name="tag" PropValue="Card.ICO"/><PropertyData Name="caption" PropValue="Фильтр для Сотрудник"/><PropertyData Name="ShowInTaskBar" PropValue="True"/></FormData></BlockHolder><BlockHolder BlockName="'description" BlockCode="Public Item as object
+public OK as boolean
+private OnInit as boolean
+public event Changed
+Private TSCustom As MTZ_CUSTOMTAB.TabStripCustomizer
+
+
+
+"><AttributeHolder Name="Type" Value="description"/><FormData Name=""/></BlockHolder><BlockHolder BlockName="'codebody" BlockCode="
+Private Sub cmdOK_Click()
+    on error resume next 
+    OK = true
+    me.hide
+End Sub
+Private Sub cmdCancel_Click()
+    on error resume next 
+    OK = false
+    me.hide
+End Sub
+public sub Init( ObjItem as object)
+ set Item = objItem
+ if Item is nothing then set Item =Myuser.application
+ TInit
+end sub
+Private Sub Form_Load()
+  on error resume next
+  Dim ff As Long, buf As String
+  LoadFromSkin me
+  ts.Move 0,0,Me.ScaleWidth,Me.ScaleHeight-cmdOK.height
+  cmdOK.Move Me.ScaleWidth - 110 * screen.twipsperpixelx,Me.ScaleHeight-cmdOK.height,cmdok.width,cmdok.height
+  cmdCancel.Move Me.ScaleWidth - 55 * screen.twipsperpixelx,Me.ScaleHeight-cmdOK.height,cmdcancel.width,cmdok.height
+  if Item is nothing then Init Myuser.Application
+End Sub
+Private Sub Form_Unload(Cancel As Integer)
+  on error resume next
+  set item=nothing
+  Set TSCustom = Nothing
+  SaveToSkin me
+  exit sub
+bye:
+  msgbox err.description,vbokonly
+  cancel = -1
+End Sub
+private sub Form_Resize()
+ if me.windowstate =1 then exit sub
+ on error resume next
+  ts.Move 0,0,Me.ScaleWidth,Me.ScaleHeight-cmdOK.height
+  cmdOK.Move Me.ScaleWidth - 110 * screen.twipsperpixelx,Me.ScaleHeight-cmdOK.height,cmdok.width,cmdok.height
+  cmdCancel.Move Me.ScaleWidth - 55 * screen.twipsperpixelx,Me.ScaleHeight-cmdOK.height,cmdcancel.width,cmdok.height
+  ts_click
+end sub
+Private Sub mnuSetup_Click()
+TSCustom.Setup ts
+End Sub
+Private Sub ts_MouseUp(Button As Integer, Shift As Integer, X As Single, Y As Single)
+  If Button = 2 And Shift = 0 Then
+    PopupMenu mnuCtl
+  End If
+End Sub
+private sub ts_click()
+  on error resume next
+  panelfGroup.Visible = False
+
+   Select Case ts.SelectedItem.Key
+   Case &quot;fGroup&quot;
+     With panelfGroup
+     .Top = ts.ClientTop
+     .Left = ts.ClientLeft
+     .Width = ts.ClientWidth
+     .Height = ts.ClientHeight
+     .Visible = True
+     .ZOrder 0
+     End With
+     End select
+end sub
+private sub TInit()
+  on error resume next
+  Dim ff As Long, buf As String
+
+ts.Tabs.Item(1).Caption = &quot;Описание&quot;
+ts.Tabs.Item(1).key = &quot;fGroup&quot;
+panelfGroupInit
+  Set TSCustom = New MTZ_CUSTOMTAB.TabStripCustomizer
+  TSCustom.Init ts, &quot;osEmp&quot;, &quot;fctlosEmp&quot;
+  TSCustom.SetupFromRegistry ts
+ ts_click
+end sub
+
+
+private sub Changing
+if OnInit then exit sub
+ raiseevent Changed()
+end sub
+private sub txtFIO_Change()
+  Changing
+end sub
+private sub txtEmpPosition_Change()
+  Changing
+end sub
+private sub txtChipNumber_Change()
+  Changing
+end sub
+private sub PanelfGroupInit()
+OnInit = true
+dim iii as long ' for combo only
+
+txtFIO = &quot;&quot;
+txtEmpPosition = &quot;&quot;
+txtChipNumber = &quot;&quot;
+OnInit = false
+end sub
+
+"><AttributeHolder Name="Type" Value="code"/><FormData Name=""/></BlockHolder></ModuleHolder><ModuleHolder ModuleName="Util" File=""><AttributeHolder Name="Instancing" Value="private"/><AttributeHolder Name="Type" Value="module"/><BlockHolder BlockName="'description" BlockCode="
+
+"><AttributeHolder Name="Type" Value="description"/><FormData Name=""/></BlockHolder><BlockHolder BlockName="'codebody" BlockCode="
+public sub LoadFromSkin( frm as form )
+  on error resume next
+  Dim s As String, arr() as string
+  s = GetSetting(&quot;MTZ&quot;, &quot;CONFIG&quot;, &quot;LAYOUTS&quot;, &quot;&quot;)
+  If s = &quot;&quot; Then Exit Sub
+  Dim ff As Long, buf As String
+  ff = FreeFile
+  Open s &amp; frm.name For Input As #ff
+  buf = Input(LOF(ff), ff)
+  Close #ff
+  arr = split(buf, vbcrlf)
+  Dim arr2() As String, i as long
+For i = 0 To UBound(arr)
+  arr2 = Split(arr(i), &quot;:&quot;)
+  Select Case arr2(0)
+  case &quot;FormTag&quot;
+    frm.Tag = arr2(1)
+  Case &quot;FormTop&quot;
+    frm.Top = arr2(1)
+  Case &quot;FormLeft&quot;
+    frm.left = arr2(1)
+  Case &quot;FormWidth&quot;
+    frm.Width = arr2(1)
+  Case &quot;FormHeight&quot;
+    frm.Height = arr2(1)
+  Case Else
+    frm.Controls(arr2(0)).tag = Val(arr2(1))
+  End Select
+Next
+  s =&quot;&quot; 
+  s = GetSetting(&quot;MTZ&quot;, &quot;CONFIG&quot;, &quot;IMAGEPATH&quot;, &quot;&quot;)
+  If s = &quot;&quot; Then Exit Sub
+  set frm.icon = LoadPicture(s &amp; frm.tag)
+end sub
+
+public sub SaveToSkin( frm as form )
+  on error resume next
+  Dim s As String, buf as string
+  s = GetSetting(&quot;MTZ&quot;, &quot;CONFIG&quot;, &quot;LAYOUTS&quot;, &quot;&quot;)
+  If s = &quot;&quot; Then Exit Sub
+  frm.WindowState =0 
+  Dim ff As Long
+  ff = FreeFile
+  kill s &amp; frm.name
+  Open s &amp; frm.name For output As #ff
+  buf =  &quot;FormTag:&quot; &amp; frm.Tag 
+  buf = buf &amp; vbcrlf &amp; &quot;FormTop:&quot; &amp; frm.Top 
+  buf = buf &amp; vbCrLf &amp; &quot;FormLeft:&quot; &amp; frm.Left
+  buf = buf &amp; vbCrLf &amp; &quot;FormWidth:&quot; &amp; frm.Width
+  buf = buf &amp; vbCrLf &amp; &quot;FormHeight:&quot; &amp; frm.Height
+  print #ff, buf
+  Close #ff
+end sub
+
+
+"><AttributeHolder Name="Type" Value="code"/><FormData Name=""/></BlockHolder></ModuleHolder></root>

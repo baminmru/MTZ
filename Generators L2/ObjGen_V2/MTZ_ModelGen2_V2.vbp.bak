@@ -1,0 +1,49 @@
+Type=OleDll
+Reference=*\G{00020430-0000-0000-C000-000000000046}#2.0#0#..\..\..\..\WINDOWS\system32\stdole2.tlb#OLE Automation
+Reference=*\G{B61BB87D-36CB-4C4C-AF26-77D27D1E87F7}#1.0#0#..\..\MTZGenerator\MTZGenerator.dll#MTZGenerator
+Reference=*\G{BD8EE116-DA79-4012-AD82-81E033407978}#1.0#0#..\..\MTZAdministrator\ядро\VB Model\MTZMetaModel\MTZMetaModel.dll#MTZMetaModel
+Reference=*\G{27532C15-381F-49B2-83D7-087D2BB897B8}#5.8#0#..\..\MTZUtil\MTZUtil.dll#MTZUtil
+Reference=*\G{2A75196C-D9EB-4129-B803-931327F72D5C}#2.8#0#..\..\..\..\Program Files\Common Files\System\ado\msado15.dll#Microsoft ActiveX Data Objects 2.8 Library
+Class=Generator; Generator.cls
+Module=Utils; Utils.bas
+Module=GridTreeSupport; GridTreeSupport.bas
+Module=XMLSupport; XMLSupport.bas
+Module=BatchUpdate; BatchUpdate.bas
+Module=Commenter; Commenter.bas
+Startup="(None)"
+HelpFile=""
+Title="MTZ_ModelGen"
+ExeName32="MTZ_ModelGen2_V2.dll"
+Command32=""
+Name="MTZ_MODELGEN2_V2"
+HelpContextID="0"
+CompatibleMode="1"
+CompatibleEXE32="MTZ_ModelGen2_V2.dll"
+MajorVer=1
+MinorVer=0
+RevisionVer=444
+AutoIncrementVer=1
+ServerSupportFiles=0
+VersionCompanyName="Murometz Co. Ltd."
+CondComp="TRIAL = 1"
+CompilationType=0
+OptimizationType=0
+FavorPentiumPro(tm)=0
+CodeViewDebugInfo=0
+NoAliasing=0
+BoundsCheck=0
+OverflowCheck=0
+FlPointCheck=0
+FDIVCheck=0
+UnroundedFP=0
+StartMode=1
+Unattended=0
+Retained=0
+ThreadPerObject=0
+MaxNumberOfThreads=1
+ThreadingModel=1
+DebugStartupOption=0
+
+[MS Transaction Server]
+AutoRefresh=1
+

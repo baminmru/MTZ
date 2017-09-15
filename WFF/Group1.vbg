@@ -1,0 +1,22 @@
+VBGROUP 5.0
+Project=WFF_CONCAT\WFF_CONCAT.vbp
+Project=..\WFServer\WFserver.vbp
+Project=..\WFF_RTMBase\WFF_RTMBASE.vbp
+Project=WFF_CMPVARS\WFF_CMPVARS.vbp
+Project=WFF_INCVAR\WFF_INCVAR.vbp
+Project=WFF_DECVAR\WFF_DECVAR.vbp
+Project=WFF_SETVAR\WFF_SETVAR.vbp
+Project=WFF_NOP\WFF_NOP.vbp
+Project=WFF_NEWDOC\WFF_NEWDOC.vbp
+Project=WFF_ADDROW\WFF_ADDROW.vbp
+Project=WFF_FLDVAR\WFF_FLDVAR.vbp
+Project=WFF_DOCSC\WFF_DOCSC.vbp
+Project=WFF_VARROWS\WFF_VARROWS.vbp
+Project=WFF_WAITMINUTE\WFF_WAITMINUTE.vbp
+StartupProject=..\WFClient\WFClient.vbp
+Project=WFF_VARTIME\WFF_VARTIME.vbp
+Project=WFF_NEQVARS\WFF_NEQVARS.vbp
+Project=WFF_AND\WFF_AND.vbp
+Project=WFF_XOR\WFF_XOR.vbp
+Project=WFF_MANUAL\WFF_MANUAL.vbp
+Project=WFF_WAITFLD\WFF_WAITFLD.vbp

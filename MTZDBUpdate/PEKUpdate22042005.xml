@@ -1,0 +1,14 @@
+﻿<?xml version="1.0"?>
+<root><ModuleHolder ModuleName="--Update" File=""><BlockHolder BlockName="--Update EDIZM" BlockCode=" 
+update PEKACT_ITOG set edizm='4752B0E9-92B6-47C8-8BF2-48182ADCD0EA' where edizm is null
+go
+update pekz_path set ValueEdizm='C9D3C197-D4E8-43FC-9453-61997CEBFA38' where ValueEdizm is null
+go
+update pekz_path set WeightEdizm='4752B0E9-92B6-47C8-8BF2-48182ADCD0EA' where WeightEdizm is null
+go
+update pekz_dop set Edizm='4752B0E9-92B6-47C8-8BF2-48182ADCD0EA' where Edizm is null
+go
+
+"></BlockHolder>
+
+</ModuleHolder></root>

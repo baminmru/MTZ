@@ -1,0 +1,2506 @@
+<?xml version="1.0"?>
+<root><AttributeHolder Name="Name" Value="TP_Zay"/><AttributeHolder Name="ID" Value="{EAD816DD-25FE-490B-855B-5383BE0A1F24}"/><AttributeHolder Name="asmName" Value="TP_Zay"/><ModuleHolder ModuleName="ucTP_Zay_Zay.ASCX" File="ucTP_Zay_Zay.ASCX"><BlockHolder BlockName="code" BlockCode="&lt;%@ Control Language=&quot;c#&quot; AutoEventWireup=&quot;false&quot; CodeFile=&quot;ucTP_Zay_Zay.ascx.cs&quot; Inherits=&quot;TP_Zay.ASPNET.ucTP_Zay_Zay&quot; %&gt;
+&lt;TABLE id=&quot;Table1&quot; cellSpacing=&quot;0&quot; cellPadding=&quot;1&quot; width=&quot;100%&quot; border=&quot;0&quot;&gt;
+  &lt;TR&gt;
+  &lt;TD colspan=3 align=center&gt;
+        &lt;asp:Label id=&quot;TP_Zay_ZayLabelInfo&quot; runat=&quot;server&quot;&gt;&lt;/asp:Label&gt;
+  &lt;/TD&gt;
+  &lt;/TR&gt;
+  &lt;TR&gt;
+      &lt;TD width=20%&gt;
+        &lt;asp:Label id=&quot;lblNum&quot; runat=&quot;server&quot; Width=&quot;100%&quot; ForeColor=&quot;#000000&quot;&gt;Номер заявки :&lt;/asp:Label&gt;
+      &lt;/TD&gt;
+      &lt;TD width=40%&gt;
+          &lt;asp:TextBox id=&quot;txtNum&quot; runat=&quot;server&quot; Width=&quot;100%&quot; MaxLength=&quot;0&quot; Text=&quot;&quot;&gt;&lt;/asp:TextBox&gt;
+      &lt;/TD&gt;
+      &lt;TD width=40%&gt;
+          &lt;asp:RequiredFieldValidator id=&quot;rfvNum&quot; runat=&quot;server&quot; ErrorMessage=&quot;Fill this field&quot; ControlToValidate=&quot;txtNum&quot;&gt;&lt;/asp:RequiredFieldValidator&gt;
+      &lt;/TD&gt;
+    &lt;/TR&gt;
+  &lt;TR&gt;
+      &lt;TD width=20%&gt;
+        &lt;asp:Label id=&quot;lblDataPriem&quot; runat=&quot;server&quot; Width=&quot;100%&quot; ForeColor=&quot;#000000&quot;&gt;Дата приема:&lt;/asp:Label&gt;
+      &lt;/TD&gt;
+      &lt;TD width=40%&gt;
+&lt;input id=&quot;changedDateDataPriem&quot; type=&quot;hidden&quot; value=0 name=&quot;changedDateDataPriem&quot; runat=&quot;server&quot;&gt;
+&lt;asp:textbox id=&quot;DateDataPriem&quot; runat=&quot;server&quot; Width=&quot;70px&quot;&gt;&lt;/asp:textbox&gt;
+&lt;A id='btnDataPriem'  href=&quot;javascript:ShowCalendar('DateEdBtnDataPriem','&lt;%=this.DateDataPriem.ClientID%&gt;','&lt;%=this.changedDateDataPriem.ClientID.ToString()%&gt;')&quot; &gt;
+&lt;img alt=&quot;Select Date&quot; id=DateEdBtnDataPriem height=14  src=&quot;&lt;%=Request.ApplicationPath%&gt;/Include/Calendar/calendar.gif&quot;  width=23 border=0&gt;&lt;/A&gt;
+      &lt;/TD&gt;
+      &lt;TD width=40%&gt;
+          &lt;asp:RequiredFieldValidator id=&quot;rfvDataPriem&quot; runat=&quot;server&quot; ErrorMessage=&quot;Fill this field&quot; ControlToValidate=&quot;DateDataPriem&quot;&gt;&lt;/asp:RequiredFieldValidator&gt;
+      &lt;/TD&gt;
+    &lt;/TR&gt;
+  &lt;TR&gt;
+      &lt;TD width=20%&gt;
+        &lt;asp:Label id=&quot;lblFIO&quot; runat=&quot;server&quot; Width=&quot;100%&quot; ForeColor=&quot;#000000&quot;&gt;ФИО:&lt;/asp:Label&gt;
+      &lt;/TD&gt;
+      &lt;TD width=40%&gt;
+          &lt;asp:TextBox id=&quot;txtFIO&quot; runat=&quot;server&quot; Width=&quot;100%&quot; MaxLength=&quot;255&quot; Text=&quot;&quot;&gt;&lt;/asp:TextBox&gt;
+      &lt;/TD&gt;
+      &lt;TD width=40%&gt;
+          &lt;asp:RequiredFieldValidator id=&quot;rfvFIO&quot; runat=&quot;server&quot; ErrorMessage=&quot;Fill this field&quot; ControlToValidate=&quot;txtFIO&quot;&gt;&lt;/asp:RequiredFieldValidator&gt;
+      &lt;/TD&gt;
+    &lt;/TR&gt;
+  &lt;TR&gt;
+      &lt;TD width=20%&gt;
+        &lt;asp:Label id=&quot;lblTheOperator&quot; runat=&quot;server&quot; Width=&quot;100%&quot; ForeColor=&quot;#000000&quot;&gt;Оператор:&lt;/asp:Label&gt;
+      &lt;/TD&gt;
+      &lt;TD width=40%&gt;
+&lt;asp:DropDownList id=&quot;cmbTheOperator&quot; runat=&quot;server&quot; Width=&quot;100%&quot;&gt;&lt;/asp:DropDownList&gt;
+      &lt;/TD&gt;
+      &lt;TD width=40%&gt;
+      &lt;/TD&gt;
+    &lt;/TR&gt;
+  &lt;TR&gt;
+      &lt;TD width=20%&gt;
+        &lt;asp:Label id=&quot;lblAdres&quot; runat=&quot;server&quot; Width=&quot;100%&quot; ForeColor=&quot;#000000&quot;&gt;Адрес:&lt;/asp:Label&gt;
+      &lt;/TD&gt;
+      &lt;TD width=40%&gt;
+          &lt;asp:TextBox id=&quot;txtAdres&quot; runat=&quot;server&quot; Width=&quot;100%&quot; MaxLength=&quot;255&quot; Text=&quot;&quot;&gt;&lt;/asp:TextBox&gt;
+      &lt;/TD&gt;
+      &lt;TD width=40%&gt;
+      &lt;/TD&gt;
+    &lt;/TR&gt;
+  &lt;TR&gt;
+      &lt;TD width=20%&gt;
+        &lt;asp:Label id=&quot;lblRayon&quot; runat=&quot;server&quot; Width=&quot;100%&quot; ForeColor=&quot;#000000&quot;&gt;Район:&lt;/asp:Label&gt;
+      &lt;/TD&gt;
+      &lt;TD width=40%&gt;
+&lt;asp:DropDownList id=&quot;cmbRayon&quot; runat=&quot;server&quot; Width=&quot;100%&quot;&gt;&lt;/asp:DropDownList&gt;
+      &lt;/TD&gt;
+      &lt;TD width=40%&gt;
+      &lt;/TD&gt;
+    &lt;/TR&gt;
+  &lt;TR&gt;
+      &lt;TD width=20%&gt;
+        &lt;asp:Label id=&quot;lblMetro&quot; runat=&quot;server&quot; Width=&quot;100%&quot; ForeColor=&quot;#000000&quot;&gt;Метро:&lt;/asp:Label&gt;
+      &lt;/TD&gt;
+      &lt;TD width=40%&gt;
+&lt;asp:DropDownList id=&quot;cmbMetro&quot; runat=&quot;server&quot; Width=&quot;100%&quot;&gt;&lt;/asp:DropDownList&gt;
+      &lt;/TD&gt;
+      &lt;TD width=40%&gt;
+      &lt;/TD&gt;
+    &lt;/TR&gt;
+  &lt;TR&gt;
+      &lt;TD width=20%&gt;
+        &lt;asp:Label id=&quot;lblKonrLizo&quot; runat=&quot;server&quot; Width=&quot;100%&quot; ForeColor=&quot;#000000&quot;&gt;Контактное лицо:&lt;/asp:Label&gt;
+      &lt;/TD&gt;
+      &lt;TD width=40%&gt;
+          &lt;asp:TextBox id=&quot;txtKonrLizo&quot; runat=&quot;server&quot; Width=&quot;100%&quot; MaxLength=&quot;255&quot; Text=&quot;&quot;&gt;&lt;/asp:TextBox&gt;
+      &lt;/TD&gt;
+      &lt;TD width=40%&gt;
+      &lt;/TD&gt;
+    &lt;/TR&gt;
+  &lt;TR&gt;
+      &lt;TD width=20%&gt;
+        &lt;asp:Label id=&quot;lblKontTelefon&quot; runat=&quot;server&quot; Width=&quot;100%&quot; ForeColor=&quot;#000000&quot;&gt;Контактный телефон:&lt;/asp:Label&gt;
+      &lt;/TD&gt;
+      &lt;TD width=40%&gt;
+          &lt;asp:TextBox id=&quot;txtKontTelefon&quot; runat=&quot;server&quot; Width=&quot;100%&quot; MaxLength=&quot;100&quot; Text=&quot;&quot;&gt;&lt;/asp:TextBox&gt;
+      &lt;/TD&gt;
+      &lt;TD width=40%&gt;
+      &lt;/TD&gt;
+    &lt;/TR&gt;
+  &lt;TR&gt;
+      &lt;TD width=20%&gt;
+        &lt;asp:Label id=&quot;lblKontEMAIL&quot; runat=&quot;server&quot; Width=&quot;100%&quot; ForeColor=&quot;#000000&quot;&gt;Контактный e-mail:&lt;/asp:Label&gt;
+      &lt;/TD&gt;
+      &lt;TD width=40%&gt;
+          &lt;asp:TextBox id=&quot;txtKontEMAIL&quot; runat=&quot;server&quot; Width=&quot;100%&quot; MaxLength=&quot;100&quot; Text=&quot;&quot;&gt;&lt;/asp:TextBox&gt;
+      &lt;/TD&gt;
+      &lt;TD width=40%&gt;
+      &lt;/TD&gt;
+    &lt;/TR&gt;
+  &lt;TR&gt;
+      &lt;TD width=20%&gt;
+        &lt;asp:Label id=&quot;lblVremjaDljaSvjazi&quot; runat=&quot;server&quot; Width=&quot;100%&quot; ForeColor=&quot;#000000&quot;&gt;Время для связи:&lt;/asp:Label&gt;
+      &lt;/TD&gt;
+      &lt;TD width=40%&gt;
+          &lt;asp:TextBox id=&quot;txtVremjaDljaSvjazi&quot; runat=&quot;server&quot; Width=&quot;100%&quot; MaxLength=&quot;255&quot; Text=&quot;&quot;&gt;&lt;/asp:TextBox&gt;
+      &lt;/TD&gt;
+      &lt;TD width=40%&gt;
+      &lt;/TD&gt;
+    &lt;/TR&gt;
+  &lt;TR&gt;
+      &lt;TD width=20%&gt;
+        &lt;asp:Label id=&quot;lblGelData&quot; runat=&quot;server&quot; Width=&quot;100%&quot; ForeColor=&quot;#000000&quot;&gt;Желаемая дата визита инсталятора:&lt;/asp:Label&gt;
+      &lt;/TD&gt;
+      &lt;TD width=40%&gt;
+&lt;input id=&quot;changedDateGelData&quot; type=&quot;hidden&quot; value=0 name=&quot;changedDateGelData&quot; runat=&quot;server&quot;&gt;
+&lt;asp:textbox id=&quot;DateGelData&quot; runat=&quot;server&quot; Width=&quot;70px&quot;&gt;&lt;/asp:textbox&gt;
+&lt;A id='btnGelData'  href=&quot;javascript:ShowCalendar('DateEdBtnGelData','&lt;%=this.DateGelData.ClientID%&gt;','&lt;%=this.changedDateGelData.ClientID.ToString()%&gt;')&quot; &gt;
+&lt;img alt=&quot;Select Date&quot; id=DateEdBtnGelData height=14  src=&quot;&lt;%=Request.ApplicationPath%&gt;/Include/Calendar/calendar.gif&quot;  width=23 border=0&gt;&lt;/A&gt;
+      &lt;/TD&gt;
+      &lt;TD width=40%&gt;
+      &lt;/TD&gt;
+    &lt;/TR&gt;
+  &lt;TR&gt;
+      &lt;TD width=20%&gt;
+        &lt;asp:Label id=&quot;lblGelVremja&quot; runat=&quot;server&quot; Width=&quot;100%&quot; ForeColor=&quot;#000000&quot;&gt;Желаемое время визита инсталятора:&lt;/asp:Label&gt;
+      &lt;/TD&gt;
+      &lt;TD width=40%&gt;
+&lt;asp:DropDownList id=&quot;cmbGelVremja&quot; runat=&quot;server&quot; Width=&quot;100%&quot;&gt;&lt;/asp:DropDownList&gt;
+      &lt;/TD&gt;
+      &lt;TD width=40%&gt;
+      &lt;/TD&gt;
+    &lt;/TR&gt;
+  &lt;TR&gt;
+      &lt;TD width=20%&gt;
+        &lt;asp:Label id=&quot;lblPortref&quot; runat=&quot;server&quot; Width=&quot;100%&quot; ForeColor=&quot;#000000&quot;&gt;Порт:&lt;/asp:Label&gt;
+      &lt;/TD&gt;
+      &lt;TD width=40%&gt;
+&lt;asp:DropDownList id=&quot;cmbPortref&quot; runat=&quot;server&quot; Width=&quot;100%&quot;&gt;&lt;/asp:DropDownList&gt;
+      &lt;/TD&gt;
+      &lt;TD width=40%&gt;
+      &lt;/TD&gt;
+    &lt;/TR&gt;
+  &lt;TR&gt;
+      &lt;TD width=20%&gt;
+        &lt;asp:Label id=&quot;lblKoordin&quot; runat=&quot;server&quot; Width=&quot;100%&quot; ForeColor=&quot;#000000&quot;&gt;Координатор:&lt;/asp:Label&gt;
+      &lt;/TD&gt;
+      &lt;TD width=40%&gt;
+&lt;asp:DropDownList id=&quot;cmbKoordin&quot; runat=&quot;server&quot; Width=&quot;100%&quot;&gt;&lt;/asp:DropDownList&gt;
+      &lt;/TD&gt;
+      &lt;TD width=40%&gt;
+      &lt;/TD&gt;
+    &lt;/TR&gt;
+  &lt;TR&gt;
+      &lt;TD width=20%&gt;
+        &lt;asp:Label id=&quot;lblIngener&quot; runat=&quot;server&quot; Width=&quot;100%&quot; ForeColor=&quot;#000000&quot;&gt;Инженер:&lt;/asp:Label&gt;
+      &lt;/TD&gt;
+      &lt;TD width=40%&gt;
+&lt;asp:DropDownList id=&quot;cmbIngener&quot; runat=&quot;server&quot; Width=&quot;100%&quot;&gt;&lt;/asp:DropDownList&gt;
+      &lt;/TD&gt;
+      &lt;TD width=40%&gt;
+      &lt;/TD&gt;
+    &lt;/TR&gt;
+  &lt;TR&gt;
+      &lt;TD width=20%&gt;
+        &lt;asp:Label id=&quot;lblVidanModemSer&quot; runat=&quot;server&quot; Width=&quot;100%&quot; ForeColor=&quot;#000000&quot;&gt;Выданный модем серийник:&lt;/asp:Label&gt;
+      &lt;/TD&gt;
+      &lt;TD width=40%&gt;
+          &lt;asp:TextBox id=&quot;txtVidanModemSer&quot; runat=&quot;server&quot; Width=&quot;100%&quot; MaxLength=&quot;255&quot; Text=&quot;&quot;&gt;&lt;/asp:TextBox&gt;
+      &lt;/TD&gt;
+      &lt;TD width=40%&gt;
+      &lt;/TD&gt;
+    &lt;/TR&gt;
+  &lt;TR&gt;
+      &lt;TD width=20%&gt;
+        &lt;asp:Label id=&quot;lblTarif&quot; runat=&quot;server&quot; Width=&quot;100%&quot; ForeColor=&quot;#000000&quot;&gt;Тариф:&lt;/asp:Label&gt;
+      &lt;/TD&gt;
+      &lt;TD width=40%&gt;
+&lt;asp:DropDownList id=&quot;cmbTarif&quot; runat=&quot;server&quot; Width=&quot;100%&quot;&gt;&lt;/asp:DropDownList&gt;
+      &lt;/TD&gt;
+      &lt;TD width=40%&gt;
+      &lt;/TD&gt;
+    &lt;/TR&gt;
+  &lt;TR&gt;
+      &lt;TD width=20%&gt;
+        &lt;asp:Label id=&quot;lblFIOdogovor&quot; runat=&quot;server&quot; Width=&quot;100%&quot; ForeColor=&quot;#000000&quot;&gt;ФИО в договоре:&lt;/asp:Label&gt;
+      &lt;/TD&gt;
+      &lt;TD width=40%&gt;
+          &lt;asp:TextBox id=&quot;txtFIOdogovor&quot; runat=&quot;server&quot; Width=&quot;100%&quot; MaxLength=&quot;255&quot; Text=&quot;&quot;&gt;&lt;/asp:TextBox&gt;
+      &lt;/TD&gt;
+      &lt;TD width=40%&gt;
+      &lt;/TD&gt;
+    &lt;/TR&gt;
+  &lt;TR&gt;
+      &lt;TD width=20%&gt;
+        &lt;asp:Label id=&quot;lblDataInstall&quot; runat=&quot;server&quot; Width=&quot;100%&quot; ForeColor=&quot;#000000&quot;&gt;Дата инсталяции:&lt;/asp:Label&gt;
+      &lt;/TD&gt;
+      &lt;TD width=40%&gt;
+&lt;input id=&quot;changedDateDataInstall&quot; type=&quot;hidden&quot; value=0 name=&quot;changedDateDataInstall&quot; runat=&quot;server&quot;&gt;
+&lt;asp:textbox id=&quot;DateDataInstall&quot; runat=&quot;server&quot; Width=&quot;70px&quot;&gt;&lt;/asp:textbox&gt;
+&lt;A id='btnDataInstall'  href=&quot;javascript:ShowCalendar('DateEdBtnDataInstall','&lt;%=this.DateDataInstall.ClientID%&gt;','&lt;%=this.changedDateDataInstall.ClientID.ToString()%&gt;')&quot; &gt;
+&lt;img alt=&quot;Select Date&quot; id=DateEdBtnDataInstall height=14  src=&quot;&lt;%=Request.ApplicationPath%&gt;/Include/Calendar/calendar.gif&quot;  width=23 border=0&gt;&lt;/A&gt;
+      &lt;/TD&gt;
+      &lt;TD width=40%&gt;
+      &lt;/TD&gt;
+    &lt;/TR&gt;
+  &lt;TR&gt;
+      &lt;TD width=20%&gt;
+        &lt;asp:Label id=&quot;lblSrochDogovor&quot; runat=&quot;server&quot; Width=&quot;100%&quot; ForeColor=&quot;#000000&quot;&gt;Срок договора:&lt;/asp:Label&gt;
+      &lt;/TD&gt;
+      &lt;TD width=40%&gt;
+&lt;asp:DropDownList id=&quot;cmbSrochDogovor&quot; runat=&quot;server&quot; Width=&quot;100%&quot;&gt;&lt;/asp:DropDownList&gt;
+      &lt;/TD&gt;
+      &lt;TD width=40%&gt;
+      &lt;/TD&gt;
+    &lt;/TR&gt;
+  &lt;TR&gt;
+      &lt;TD width=20%&gt;
+        &lt;asp:Label id=&quot;lblDocPolych&quot; runat=&quot;server&quot; Width=&quot;100%&quot; ForeColor=&quot;#000000&quot;&gt;Документы получены:&lt;/asp:Label&gt;
+      &lt;/TD&gt;
+      &lt;TD width=40%&gt;
+&lt;asp:DropDownList id=&quot;cmbDocPolych&quot; runat=&quot;server&quot; Width=&quot;100%&quot;&gt;&lt;/asp:DropDownList&gt;
+      &lt;/TD&gt;
+      &lt;TD width=40%&gt;
+      &lt;/TD&gt;
+    &lt;/TR&gt;
+  &lt;TR&gt;
+      &lt;TD width=20%&gt;
+        &lt;asp:Label id=&quot;lblDataSZT&quot; runat=&quot;server&quot; Width=&quot;100%&quot; ForeColor=&quot;#000000&quot;&gt;Дата передачи в СЗТ:&lt;/asp:Label&gt;
+      &lt;/TD&gt;
+      &lt;TD width=40%&gt;
+&lt;input id=&quot;changedDateDataSZT&quot; type=&quot;hidden&quot; value=0 name=&quot;changedDateDataSZT&quot; runat=&quot;server&quot;&gt;
+&lt;asp:textbox id=&quot;DateDataSZT&quot; runat=&quot;server&quot; Width=&quot;70px&quot;&gt;&lt;/asp:textbox&gt;
+&lt;A id='btnDataSZT'  href=&quot;javascript:ShowCalendar('DateEdBtnDataSZT','&lt;%=this.DateDataSZT.ClientID%&gt;','&lt;%=this.changedDateDataSZT.ClientID.ToString()%&gt;')&quot; &gt;
+&lt;img alt=&quot;Select Date&quot; id=DateEdBtnDataSZT height=14  src=&quot;&lt;%=Request.ApplicationPath%&gt;/Include/Calendar/calendar.gif&quot;  width=23 border=0&gt;&lt;/A&gt;
+      &lt;/TD&gt;
+      &lt;TD width=40%&gt;
+      &lt;/TD&gt;
+    &lt;/TR&gt;
+  &lt;TR&gt;
+      &lt;TD width=20%&gt;
+        &lt;asp:Label id=&quot;lblVklVReestr&quot; runat=&quot;server&quot; Width=&quot;100%&quot; ForeColor=&quot;#000000&quot;&gt;Включена в реестр для оплаты:&lt;/asp:Label&gt;
+      &lt;/TD&gt;
+      &lt;TD width=40%&gt;
+&lt;asp:DropDownList id=&quot;cmbVklVReestr&quot; runat=&quot;server&quot; Width=&quot;100%&quot;&gt;&lt;/asp:DropDownList&gt;
+      &lt;/TD&gt;
+      &lt;TD width=40%&gt;
+      &lt;/TD&gt;
+    &lt;/TR&gt;
+  &lt;TR&gt;
+      &lt;TD width=20%&gt;
+        &lt;asp:Label id=&quot;lblOtkaz&quot; runat=&quot;server&quot; Width=&quot;100%&quot; ForeColor=&quot;#000000&quot;&gt;Отказ:&lt;/asp:Label&gt;
+      &lt;/TD&gt;
+      &lt;TD width=40%&gt;
+&lt;asp:DropDownList id=&quot;cmbOtkaz&quot; runat=&quot;server&quot; Width=&quot;100%&quot;&gt;&lt;/asp:DropDownList&gt;
+      &lt;/TD&gt;
+      &lt;TD width=40%&gt;
+      &lt;/TD&gt;
+    &lt;/TR&gt;
+  &lt;TR&gt;
+      &lt;TD width=20%&gt;
+        &lt;asp:Label id=&quot;lblOpisProblem&quot; runat=&quot;server&quot; Width=&quot;100%&quot; ForeColor=&quot;#000000&quot;&gt;Описание проблемы:&lt;/asp:Label&gt;
+      &lt;/TD&gt;
+      &lt;TD width=40%&gt;
+          &lt;asp:TextBox id=&quot;txtOpisProblem&quot; runat=&quot;server&quot; Width=&quot;100%&quot; MaxLength=&quot;0&quot; Text=&quot;&quot;&gt;&lt;/asp:TextBox&gt;
+      &lt;/TD&gt;
+      &lt;TD width=40%&gt;
+      &lt;/TD&gt;
+    &lt;/TR&gt;
+  &lt;TR&gt;
+      &lt;TD width=20%&gt;
+        &lt;asp:Label id=&quot;lblOtprVKEY&quot; runat=&quot;server&quot; Width=&quot;100%&quot; ForeColor=&quot;#000000&quot;&gt;Отправлено в КЭУ:&lt;/asp:Label&gt;
+      &lt;/TD&gt;
+      &lt;TD width=40%&gt;
+&lt;asp:DropDownList id=&quot;cmbOtprVKEY&quot; runat=&quot;server&quot; Width=&quot;100%&quot;&gt;&lt;/asp:DropDownList&gt;
+      &lt;/TD&gt;
+      &lt;TD width=40%&gt;
+      &lt;/TD&gt;
+    &lt;/TR&gt;
+  &lt;TR&gt;
+      &lt;TD width=20%&gt;
+        &lt;asp:Label id=&quot;lblDataOtpravVKEY&quot; runat=&quot;server&quot; Width=&quot;100%&quot; ForeColor=&quot;#000000&quot;&gt;Дата отправки в КЭУ:&lt;/asp:Label&gt;
+      &lt;/TD&gt;
+      &lt;TD width=40%&gt;
+&lt;input id=&quot;changedDateDataOtpravVKEY&quot; type=&quot;hidden&quot; value=0 name=&quot;changedDateDataOtpravVKEY&quot; runat=&quot;server&quot;&gt;
+&lt;asp:textbox id=&quot;DateDataOtpravVKEY&quot; runat=&quot;server&quot; Width=&quot;70px&quot;&gt;&lt;/asp:textbox&gt;
+&lt;A id='btnDataOtpravVKEY'  href=&quot;javascript:ShowCalendar('DateEdBtnDataOtpravVKEY','&lt;%=this.DateDataOtpravVKEY.ClientID%&gt;','&lt;%=this.changedDateDataOtpravVKEY.ClientID.ToString()%&gt;')&quot; &gt;
+&lt;img alt=&quot;Select Date&quot; id=DateEdBtnDataOtpravVKEY height=14  src=&quot;&lt;%=Request.ApplicationPath%&gt;/Include/Calendar/calendar.gif&quot;  width=23 border=0&gt;&lt;/A&gt;
+      &lt;/TD&gt;
+      &lt;TD width=40%&gt;
+      &lt;/TD&gt;
+    &lt;/TR&gt;
+  &lt;TR&gt;
+      &lt;TD width=20%&gt;
+        &lt;asp:Label id=&quot;lblDopSogl&quot; runat=&quot;server&quot; Width=&quot;100%&quot; ForeColor=&quot;#000000&quot;&gt;Дополнительное соглашение:&lt;/asp:Label&gt;
+      &lt;/TD&gt;
+      &lt;TD width=40%&gt;
+&lt;asp:DropDownList id=&quot;cmbDopSogl&quot; runat=&quot;server&quot; Width=&quot;100%&quot;&gt;&lt;/asp:DropDownList&gt;
+      &lt;/TD&gt;
+      &lt;TD width=40%&gt;
+      &lt;/TD&gt;
+    &lt;/TR&gt;
+  &lt;TR&gt;
+      &lt;TD width=20%&gt;
+        &lt;asp:Label id=&quot;lblNumDogovor&quot; runat=&quot;server&quot; Width=&quot;100%&quot; ForeColor=&quot;#000000&quot;&gt;Номер договора:&lt;/asp:Label&gt;
+      &lt;/TD&gt;
+      &lt;TD width=40%&gt;
+          &lt;asp:TextBox id=&quot;txtNumDogovor&quot; runat=&quot;server&quot; Width=&quot;100%&quot; MaxLength=&quot;255&quot; Text=&quot;&quot;&gt;&lt;/asp:TextBox&gt;
+      &lt;/TD&gt;
+      &lt;TD width=40%&gt;
+      &lt;/TD&gt;
+    &lt;/TR&gt;
+  &lt;TR&gt;
+      &lt;TD width=20%&gt;
+        &lt;asp:Label id=&quot;lblKomment&quot; runat=&quot;server&quot; Width=&quot;100%&quot; ForeColor=&quot;#000000&quot;&gt;Комментарий:&lt;/asp:Label&gt;
+      &lt;/TD&gt;
+      &lt;TD width=40%&gt;
+          &lt;asp:TextBox id=&quot;txtKomment&quot; runat=&quot;server&quot; Width=&quot;100%&quot; MaxLength=&quot;0&quot; Text=&quot;&quot;&gt;&lt;/asp:TextBox&gt;
+      &lt;/TD&gt;
+      &lt;TD width=40%&gt;
+      &lt;/TD&gt;
+    &lt;/TR&gt;
+  &lt;TR&gt;
+      &lt;TD&gt;
+      &lt;/TD&gt;
+      &lt;TD align=&quot;right&quot;&gt;
+        &lt;asp:Button id=&quot;btnSave&quot; runat=&quot;server&quot; Text=&quot;Save&quot; Width=&quot;88px&quot;&gt;&lt;/asp:Button&gt;
+        &lt;asp:Button id=&quot;btnCancel&quot; runat=&quot;server&quot; Text=&quot;Cancel&quot; Width=&quot;88px&quot; CausesValidation=&quot;false&quot;&gt;&lt;/asp:Button&gt;&amp;nbsp;
+      &lt;/TD&gt;
+      &lt;TD&gt;&lt;/TD&gt;
+   &lt;/TR&gt;
+&lt;/TABLE&gt;
+&lt;script language=&quot;javascript&quot; type=&quot;text/javascript&quot;&gt;
+
+function TP_Zay_ZayLoad()
+
+{
+
+    &lt;%=GetOnLoadScript()%&gt;
+
+}
+
+function ElementShow(elName)
+
+{
+
+ var el;
+
+ el = document.getElementById(elName);
+
+ if (el != null)
+
+ {
+
+   el.style.display = '';
+
+ }
+
+}
+
+function ElementHide(elName)
+
+{
+
+ var el;
+
+ el = document.getElementById(elName);
+
+ if (el != null)
+
+ {
+
+   el.style.display = 'none';
+
+ }
+
+}
+
+&lt;/script&gt;
+
+
+"><FormData Name=""/></BlockHolder></ModuleHolder><ModuleHolder ModuleName="ucTP_Zay_Zay.ASCX.cs" File="ucTP_Zay_Zay.ASCX.cs"><BlockHolder BlockName="code" BlockCode="
+
+namespace TP_Zay.ASPNET
+{
+  using System;
+  using System.Data;
+  using System.IO;
+  using System.Collections;
+  using System.Drawing;
+  using System.Web;
+  using System.Web.UI.WebControls;
+  using System.Web.UI.HtmlControls;
+  using System.Globalization;
+  using Mokasin.ASPNET;
+  using TP_Zay;
+
+  /// &lt;summary&gt;
+  ///    ucTP_Zay_Zay - форма редактирования раздела Заявка
+  /// &lt;/summary&gt;
+  public partial class ucTP_Zay_Zay  : ucParent 
+  {
+    protected ArrayList ControlsToHide = new ArrayList();
+    public override event System.EventHandler OnFieldInit;
+    public override event System.EventHandler OnBeforeSave;
+    public override event System.EventHandler OnAfterSave;
+    public override event System.EventHandler OnCancel;
+    public override event InfoEventHandler OnInfo;
+
+    public override string CancelButtonID
+    {
+      get
+      {
+        return btnCancel.ClientID;
+      }
+    }
+
+    public override string SaveButtonID
+    {
+      get
+      {
+        return btnSave.ClientID;
+      }
+    }
+
+    public TP_Zay.TP_Zay_Zay RowItem
+    {
+      get
+      {
+        return (TP_Zay.TP_Zay_Zay)base.MKSNRowItem;
+      }
+    }
+
+    private bool ReadOnly
+    {
+      get
+      {
+        return !AllowEdit;
+      }
+    }
+
+    private void Page_Unload(object sender, System.EventArgs e)
+    {
+      return;
+    }
+
+    private void Page_Load(object sender, System.EventArgs e)
+    {
+      base.Page_Load(sender,e); 
+      if (RowItem != null)
+      {
+   if (!(DataComponent.DenyVisible.IndexOf(&quot;Num&quot;) &gt; -1)) {
+          txtNum.Text = GetValueFromRowItem(RowItem.Num);
+   }
+          txtNum.ToolTip = &quot;Номер заявки &quot;;
+          if (ReadOnly || (DataComponent.DenyEdit.IndexOf(&quot;Num&quot;) &gt; -1))
+          {
+            ControlsToHide.Add(&quot;btnNum&quot;);
+            txtNum.Enabled = false;
+            rfvNum.Enabled = false;
+          }
+          if (DataComponent.DenyVisible.IndexOf(&quot;Num&quot;) &gt; -1) 
+          {
+            lblNum.Visible = false;
+            txtNum.Visible = false;
+            rfvNum.Enabled = false;
+          }
+          if (OnFieldInit != null)
+          {
+            OnFieldInit(txtNum, new EventArgs());
+          }
+          if(RowItem.DataPriem != Convert.ToDateTime(&quot;30.12.1899&quot;) &amp;&amp; RowItem.DataPriem != Convert.ToDateTime(&quot;01.01.0001&quot;))
+            DateDataPriem.Text=RowItem.DataPriem.ToShortDateString();
+          DateDataPriem.ToolTip = &quot;Дата приема&quot;;
+          if (ReadOnly || (DataComponent.DenyEdit.IndexOf(&quot;DataPriem&quot;) &gt; -1))
+          {
+            ControlsToHide.Add(&quot;btnDataPriem&quot;);
+            DateDataPriem.Enabled = false;
+            rfvDataPriem.Enabled = false;
+          }
+          if (DataComponent.DenyVisible.IndexOf(&quot;DataPriem&quot;) &gt; -1) 
+          {
+            lblDataPriem.Visible = false;
+            DateDataPriem.Visible = false;
+            rfvDataPriem.Enabled = false;
+          }
+          if (OnFieldInit != null)
+          {
+            OnFieldInit(DateDataPriem, new EventArgs());
+          }
+   if (!(DataComponent.DenyVisible.IndexOf(&quot;FIO&quot;) &gt; -1)) {
+          txtFIO.Text = GetValueFromRowItem(RowItem.FIO);
+   }
+          txtFIO.ToolTip = &quot;ФИО&quot;;
+          if (ReadOnly || (DataComponent.DenyEdit.IndexOf(&quot;FIO&quot;) &gt; -1))
+          {
+            ControlsToHide.Add(&quot;btnFIO&quot;);
+            txtFIO.Enabled = false;
+            rfvFIO.Enabled = false;
+          }
+          if (DataComponent.DenyVisible.IndexOf(&quot;FIO&quot;) &gt; -1) 
+          {
+            lblFIO.Visible = false;
+            txtFIO.Visible = false;
+            rfvFIO.Enabled = false;
+          }
+          if (OnFieldInit != null)
+          {
+            OnFieldInit(txtFIO, new EventArgs());
+          }
+          DataTable dtTheOperator = MKSNManager.Session.GetData(&quot; select TP_Spr_OperID , dbo.TP_Spr_Oper_BRIEF_F(TP_Spr_OperID ) BRIEF from TP_Spr_Oper order by BRIEF &quot;);
+          if (dtTheOperator!=null) { 
+            cmbTheOperator.DataSource = dtTheOperator;
+            cmbTheOperator.DataTextField = &quot;BRIEF&quot;;
+            cmbTheOperator.DataValueField = &quot;TP_Spr_OperID&quot;;
+          }
+          cmbTheOperator.DataBind();
+          if (RowItem.TheOperator!= null)
+          {
+            cmbTheOperator.SelectedValue = RowItem.TheOperator.ID.ToString();
+          }
+          cmbTheOperator.Items.Insert(0, new System.Web.UI.WebControls.ListItem(string.Empty, string.Empty));
+          cmbTheOperator.ToolTip = &quot;Оператор&quot;;
+          if (ReadOnly || (DataComponent.DenyEdit.IndexOf(&quot;TheOperator&quot;) &gt; -1))
+          {
+            ControlsToHide.Add(&quot;btnTheOperator&quot;);
+            cmbTheOperator.Enabled = false;
+          }
+          if (DataComponent.DenyVisible.IndexOf(&quot;TheOperator&quot;) &gt; -1) 
+          {
+            lblTheOperator.Visible = false;
+            cmbTheOperator.Visible = false;
+          }
+          if (OnFieldInit != null)
+          {
+            OnFieldInit(cmbTheOperator, new EventArgs());
+          }
+   if (!(DataComponent.DenyVisible.IndexOf(&quot;Adres&quot;) &gt; -1)) {
+          txtAdres.Text = GetValueFromRowItem(RowItem.Adres);
+   }
+          txtAdres.ToolTip = &quot;Адрес&quot;;
+          if (ReadOnly || (DataComponent.DenyEdit.IndexOf(&quot;Adres&quot;) &gt; -1))
+          {
+            ControlsToHide.Add(&quot;btnAdres&quot;);
+            txtAdres.Enabled = false;
+          }
+          if (DataComponent.DenyVisible.IndexOf(&quot;Adres&quot;) &gt; -1) 
+          {
+            lblAdres.Visible = false;
+            txtAdres.Visible = false;
+          }
+          if (OnFieldInit != null)
+          {
+            OnFieldInit(txtAdres, new EventArgs());
+          }
+          DataTable dtRayon = MKSNManager.Session.GetData(&quot; select RayonID , dbo.Rayon_BRIEF_F(RayonID ) BRIEF from Rayon order by BRIEF &quot;);
+          if (dtRayon!=null) { 
+            cmbRayon.DataSource = dtRayon;
+            cmbRayon.DataTextField = &quot;BRIEF&quot;;
+            cmbRayon.DataValueField = &quot;RayonID&quot;;
+          }
+          cmbRayon.DataBind();
+          if (RowItem.Rayon!= null)
+          {
+            cmbRayon.SelectedValue = RowItem.Rayon.ID.ToString();
+          }
+          cmbRayon.Items.Insert(0, new System.Web.UI.WebControls.ListItem(string.Empty, string.Empty));
+          cmbRayon.ToolTip = &quot;Район&quot;;
+          if (ReadOnly || (DataComponent.DenyEdit.IndexOf(&quot;Rayon&quot;) &gt; -1))
+          {
+            ControlsToHide.Add(&quot;btnRayon&quot;);
+            cmbRayon.Enabled = false;
+          }
+          if (DataComponent.DenyVisible.IndexOf(&quot;Rayon&quot;) &gt; -1) 
+          {
+            lblRayon.Visible = false;
+            cmbRayon.Visible = false;
+          }
+          if (OnFieldInit != null)
+          {
+            OnFieldInit(cmbRayon, new EventArgs());
+          }
+          DataTable dtMetro = MKSNManager.Session.GetData(&quot; select TP_Spr_MetroID , dbo.TP_Spr_Metro_BRIEF_F(TP_Spr_MetroID ) BRIEF from TP_Spr_Metro order by BRIEF &quot;);
+          if (dtMetro!=null) { 
+            cmbMetro.DataSource = dtMetro;
+            cmbMetro.DataTextField = &quot;BRIEF&quot;;
+            cmbMetro.DataValueField = &quot;TP_Spr_MetroID&quot;;
+          }
+          cmbMetro.DataBind();
+          if (RowItem.Metro!= null)
+          {
+            cmbMetro.SelectedValue = RowItem.Metro.ID.ToString();
+          }
+          cmbMetro.Items.Insert(0, new System.Web.UI.WebControls.ListItem(string.Empty, string.Empty));
+          cmbMetro.ToolTip = &quot;Метро&quot;;
+          if (ReadOnly || (DataComponent.DenyEdit.IndexOf(&quot;Metro&quot;) &gt; -1))
+          {
+            ControlsToHide.Add(&quot;btnMetro&quot;);
+            cmbMetro.Enabled = false;
+          }
+          if (DataComponent.DenyVisible.IndexOf(&quot;Metro&quot;) &gt; -1) 
+          {
+            lblMetro.Visible = false;
+            cmbMetro.Visible = false;
+          }
+          if (OnFieldInit != null)
+          {
+            OnFieldInit(cmbMetro, new EventArgs());
+          }
+   if (!(DataComponent.DenyVisible.IndexOf(&quot;KonrLizo&quot;) &gt; -1)) {
+          txtKonrLizo.Text = GetValueFromRowItem(RowItem.KonrLizo);
+   }
+          txtKonrLizo.ToolTip = &quot;Контактное лицо&quot;;
+          if (ReadOnly || (DataComponent.DenyEdit.IndexOf(&quot;KonrLizo&quot;) &gt; -1))
+          {
+            ControlsToHide.Add(&quot;btnKonrLizo&quot;);
+            txtKonrLizo.Enabled = false;
+          }
+          if (DataComponent.DenyVisible.IndexOf(&quot;KonrLizo&quot;) &gt; -1) 
+          {
+            lblKonrLizo.Visible = false;
+            txtKonrLizo.Visible = false;
+          }
+          if (OnFieldInit != null)
+          {
+            OnFieldInit(txtKonrLizo, new EventArgs());
+          }
+   if (!(DataComponent.DenyVisible.IndexOf(&quot;KontTelefon&quot;) &gt; -1)) {
+          txtKontTelefon.Text = GetValueFromRowItem(RowItem.KontTelefon);
+   }
+          txtKontTelefon.ToolTip = &quot;Контактный телефон&quot;;
+          if (ReadOnly || (DataComponent.DenyEdit.IndexOf(&quot;KontTelefon&quot;) &gt; -1))
+          {
+            ControlsToHide.Add(&quot;btnKontTelefon&quot;);
+            txtKontTelefon.Enabled = false;
+          }
+          if (DataComponent.DenyVisible.IndexOf(&quot;KontTelefon&quot;) &gt; -1) 
+          {
+            lblKontTelefon.Visible = false;
+            txtKontTelefon.Visible = false;
+          }
+          if (OnFieldInit != null)
+          {
+            OnFieldInit(txtKontTelefon, new EventArgs());
+          }
+   if (!(DataComponent.DenyVisible.IndexOf(&quot;KontEMAIL&quot;) &gt; -1)) {
+          txtKontEMAIL.Text = GetValueFromRowItem(RowItem.KontEMAIL);
+   }
+          txtKontEMAIL.ToolTip = &quot;Контактный e-mail&quot;;
+          if (ReadOnly || (DataComponent.DenyEdit.IndexOf(&quot;KontEMAIL&quot;) &gt; -1))
+          {
+            ControlsToHide.Add(&quot;btnKontEMAIL&quot;);
+            txtKontEMAIL.Enabled = false;
+          }
+          if (DataComponent.DenyVisible.IndexOf(&quot;KontEMAIL&quot;) &gt; -1) 
+          {
+            lblKontEMAIL.Visible = false;
+            txtKontEMAIL.Visible = false;
+          }
+          if (OnFieldInit != null)
+          {
+            OnFieldInit(txtKontEMAIL, new EventArgs());
+          }
+   if (!(DataComponent.DenyVisible.IndexOf(&quot;VremjaDljaSvjazi&quot;) &gt; -1)) {
+          txtVremjaDljaSvjazi.Text = GetValueFromRowItem(RowItem.VremjaDljaSvjazi);
+   }
+          txtVremjaDljaSvjazi.ToolTip = &quot;Время для связи&quot;;
+          if (ReadOnly || (DataComponent.DenyEdit.IndexOf(&quot;VremjaDljaSvjazi&quot;) &gt; -1))
+          {
+            ControlsToHide.Add(&quot;btnVremjaDljaSvjazi&quot;);
+            txtVremjaDljaSvjazi.Enabled = false;
+          }
+          if (DataComponent.DenyVisible.IndexOf(&quot;VremjaDljaSvjazi&quot;) &gt; -1) 
+          {
+            lblVremjaDljaSvjazi.Visible = false;
+            txtVremjaDljaSvjazi.Visible = false;
+          }
+          if (OnFieldInit != null)
+          {
+            OnFieldInit(txtVremjaDljaSvjazi, new EventArgs());
+          }
+          if(RowItem.GelData != Convert.ToDateTime(&quot;30.12.1899&quot;) &amp;&amp; RowItem.GelData != Convert.ToDateTime(&quot;01.01.0001&quot;))
+            DateGelData.Text=RowItem.GelData.ToShortDateString();
+          DateGelData.ToolTip = &quot;Желаемая дата визита инсталятора&quot;;
+          if (ReadOnly || (DataComponent.DenyEdit.IndexOf(&quot;GelData&quot;) &gt; -1))
+          {
+            ControlsToHide.Add(&quot;btnGelData&quot;);
+            DateGelData.Enabled = false;
+          }
+          if (DataComponent.DenyVisible.IndexOf(&quot;GelData&quot;) &gt; -1) 
+          {
+            lblGelData.Visible = false;
+            DateGelData.Visible = false;
+          }
+          if (OnFieldInit != null)
+          {
+            OnFieldInit(DateGelData, new EventArgs());
+          }
+          DataTable dtGelVremja = MKSNManager.Session.GetData(&quot; select TP_Spr_VrVisInstID , dbo.TP_Spr_VrVisInst_BRIEF_F(TP_Spr_VrVisInstID ) BRIEF from TP_Spr_VrVisInst order by BRIEF &quot;);
+          if (dtGelVremja!=null) { 
+            cmbGelVremja.DataSource = dtGelVremja;
+            cmbGelVremja.DataTextField = &quot;BRIEF&quot;;
+            cmbGelVremja.DataValueField = &quot;TP_Spr_VrVisInstID&quot;;
+          }
+          cmbGelVremja.DataBind();
+          if (RowItem.GelVremja!= null)
+          {
+            cmbGelVremja.SelectedValue = RowItem.GelVremja.ID.ToString();
+          }
+          cmbGelVremja.Items.Insert(0, new System.Web.UI.WebControls.ListItem(string.Empty, string.Empty));
+          cmbGelVremja.ToolTip = &quot;Желаемое время визита инсталятора&quot;;
+          if (ReadOnly || (DataComponent.DenyEdit.IndexOf(&quot;GelVremja&quot;) &gt; -1))
+          {
+            ControlsToHide.Add(&quot;btnGelVremja&quot;);
+            cmbGelVremja.Enabled = false;
+          }
+          if (DataComponent.DenyVisible.IndexOf(&quot;GelVremja&quot;) &gt; -1) 
+          {
+            lblGelVremja.Visible = false;
+            cmbGelVremja.Visible = false;
+          }
+          if (OnFieldInit != null)
+          {
+            OnFieldInit(cmbGelVremja, new EventArgs());
+          }
+          DataTable dtPortref = MKSNManager.Session.GetData(&quot; select TP_SPR_PortID , dbo.TP_SPR_Port_BRIEF_F(TP_SPR_PortID ) BRIEF from TP_SPR_Port order by BRIEF &quot;);
+          if (dtPortref!=null) { 
+            cmbPortref.DataSource = dtPortref;
+            cmbPortref.DataTextField = &quot;BRIEF&quot;;
+            cmbPortref.DataValueField = &quot;TP_SPR_PortID&quot;;
+          }
+          cmbPortref.DataBind();
+          if (RowItem.Portref!= null)
+          {
+            cmbPortref.SelectedValue = RowItem.Portref.ID.ToString();
+          }
+          cmbPortref.Items.Insert(0, new System.Web.UI.WebControls.ListItem(string.Empty, string.Empty));
+          cmbPortref.ToolTip = &quot;Порт&quot;;
+          if (ReadOnly || (DataComponent.DenyEdit.IndexOf(&quot;Portref&quot;) &gt; -1))
+          {
+            ControlsToHide.Add(&quot;btnPortref&quot;);
+            cmbPortref.Enabled = false;
+          }
+          if (DataComponent.DenyVisible.IndexOf(&quot;Portref&quot;) &gt; -1) 
+          {
+            lblPortref.Visible = false;
+            cmbPortref.Visible = false;
+          }
+          if (OnFieldInit != null)
+          {
+            OnFieldInit(cmbPortref, new EventArgs());
+          }
+          DataTable dtKoordin = MKSNManager.Session.GetData(&quot; select TP_Spr_KoorID , dbo.TP_Spr_Koor_BRIEF_F(TP_Spr_KoorID ) BRIEF from TP_Spr_Koor order by BRIEF &quot;);
+          if (dtKoordin!=null) { 
+            cmbKoordin.DataSource = dtKoordin;
+            cmbKoordin.DataTextField = &quot;BRIEF&quot;;
+            cmbKoordin.DataValueField = &quot;TP_Spr_KoorID&quot;;
+          }
+          cmbKoordin.DataBind();
+          if (RowItem.Koordin!= null)
+          {
+            cmbKoordin.SelectedValue = RowItem.Koordin.ID.ToString();
+          }
+          cmbKoordin.Items.Insert(0, new System.Web.UI.WebControls.ListItem(string.Empty, string.Empty));
+          cmbKoordin.ToolTip = &quot;Координатор&quot;;
+          if (ReadOnly || (DataComponent.DenyEdit.IndexOf(&quot;Koordin&quot;) &gt; -1))
+          {
+            ControlsToHide.Add(&quot;btnKoordin&quot;);
+            cmbKoordin.Enabled = false;
+          }
+          if (DataComponent.DenyVisible.IndexOf(&quot;Koordin&quot;) &gt; -1) 
+          {
+            lblKoordin.Visible = false;
+            cmbKoordin.Visible = false;
+          }
+          if (OnFieldInit != null)
+          {
+            OnFieldInit(cmbKoordin, new EventArgs());
+          }
+          DataTable dtIngener = MKSNManager.Session.GetData(&quot; select TP_Spr_IngID , dbo.TP_Spr_Ing_BRIEF_F(TP_Spr_IngID ) BRIEF from TP_Spr_Ing order by BRIEF &quot;);
+          if (dtIngener!=null) { 
+            cmbIngener.DataSource = dtIngener;
+            cmbIngener.DataTextField = &quot;BRIEF&quot;;
+            cmbIngener.DataValueField = &quot;TP_Spr_IngID&quot;;
+          }
+          cmbIngener.DataBind();
+          if (RowItem.Ingener!= null)
+          {
+            cmbIngener.SelectedValue = RowItem.Ingener.ID.ToString();
+          }
+          cmbIngener.Items.Insert(0, new System.Web.UI.WebControls.ListItem(string.Empty, string.Empty));
+          cmbIngener.ToolTip = &quot;Инженер&quot;;
+          if (ReadOnly || (DataComponent.DenyEdit.IndexOf(&quot;Ingener&quot;) &gt; -1))
+          {
+            ControlsToHide.Add(&quot;btnIngener&quot;);
+            cmbIngener.Enabled = false;
+          }
+          if (DataComponent.DenyVisible.IndexOf(&quot;Ingener&quot;) &gt; -1) 
+          {
+            lblIngener.Visible = false;
+            cmbIngener.Visible = false;
+          }
+          if (OnFieldInit != null)
+          {
+            OnFieldInit(cmbIngener, new EventArgs());
+          }
+   if (!(DataComponent.DenyVisible.IndexOf(&quot;VidanModemSer&quot;) &gt; -1)) {
+          txtVidanModemSer.Text = GetValueFromRowItem(RowItem.VidanModemSer);
+   }
+          txtVidanModemSer.ToolTip = &quot;Выданный модем серийник&quot;;
+          if (ReadOnly || (DataComponent.DenyEdit.IndexOf(&quot;VidanModemSer&quot;) &gt; -1))
+          {
+            ControlsToHide.Add(&quot;btnVidanModemSer&quot;);
+            txtVidanModemSer.Enabled = false;
+          }
+          if (DataComponent.DenyVisible.IndexOf(&quot;VidanModemSer&quot;) &gt; -1) 
+          {
+            lblVidanModemSer.Visible = false;
+            txtVidanModemSer.Visible = false;
+          }
+          if (OnFieldInit != null)
+          {
+            OnFieldInit(txtVidanModemSer, new EventArgs());
+          }
+          DataTable dtTarif = MKSNManager.Session.GetData(&quot; select TP_Spr_TarID , dbo.TP_Spr_Tar_BRIEF_F(TP_Spr_TarID ) BRIEF from TP_Spr_Tar order by BRIEF &quot;);
+          if (dtTarif!=null) { 
+            cmbTarif.DataSource = dtTarif;
+            cmbTarif.DataTextField = &quot;BRIEF&quot;;
+            cmbTarif.DataValueField = &quot;TP_Spr_TarID&quot;;
+          }
+          cmbTarif.DataBind();
+          if (RowItem.Tarif!= null)
+          {
+            cmbTarif.SelectedValue = RowItem.Tarif.ID.ToString();
+          }
+          cmbTarif.Items.Insert(0, new System.Web.UI.WebControls.ListItem(string.Empty, string.Empty));
+          cmbTarif.ToolTip = &quot;Тариф&quot;;
+          if (ReadOnly || (DataComponent.DenyEdit.IndexOf(&quot;Tarif&quot;) &gt; -1))
+          {
+            ControlsToHide.Add(&quot;btnTarif&quot;);
+            cmbTarif.Enabled = false;
+          }
+          if (DataComponent.DenyVisible.IndexOf(&quot;Tarif&quot;) &gt; -1) 
+          {
+            lblTarif.Visible = false;
+            cmbTarif.Visible = false;
+          }
+          if (OnFieldInit != null)
+          {
+            OnFieldInit(cmbTarif, new EventArgs());
+          }
+   if (!(DataComponent.DenyVisible.IndexOf(&quot;FIOdogovor&quot;) &gt; -1)) {
+          txtFIOdogovor.Text = GetValueFromRowItem(RowItem.FIOdogovor);
+   }
+          txtFIOdogovor.ToolTip = &quot;ФИО в договоре&quot;;
+          if (ReadOnly || (DataComponent.DenyEdit.IndexOf(&quot;FIOdogovor&quot;) &gt; -1))
+          {
+            ControlsToHide.Add(&quot;btnFIOdogovor&quot;);
+            txtFIOdogovor.Enabled = false;
+          }
+          if (DataComponent.DenyVisible.IndexOf(&quot;FIOdogovor&quot;) &gt; -1) 
+          {
+            lblFIOdogovor.Visible = false;
+            txtFIOdogovor.Visible = false;
+          }
+          if (OnFieldInit != null)
+          {
+            OnFieldInit(txtFIOdogovor, new EventArgs());
+          }
+          if(RowItem.DataInstall != Convert.ToDateTime(&quot;30.12.1899&quot;) &amp;&amp; RowItem.DataInstall != Convert.ToDateTime(&quot;01.01.0001&quot;))
+            DateDataInstall.Text=RowItem.DataInstall.ToShortDateString();
+          DateDataInstall.ToolTip = &quot;Дата инсталяции&quot;;
+          if (ReadOnly || (DataComponent.DenyEdit.IndexOf(&quot;DataInstall&quot;) &gt; -1))
+          {
+            ControlsToHide.Add(&quot;btnDataInstall&quot;);
+            DateDataInstall.Enabled = false;
+          }
+          if (DataComponent.DenyVisible.IndexOf(&quot;DataInstall&quot;) &gt; -1) 
+          {
+            lblDataInstall.Visible = false;
+            DateDataInstall.Visible = false;
+          }
+          if (OnFieldInit != null)
+          {
+            OnFieldInit(DateDataInstall, new EventArgs());
+          }
+          DataTable dtSrochDogovor = MKSNManager.Session.GetData(&quot; select TP_Spr_SrochDogID , dbo.TP_Spr_SrochDog_BRIEF_F(TP_Spr_SrochDogID ) BRIEF from TP_Spr_SrochDog order by BRIEF &quot;);
+          if (dtSrochDogovor!=null) { 
+            cmbSrochDogovor.DataSource = dtSrochDogovor;
+            cmbSrochDogovor.DataTextField = &quot;BRIEF&quot;;
+            cmbSrochDogovor.DataValueField = &quot;TP_Spr_SrochDogID&quot;;
+          }
+          cmbSrochDogovor.DataBind();
+          if (RowItem.SrochDogovor!= null)
+          {
+            cmbSrochDogovor.SelectedValue = RowItem.SrochDogovor.ID.ToString();
+          }
+          cmbSrochDogovor.Items.Insert(0, new System.Web.UI.WebControls.ListItem(string.Empty, string.Empty));
+          cmbSrochDogovor.ToolTip = &quot;Срок договора&quot;;
+          if (ReadOnly || (DataComponent.DenyEdit.IndexOf(&quot;SrochDogovor&quot;) &gt; -1))
+          {
+            ControlsToHide.Add(&quot;btnSrochDogovor&quot;);
+            cmbSrochDogovor.Enabled = false;
+          }
+          if (DataComponent.DenyVisible.IndexOf(&quot;SrochDogovor&quot;) &gt; -1) 
+          {
+            lblSrochDogovor.Visible = false;
+            cmbSrochDogovor.Visible = false;
+          }
+          if (OnFieldInit != null)
+          {
+            OnFieldInit(cmbSrochDogovor, new EventArgs());
+          }
+          cmbDocPolych.Items.Clear();
+          cmbDocPolych.Items.Insert(0, new System.Web.UI.WebControls.ListItem(&quot;Да&quot;, &quot;-1&quot;));
+          cmbDocPolych.Items.Insert(0, new System.Web.UI.WebControls.ListItem(&quot;Нет&quot;, &quot;0&quot;));
+          try {
+          cmbDocPolych.SelectedValue = ((int)RowItem.DocPolych).ToString();
+          }catch{}
+          cmbDocPolych.ToolTip = &quot;Документы получены&quot;;
+          if (ReadOnly || (DataComponent.DenyEdit.IndexOf(&quot;DocPolych&quot;) &gt; -1))
+          {
+            ControlsToHide.Add(&quot;btnDocPolych&quot;);
+            cmbDocPolych.Enabled = false;
+          }
+          if (DataComponent.DenyVisible.IndexOf(&quot;DocPolych&quot;) &gt; -1) 
+          {
+            lblDocPolych.Visible = false;
+            cmbDocPolych.Visible = false;
+          }
+          if (OnFieldInit != null)
+          {
+            OnFieldInit(cmbDocPolych, new EventArgs());
+          }
+          if(RowItem.DataSZT != Convert.ToDateTime(&quot;30.12.1899&quot;) &amp;&amp; RowItem.DataSZT != Convert.ToDateTime(&quot;01.01.0001&quot;))
+            DateDataSZT.Text=RowItem.DataSZT.ToShortDateString();
+          DateDataSZT.ToolTip = &quot;Дата передачи в СЗТ&quot;;
+          if (ReadOnly || (DataComponent.DenyEdit.IndexOf(&quot;DataSZT&quot;) &gt; -1))
+          {
+            ControlsToHide.Add(&quot;btnDataSZT&quot;);
+            DateDataSZT.Enabled = false;
+          }
+          if (DataComponent.DenyVisible.IndexOf(&quot;DataSZT&quot;) &gt; -1) 
+          {
+            lblDataSZT.Visible = false;
+            DateDataSZT.Visible = false;
+          }
+          if (OnFieldInit != null)
+          {
+            OnFieldInit(DateDataSZT, new EventArgs());
+          }
+          cmbVklVReestr.Items.Clear();
+          cmbVklVReestr.Items.Insert(0, new System.Web.UI.WebControls.ListItem(&quot;Да&quot;, &quot;-1&quot;));
+          cmbVklVReestr.Items.Insert(0, new System.Web.UI.WebControls.ListItem(&quot;Нет&quot;, &quot;0&quot;));
+          try {
+          cmbVklVReestr.SelectedValue = ((int)RowItem.VklVReestr).ToString();
+          }catch{}
+          cmbVklVReestr.ToolTip = &quot;Включена в реестр для оплаты&quot;;
+          if (ReadOnly || (DataComponent.DenyEdit.IndexOf(&quot;VklVReestr&quot;) &gt; -1))
+          {
+            ControlsToHide.Add(&quot;btnVklVReestr&quot;);
+            cmbVklVReestr.Enabled = false;
+          }
+          if (DataComponent.DenyVisible.IndexOf(&quot;VklVReestr&quot;) &gt; -1) 
+          {
+            lblVklVReestr.Visible = false;
+            cmbVklVReestr.Visible = false;
+          }
+          if (OnFieldInit != null)
+          {
+            OnFieldInit(cmbVklVReestr, new EventArgs());
+          }
+          cmbOtkaz.Items.Clear();
+          cmbOtkaz.Items.Insert(0, new System.Web.UI.WebControls.ListItem(&quot;Да&quot;, &quot;-1&quot;));
+          cmbOtkaz.Items.Insert(0, new System.Web.UI.WebControls.ListItem(&quot;Нет&quot;, &quot;0&quot;));
+          try {
+          cmbOtkaz.SelectedValue = ((int)RowItem.Otkaz).ToString();
+          }catch{}
+          cmbOtkaz.ToolTip = &quot;Отказ&quot;;
+          if (ReadOnly || (DataComponent.DenyEdit.IndexOf(&quot;Otkaz&quot;) &gt; -1))
+          {
+            ControlsToHide.Add(&quot;btnOtkaz&quot;);
+            cmbOtkaz.Enabled = false;
+          }
+          if (DataComponent.DenyVisible.IndexOf(&quot;Otkaz&quot;) &gt; -1) 
+          {
+            lblOtkaz.Visible = false;
+            cmbOtkaz.Visible = false;
+          }
+          if (OnFieldInit != null)
+          {
+            OnFieldInit(cmbOtkaz, new EventArgs());
+          }
+   if (!(DataComponent.DenyVisible.IndexOf(&quot;OpisProblem&quot;) &gt; -1)) {
+          txtOpisProblem.Text = GetValueFromRowItem(RowItem.OpisProblem);
+   }
+          txtOpisProblem.ToolTip = &quot;Описание проблемы&quot;;
+          if (ReadOnly || (DataComponent.DenyEdit.IndexOf(&quot;OpisProblem&quot;) &gt; -1))
+          {
+            ControlsToHide.Add(&quot;btnOpisProblem&quot;);
+            txtOpisProblem.Enabled = false;
+          }
+          if (DataComponent.DenyVisible.IndexOf(&quot;OpisProblem&quot;) &gt; -1) 
+          {
+            lblOpisProblem.Visible = false;
+            txtOpisProblem.Visible = false;
+          }
+          if (OnFieldInit != null)
+          {
+            OnFieldInit(txtOpisProblem, new EventArgs());
+          }
+          cmbOtprVKEY.Items.Clear();
+          cmbOtprVKEY.Items.Insert(0, new System.Web.UI.WebControls.ListItem(&quot;Да&quot;, &quot;-1&quot;));
+          cmbOtprVKEY.Items.Insert(0, new System.Web.UI.WebControls.ListItem(&quot;Нет&quot;, &quot;0&quot;));
+          try {
+          cmbOtprVKEY.SelectedValue = ((int)RowItem.OtprVKEY).ToString();
+          }catch{}
+          cmbOtprVKEY.ToolTip = &quot;Отправлено в КЭУ&quot;;
+          if (ReadOnly || (DataComponent.DenyEdit.IndexOf(&quot;OtprVKEY&quot;) &gt; -1))
+          {
+            ControlsToHide.Add(&quot;btnOtprVKEY&quot;);
+            cmbOtprVKEY.Enabled = false;
+          }
+          if (DataComponent.DenyVisible.IndexOf(&quot;OtprVKEY&quot;) &gt; -1) 
+          {
+            lblOtprVKEY.Visible = false;
+            cmbOtprVKEY.Visible = false;
+          }
+          if (OnFieldInit != null)
+          {
+            OnFieldInit(cmbOtprVKEY, new EventArgs());
+          }
+          if(RowItem.DataOtpravVKEY != Convert.ToDateTime(&quot;30.12.1899&quot;) &amp;&amp; RowItem.DataOtpravVKEY != Convert.ToDateTime(&quot;01.01.0001&quot;))
+            DateDataOtpravVKEY.Text=RowItem.DataOtpravVKEY.ToShortDateString();
+          DateDataOtpravVKEY.ToolTip = &quot;Дата отправки в КЭУ&quot;;
+          if (ReadOnly || (DataComponent.DenyEdit.IndexOf(&quot;DataOtpravVKEY&quot;) &gt; -1))
+          {
+            ControlsToHide.Add(&quot;btnDataOtpravVKEY&quot;);
+            DateDataOtpravVKEY.Enabled = false;
+          }
+          if (DataComponent.DenyVisible.IndexOf(&quot;DataOtpravVKEY&quot;) &gt; -1) 
+          {
+            lblDataOtpravVKEY.Visible = false;
+            DateDataOtpravVKEY.Visible = false;
+          }
+          if (OnFieldInit != null)
+          {
+            OnFieldInit(DateDataOtpravVKEY, new EventArgs());
+          }
+          cmbDopSogl.Items.Clear();
+          cmbDopSogl.Items.Insert(0, new System.Web.UI.WebControls.ListItem(&quot;Да&quot;, &quot;-1&quot;));
+          cmbDopSogl.Items.Insert(0, new System.Web.UI.WebControls.ListItem(&quot;Нет&quot;, &quot;0&quot;));
+          try {
+          cmbDopSogl.SelectedValue = ((int)RowItem.DopSogl).ToString();
+          }catch{}
+          cmbDopSogl.ToolTip = &quot;Дополнительное соглашение&quot;;
+          if (ReadOnly || (DataComponent.DenyEdit.IndexOf(&quot;DopSogl&quot;) &gt; -1))
+          {
+            ControlsToHide.Add(&quot;btnDopSogl&quot;);
+            cmbDopSogl.Enabled = false;
+          }
+          if (DataComponent.DenyVisible.IndexOf(&quot;DopSogl&quot;) &gt; -1) 
+          {
+            lblDopSogl.Visible = false;
+            cmbDopSogl.Visible = false;
+          }
+          if (OnFieldInit != null)
+          {
+            OnFieldInit(cmbDopSogl, new EventArgs());
+          }
+   if (!(DataComponent.DenyVisible.IndexOf(&quot;NumDogovor&quot;) &gt; -1)) {
+          txtNumDogovor.Text = GetValueFromRowItem(RowItem.NumDogovor);
+   }
+          txtNumDogovor.ToolTip = &quot;Номер договора&quot;;
+          if (ReadOnly || (DataComponent.DenyEdit.IndexOf(&quot;NumDogovor&quot;) &gt; -1))
+          {
+            ControlsToHide.Add(&quot;btnNumDogovor&quot;);
+            txtNumDogovor.Enabled = false;
+          }
+          if (DataComponent.DenyVisible.IndexOf(&quot;NumDogovor&quot;) &gt; -1) 
+          {
+            lblNumDogovor.Visible = false;
+            txtNumDogovor.Visible = false;
+          }
+          if (OnFieldInit != null)
+          {
+            OnFieldInit(txtNumDogovor, new EventArgs());
+          }
+   if (!(DataComponent.DenyVisible.IndexOf(&quot;Komment&quot;) &gt; -1)) {
+          txtKomment.Text = GetValueFromRowItem(RowItem.Komment);
+   }
+          txtKomment.ToolTip = &quot;Комментарий&quot;;
+          if (ReadOnly || (DataComponent.DenyEdit.IndexOf(&quot;Komment&quot;) &gt; -1))
+          {
+            ControlsToHide.Add(&quot;btnKomment&quot;);
+            txtKomment.Enabled = false;
+          }
+          if (DataComponent.DenyVisible.IndexOf(&quot;Komment&quot;) &gt; -1) 
+          {
+            lblKomment.Visible = false;
+            txtKomment.Visible = false;
+          }
+          if (OnFieldInit != null)
+          {
+            OnFieldInit(txtKomment, new EventArgs());
+          }
+      }
+      if (ReadOnly) btnSave.Enabled = false;
+    }
+
+    #region Web Form Designer generated code
+    override protected void OnInit(EventArgs e)
+    {
+      base.OnInit(e);
+      InitializeComponent();
+    }
+
+    private void InitializeComponent()
+    {
+      this.btnSave.Click += new System.EventHandler(this.btnSave_Click);
+      this.btnCancel.Click += new System.EventHandler(this.btnCancel_Click);
+      this.Load += new System.EventHandler(this.Page_Load);
+      this.Unload += new System.EventHandler(this.Page_Unload);
+
+    }
+    #endregion
+
+     private string GetValueFromRowItem(object RowItemValue)
+     {
+       string Result = string.Empty;
+       if (RowItemValue != null)
+       {
+         Result = RowItemValue.ToString();
+       }
+
+       return Result;
+     }
+
+    private void btnCancel_Click(object sender, System.EventArgs e)
+    {
+        if (OnCancel != null)
+        {
+          OnCancel(this, new EventArgs());
+        }
+        else
+        {
+           //Response.Redirect(BackUrl);
+        }
+    }
+
+    private void btnSave_Click(object sender, System.EventArgs e)
+    {
+         if (RowItem == null)
+         {
+           if (OnInfo != null)
+           {
+              OnInfo(this, new InfoEventArgs(&quot;Error on create row.&quot;, System.Drawing.Color.Red));
+           }
+           else
+           {
+              TP_Zay_ZayLabelInfo.Text = &quot;Error on create row. &quot;;
+              TP_Zay_ZayLabelInfo.ForeColor = System.Drawing.Color.Red;
+           }
+           return;
+         }
+        if (OnBeforeSave != null)
+        {
+          OnBeforeSave(this, new EventArgs());
+        }
+       try
+       {
+          RowItem.Num = Convert.ToInt32( txtNum.Text);
+       }
+       catch
+       {
+         TP_Zay_ZayLabelInfo.Text = &quot;Enter numeric value to field Номер заявки  (example 100)&quot;;
+         return;
+       }
+       try
+       {
+         if (DateDataPriem.Text != string.Empty)
+         {
+              RowItem.DataPriem = Convert.ToDateTime(DateDataPriem.Text);
+         }
+         else 
+         {
+              RowItem.DataPriem = DateTime.MinValue;
+         }
+       }
+       catch
+       {
+         if (OnInfo != null)
+           {
+              OnInfo(this, new InfoEventArgs(&quot;Введите правильную дату в поле Дата приема (например 14.11.1973)&quot;, System.Drawing.Color.Red));
+           }
+           else
+           {
+              TP_Zay_ZayLabelInfo.Text = &quot;Введите правильную дату в поле Дата приема (например 14.11.1973)&quot;;
+           }
+       }
+   RowItem.FIO = txtFIO.Text;
+      if (cmbTheOperator.SelectedValue.ToString() != string.Empty)
+      {
+        RowItem.TheOperator = RowItem.Application.FindRowObject(&quot;TP_Spr_Oper&quot;, new Guid(cmbTheOperator.SelectedValue.ToString()));
+      }
+      else
+      {
+        try {
+        RowItem.TheOperator = null;
+        }catch {}
+      }
+   RowItem.Adres = txtAdres.Text;
+      if (cmbRayon.SelectedValue.ToString() != string.Empty)
+      {
+        RowItem.Rayon = RowItem.Application.FindRowObject(&quot;Rayon&quot;, new Guid(cmbRayon.SelectedValue.ToString()));
+      }
+      else
+      {
+        try {
+        RowItem.Rayon = null;
+        }catch {}
+      }
+      if (cmbMetro.SelectedValue.ToString() != string.Empty)
+      {
+        RowItem.Metro = RowItem.Application.FindRowObject(&quot;TP_Spr_Metro&quot;, new Guid(cmbMetro.SelectedValue.ToString()));
+      }
+      else
+      {
+        try {
+        RowItem.Metro = null;
+        }catch {}
+      }
+   RowItem.KonrLizo = txtKonrLizo.Text;
+   RowItem.KontTelefon = txtKontTelefon.Text;
+   RowItem.KontEMAIL = txtKontEMAIL.Text;
+   RowItem.VremjaDljaSvjazi = txtVremjaDljaSvjazi.Text;
+       try
+       {
+         if (DateGelData.Text != string.Empty)
+         {
+              RowItem.GelData = Convert.ToDateTime(DateGelData.Text);
+         }
+         else 
+         {
+              RowItem.GelData = DateTime.MinValue;
+         }
+       }
+       catch
+       {
+         if (OnInfo != null)
+           {
+              OnInfo(this, new InfoEventArgs(&quot;Введите правильную дату в поле Желаемая дата визита инсталятора (например 14.11.1973)&quot;, System.Drawing.Color.Red));
+           }
+           else
+           {
+              TP_Zay_ZayLabelInfo.Text = &quot;Введите правильную дату в поле Желаемая дата визита инсталятора (например 14.11.1973)&quot;;
+           }
+       }
+      if (cmbGelVremja.SelectedValue.ToString() != string.Empty)
+      {
+        RowItem.GelVremja = RowItem.Application.FindRowObject(&quot;TP_Spr_VrVisInst&quot;, new Guid(cmbGelVremja.SelectedValue.ToString()));
+      }
+      else
+      {
+        try {
+        RowItem.GelVremja = null;
+        }catch {}
+      }
+      if (cmbPortref.SelectedValue.ToString() != string.Empty)
+      {
+        RowItem.Portref = RowItem.Application.FindRowObject(&quot;TP_SPR_Port&quot;, new Guid(cmbPortref.SelectedValue.ToString()));
+      }
+      else
+      {
+        try {
+        RowItem.Portref = null;
+        }catch {}
+      }
+      if (cmbKoordin.SelectedValue.ToString() != string.Empty)
+      {
+        RowItem.Koordin = RowItem.Application.FindRowObject(&quot;TP_Spr_Koor&quot;, new Guid(cmbKoordin.SelectedValue.ToString()));
+      }
+      else
+      {
+        try {
+        RowItem.Koordin = null;
+        }catch {}
+      }
+      if (cmbIngener.SelectedValue.ToString() != string.Empty)
+      {
+        RowItem.Ingener = RowItem.Application.FindRowObject(&quot;TP_Spr_Ing&quot;, new Guid(cmbIngener.SelectedValue.ToString()));
+      }
+      else
+      {
+        try {
+        RowItem.Ingener = null;
+        }catch {}
+      }
+   RowItem.VidanModemSer = txtVidanModemSer.Text;
+      if (cmbTarif.SelectedValue.ToString() != string.Empty)
+      {
+        RowItem.Tarif = RowItem.Application.FindRowObject(&quot;TP_Spr_Tar&quot;, new Guid(cmbTarif.SelectedValue.ToString()));
+      }
+      else
+      {
+        try {
+        RowItem.Tarif = null;
+        }catch {}
+      }
+   RowItem.FIOdogovor = txtFIOdogovor.Text;
+       try
+       {
+         if (DateDataInstall.Text != string.Empty)
+         {
+              RowItem.DataInstall = Convert.ToDateTime(DateDataInstall.Text);
+         }
+         else 
+         {
+              RowItem.DataInstall = DateTime.MinValue;
+         }
+       }
+       catch
+       {
+         if (OnInfo != null)
+           {
+              OnInfo(this, new InfoEventArgs(&quot;Введите правильную дату в поле Дата инсталяции (например 14.11.1973)&quot;, System.Drawing.Color.Red));
+           }
+           else
+           {
+              TP_Zay_ZayLabelInfo.Text = &quot;Введите правильную дату в поле Дата инсталяции (например 14.11.1973)&quot;;
+           }
+       }
+      if (cmbSrochDogovor.SelectedValue.ToString() != string.Empty)
+      {
+        RowItem.SrochDogovor = RowItem.Application.FindRowObject(&quot;TP_Spr_SrochDog&quot;, new Guid(cmbSrochDogovor.SelectedValue.ToString()));
+      }
+      else
+      {
+        try {
+        RowItem.SrochDogovor = null;
+        }catch {}
+      }
+        try {
+        RowItem.DocPolych = (TP_Zay.enumBoolean)Convert.ToInt32(cmbDocPolych.SelectedValue);
+        }catch{}
+       try
+       {
+         if (DateDataSZT.Text != string.Empty)
+         {
+              RowItem.DataSZT = Convert.ToDateTime(DateDataSZT.Text);
+         }
+         else 
+         {
+              RowItem.DataSZT = DateTime.MinValue;
+         }
+       }
+       catch
+       {
+         if (OnInfo != null)
+           {
+              OnInfo(this, new InfoEventArgs(&quot;Введите правильную дату в поле Дата передачи в СЗТ (например 14.11.1973)&quot;, System.Drawing.Color.Red));
+           }
+           else
+           {
+              TP_Zay_ZayLabelInfo.Text = &quot;Введите правильную дату в поле Дата передачи в СЗТ (например 14.11.1973)&quot;;
+           }
+       }
+        try {
+        RowItem.VklVReestr = (TP_Zay.enumBoolean)Convert.ToInt32(cmbVklVReestr.SelectedValue);
+        }catch{}
+        try {
+        RowItem.Otkaz = (TP_Zay.enumBoolean)Convert.ToInt32(cmbOtkaz.SelectedValue);
+        }catch{}
+   RowItem.OpisProblem = txtOpisProblem.Text;
+        try {
+        RowItem.OtprVKEY = (TP_Zay.enumBoolean)Convert.ToInt32(cmbOtprVKEY.SelectedValue);
+        }catch{}
+       try
+       {
+         if (DateDataOtpravVKEY.Text != string.Empty)
+         {
+              RowItem.DataOtpravVKEY = Convert.ToDateTime(DateDataOtpravVKEY.Text);
+         }
+         else 
+         {
+              RowItem.DataOtpravVKEY = DateTime.MinValue;
+         }
+       }
+       catch
+       {
+         if (OnInfo != null)
+           {
+              OnInfo(this, new InfoEventArgs(&quot;Введите правильную дату в поле Дата отправки в КЭУ (например 14.11.1973)&quot;, System.Drawing.Color.Red));
+           }
+           else
+           {
+              TP_Zay_ZayLabelInfo.Text = &quot;Введите правильную дату в поле Дата отправки в КЭУ (например 14.11.1973)&quot;;
+           }
+       }
+        try {
+        RowItem.DopSogl = (TP_Zay.enumBoolean)Convert.ToInt32(cmbDopSogl.SelectedValue);
+        }catch{}
+   RowItem.NumDogovor = txtNumDogovor.Text;
+   RowItem.Komment = txtKomment.Text;
+      try
+      {
+        RowItem.Save();
+        if (OnInfo != null)
+        {
+          OnInfo(this, new InfoEventArgs(&quot;Row saved&quot;, System.Drawing.Color.Green));
+        }
+        else
+        {
+          TP_Zay_ZayLabelInfo.ForeColor = System.Drawing.Color.Green;
+          TP_Zay_ZayLabelInfo.Text = &quot;Row saved&quot;;
+        }
+        if (OnAfterSave != null)
+        {
+          OnAfterSave(this, new EventArgs());
+        }
+      }
+      catch(Exception Ex)
+      {
+        TP_Zay_ZayLabelInfo.Text = &quot;Save error. &quot; + Ex.Message;
+        TP_Zay_ZayLabelInfo.ForeColor = System.Drawing.Color.Red;
+      }
+    }
+    private DataView ConfigureView(DataTable dt, string DataTextFormatString)
+    {
+      DataView Result = null;
+      DataTable NewDT = new DataTable(dt.TableName);
+      NewDT.Columns.Add(&quot;text&quot;);
+      NewDT.Columns.Add(&quot;id&quot;);
+      foreach(DataRow dr  in dt.Rows)
+      {
+        DataRow newDr = NewDT.NewRow();
+        newDr[&quot;id&quot;] = dr[&quot;ID&quot;].ToString();
+        string Text =  DataTextFormatString;
+        foreach(DataColumn col in dt.Columns )
+        {
+           Text = Text.Replace(col.ColumnName, dr[col].ToString());
+        }
+        newDr[&quot;text&quot;] = Text;
+        NewDT.Rows.Add(newDr);
+      }
+      Result = NewDT.DefaultView;
+      Result.Sort = &quot;text&quot;;
+      return Result;
+    }
+
+    protected string GetOnLoadScript()
+    {
+      string result = string.Empty;
+      if (ControlsToHide != null)
+      {
+        foreach(string str in ControlsToHide)
+        {
+          result += &quot;ElementHide('&quot; + str + &quot;');&quot;;
+        }
+      }
+      return result;
+    }
+  }
+}
+
+"><FormData Name=""/></BlockHolder></ModuleHolder><ModuleHolder ModuleName="ucTabTP_Zay_Zay.ASCX" File="ucTabTP_Zay_Zay.ASCX"><BlockHolder BlockName="code" BlockCode="&lt;%@ Control Language=&quot;c#&quot; AutoEventWireup=&quot;false&quot; CodeFile=&quot;ucTabTP_Zay_Zay.ascx.cs&quot; Inherits=&quot;TP_Zay.ASPNET.ucTabTP_Zay_Zay&quot; %&gt;
+&lt;%@ Register Assembly=&quot;Infragistics2.WebUI.UltraWebGrid.v6.2, Version=6.2.20062.34, Culture=neutral, PublicKeyToken=7dd5c3163f2cd0cb&quot;
+Namespace=&quot;Infragistics.WebUI.UltraWebGrid&quot; TagPrefix=&quot;igtbl&quot; %&gt;
+&lt;asp:HyperLink id=&quot;HyperLinkAddNew&quot; runat=&quot;server&quot;&gt;&lt;/asp:HyperLink&gt;&lt;br&gt;
+ &lt;igtbl:ultrawebgrid id=&quot;DataGrid_TP_Zay_Zay&quot; runat=&quot;server&quot; Width=&quot;100%&quot; Height=&quot;350px&quot;&gt;&lt;Bands&gt;
+&lt;igtbl:UltraGridBand&gt;
+&lt;AddNewRow View=&quot;NotSet&quot; Visible=&quot;NotSet&quot;&gt;&lt;/AddNewRow&gt;
+&lt;FilterOptions EmptyString=&quot;&quot; AllString=&quot;&quot; NonEmptyString=&quot;&quot; AllowRowFiltering=&quot;OnClient&quot;&gt;
+&lt;FilterDropDownStyle BorderWidth=&quot;1px&quot; BorderColor=&quot;Silver&quot; BorderStyle=&quot;Solid&quot; Font-Size=&quot;11px&quot; Font-Names=&quot;Verdana,Arial,Helvetica,sans-serif&quot; BackColor=&quot;White&quot; Width=&quot;200px&quot; CustomRules=&quot;overflow:auto;&quot;&gt;
+&lt;Padding Left=&quot;2px&quot;&gt;&lt;/Padding&gt;
+&lt;/FilterDropDownStyle&gt;
+&lt;FilterHighlightRowStyle ForeColor=&quot;White&quot; BackColor=&quot;#151C55&quot;&gt;&lt;/FilterHighlightRowStyle&gt;
+&lt;/FilterOptions&gt;
+&lt;/igtbl:UltraGridBand&gt;
+&lt;/Bands&gt;
+&lt;DisplayLayout ViewType=&quot;OutlookGroupBy&quot; Version=&quot;4.00&quot; AllowSortingDefault=&quot;OnClient&quot; AllowColSizingDefault=&quot;Free&quot; HeaderClickActionDefault=&quot;SortSingle&quot; Name=&quot;ctl00xDataGrid_TP_Zay_Zay&quot; BorderCollapseDefault=&quot;Separate&quot; RowSelectorsDefault=&quot;No&quot; RowHeightDefault=&quot;20px&quot; AllowColumnMovingDefault=&quot;OnServer&quot; SelectTypeRowDefault=&quot;Single&quot;&gt;
+&lt;GroupByBox&gt;
+&lt;Style BorderColor=&quot;Window&quot; BackColor=&quot;ActiveBorder&quot;&gt;&lt;/Style&gt;
+&lt;/GroupByBox&gt;
+&lt;GroupByRowStyleDefault BorderColor=&quot;Window&quot; BackColor=&quot;Control&quot;&gt;&lt;/GroupByRowStyleDefault&gt;
+&lt;FooterStyleDefault BorderWidth=&quot;1px&quot; BorderStyle=&quot;Solid&quot; BackColor=&quot;LightGray&quot;&gt;
+&lt;BorderDetails ColorTop=&quot;White&quot; WidthLeft=&quot;1px&quot; WidthTop=&quot;1px&quot; ColorLeft=&quot;White&quot;&gt;&lt;/BorderDetails&gt;
+&lt;/FooterStyleDefault&gt;
+
+&lt;RowStyleDefault BorderWidth=&quot;1px&quot; BorderColor=&quot;Silver&quot; BorderStyle=&quot;Solid&quot; BackColor=&quot;Window&quot;&gt;
+&lt;BorderDetails ColorTop=&quot;Window&quot; ColorLeft=&quot;Window&quot;&gt;&lt;/BorderDetails&gt;
+
+&lt;Padding Left=&quot;3px&quot;&gt;&lt;/Padding&gt;
+&lt;/RowStyleDefault&gt;
+
+&lt;FilterOptionsDefault EmptyString=&quot;(Empty)&quot; AllString=&quot;(All)&quot; NonEmptyString=&quot;(NonEmpty)&quot;&gt;
+&lt;FilterDropDownStyle BorderWidth=&quot;1px&quot; BorderColor=&quot;Silver&quot; BorderStyle=&quot;Solid&quot; Font-Size=&quot;11px&quot; Font-Names=&quot;Verdana,Arial,Helvetica,sans-serif&quot; BackColor=&quot;White&quot; Width=&quot;200px&quot; CustomRules=&quot;overflow:auto;&quot;&gt;
+&lt;Padding Left=&quot;2px&quot;&gt;&lt;/Padding&gt;
+&lt;/FilterDropDownStyle&gt;
+
+&lt;FilterHighlightRowStyle ForeColor=&quot;White&quot; BackColor=&quot;#151C55&quot;&gt;&lt;/FilterHighlightRowStyle&gt;
+&lt;/FilterOptionsDefault&gt;
+
+&lt;HeaderStyleDefault HorizontalAlign=&quot;Left&quot; BorderStyle=&quot;Solid&quot; BackColor=&quot;LightGray&quot;&gt;
+&lt;BorderDetails ColorTop=&quot;White&quot; WidthLeft=&quot;1px&quot; WidthTop=&quot;1px&quot; ColorLeft=&quot;White&quot;&gt;&lt;/BorderDetails&gt;
+&lt;/HeaderStyleDefault&gt;
+
+&lt;EditCellStyleDefault BorderWidth=&quot;0px&quot; BorderStyle=&quot;None&quot;&gt;&lt;/EditCellStyleDefault&gt;
+
+&lt;FrameStyle BorderWidth=&quot;1px&quot; BorderColor=&quot;InactiveCaption&quot; BorderStyle=&quot;Solid&quot; Font-Size=&quot;8.25pt&quot; Font-Names=&quot;Microsoft Sans Serif&quot; BackColor=&quot;Window&quot; Width=&quot;100%&quot;&gt;&lt;/FrameStyle&gt;
+
+&lt;Pager&gt;
+&lt;Style BorderWidth=&quot;1px&quot; BorderStyle=&quot;Solid&quot; BackColor=&quot;LightGray&quot;&gt;
+&lt;BorderDetails ColorTop=&quot;White&quot; WidthLeft=&quot;1px&quot; WidthTop=&quot;1px&quot; ColorLeft=&quot;White&quot;&gt;&lt;/BorderDetails&gt;
+&lt;/Style&gt;
+&lt;/Pager&gt;
+
+&lt;AddNewBox&gt;
+&lt;Style BorderWidth=&quot;1px&quot; BorderColor=&quot;InactiveCaption&quot; BorderStyle=&quot;Solid&quot; BackColor=&quot;Window&quot;&gt;
+&lt;BorderDetails ColorTop=&quot;White&quot; WidthLeft=&quot;1px&quot; WidthTop=&quot;1px&quot; ColorLeft=&quot;White&quot;&gt;&lt;/BorderDetails&gt;
+&lt;/Style&gt;
+&lt;/AddNewBox&gt;
+&lt;/DisplayLayout&gt;
+&lt;/igtbl:ultrawebgrid&gt;
+&lt;%=ClientScript()%&gt;
+&lt;script language=&quot;javascript&quot; type=&quot;text/javascript&quot;&gt;
+
+function TP_Zay_ZayLoad()
+
+{
+
+}
+
+function ElementShow(elName)
+
+{
+
+ var el;
+
+ el = document.getElementById(elName);
+
+ if (el != null)
+
+ {
+
+   el.style.display = '';
+
+ }
+
+}
+
+function ElementHide(elName)
+
+{
+
+ var el;
+
+ el = document.getElementById(elName);
+
+ if (el != null)
+
+ {
+
+   el.style.display = 'none';
+
+ }
+
+}
+
+&lt;/script&gt;
+
+
+"><FormData Name=""/></BlockHolder></ModuleHolder><ModuleHolder ModuleName="ucTabTP_Zay_Zay.ASCX.cs" File="ucTabTP_Zay_Zay.ASCX.cs"><BlockHolder BlockName="code" BlockCode="
+  namespace TP_Zay.ASPNET
+{
+  #region MTZ ASP NET Generator code
+  using System;
+  using System.Data;
+  using System.Collections;
+  using System.Drawing;
+  using System.Web;
+  using System.Web.UI.WebControls;
+  using System.Web.UI.HtmlControls;
+  using Mokasin.ASPNET;
+  using TP_Zay;
+  public partial class ucTabTP_Zay_Zay  : ucParent
+  {
+    // Добавленное руками
+    string EditColumnName = &quot;EditColumn&quot;;
+    string DeleteParameterName = &quot;DeleteParameterName&quot;;
+    string DeleteColumnName = &quot;DeleteColumn&quot;;
+    string EditParameterName = &quot;EditParameterName&quot;;
+    private int EditColumnIndex = -1;
+    private int DeleteColumnIndex = -1;
+    private int SelectColumnIndex = -1;
+
+    public  TP_Zay.TP_Zay_Zay_col DataSource
+    { 
+      get
+      {
+        return (TP_Zay.TP_Zay_Zay_col)base.MKSNDataSource;
+      }
+    }
+
+    private void Page_Load(object sender, System.EventArgs e)
+    {
+      base.Page_Load(sender,e); 
+      if (!IsPostBack) PageNum = Parameter(&quot;PageNum&quot;);
+      string EVENTTARGET = string.Empty;
+      string EVENTARGUMENT = string.Empty;
+      if (Request.Form[&quot;__EVENTTARGET&quot;] != null)   EVENTTARGET = Request.Form[&quot;__EVENTTARGET&quot;].ToString();
+      if (Request.Form[&quot;__EVENTARGUMENT&quot;] != null)   EVENTARGUMENT = Request.Form[&quot;__EVENTARGUMENT&quot;].ToString();
+    // БЛОК УДАЛЕНИЯ ЗАПИСИ begin
+      if (EVENTTARGET  == DeleteParameterName + &quot;TP_Zay_Zay&quot;)
+      {
+        string id = EVENTARGUMENT;
+        if (id != string.Empty)
+        {
+         // УДАЛЯЕМ ОБЪЕКТ
+         DataSource.Delete(id);
+         DataSource.Refresh();
+        }
+      }
+      // БЛОК УДАЛЕНИЯ ЗАПИСИ end
+      // БЛОК РЕДАКТИРОВАНИЯ ЗАПИСИ begin
+      if (EVENTTARGET == EditParameterName)
+      {
+        string id = string.Empty;
+        bool bEdit = false;
+          try
+          {
+            bEdit = EVENTARGUMENT.Substring(0,1) == &quot;1&quot;;
+            id = EVENTARGUMENT.ToString().Substring(1);
+          }
+          catch{}
+      if (id != string.Empty)
+      {
+        string EditURL = Request.ApplicationPath + &quot;/&quot; + EditPage.URL(Server);
+        AddParameter(ref EditURL, DataComponent.SelectIDParameterName, id);
+        AddParameter(ref EditURL, &quot;ObjectID&quot;, this.ObjectID);
+        if (!bEdit)
+          AddParameter(ref EditURL, &quot;mode&quot;, &quot;readonly&quot;);
+        Response.Redirect(EditURL);
+      }
+     }
+     // БЛОК РЕДАКТИРОВАНИЯ ЗАПИСИ end
+     LoadData();
+   }
+
+    private void LoadData()
+    {
+      if (DataSource != null)
+      {
+              DataSource.Refresh();
+              DataTable = DataSource.GetDataTable();
+      }
+      if (DataTable  != null)
+      {
+        DataView = DataComponent.PrepareDataSourceIG(DataTable, EditPage, AllowEdit, Mode.ToLower().IndexOf(&quot;readonly&quot;) &lt; -1, ref EditColumnName, ref DeleteColumnName,  Server);
+      }
+
+      DataGrid_TP_Zay_Zay.Columns.Clear();
+      DataGrid_TP_Zay_Zay.DataSource = DataView;
+      this.DataBind();
+     // change column headers here
+      DataGrid_TP_Zay_Zay.Columns.FromKey(&quot;ID&quot;).ServerOnly = true;
+      DataGrid_TP_Zay_Zay.Columns.FromKey(&quot;Brief&quot;).ServerOnly = true;
+
+      if (DataGrid_TP_Zay_Zay.Columns.FromKey(EditColumnName) != null)
+      {
+          DataGrid_TP_Zay_Zay.Columns.FromKey(EditColumnName).AllowGroupBy = Infragistics.WebUI.UltraWebGrid.AllowGroupBy.No;
+          DataGrid_TP_Zay_Zay.Columns.FromKey(EditColumnName).AllowRowFiltering = false;
+          DataGrid_TP_Zay_Zay.Columns.FromKey(EditColumnName).Header.Caption = &quot;Edit&quot;;
+      }
+      if (DataGrid_TP_Zay_Zay.Columns.FromKey(DeleteColumnName) != null)
+      {
+          DataGrid_TP_Zay_Zay.Columns.FromKey(DeleteColumnName).AllowGroupBy = Infragistics.WebUI.UltraWebGrid.AllowGroupBy.No;
+          DataGrid_TP_Zay_Zay.Columns.FromKey(DeleteColumnName).AllowRowFiltering = false;
+          DataGrid_TP_Zay_Zay.Columns.FromKey(DeleteColumnName).Header.Caption = &quot;Delete&quot;;
+      }
+
+      DataGrid_TP_Zay_Zay.Columns.FromKey(&quot;Num&quot;).Header.Caption = &quot;Номер заявки &quot;;
+      DataGrid_TP_Zay_Zay.Columns.FromKey(&quot;DataPriem&quot;).Header.Caption = &quot;Дата приема&quot;;
+      DataGrid_TP_Zay_Zay.Columns.FromKey(&quot;FIO&quot;).Header.Caption = &quot;ФИО&quot;;
+      DataGrid_TP_Zay_Zay.Columns.FromKey(&quot;TheOperator&quot;).Header.Caption = &quot;Оператор&quot;;
+      DataGrid_TP_Zay_Zay.Columns.FromKey(&quot;TheOperator_ID&quot;).ServerOnly = true;
+      DataGrid_TP_Zay_Zay.Columns.FromKey(&quot;Adres&quot;).Header.Caption = &quot;Адрес&quot;;
+      DataGrid_TP_Zay_Zay.Columns.FromKey(&quot;Rayon&quot;).Header.Caption = &quot;Район&quot;;
+      DataGrid_TP_Zay_Zay.Columns.FromKey(&quot;Rayon_ID&quot;).ServerOnly = true;
+      DataGrid_TP_Zay_Zay.Columns.FromKey(&quot;Metro&quot;).Header.Caption = &quot;Метро&quot;;
+      DataGrid_TP_Zay_Zay.Columns.FromKey(&quot;Metro_ID&quot;).ServerOnly = true;
+      DataGrid_TP_Zay_Zay.Columns.FromKey(&quot;KonrLizo&quot;).Header.Caption = &quot;Контактное лицо&quot;;
+      DataGrid_TP_Zay_Zay.Columns.FromKey(&quot;KontTelefon&quot;).Header.Caption = &quot;Контактный телефон&quot;;
+      DataGrid_TP_Zay_Zay.Columns.FromKey(&quot;KontEMAIL&quot;).Header.Caption = &quot;Контактный e-mail&quot;;
+      DataGrid_TP_Zay_Zay.Columns.FromKey(&quot;VremjaDljaSvjazi&quot;).Header.Caption = &quot;Время для связи&quot;;
+      DataGrid_TP_Zay_Zay.Columns.FromKey(&quot;GelData&quot;).Header.Caption = &quot;Желаемая дата визита инсталятора&quot;;
+      DataGrid_TP_Zay_Zay.Columns.FromKey(&quot;GelVremja&quot;).Header.Caption = &quot;Желаемое время визита инсталятора&quot;;
+      DataGrid_TP_Zay_Zay.Columns.FromKey(&quot;GelVremja_ID&quot;).ServerOnly = true;
+      DataGrid_TP_Zay_Zay.Columns.FromKey(&quot;Portref&quot;).Header.Caption = &quot;Порт&quot;;
+      DataGrid_TP_Zay_Zay.Columns.FromKey(&quot;Portref_ID&quot;).ServerOnly = true;
+      DataGrid_TP_Zay_Zay.Columns.FromKey(&quot;Koordin&quot;).Header.Caption = &quot;Координатор&quot;;
+      DataGrid_TP_Zay_Zay.Columns.FromKey(&quot;Koordin_ID&quot;).ServerOnly = true;
+      DataGrid_TP_Zay_Zay.Columns.FromKey(&quot;Ingener&quot;).Header.Caption = &quot;Инженер&quot;;
+      DataGrid_TP_Zay_Zay.Columns.FromKey(&quot;Ingener_ID&quot;).ServerOnly = true;
+      DataGrid_TP_Zay_Zay.Columns.FromKey(&quot;VidanModemSer&quot;).Header.Caption = &quot;Выданный модем серийник&quot;;
+      DataGrid_TP_Zay_Zay.Columns.FromKey(&quot;Tarif&quot;).Header.Caption = &quot;Тариф&quot;;
+      DataGrid_TP_Zay_Zay.Columns.FromKey(&quot;Tarif_ID&quot;).ServerOnly = true;
+      DataGrid_TP_Zay_Zay.Columns.FromKey(&quot;FIOdogovor&quot;).Header.Caption = &quot;ФИО в договоре&quot;;
+      DataGrid_TP_Zay_Zay.Columns.FromKey(&quot;DataInstall&quot;).Header.Caption = &quot;Дата инсталяции&quot;;
+      DataGrid_TP_Zay_Zay.Columns.FromKey(&quot;SrochDogovor&quot;).Header.Caption = &quot;Срок договора&quot;;
+      DataGrid_TP_Zay_Zay.Columns.FromKey(&quot;SrochDogovor_ID&quot;).ServerOnly = true;
+      DataGrid_TP_Zay_Zay.Columns.FromKey(&quot;DocPolych&quot;).Header.Caption = &quot;Документы получены&quot;;
+      DataGrid_TP_Zay_Zay.Columns.FromKey(&quot;DocPolych_VAL&quot;).ServerOnly = true;
+      DataGrid_TP_Zay_Zay.Columns.FromKey(&quot;DataSZT&quot;).Header.Caption = &quot;Дата передачи в СЗТ&quot;;
+      DataGrid_TP_Zay_Zay.Columns.FromKey(&quot;VklVReestr&quot;).Header.Caption = &quot;Включена в реестр для оплаты&quot;;
+      DataGrid_TP_Zay_Zay.Columns.FromKey(&quot;VklVReestr_VAL&quot;).ServerOnly = true;
+      DataGrid_TP_Zay_Zay.Columns.FromKey(&quot;Otkaz&quot;).Header.Caption = &quot;Отказ&quot;;
+      DataGrid_TP_Zay_Zay.Columns.FromKey(&quot;Otkaz_VAL&quot;).ServerOnly = true;
+      DataGrid_TP_Zay_Zay.Columns.FromKey(&quot;OpisProblem&quot;).Header.Caption = &quot;Описание проблемы&quot;;
+      DataGrid_TP_Zay_Zay.Columns.FromKey(&quot;OtprVKEY&quot;).Header.Caption = &quot;Отправлено в КЭУ&quot;;
+      DataGrid_TP_Zay_Zay.Columns.FromKey(&quot;OtprVKEY_VAL&quot;).ServerOnly = true;
+      DataGrid_TP_Zay_Zay.Columns.FromKey(&quot;DataOtpravVKEY&quot;).Header.Caption = &quot;Дата отправки в КЭУ&quot;;
+      DataGrid_TP_Zay_Zay.Columns.FromKey(&quot;DopSogl&quot;).Header.Caption = &quot;Дополнительное соглашение&quot;;
+      DataGrid_TP_Zay_Zay.Columns.FromKey(&quot;DopSogl_VAL&quot;).ServerOnly = true;
+      DataGrid_TP_Zay_Zay.Columns.FromKey(&quot;NumDogovor&quot;).Header.Caption = &quot;Номер договора&quot;;
+      DataGrid_TP_Zay_Zay.Columns.FromKey(&quot;Komment&quot;).Header.Caption = &quot;Комментарий&quot;;
+      if (AllowAddNew &amp;&amp; AllowEdit)
+      {
+         if (EditPage != null)
+         {
+           string EditURL = Request.ApplicationPath + &quot;/&quot; + EditPage.URL(Server);
+           AddParameter(ref EditURL, &quot;mode&quot;, &quot;addnew&quot;);
+           AddParameter(ref EditURL, &quot;ObjectID&quot;, ObjectID);
+           HyperLinkAddNew.Text = &quot;New row&quot;;
+           HyperLinkAddNew.NavigateUrl = EditURL;
+           HyperLinkAddNew.ImageUrl = &quot;../../images/new.gif&quot;;
+         }
+      }
+    }
+    protected string ClientScript()
+    {
+      string Result = string.Empty;
+      Result += &quot;&lt;script language=\&quot;Javascript\&quot;&gt;\n&quot;;
+      Result +=  &quot;function ConfirmDelete(id)\n&quot;;
+      Result += &quot;{\n&quot;;
+      Result += &quot;if (confirm('Delete row?') != 0)\n&quot;;
+      Result += &quot;{\n&quot;;
+      Result += &quot;__doPostBack('DeleteParameterNameTP_Zay_Zay',id);\n&quot;;
+      Result += &quot;}\n}\n&quot;;
+      Result += &quot;&lt;/script&gt;\n&quot;;
+      Result += &quot;&lt;script language=\&quot;Javascript\&quot;&gt;\n&quot;;
+      Result +=  &quot;function LinkToEdit(id)\n&quot;;
+      Result += &quot;{\n&quot;;
+      Result += &quot; __doPostBack('&quot; + EditParameterName + &quot;','1'+id);\n&quot;;
+      Result += &quot;}\n&quot;;
+      Result += &quot;&lt;/script&gt;\n&quot;;
+      Result += &quot;&lt;script language=\&quot;Javascript\&quot;&gt;\n&quot;;
+      Result +=  &quot;function LinkToView(id)\n&quot;;
+      Result += &quot;{\n&quot;;
+      Result += &quot; __doPostBack('&quot; + EditParameterName + &quot;','0'+id);\n&quot;;
+      Result += &quot;}\n&quot;;
+      Result += &quot;&lt;/script&gt;\n&quot;;
+      return Result;
+    }
+    #region Web Form Designer generated code
+    override protected void OnInit(EventArgs e)
+    {
+      base.OnInit(e);
+      InitializeComponent();
+    }
+
+    private void InitializeComponent()
+    {
+      this.Load += new System.EventHandler(this.Page_Load);
+
+    }
+    #endregion
+
+  }
+  #endregion
+}
+
+"><FormData Name=""/></BlockHolder></ModuleHolder><ModuleHolder ModuleName="ucTP_Zayav_Ist.ASCX" File="ucTP_Zayav_Ist.ASCX"><BlockHolder BlockName="code" BlockCode="&lt;%@ Control Language=&quot;c#&quot; AutoEventWireup=&quot;false&quot; CodeFile=&quot;ucTP_Zayav_Ist.ascx.cs&quot; Inherits=&quot;TP_Zay.ASPNET.ucTP_Zayav_Ist&quot; %&gt;
+&lt;TABLE id=&quot;Table1&quot; cellSpacing=&quot;0&quot; cellPadding=&quot;1&quot; width=&quot;100%&quot; border=&quot;0&quot;&gt;
+  &lt;TR&gt;
+  &lt;TD colspan=3 align=center&gt;
+        &lt;asp:Label id=&quot;TP_Zayav_IstLabelInfo&quot; runat=&quot;server&quot;&gt;&lt;/asp:Label&gt;
+  &lt;/TD&gt;
+  &lt;/TR&gt;
+  &lt;TR&gt;
+      &lt;TD width=20%&gt;
+        &lt;asp:Label id=&quot;lblImenStatys&quot; runat=&quot;server&quot; Width=&quot;100%&quot; ForeColor=&quot;#000000&quot;&gt;Изменён статус:&lt;/asp:Label&gt;
+      &lt;/TD&gt;
+      &lt;TD width=40%&gt;
+          &lt;asp:TextBox id=&quot;txtImenStatys&quot; runat=&quot;server&quot; Width=&quot;100%&quot; MaxLength=&quot;255&quot; Text=&quot;&quot;&gt;&lt;/asp:TextBox&gt;
+      &lt;/TD&gt;
+      &lt;TD width=40%&gt;
+          &lt;asp:RequiredFieldValidator id=&quot;rfvImenStatys&quot; runat=&quot;server&quot; ErrorMessage=&quot;Fill this field&quot; ControlToValidate=&quot;txtImenStatys&quot;&gt;&lt;/asp:RequiredFieldValidator&gt;
+      &lt;/TD&gt;
+    &lt;/TR&gt;
+  &lt;TR&gt;
+      &lt;TD width=20%&gt;
+        &lt;asp:Label id=&quot;lblData&quot; runat=&quot;server&quot; Width=&quot;100%&quot; ForeColor=&quot;#000000&quot;&gt;Дата и время изменения:&lt;/asp:Label&gt;
+      &lt;/TD&gt;
+      &lt;TD width=40%&gt;
+&lt;input id=&quot;changedDateData&quot; type=&quot;hidden&quot; value=0 name=&quot;changedDateData&quot; runat=&quot;server&quot;&gt;
+&lt;asp:textbox id=&quot;DateData&quot; runat=&quot;server&quot; Width=&quot;70px&quot;&gt;&lt;/asp:textbox&gt;
+&lt;A id='btnData' alt=&quot;Select date&quot; href=&quot;javascript:ShowCalendar('DateEdBtnData','&lt;%=this.DateData.ClientID%&gt;','&lt;%=this.changedDateData.ClientID.ToString()%&gt;')&quot; &gt;
+&lt;img id=DateEdBtnData height=14  src=&quot;&lt;%=Request.ApplicationPath%&gt;/Include/Calendar/calendar.gif&quot;  width=23 border=0&gt;&lt;/A&gt;
+&lt;asp:textbox id=&quot;TimeData&quot; runat=&quot;server&quot; Width=&quot;50px&quot;&gt;&lt;/asp:textbox&gt;
+      &lt;/TD&gt;
+      &lt;TD width=40%&gt;
+          &lt;asp:RequiredFieldValidator id=&quot;rfvData&quot; runat=&quot;server&quot; ErrorMessage=&quot;Fill this field&quot; ControlToValidate=&quot;DateData&quot;&gt;&lt;/asp:RequiredFieldValidator&gt;
+      &lt;/TD&gt;
+    &lt;/TR&gt;
+  &lt;TR&gt;
+      &lt;TD width=20%&gt;
+        &lt;asp:Label id=&quot;lblFIO&quot; runat=&quot;server&quot; Width=&quot;100%&quot; ForeColor=&quot;#000000&quot;&gt;Изменил(ФИО):&lt;/asp:Label&gt;
+      &lt;/TD&gt;
+      &lt;TD width=40%&gt;
+          &lt;asp:TextBox id=&quot;txtFIO&quot; runat=&quot;server&quot; Width=&quot;100%&quot; MaxLength=&quot;255&quot; Text=&quot;&quot;&gt;&lt;/asp:TextBox&gt;
+      &lt;/TD&gt;
+      &lt;TD width=40%&gt;
+      &lt;/TD&gt;
+    &lt;/TR&gt;
+  &lt;TR&gt;
+      &lt;TD width=20%&gt;
+        &lt;asp:Label id=&quot;lblKomment&quot; runat=&quot;server&quot; Width=&quot;100%&quot; ForeColor=&quot;#000000&quot;&gt;Комментарий:&lt;/asp:Label&gt;
+      &lt;/TD&gt;
+      &lt;TD width=40%&gt;
+          &lt;asp:TextBox id=&quot;txtKomment&quot; runat=&quot;server&quot; Width=&quot;100%&quot; MaxLength=&quot;255&quot; Text=&quot;&quot;&gt;&lt;/asp:TextBox&gt;
+      &lt;/TD&gt;
+      &lt;TD width=40%&gt;
+      &lt;/TD&gt;
+    &lt;/TR&gt;
+  &lt;TR&gt;
+      &lt;TD&gt;
+      &lt;/TD&gt;
+      &lt;TD align=&quot;right&quot;&gt;
+        &lt;asp:Button id=&quot;btnSave&quot; runat=&quot;server&quot; Text=&quot;Save&quot; Width=&quot;88px&quot;&gt;&lt;/asp:Button&gt;
+        &lt;asp:Button id=&quot;btnCancel&quot; runat=&quot;server&quot; Text=&quot;Cancel&quot; Width=&quot;88px&quot; CausesValidation=&quot;false&quot;&gt;&lt;/asp:Button&gt;&amp;nbsp;
+      &lt;/TD&gt;
+      &lt;TD&gt;&lt;/TD&gt;
+   &lt;/TR&gt;
+&lt;/TABLE&gt;
+&lt;script language=&quot;javascript&quot; type=&quot;text/javascript&quot;&gt;
+
+function TP_Zayav_IstLoad()
+
+{
+
+    &lt;%=GetOnLoadScript()%&gt;
+
+}
+
+function ElementShow(elName)
+
+{
+
+ var el;
+
+ el = document.getElementById(elName);
+
+ if (el != null)
+
+ {
+
+   el.style.display = '';
+
+ }
+
+}
+
+function ElementHide(elName)
+
+{
+
+ var el;
+
+ el = document.getElementById(elName);
+
+ if (el != null)
+
+ {
+
+   el.style.display = 'none';
+
+ }
+
+}
+
+&lt;/script&gt;
+
+
+"><FormData Name=""/></BlockHolder></ModuleHolder><ModuleHolder ModuleName="ucTP_Zayav_Ist.ASCX.cs" File="ucTP_Zayav_Ist.ASCX.cs"><BlockHolder BlockName="code" BlockCode="
+
+namespace TP_Zay.ASPNET
+{
+  using System;
+  using System.Data;
+  using System.IO;
+  using System.Collections;
+  using System.Drawing;
+  using System.Web;
+  using System.Web.UI.WebControls;
+  using System.Web.UI.HtmlControls;
+  using System.Globalization;
+  using Mokasin.ASPNET;
+  using TP_Zay;
+
+  /// &lt;summary&gt;
+  ///    ucTP_Zayav_Ist - форма редактирования раздела История
+  /// &lt;/summary&gt;
+  public partial class ucTP_Zayav_Ist  : ucParent 
+  {
+    protected ArrayList ControlsToHide = new ArrayList();
+    public override event System.EventHandler OnFieldInit;
+    public override event System.EventHandler OnBeforeSave;
+    public override event System.EventHandler OnAfterSave;
+    public override event System.EventHandler OnCancel;
+    public override event InfoEventHandler OnInfo;
+
+    public override string CancelButtonID
+    {
+      get
+      {
+        return btnCancel.ClientID;
+      }
+    }
+
+    public override string SaveButtonID
+    {
+      get
+      {
+        return btnSave.ClientID;
+      }
+    }
+
+    public TP_Zay.TP_Zayav_Ist RowItem
+    {
+      get
+      {
+        return (TP_Zay.TP_Zayav_Ist)base.MKSNRowItem;
+      }
+    }
+
+    private bool ReadOnly
+    {
+      get
+      {
+        return !AllowEdit;
+      }
+    }
+
+    private void Page_Unload(object sender, System.EventArgs e)
+    {
+      return;
+    }
+
+    private void Page_Load(object sender, System.EventArgs e)
+    {
+      base.Page_Load(sender,e); 
+      if (RowItem != null)
+      {
+   if (!(DataComponent.DenyVisible.IndexOf(&quot;ImenStatys&quot;) &gt; -1)) {
+          txtImenStatys.Text = GetValueFromRowItem(RowItem.ImenStatys);
+   }
+          txtImenStatys.ToolTip = &quot;Изменён статус&quot;;
+          if (ReadOnly || (DataComponent.DenyEdit.IndexOf(&quot;ImenStatys&quot;) &gt; -1))
+          {
+            ControlsToHide.Add(&quot;btnImenStatys&quot;);
+            txtImenStatys.Enabled = false;
+            rfvImenStatys.Enabled = false;
+          }
+          if (DataComponent.DenyVisible.IndexOf(&quot;ImenStatys&quot;) &gt; -1) 
+          {
+            lblImenStatys.Visible = false;
+            txtImenStatys.Visible = false;
+            rfvImenStatys.Enabled = false;
+          }
+          if (OnFieldInit != null)
+          {
+            OnFieldInit(txtImenStatys, new EventArgs());
+          }
+          if(RowItem.Data != Convert.ToDateTime(&quot;30.12.1899&quot;) &amp;&amp; RowItem.Data != Convert.ToDateTime(&quot;01.01.0001&quot;))
+          {
+            DateData.Text = RowItem.Data.ToShortDateString();
+            TimeData.Text = RowItem.Data.ToShortTimeString();
+          }
+          DateData.ToolTip = &quot;Дата и время изменения&quot;;
+          if (ReadOnly || (DataComponent.DenyEdit.IndexOf(&quot;Data&quot;) &gt; -1))
+          {
+            ControlsToHide.Add(&quot;btnData&quot;);
+            DateData.Enabled = false;
+            rfvData.Enabled = false;
+          }
+          if (DataComponent.DenyVisible.IndexOf(&quot;Data&quot;) &gt; -1) 
+          {
+            lblData.Visible = false;
+            DateData.Visible = false;
+            rfvData.Enabled = false;
+          }
+          if (OnFieldInit != null)
+          {
+            OnFieldInit(DateData, new EventArgs());
+          }
+   if (!(DataComponent.DenyVisible.IndexOf(&quot;FIO&quot;) &gt; -1)) {
+          txtFIO.Text = GetValueFromRowItem(RowItem.FIO);
+   }
+          txtFIO.ToolTip = &quot;Изменил(ФИО)&quot;;
+          if (ReadOnly || (DataComponent.DenyEdit.IndexOf(&quot;FIO&quot;) &gt; -1))
+          {
+            ControlsToHide.Add(&quot;btnFIO&quot;);
+            txtFIO.Enabled = false;
+          }
+          if (DataComponent.DenyVisible.IndexOf(&quot;FIO&quot;) &gt; -1) 
+          {
+            lblFIO.Visible = false;
+            txtFIO.Visible = false;
+          }
+          if (OnFieldInit != null)
+          {
+            OnFieldInit(txtFIO, new EventArgs());
+          }
+   if (!(DataComponent.DenyVisible.IndexOf(&quot;Komment&quot;) &gt; -1)) {
+          txtKomment.Text = GetValueFromRowItem(RowItem.Komment);
+   }
+          txtKomment.ToolTip = &quot;Комментарий&quot;;
+          if (ReadOnly || (DataComponent.DenyEdit.IndexOf(&quot;Komment&quot;) &gt; -1))
+          {
+            ControlsToHide.Add(&quot;btnKomment&quot;);
+            txtKomment.Enabled = false;
+          }
+          if (DataComponent.DenyVisible.IndexOf(&quot;Komment&quot;) &gt; -1) 
+          {
+            lblKomment.Visible = false;
+            txtKomment.Visible = false;
+          }
+          if (OnFieldInit != null)
+          {
+            OnFieldInit(txtKomment, new EventArgs());
+          }
+      }
+      if (ReadOnly) btnSave.Enabled = false;
+    }
+
+    #region Web Form Designer generated code
+    override protected void OnInit(EventArgs e)
+    {
+      base.OnInit(e);
+      InitializeComponent();
+    }
+
+    private void InitializeComponent()
+    {
+      this.btnSave.Click += new System.EventHandler(this.btnSave_Click);
+      this.btnCancel.Click += new System.EventHandler(this.btnCancel_Click);
+      this.Load += new System.EventHandler(this.Page_Load);
+      this.Unload += new System.EventHandler(this.Page_Unload);
+
+    }
+    #endregion
+
+     private string GetValueFromRowItem(object RowItemValue)
+     {
+       string Result = string.Empty;
+       if (RowItemValue != null)
+       {
+         Result = RowItemValue.ToString();
+       }
+
+       return Result;
+     }
+
+    private void btnCancel_Click(object sender, System.EventArgs e)
+    {
+        if (OnCancel != null)
+        {
+          OnCancel(this, new EventArgs());
+        }
+        else
+        {
+           //Response.Redirect(BackUrl);
+        }
+          try
+        {
+                    object obj;
+                    obj = this;
+                    while ( !(obj is  VACOOLA.ParentPage) &amp;&amp; obj!=null){
+                        obj = (obj as System.Web.UI.Control).Parent;
+                    }
+                    (obj as VACOOLA.ParentPage).GoBack();
+                }
+                catch { }
+    }
+
+    private void btnSave_Click(object sender, System.EventArgs e)
+    {
+         if (RowItem == null)
+         {
+           if (OnInfo != null)
+           {
+              OnInfo(this, new InfoEventArgs(&quot;Error on create row.&quot;, System.Drawing.Color.Red));
+           }
+           else
+           {
+              TP_Zayav_IstLabelInfo.Text = &quot;Error on create row. &quot;;
+              TP_Zayav_IstLabelInfo.ForeColor = System.Drawing.Color.Red;
+           }
+           return;
+         }
+        if (OnBeforeSave != null)
+        {
+          OnBeforeSave(this, new EventArgs());
+        }
+   RowItem.ImenStatys = txtImenStatys.Text;
+       try
+       {
+         if (DateData.Text != string.Empty)
+         {
+            DateTime newValue;
+            newValue = Convert.ToDateTime(DateData.Text + &quot; &quot; +  TimeData.Text);
+            RowItem.Data = newValue;
+         }
+         else 
+         {
+              RowItem.Data = DateTime.MinValue;
+         }
+       }
+       catch
+       {
+         if (OnInfo != null)
+         {
+            OnInfo(this, new InfoEventArgs(&quot;Введите правильную дату в поле Дата и время изменения (например 14.11.1973)&quot;, System.Drawing.Color.Red));
+         }
+         else
+         {
+            TP_Zayav_IstLabelInfo.Text = &quot;Введите правильную дату в поле Дата и время изменения (например 14.11.1973)&quot;;
+            lblData.ForeColor = System.Drawing.Color.Red;
+         }
+         return;
+       }
+   RowItem.FIO = txtFIO.Text;
+   RowItem.Komment = txtKomment.Text;
+      try
+      {
+        RowItem.Save();
+        if (OnInfo != null)
+        {
+          OnInfo(this, new InfoEventArgs(&quot;Row saved&quot;, System.Drawing.Color.Green));
+        }
+        else
+        {
+          TP_Zayav_IstLabelInfo.ForeColor = System.Drawing.Color.Green;
+          TP_Zayav_IstLabelInfo.Text = &quot;Row saved&quot;;
+        }
+        if (OnAfterSave != null)
+        {
+          OnAfterSave(this, new EventArgs());
+        }
+          try
+        {
+                    object obj;
+                    obj = this;
+                    while ( !(obj is  VACOOLA.ParentPage) &amp;&amp; obj!=null){
+                        obj = (obj as System.Web.UI.Control).Parent;
+                    }
+                    (obj as VACOOLA.ParentPage).GoBack();
+                }
+                catch { }
+      }
+      catch(Exception Ex)
+      {
+        TP_Zayav_IstLabelInfo.Text = &quot;Save error. &quot; + Ex.Message;
+        TP_Zayav_IstLabelInfo.ForeColor = System.Drawing.Color.Red;
+      }
+    }
+    private DataView ConfigureView(DataTable dt, string DataTextFormatString)
+    {
+      DataView Result = null;
+      DataTable NewDT = new DataTable(dt.TableName);
+      NewDT.Columns.Add(&quot;text&quot;);
+      NewDT.Columns.Add(&quot;id&quot;);
+      foreach(DataRow dr  in dt.Rows)
+      {
+        DataRow newDr = NewDT.NewRow();
+        newDr[&quot;id&quot;] = dr[&quot;ID&quot;].ToString();
+        string Text =  DataTextFormatString;
+        foreach(DataColumn col in dt.Columns )
+        {
+           Text = Text.Replace(col.ColumnName, dr[col].ToString());
+        }
+        newDr[&quot;text&quot;] = Text;
+        NewDT.Rows.Add(newDr);
+      }
+      Result = NewDT.DefaultView;
+      Result.Sort = &quot;text&quot;;
+      return Result;
+    }
+
+    protected string GetOnLoadScript()
+    {
+      string result = string.Empty;
+      if (ControlsToHide != null)
+      {
+        foreach(string str in ControlsToHide)
+        {
+          result += &quot;ElementHide('&quot; + str + &quot;');&quot;;
+        }
+      }
+      return result;
+    }
+  }
+}
+
+"><FormData Name=""/></BlockHolder></ModuleHolder><ModuleHolder ModuleName="ucTabTP_Zayav_Ist.ASCX" File="ucTabTP_Zayav_Ist.ASCX"><BlockHolder BlockName="code" BlockCode="&lt;%@ Control Language=&quot;c#&quot; AutoEventWireup=&quot;false&quot; CodeFile=&quot;ucTabTP_Zayav_Ist.ascx.cs&quot; Inherits=&quot;TP_Zay.ASPNET.ucTabTP_Zayav_Ist&quot; %&gt;
+&lt;%@ Register Assembly=&quot;Infragistics2.WebUI.UltraWebGrid.v6.2, Version=6.2.20062.34, Culture=neutral, PublicKeyToken=7dd5c3163f2cd0cb&quot;
+Namespace=&quot;Infragistics.WebUI.UltraWebGrid&quot; TagPrefix=&quot;igtbl&quot; %&gt;
+&lt;asp:HyperLink id=&quot;HyperLinkAddNew&quot; runat=&quot;server&quot;&gt;&lt;/asp:HyperLink&gt;&lt;br&gt;
+ &lt;igtbl:ultrawebgrid id=&quot;DataGrid_TP_Zayav_Ist&quot; runat=&quot;server&quot; Width=&quot;100%&quot; Height=&quot;350px&quot;&gt;&lt;Bands&gt;
+&lt;igtbl:UltraGridBand&gt;
+&lt;AddNewRow View=&quot;NotSet&quot; Visible=&quot;NotSet&quot;&gt;&lt;/AddNewRow&gt;
+&lt;FilterOptions EmptyString=&quot;&quot; AllString=&quot;&quot; NonEmptyString=&quot;&quot; AllowRowFiltering=&quot;OnClient&quot;&gt;
+&lt;FilterDropDownStyle BorderWidth=&quot;1px&quot; BorderColor=&quot;Silver&quot; BorderStyle=&quot;Solid&quot; Font-Size=&quot;11px&quot; Font-Names=&quot;Verdana,Arial,Helvetica,sans-serif&quot; BackColor=&quot;White&quot; Width=&quot;200px&quot; CustomRules=&quot;overflow:auto;&quot;&gt;
+&lt;Padding Left=&quot;2px&quot;&gt;&lt;/Padding&gt;
+&lt;/FilterDropDownStyle&gt;
+&lt;FilterHighlightRowStyle ForeColor=&quot;White&quot; BackColor=&quot;#151C55&quot;&gt;&lt;/FilterHighlightRowStyle&gt;
+&lt;/FilterOptions&gt;
+&lt;/igtbl:UltraGridBand&gt;
+&lt;/Bands&gt;
+&lt;DisplayLayout ViewType=&quot;OutlookGroupBy&quot; Version=&quot;4.00&quot; AllowSortingDefault=&quot;OnClient&quot; AllowColSizingDefault=&quot;Free&quot; HeaderClickActionDefault=&quot;SortSingle&quot; Name=&quot;ctl00xDataGrid_TP_Zayav_Ist&quot; BorderCollapseDefault=&quot;Separate&quot; RowSelectorsDefault=&quot;No&quot; RowHeightDefault=&quot;20px&quot; AllowColumnMovingDefault=&quot;OnServer&quot; SelectTypeRowDefault=&quot;Single&quot;&gt;
+&lt;GroupByBox&gt;
+&lt;Style BorderColor=&quot;Window&quot; BackColor=&quot;ActiveBorder&quot;&gt;&lt;/Style&gt;
+&lt;/GroupByBox&gt;
+&lt;GroupByRowStyleDefault BorderColor=&quot;Window&quot; BackColor=&quot;Control&quot;&gt;&lt;/GroupByRowStyleDefault&gt;
+&lt;FooterStyleDefault BorderWidth=&quot;1px&quot; BorderStyle=&quot;Solid&quot; BackColor=&quot;LightGray&quot;&gt;
+&lt;BorderDetails ColorTop=&quot;White&quot; WidthLeft=&quot;1px&quot; WidthTop=&quot;1px&quot; ColorLeft=&quot;White&quot;&gt;&lt;/BorderDetails&gt;
+&lt;/FooterStyleDefault&gt;
+
+&lt;RowStyleDefault BorderWidth=&quot;1px&quot; BorderColor=&quot;Silver&quot; BorderStyle=&quot;Solid&quot; BackColor=&quot;Window&quot;&gt;
+&lt;BorderDetails ColorTop=&quot;Window&quot; ColorLeft=&quot;Window&quot;&gt;&lt;/BorderDetails&gt;
+
+&lt;Padding Left=&quot;3px&quot;&gt;&lt;/Padding&gt;
+&lt;/RowStyleDefault&gt;
+
+&lt;FilterOptionsDefault EmptyString=&quot;(Empty)&quot; AllString=&quot;(All)&quot; NonEmptyString=&quot;(NonEmpty)&quot;&gt;
+&lt;FilterDropDownStyle BorderWidth=&quot;1px&quot; BorderColor=&quot;Silver&quot; BorderStyle=&quot;Solid&quot; Font-Size=&quot;11px&quot; Font-Names=&quot;Verdana,Arial,Helvetica,sans-serif&quot; BackColor=&quot;White&quot; Width=&quot;200px&quot; CustomRules=&quot;overflow:auto;&quot;&gt;
+&lt;Padding Left=&quot;2px&quot;&gt;&lt;/Padding&gt;
+&lt;/FilterDropDownStyle&gt;
+
+&lt;FilterHighlightRowStyle ForeColor=&quot;White&quot; BackColor=&quot;#151C55&quot;&gt;&lt;/FilterHighlightRowStyle&gt;
+&lt;/FilterOptionsDefault&gt;
+
+&lt;HeaderStyleDefault HorizontalAlign=&quot;Left&quot; BorderStyle=&quot;Solid&quot; BackColor=&quot;LightGray&quot;&gt;
+&lt;BorderDetails ColorTop=&quot;White&quot; WidthLeft=&quot;1px&quot; WidthTop=&quot;1px&quot; ColorLeft=&quot;White&quot;&gt;&lt;/BorderDetails&gt;
+&lt;/HeaderStyleDefault&gt;
+
+&lt;EditCellStyleDefault BorderWidth=&quot;0px&quot; BorderStyle=&quot;None&quot;&gt;&lt;/EditCellStyleDefault&gt;
+
+&lt;FrameStyle BorderWidth=&quot;1px&quot; BorderColor=&quot;InactiveCaption&quot; BorderStyle=&quot;Solid&quot; Font-Size=&quot;8.25pt&quot; Font-Names=&quot;Microsoft Sans Serif&quot; BackColor=&quot;Window&quot; Width=&quot;100%&quot;&gt;&lt;/FrameStyle&gt;
+
+&lt;Pager&gt;
+&lt;Style BorderWidth=&quot;1px&quot; BorderStyle=&quot;Solid&quot; BackColor=&quot;LightGray&quot;&gt;
+&lt;BorderDetails ColorTop=&quot;White&quot; WidthLeft=&quot;1px&quot; WidthTop=&quot;1px&quot; ColorLeft=&quot;White&quot;&gt;&lt;/BorderDetails&gt;
+&lt;/Style&gt;
+&lt;/Pager&gt;
+
+&lt;AddNewBox&gt;
+&lt;Style BorderWidth=&quot;1px&quot; BorderColor=&quot;InactiveCaption&quot; BorderStyle=&quot;Solid&quot; BackColor=&quot;Window&quot;&gt;
+&lt;BorderDetails ColorTop=&quot;White&quot; WidthLeft=&quot;1px&quot; WidthTop=&quot;1px&quot; ColorLeft=&quot;White&quot;&gt;&lt;/BorderDetails&gt;
+&lt;/Style&gt;
+&lt;/AddNewBox&gt;
+&lt;/DisplayLayout&gt;
+&lt;/igtbl:ultrawebgrid&gt;
+&lt;%=ClientScript()%&gt;
+&lt;script language=&quot;javascript&quot; type=&quot;text/javascript&quot;&gt;
+
+function TP_Zayav_IstLoad()
+
+{
+
+}
+
+function ElementShow(elName)
+
+{
+
+ var el;
+
+ el = document.getElementById(elName);
+
+ if (el != null)
+
+ {
+
+   el.style.display = '';
+
+ }
+
+}
+
+function ElementHide(elName)
+
+{
+
+ var el;
+
+ el = document.getElementById(elName);
+
+ if (el != null)
+
+ {
+
+   el.style.display = 'none';
+
+ }
+
+}
+
+&lt;/script&gt;
+
+
+"><FormData Name=""/></BlockHolder></ModuleHolder><ModuleHolder ModuleName="ucTabTP_Zayav_Ist.ASCX.cs" File="ucTabTP_Zayav_Ist.ASCX.cs"><BlockHolder BlockName="code" BlockCode="
+  namespace TP_Zay.ASPNET
+{
+  #region MTZ ASP NET Generator code
+  using System;
+  using System.Data;
+  using System.Collections;
+  using System.Drawing;
+  using System.Web;
+  using System.Web.UI.WebControls;
+  using System.Web.UI.HtmlControls;
+  using Mokasin.ASPNET;
+  using TP_Zay;
+  public partial class ucTabTP_Zayav_Ist  : ucParent
+  {
+    // Добавленное руками
+    string EditColumnName = &quot;EditColumn&quot;;
+    string DeleteParameterName = &quot;DeleteParameterName&quot;;
+    string DeleteColumnName = &quot;DeleteColumn&quot;;
+    string EditParameterName = &quot;EditParameterName&quot;;
+    private int EditColumnIndex = -1;
+    private int DeleteColumnIndex = -1;
+    private int SelectColumnIndex = -1;
+
+    public  TP_Zay.TP_Zayav_Ist_col DataSource
+    { 
+      get
+      {
+        return (TP_Zay.TP_Zayav_Ist_col)base.MKSNDataSource;
+      }
+    }
+
+    private void Page_Load(object sender, System.EventArgs e)
+    {
+      base.Page_Load(sender,e); 
+      if (!IsPostBack) PageNum = Parameter(&quot;PageNum&quot;);
+      string EVENTTARGET = string.Empty;
+      string EVENTARGUMENT = string.Empty;
+      if (Request.Form[&quot;__EVENTTARGET&quot;] != null)   EVENTTARGET = Request.Form[&quot;__EVENTTARGET&quot;].ToString();
+      if (Request.Form[&quot;__EVENTARGUMENT&quot;] != null)   EVENTARGUMENT = Request.Form[&quot;__EVENTARGUMENT&quot;].ToString();
+    // БЛОК УДАЛЕНИЯ ЗАПИСИ begin
+      if (EVENTTARGET  == DeleteParameterName + &quot;TP_Zayav_Ist&quot;)
+      {
+        string id = EVENTARGUMENT;
+        if (id != string.Empty)
+        {
+         // УДАЛЯЕМ ОБЪЕКТ
+         DataSource.Delete(id);
+         DataSource.Refresh();
+        }
+      }
+      // БЛОК УДАЛЕНИЯ ЗАПИСИ end
+      // БЛОК РЕДАКТИРОВАНИЯ ЗАПИСИ begin
+      if (EVENTTARGET == EditParameterName)
+      {
+        string id = string.Empty;
+        bool bEdit = false;
+          try
+          {
+            bEdit = EVENTARGUMENT.Substring(0,1) == &quot;1&quot;;
+            id = EVENTARGUMENT.ToString().Substring(1);
+          }
+          catch{}
+      if (id != string.Empty)
+      {
+        string EditURL = Request.ApplicationPath + &quot;/&quot; + EditPage.URL(Server);
+        AddParameter(ref EditURL, DataComponent.SelectIDParameterName, id);
+        AddParameter(ref EditURL, &quot;ObjectID&quot;, this.ObjectID);
+        if (!bEdit)
+          AddParameter(ref EditURL, &quot;mode&quot;, &quot;readonly&quot;);
+        Response.Redirect(EditURL);
+      }
+     }
+     // БЛОК РЕДАКТИРОВАНИЯ ЗАПИСИ end
+     LoadData();
+   }
+
+    private void LoadData()
+    {
+      if (DataSource != null)
+      {
+              DataSource.Refresh();
+              DataTable = DataSource.GetDataTable();
+      }
+      if (DataTable  != null)
+      {
+        DataView = DataComponent.PrepareDataSourceIG(DataTable, EditPage, AllowEdit, Mode.ToLower().IndexOf(&quot;readonly&quot;) &lt; -1, ref EditColumnName, ref DeleteColumnName,  Server);
+      }
+
+      DataGrid_TP_Zayav_Ist.Columns.Clear();
+      DataGrid_TP_Zayav_Ist.DataSource = DataView;
+      this.DataBind();
+     // change column headers here
+      DataGrid_TP_Zayav_Ist.Columns.FromKey(&quot;ID&quot;).ServerOnly = true;
+      DataGrid_TP_Zayav_Ist.Columns.FromKey(&quot;Brief&quot;).ServerOnly = true;
+
+      if (DataGrid_TP_Zayav_Ist.Columns.FromKey(EditColumnName) != null)
+      {
+          DataGrid_TP_Zayav_Ist.Columns.FromKey(EditColumnName).AllowGroupBy = Infragistics.WebUI.UltraWebGrid.AllowGroupBy.No;
+          DataGrid_TP_Zayav_Ist.Columns.FromKey(EditColumnName).AllowRowFiltering = false;
+          DataGrid_TP_Zayav_Ist.Columns.FromKey(EditColumnName).Header.Caption = &quot;Edit&quot;;
+      }
+      if (DataGrid_TP_Zayav_Ist.Columns.FromKey(DeleteColumnName) != null)
+      {
+          DataGrid_TP_Zayav_Ist.Columns.FromKey(DeleteColumnName).AllowGroupBy = Infragistics.WebUI.UltraWebGrid.AllowGroupBy.No;
+          DataGrid_TP_Zayav_Ist.Columns.FromKey(DeleteColumnName).AllowRowFiltering = false;
+          DataGrid_TP_Zayav_Ist.Columns.FromKey(DeleteColumnName).Header.Caption = &quot;Delete&quot;;
+      }
+
+      DataGrid_TP_Zayav_Ist.Columns.FromKey(&quot;ImenStatys&quot;).Header.Caption = &quot;Изменён статус&quot;;
+      DataGrid_TP_Zayav_Ist.Columns.FromKey(&quot;Data&quot;).Header.Caption = &quot;Дата и время изменения&quot;;
+      DataGrid_TP_Zayav_Ist.Columns.FromKey(&quot;FIO&quot;).Header.Caption = &quot;Изменил(ФИО)&quot;;
+      DataGrid_TP_Zayav_Ist.Columns.FromKey(&quot;Komment&quot;).Header.Caption = &quot;Комментарий&quot;;
+      if (AllowAddNew &amp;&amp; AllowEdit)
+      {
+         if (EditPage != null)
+         {
+           string EditURL = Request.ApplicationPath + &quot;/&quot; + EditPage.URL(Server);
+           AddParameter(ref EditURL, &quot;mode&quot;, &quot;addnew&quot;);
+           AddParameter(ref EditURL, &quot;ObjectID&quot;, ObjectID);
+           HyperLinkAddNew.Text = &quot;New row&quot;;
+           HyperLinkAddNew.NavigateUrl = EditURL;
+           HyperLinkAddNew.ImageUrl = &quot;../../images/new.gif&quot;;
+         }
+      }
+    }
+    protected string ClientScript()
+    {
+      string Result = string.Empty;
+      Result += &quot;&lt;script language=\&quot;Javascript\&quot;&gt;\n&quot;;
+      Result +=  &quot;function ConfirmDelete(id)\n&quot;;
+      Result += &quot;{\n&quot;;
+      Result += &quot;if (confirm('Delete row?') != 0)\n&quot;;
+      Result += &quot;{\n&quot;;
+      Result += &quot;__doPostBack('DeleteParameterNameTP_Zayav_Ist',id);\n&quot;;
+      Result += &quot;}\n}\n&quot;;
+      Result += &quot;&lt;/script&gt;\n&quot;;
+      Result += &quot;&lt;script language=\&quot;Javascript\&quot;&gt;\n&quot;;
+      Result +=  &quot;function LinkToEdit(id)\n&quot;;
+      Result += &quot;{\n&quot;;
+      Result += &quot; __doPostBack('&quot; + EditParameterName + &quot;','1'+id);\n&quot;;
+      Result += &quot;}\n&quot;;
+      Result += &quot;&lt;/script&gt;\n&quot;;
+      Result += &quot;&lt;script language=\&quot;Javascript\&quot;&gt;\n&quot;;
+      Result +=  &quot;function LinkToView(id)\n&quot;;
+      Result += &quot;{\n&quot;;
+      Result += &quot; __doPostBack('&quot; + EditParameterName + &quot;','0'+id);\n&quot;;
+      Result += &quot;}\n&quot;;
+      Result += &quot;&lt;/script&gt;\n&quot;;
+      return Result;
+    }
+    #region Web Form Designer generated code
+    override protected void OnInit(EventArgs e)
+    {
+      base.OnInit(e);
+      InitializeComponent();
+    }
+
+    private void InitializeComponent()
+    {
+      this.Load += new System.EventHandler(this.Page_Load);
+
+    }
+    #endregion
+
+  }
+  #endregion
+}
+
+"><FormData Name=""/></BlockHolder></ModuleHolder></root>

@@ -1,0 +1,3 @@
+VBGROUP 5.0
+StartupProject=..\..\VB Interface\WFRtm\WFRtmGUI.vbp
+Project=WFRtm.vbp

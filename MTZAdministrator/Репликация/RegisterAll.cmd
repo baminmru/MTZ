@@ -1,0 +1,1 @@
+for /R .  %%v in (*.dll *.ocx) DO regsvr32.exe /s "%%v"

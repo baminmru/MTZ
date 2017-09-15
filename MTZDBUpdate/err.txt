@@ -1,0 +1,2517 @@
+"
+--body:--Kernel tables
+
+create function GetIDFromXML (@xmlSource varchar(4000))
+RETURNS VarChar(4000)
+as
+BEGIN
+declare @outstr as varchar(4000)
+declare @from as int
+declare @to as int
+
+select @from = CHARINDEX('<ID>', @xmlSource)
+select @to = CHARINDEX('</ID>', @xmlSource)
+if (@from > 0 AND @to > 0) begin
+  select @outstr = substring(@xmlSource, @from + 4, @to - @from - 4)
+end else begin
+  select @outstr = ''
+End
+
+return @outstr
+
+End
+------------------------
+[2714]There is already an object named 'GetIDFromXML' in the database.
+
+[
+create function GetIDFromXML (@xmlSource varchar(4000))
+RETURNS VarChar(4000)
+as
+BEGIN
+declare @outstr as varchar(4000)
+declare @from as int
+declare @to as int
+
+select @from = CHARINDEX('<ID>', @xmlSource)
+select @to = CHARINDEX('</ID>', @xmlSource)
+if (@from > 0 AND @to > 0) begin
+  select @outstr = substring(@xmlSource, @from + 4, @to - @from - 4)
+end else begin
+  select @outstr = ''
+End
+
+return @outstr
+
+End]
+--body:--Kernel tables
+
+if  not exists(select * from syscolumns where name='arcihved' and id=object_id(N'INSTANCE'))
+alter table instance add archived int null default (0)
+------------------------
+[2705]Column names in each table must be unique. Column name 'archived' in table 'instance' is specified more than once.
+
+[
+if  not exists(select * from syscolumns where name='arcihved' and id=object_id(N'INSTANCE'))
+alter table instance add archived int null default (0)]
+--body:--Tables
+
+
+
+if exists(select * from sysobjects where id=object_id(N'pk_FilterFieldGroup') and xtype='PK' and type='K')
+ALTER TABLE FilterFieldGroup DROP CONSTRAINT pk_FilterFieldGroup
+------------------------
+[3725]The constraint 'pk_FilterFieldGroup' is being referenced by table 'FileterField', foreign key constraint 'fk_F4B3740CE6764B6EA833EDE44CB9FA63'.
+[3727]Could not drop constraint. See previous errors.
+
+[
+
+
+if exists(select * from sysobjects where id=object_id(N'pk_FilterFieldGroup') and xtype='PK' and type='K')
+ALTER TABLE FilterFieldGroup DROP CONSTRAINT pk_FilterFieldGroup]
+--body:--Tables
+
+alter table FilterFieldGroup add constraint pk_FilterFieldGroup primary key (FilterFieldGroupID)
+
+
+------------------------
+[1779]Table 'FilterFieldGroup' already has a primary key defined on it.
+[1750]Could not create constraint. See previous errors.
+
+[
+alter table FilterFieldGroup add constraint pk_FilterFieldGroup primary key (FilterFieldGroupID)
+
+]
+--body:--Tables
+
+
+
+if exists(select * from sysobjects where id=object_id(N'pk_FilterFieldGroup') and xtype='PK' and type='K')
+ALTER TABLE FilterFieldGroup DROP CONSTRAINT pk_FilterFieldGroup
+------------------------
+[3725]The constraint 'pk_FilterFieldGroup' is being referenced by table 'FileterField', foreign key constraint 'fk_F4B3740CE6764B6EA833EDE44CB9FA63'.
+[3727]Could not drop constraint. See previous errors.
+
+[
+
+
+if exists(select * from sysobjects where id=object_id(N'pk_FilterFieldGroup') and xtype='PK' and type='K')
+ALTER TABLE FilterFieldGroup DROP CONSTRAINT pk_FilterFieldGroup]
+--body:--Tables
+
+alter table FilterFieldGroup add constraint pk_FilterFieldGroup primary key (FilterFieldGroupID)
+
+
+------------------------
+[1779]Table 'FilterFieldGroup' already has a primary key defined on it.
+[1750]Could not create constraint. See previous errors.
+
+[
+alter table FilterFieldGroup add constraint pk_FilterFieldGroup primary key (FilterFieldGroupID)
+
+]
+--body:--Tables
+
+
+
+if exists(select * from sysobjects where id=object_id(N'pk_REPD_RequestQuery') and xtype='PK' and type='K')
+ALTER TABLE REPD_RequestQuery DROP CONSTRAINT pk_REPD_RequestQuery
+------------------------
+[3725]The constraint 'pk_REPD_RequestQuery' is being referenced by table 'REPD_ResQueryRcv', foreign key constraint 'fk_7574AE4ACC5546B9966BBBCF643C3E33'.
+[3727]Could not drop constraint. See previous errors.
+
+[
+
+
+if exists(select * from sysobjects where id=object_id(N'pk_REPD_RequestQuery') and xtype='PK' and type='K')
+ALTER TABLE REPD_RequestQuery DROP CONSTRAINT pk_REPD_RequestQuery]
+--body:--Tables
+
+alter table REPD_RequestQuery add constraint pk_REPD_RequestQuery primary key (REPD_RequestQueryID)
+
+
+------------------------
+[1779]Table 'REPD_RequestQuery' already has a primary key defined on it.
+[1750]Could not create constraint. See previous errors.
+
+[
+alter table REPD_RequestQuery add constraint pk_REPD_RequestQuery primary key (REPD_RequestQueryID)
+
+]
+--body:--Tables
+
+
+
+if exists(select * from sysobjects where id=object_id(N'pk_REPD_RequestQuery') and xtype='PK' and type='K')
+ALTER TABLE REPD_RequestQuery DROP CONSTRAINT pk_REPD_RequestQuery
+------------------------
+[3725]The constraint 'pk_REPD_RequestQuery' is being referenced by table 'REPD_ResQueryRcv', foreign key constraint 'fk_7574AE4ACC5546B9966BBBCF643C3E33'.
+[3727]Could not drop constraint. See previous errors.
+
+[
+
+
+if exists(select * from sysobjects where id=object_id(N'pk_REPD_RequestQuery') and xtype='PK' and type='K')
+ALTER TABLE REPD_RequestQuery DROP CONSTRAINT pk_REPD_RequestQuery]
+--body:--Tables
+
+alter table REPD_RequestQuery add constraint pk_REPD_RequestQuery primary key (REPD_RequestQueryID)
+
+
+------------------------
+[1779]Table 'REPD_RequestQuery' already has a primary key defined on it.
+[1750]Could not create constraint. See previous errors.
+
+[
+alter table REPD_RequestQuery add constraint pk_REPD_RequestQuery primary key (REPD_RequestQueryID)
+
+]
+--body:--Tables
+
+
+
+if exists(select * from sysobjects where id=object_id(N'pk_REPD_SRV') and xtype='PK' and type='K')
+ALTER TABLE REPD_SRV DROP CONSTRAINT pk_REPD_SRV
+------------------------
+[3725]The constraint 'pk_REPD_SRV' is being referenced by table 'REPD_SNDTO', foreign key constraint 'fk_BB93E780757A496DBD42C71A2D3AABB1'.
+[3727]Could not drop constraint. See previous errors.
+
+[
+
+
+if exists(select * from sysobjects where id=object_id(N'pk_REPD_SRV') and xtype='PK' and type='K')
+ALTER TABLE REPD_SRV DROP CONSTRAINT pk_REPD_SRV]
+--body:--Tables
+
+alter table REPD_SRV add constraint pk_REPD_SRV primary key (REPD_SRVID)
+
+
+------------------------
+[1779]Table 'REPD_SRV' already has a primary key defined on it.
+[1750]Could not create constraint. See previous errors.
+
+[
+alter table REPD_SRV add constraint pk_REPD_SRV primary key (REPD_SRVID)
+
+]
+--body:--Tables
+
+
+
+if exists(select * from sysobjects where id=object_id(N'pk_REPD_SNDTO') and xtype='PK' and type='K')
+ALTER TABLE REPD_SNDTO DROP CONSTRAINT pk_REPD_SNDTO
+------------------------
+[3725]The constraint 'pk_REPD_SNDTO' is being referenced by table 'REPD_CONST', foreign key constraint 'fk_A3FA43E67EF14AF78AD3B59C94DA2AC8'.
+[3727]Could not drop constraint. See previous errors.
+
+[
+
+
+if exists(select * from sysobjects where id=object_id(N'pk_REPD_SNDTO') and xtype='PK' and type='K')
+ALTER TABLE REPD_SNDTO DROP CONSTRAINT pk_REPD_SNDTO]
+--body:--Tables
+
+alter table REPD_SNDTO add constraint pk_REPD_SNDTO primary key (REPD_SNDTOID)
+
+
+------------------------
+[1779]Table 'REPD_SNDTO' already has a primary key defined on it.
+[1750]Could not create constraint. See previous errors.
+
+[
+alter table REPD_SNDTO add constraint pk_REPD_SNDTO primary key (REPD_SNDTOID)
+
+]
+--body:--Tables
+
+
+
+if exists(select * from sysobjects where id=object_id(N'pk_REPD_SRV') and xtype='PK' and type='K')
+ALTER TABLE REPD_SRV DROP CONSTRAINT pk_REPD_SRV
+------------------------
+[3725]The constraint 'pk_REPD_SRV' is being referenced by table 'REPD_SNDTO', foreign key constraint 'fk_BB93E780757A496DBD42C71A2D3AABB1'.
+[3727]Could not drop constraint. See previous errors.
+
+[
+
+
+if exists(select * from sysobjects where id=object_id(N'pk_REPD_SRV') and xtype='PK' and type='K')
+ALTER TABLE REPD_SRV DROP CONSTRAINT pk_REPD_SRV]
+--body:--Tables
+
+alter table REPD_SRV add constraint pk_REPD_SRV primary key (REPD_SRVID)
+
+
+------------------------
+[1779]Table 'REPD_SRV' already has a primary key defined on it.
+[1750]Could not create constraint. See previous errors.
+
+[
+alter table REPD_SRV add constraint pk_REPD_SRV primary key (REPD_SRVID)
+
+]
+--body:--Tables
+
+
+
+if exists(select * from sysobjects where id=object_id(N'pk_REPD_SNDTO') and xtype='PK' and type='K')
+ALTER TABLE REPD_SNDTO DROP CONSTRAINT pk_REPD_SNDTO
+------------------------
+[3725]The constraint 'pk_REPD_SNDTO' is being referenced by table 'REPD_CONST', foreign key constraint 'fk_A3FA43E67EF14AF78AD3B59C94DA2AC8'.
+[3727]Could not drop constraint. See previous errors.
+
+[
+
+
+if exists(select * from sysobjects where id=object_id(N'pk_REPD_SNDTO') and xtype='PK' and type='K')
+ALTER TABLE REPD_SNDTO DROP CONSTRAINT pk_REPD_SNDTO]
+--body:--Tables
+
+alter table REPD_SNDTO add constraint pk_REPD_SNDTO primary key (REPD_SNDTOID)
+
+
+------------------------
+[1779]Table 'REPD_SNDTO' already has a primary key defined on it.
+[1750]Could not create constraint. See previous errors.
+
+[
+alter table REPD_SNDTO add constraint pk_REPD_SNDTO primary key (REPD_SNDTOID)
+
+]
+--body:--Tables
+
+
+
+if exists(select * from sysobjects where id=object_id(N'pk_Num_zones') and xtype='PK' and type='K')
+ALTER TABLE Num_zones DROP CONSTRAINT pk_Num_zones
+------------------------
+[3725]The constraint 'pk_Num_zones' is being referenced by table 'Num_Values', foreign key constraint 'fk_833DC00BE8D74D9191032DD084BEFC1E'.
+[3727]Could not drop constraint. See previous errors.
+
+[
+
+
+if exists(select * from sysobjects where id=object_id(N'pk_Num_zones') and xtype='PK' and type='K')
+ALTER TABLE Num_zones DROP CONSTRAINT pk_Num_zones]
+--body:--Tables
+
+alter table Num_zones add constraint pk_Num_zones primary key (Num_zonesID)
+
+
+------------------------
+[1779]Table 'Num_zones' already has a primary key defined on it.
+[1750]Could not create constraint. See previous errors.
+
+[
+alter table Num_zones add constraint pk_Num_zones primary key (Num_zonesID)
+
+]
+--body:--Tables
+
+
+
+if exists(select * from sysobjects where id=object_id(N'pk_Num_zones') and xtype='PK' and type='K')
+ALTER TABLE Num_zones DROP CONSTRAINT pk_Num_zones
+------------------------
+[3725]The constraint 'pk_Num_zones' is being referenced by table 'Num_Values', foreign key constraint 'fk_833DC00BE8D74D9191032DD084BEFC1E'.
+[3727]Could not drop constraint. See previous errors.
+
+[
+
+
+if exists(select * from sysobjects where id=object_id(N'pk_Num_zones') and xtype='PK' and type='K')
+ALTER TABLE Num_zones DROP CONSTRAINT pk_Num_zones]
+--body:--Tables
+
+alter table Num_zones add constraint pk_Num_zones primary key (Num_zonesID)
+
+
+------------------------
+[1779]Table 'Num_zones' already has a primary key defined on it.
+[1750]Could not create constraint. See previous errors.
+
+[
+alter table Num_zones add constraint pk_Num_zones primary key (Num_zonesID)
+
+]
+--body:--Tables
+
+
+
+if exists(select * from sysobjects where id=object_id(N'pk_STDJournalExtFlt') and xtype='PK' and type='K')
+ALTER TABLE STDJournalExtFlt DROP CONSTRAINT pk_STDJournalExtFlt
+------------------------
+[3725]The constraint 'pk_STDJournalExtFlt' is being referenced by table 'STDJournalExtField', foreign key constraint 'fk_E259BCAEE5E44A1988717D81A7D526FE'.
+[3727]Could not drop constraint. See previous errors.
+
+[
+
+
+if exists(select * from sysobjects where id=object_id(N'pk_STDJournalExtFlt') and xtype='PK' and type='K')
+ALTER TABLE STDJournalExtFlt DROP CONSTRAINT pk_STDJournalExtFlt]
+--body:--Tables
+
+alter table STDJournalExtFlt add constraint pk_STDJournalExtFlt primary key (STDJournalExtFltID)
+
+
+------------------------
+[1779]Table 'STDJournalExtFlt' already has a primary key defined on it.
+[1750]Could not create constraint. See previous errors.
+
+[
+alter table STDJournalExtFlt add constraint pk_STDJournalExtFlt primary key (STDJournalExtFltID)
+
+]
+--body:--Tables
+
+
+
+if exists(select * from sysobjects where id=object_id(N'pk_STDJournalExtFlt') and xtype='PK' and type='K')
+ALTER TABLE STDJournalExtFlt DROP CONSTRAINT pk_STDJournalExtFlt
+------------------------
+[3725]The constraint 'pk_STDJournalExtFlt' is being referenced by table 'STDJournalExtField', foreign key constraint 'fk_E259BCAEE5E44A1988717D81A7D526FE'.
+[3727]Could not drop constraint. See previous errors.
+
+[
+
+
+if exists(select * from sysobjects where id=object_id(N'pk_STDJournalExtFlt') and xtype='PK' and type='K')
+ALTER TABLE STDJournalExtFlt DROP CONSTRAINT pk_STDJournalExtFlt]
+--body:--Tables
+
+alter table STDJournalExtFlt add constraint pk_STDJournalExtFlt primary key (STDJournalExtFltID)
+
+
+------------------------
+[1779]Table 'STDJournalExtFlt' already has a primary key defined on it.
+[1750]Could not create constraint. See previous errors.
+
+[
+alter table STDJournalExtFlt add constraint pk_STDJournalExtFlt primary key (STDJournalExtFltID)
+
+]
+--body:--Tables
+
+
+
+if exists(select * from sysobjects where id=object_id(N'pk_FIELDTYPE') and xtype='PK' and type='K')
+ALTER TABLE FIELDTYPE DROP CONSTRAINT pk_FIELDTYPE
+------------------------
+[3725]The constraint 'pk_FIELDTYPE' is being referenced by table 'FIELDTYPEMAP', foreign key constraint 'fk_0670EFA6512711D58822204C4F4F5020'.
+[3727]Could not drop constraint. See previous errors.
+
+[
+
+
+if exists(select * from sysobjects where id=object_id(N'pk_FIELDTYPE') and xtype='PK' and type='K')
+ALTER TABLE FIELDTYPE DROP CONSTRAINT pk_FIELDTYPE]
+--body:--Tables
+
+alter table FIELDTYPE add constraint pk_FIELDTYPE primary key (FIELDTYPEID)
+
+
+------------------------
+[1779]Table 'FIELDTYPE' already has a primary key defined on it.
+[1750]Could not create constraint. See previous errors.
+
+[
+alter table FIELDTYPE add constraint pk_FIELDTYPE primary key (FIELDTYPEID)
+
+]
+--body:--Tables
+
+
+
+if exists(select * from sysobjects where id=object_id(N'pk_FIELDTYPE') and xtype='PK' and type='K')
+ALTER TABLE FIELDTYPE DROP CONSTRAINT pk_FIELDTYPE
+------------------------
+[3725]The constraint 'pk_FIELDTYPE' is being referenced by table 'FIELDTYPEMAP', foreign key constraint 'fk_0670EFA6512711D58822204C4F4F5020'.
+[3727]Could not drop constraint. See previous errors.
+
+[
+
+
+if exists(select * from sysobjects where id=object_id(N'pk_FIELDTYPE') and xtype='PK' and type='K')
+ALTER TABLE FIELDTYPE DROP CONSTRAINT pk_FIELDTYPE]
+--body:--Tables
+
+alter table FIELDTYPE add constraint pk_FIELDTYPE primary key (FIELDTYPEID)
+
+
+------------------------
+[1779]Table 'FIELDTYPE' already has a primary key defined on it.
+[1750]Could not create constraint. See previous errors.
+
+[
+alter table FIELDTYPE add constraint pk_FIELDTYPE primary key (FIELDTYPEID)
+
+]
+--body:--Tables
+
+
+
+if exists(select * from sysobjects where id=object_id(N'pk_SHAREDMETHOD') and xtype='PK' and type='K')
+ALTER TABLE SHAREDMETHOD DROP CONSTRAINT pk_SHAREDMETHOD
+------------------------
+[3725]The constraint 'pk_SHAREDMETHOD' is being referenced by table 'SCRIPT', foreign key constraint 'fk_0670EFA3512711D58822204C4F4F5020'.
+[3727]Could not drop constraint. See previous errors.
+
+[
+
+
+if exists(select * from sysobjects where id=object_id(N'pk_SHAREDMETHOD') and xtype='PK' and type='K')
+ALTER TABLE SHAREDMETHOD DROP CONSTRAINT pk_SHAREDMETHOD]
+--body:--Tables
+
+alter table SHAREDMETHOD add constraint pk_SHAREDMETHOD primary key (SHAREDMETHODID)
+
+
+------------------------
+[1779]Table 'SHAREDMETHOD' already has a primary key defined on it.
+[1750]Could not create constraint. See previous errors.
+
+[
+alter table SHAREDMETHOD add constraint pk_SHAREDMETHOD primary key (SHAREDMETHODID)
+
+]
+--body:--Tables
+
+
+
+if exists(select * from sysobjects where id=object_id(N'pk_SCRIPT') and xtype='PK' and type='K')
+ALTER TABLE SCRIPT DROP CONSTRAINT pk_SCRIPT
+------------------------
+[3725]The constraint 'pk_SCRIPT' is being referenced by table 'PARAMETERS', foreign key constraint 'fk_E598E74CA9DE404186FA972E95635600'.
+[3727]Could not drop constraint. See previous errors.
+
+[
+
+
+if exists(select * from sysobjects where id=object_id(N'pk_SCRIPT') and xtype='PK' and type='K')
+ALTER TABLE SCRIPT DROP CONSTRAINT pk_SCRIPT]
+--body:--Tables
+
+alter table SCRIPT add constraint pk_SCRIPT primary key (SCRIPTID)
+
+
+------------------------
+[1779]Table 'SCRIPT' already has a primary key defined on it.
+[1750]Could not create constraint. See previous errors.
+
+[
+alter table SCRIPT add constraint pk_SCRIPT primary key (SCRIPTID)
+
+]
+--body:--Tables
+
+
+
+if exists(select * from sysobjects where id=object_id(N'pk_SHAREDMETHOD') and xtype='PK' and type='K')
+ALTER TABLE SHAREDMETHOD DROP CONSTRAINT pk_SHAREDMETHOD
+------------------------
+[3725]The constraint 'pk_SHAREDMETHOD' is being referenced by table 'SCRIPT', foreign key constraint 'fk_0670EFA3512711D58822204C4F4F5020'.
+[3727]Could not drop constraint. See previous errors.
+
+[
+
+
+if exists(select * from sysobjects where id=object_id(N'pk_SHAREDMETHOD') and xtype='PK' and type='K')
+ALTER TABLE SHAREDMETHOD DROP CONSTRAINT pk_SHAREDMETHOD]
+--body:--Tables
+
+alter table SHAREDMETHOD add constraint pk_SHAREDMETHOD primary key (SHAREDMETHODID)
+
+
+------------------------
+[1779]Table 'SHAREDMETHOD' already has a primary key defined on it.
+[1750]Could not create constraint. See previous errors.
+
+[
+alter table SHAREDMETHOD add constraint pk_SHAREDMETHOD primary key (SHAREDMETHODID)
+
+]
+--body:--Tables
+
+
+
+if exists(select * from sysobjects where id=object_id(N'pk_SCRIPT') and xtype='PK' and type='K')
+ALTER TABLE SCRIPT DROP CONSTRAINT pk_SCRIPT
+------------------------
+[3725]The constraint 'pk_SCRIPT' is being referenced by table 'PARAMETERS', foreign key constraint 'fk_E598E74CA9DE404186FA972E95635600'.
+[3727]Could not drop constraint. See previous errors.
+
+[
+
+
+if exists(select * from sysobjects where id=object_id(N'pk_SCRIPT') and xtype='PK' and type='K')
+ALTER TABLE SCRIPT DROP CONSTRAINT pk_SCRIPT]
+--body:--Tables
+
+alter table SCRIPT add constraint pk_SCRIPT primary key (SCRIPTID)
+
+
+------------------------
+[1779]Table 'SCRIPT' already has a primary key defined on it.
+[1750]Could not create constraint. See previous errors.
+
+[
+alter table SCRIPT add constraint pk_SCRIPT primary key (SCRIPTID)
+
+]
+--body:--Tables
+
+
+
+if exists(select * from sysobjects where id=object_id(N'pk_OBJECTTYPE') and xtype='PK' and type='K')
+ALTER TABLE OBJECTTYPE DROP CONSTRAINT pk_OBJECTTYPE
+------------------------
+[3725]The constraint 'pk_OBJECTTYPE' is being referenced by table 'PART', foreign key constraint 'fk_0670EFB1512711D58822204C4F4F5020'.
+[3727]Could not drop constraint. See previous errors.
+
+[
+
+
+if exists(select * from sysobjects where id=object_id(N'pk_OBJECTTYPE') and xtype='PK' and type='K')
+ALTER TABLE OBJECTTYPE DROP CONSTRAINT pk_OBJECTTYPE]
+--body:--Tables
+
+alter table OBJECTTYPE add constraint pk_OBJECTTYPE primary key (OBJECTTYPEID)
+
+
+------------------------
+[1779]Table 'OBJECTTYPE' already has a primary key defined on it.
+[1750]Could not create constraint. See previous errors.
+
+[
+alter table OBJECTTYPE add constraint pk_OBJECTTYPE primary key (OBJECTTYPEID)
+
+]
+--body:--Tables
+
+
+
+if exists(select * from sysobjects where id=object_id(N'pk_PART') and xtype='PK' and type='K')
+ALTER TABLE PART DROP CONSTRAINT pk_PART
+------------------------
+[3725]The constraint 'pk_PART' is being referenced by table 'PARTMENU', foreign key constraint 'fk_548E9E2E89F64822A312101CA4A9FE74'.
+[3727]Could not drop constraint. See previous errors.
+
+[
+
+
+if exists(select * from sysobjects where id=object_id(N'pk_PART') and xtype='PK' and type='K')
+ALTER TABLE PART DROP CONSTRAINT pk_PART]
+--body:--Tables
+
+alter table PART add constraint pk_PART primary key (PARTID)
+
+
+------------------------
+[1779]Table 'PART' already has a primary key defined on it.
+[1750]Could not create constraint. See previous errors.
+
+[
+alter table PART add constraint pk_PART primary key (PARTID)
+
+]
+--body:--Tables
+
+
+
+if exists(select * from sysobjects where id=object_id(N'pk_PARTMENU') and xtype='PK' and type='K')
+ALTER TABLE PARTMENU DROP CONSTRAINT pk_PARTMENU
+------------------------
+[3725]The constraint 'pk_PARTMENU' is being referenced by table 'PARTPARAMMAP', foreign key constraint 'fk_F8BE6FCA595D4F46ACDBFB5838A246CA'.
+[3727]Could not drop constraint. See previous errors.
+
+[
+
+
+if exists(select * from sysobjects where id=object_id(N'pk_PARTMENU') and xtype='PK' and type='K')
+ALTER TABLE PARTMENU DROP CONSTRAINT pk_PARTMENU]
+--body:--Tables
+
+alter table PARTMENU add constraint pk_PARTMENU primary key (PARTMENUID)
+
+
+------------------------
+[1779]Table 'PARTMENU' already has a primary key defined on it.
+[1750]Could not create constraint. See previous errors.
+
+[
+alter table PARTMENU add constraint pk_PARTMENU primary key (PARTMENUID)
+
+]
+--body:--Tables
+
+
+
+if exists(select * from sysobjects where id=object_id(N'pk_FIELD') and xtype='PK' and type='K')
+ALTER TABLE FIELD DROP CONSTRAINT pk_FIELD
+------------------------
+[3725]The constraint 'pk_FIELD' is being referenced by table 'FIELDVALIDATOR', foreign key constraint 'fk_B40BBED584C54B0B8679172AA1ACDAD9'.
+[3727]Could not drop constraint. See previous errors.
+
+[
+
+
+if exists(select * from sysobjects where id=object_id(N'pk_FIELD') and xtype='PK' and type='K')
+ALTER TABLE FIELD DROP CONSTRAINT pk_FIELD]
+--body:--Tables
+
+alter table FIELD add constraint pk_FIELD primary key (FIELDID)
+
+
+------------------------
+[1779]Table 'FIELD' already has a primary key defined on it.
+[1750]Could not create constraint. See previous errors.
+
+[
+alter table FIELD add constraint pk_FIELD primary key (FIELDID)
+
+]
+--body:--Tables
+
+
+
+if exists(select * from sysobjects where id=object_id(N'pk_FIELDMENU') and xtype='PK' and type='K')
+ALTER TABLE FIELDMENU DROP CONSTRAINT pk_FIELDMENU
+------------------------
+[3725]The constraint 'pk_FIELDMENU' is being referenced by table 'FIELDPARAMMAP', foreign key constraint 'fk_54752AE806B04EC68DAA692E52A0D36C'.
+[3727]Could not drop constraint. See previous errors.
+
+[
+
+
+if exists(select * from sysobjects where id=object_id(N'pk_FIELDMENU') and xtype='PK' and type='K')
+ALTER TABLE FIELDMENU DROP CONSTRAINT pk_FIELDMENU]
+--body:--Tables
+
+alter table FIELDMENU add constraint pk_FIELDMENU primary key (FIELDMENUID)
+
+
+------------------------
+[1779]Table 'FIELDMENU' already has a primary key defined on it.
+[1750]Could not create constraint. See previous errors.
+
+[
+alter table FIELDMENU add constraint pk_FIELDMENU primary key (FIELDMENUID)
+
+]
+--body:--Tables
+
+
+
+if exists(select * from sysobjects where id=object_id(N'pk_PARTVIEW') and xtype='PK' and type='K')
+ALTER TABLE PARTVIEW DROP CONSTRAINT pk_PARTVIEW
+------------------------
+[3725]The constraint 'pk_PARTVIEW' is being referenced by table 'ViewColumn', foreign key constraint 'fk_3BF43D5E0EB54DDB8EFA62DF3261A272'.
+[3727]Could not drop constraint. See previous errors.
+
+[
+
+
+if exists(select * from sysobjects where id=object_id(N'pk_PARTVIEW') and xtype='PK' and type='K')
+ALTER TABLE PARTVIEW DROP CONSTRAINT pk_PARTVIEW]
+--body:--Tables
+
+alter table PARTVIEW add constraint pk_PARTVIEW primary key (PARTVIEWID)
+
+
+------------------------
+[1779]Table 'PARTVIEW' already has a primary key defined on it.
+[1750]Could not create constraint. See previous errors.
+
+[
+alter table PARTVIEW add constraint pk_PARTVIEW primary key (PARTVIEWID)
+
+]
+--body:--Tables
+
+
+
+if exists(select * from sysobjects where id=object_id(N'pk_UNIQUECONSTRAINT') and xtype='PK' and type='K')
+ALTER TABLE UNIQUECONSTRAINT DROP CONSTRAINT pk_UNIQUECONSTRAINT
+------------------------
+[3725]The constraint 'pk_UNIQUECONSTRAINT' is being referenced by table 'CONSTRAINTFIELD', foreign key constraint 'fk_C70106B1AA9541738097614495D6EF28'.
+[3727]Could not drop constraint. See previous errors.
+
+[
+
+
+if exists(select * from sysobjects where id=object_id(N'pk_UNIQUECONSTRAINT') and xtype='PK' and type='K')
+ALTER TABLE UNIQUECONSTRAINT DROP CONSTRAINT pk_UNIQUECONSTRAINT]
+--body:--Tables
+
+alter table UNIQUECONSTRAINT add constraint pk_UNIQUECONSTRAINT primary key (UNIQUECONSTRAINTID)
+
+
+------------------------
+[1779]Table 'UNIQUECONSTRAINT' already has a primary key defined on it.
+[1750]Could not create constraint. See previous errors.
+
+[
+alter table UNIQUECONSTRAINT add constraint pk_UNIQUECONSTRAINT primary key (UNIQUECONSTRAINTID)
+
+]
+--body:--Tables
+
+
+
+if exists(select * from sysobjects where id=object_id(N'pk_OBJSTATUS') and xtype='PK' and type='K')
+ALTER TABLE OBJSTATUS DROP CONSTRAINT pk_OBJSTATUS
+------------------------
+[3725]The constraint 'pk_OBJSTATUS' is being referenced by table 'NEXTSTATE', foreign key constraint 'fk_11C1A17929B24DDCBDB71EB21D2FF878'.
+[3727]Could not drop constraint. See previous errors.
+
+[
+
+
+if exists(select * from sysobjects where id=object_id(N'pk_OBJSTATUS') and xtype='PK' and type='K')
+ALTER TABLE OBJSTATUS DROP CONSTRAINT pk_OBJSTATUS]
+--body:--Tables
+
+alter table OBJSTATUS add constraint pk_OBJSTATUS primary key (OBJSTATUSID)
+
+
+------------------------
+[1779]Table 'OBJSTATUS' already has a primary key defined on it.
+[1750]Could not create constraint. See previous errors.
+
+[
+alter table OBJSTATUS add constraint pk_OBJSTATUS primary key (OBJSTATUSID)
+
+]
+--body:--Tables
+
+
+
+if exists(select * from sysobjects where id=object_id(N'pk_OBJECTMODE') and xtype='PK' and type='K')
+ALTER TABLE OBJECTMODE DROP CONSTRAINT pk_OBJECTMODE
+------------------------
+[3725]The constraint 'pk_OBJECTMODE' is being referenced by table 'STRUCTRESTRICTION', foreign key constraint 'fk_F448AC333B13489993EE47D3D62962EC'.
+[3727]Could not drop constraint. See previous errors.
+
+[
+
+
+if exists(select * from sysobjects where id=object_id(N'pk_OBJECTMODE') and xtype='PK' and type='K')
+ALTER TABLE OBJECTMODE DROP CONSTRAINT pk_OBJECTMODE]
+--body:--Tables
+
+alter table OBJECTMODE add constraint pk_OBJECTMODE primary key (OBJECTMODEID)
+
+
+------------------------
+[1779]Table 'OBJECTMODE' already has a primary key defined on it.
+[1750]Could not create constraint. See previous errors.
+
+[
+alter table OBJECTMODE add constraint pk_OBJECTMODE primary key (OBJECTMODEID)
+
+]
+--body:--Tables
+
+
+
+if exists(select * from sysobjects where id=object_id(N'pk_OBJECTTYPE') and xtype='PK' and type='K')
+ALTER TABLE OBJECTTYPE DROP CONSTRAINT pk_OBJECTTYPE
+------------------------
+[3725]The constraint 'pk_OBJECTTYPE' is being referenced by table 'PART', foreign key constraint 'fk_0670EFB1512711D58822204C4F4F5020'.
+[3727]Could not drop constraint. See previous errors.
+
+[
+
+
+if exists(select * from sysobjects where id=object_id(N'pk_OBJECTTYPE') and xtype='PK' and type='K')
+ALTER TABLE OBJECTTYPE DROP CONSTRAINT pk_OBJECTTYPE]
+--body:--Tables
+
+alter table OBJECTTYPE add constraint pk_OBJECTTYPE primary key (OBJECTTYPEID)
+
+
+------------------------
+[1779]Table 'OBJECTTYPE' already has a primary key defined on it.
+[1750]Could not create constraint. See previous errors.
+
+[
+alter table OBJECTTYPE add constraint pk_OBJECTTYPE primary key (OBJECTTYPEID)
+
+]
+--body:--Tables
+
+
+
+if exists(select * from sysobjects where id=object_id(N'pk_PART') and xtype='PK' and type='K')
+ALTER TABLE PART DROP CONSTRAINT pk_PART
+------------------------
+[3725]The constraint 'pk_PART' is being referenced by table 'PARTMENU', foreign key constraint 'fk_548E9E2E89F64822A312101CA4A9FE74'.
+[3727]Could not drop constraint. See previous errors.
+
+[
+
+
+if exists(select * from sysobjects where id=object_id(N'pk_PART') and xtype='PK' and type='K')
+ALTER TABLE PART DROP CONSTRAINT pk_PART]
+--body:--Tables
+
+alter table PART add constraint pk_PART primary key (PARTID)
+
+
+------------------------
+[1779]Table 'PART' already has a primary key defined on it.
+[1750]Could not create constraint. See previous errors.
+
+[
+alter table PART add constraint pk_PART primary key (PARTID)
+
+]
+--body:--Tables
+
+
+
+if exists(select * from sysobjects where id=object_id(N'pk_PARTMENU') and xtype='PK' and type='K')
+ALTER TABLE PARTMENU DROP CONSTRAINT pk_PARTMENU
+------------------------
+[3725]The constraint 'pk_PARTMENU' is being referenced by table 'PARTPARAMMAP', foreign key constraint 'fk_F8BE6FCA595D4F46ACDBFB5838A246CA'.
+[3727]Could not drop constraint. See previous errors.
+
+[
+
+
+if exists(select * from sysobjects where id=object_id(N'pk_PARTMENU') and xtype='PK' and type='K')
+ALTER TABLE PARTMENU DROP CONSTRAINT pk_PARTMENU]
+--body:--Tables
+
+alter table PARTMENU add constraint pk_PARTMENU primary key (PARTMENUID)
+
+
+------------------------
+[1779]Table 'PARTMENU' already has a primary key defined on it.
+[1750]Could not create constraint. See previous errors.
+
+[
+alter table PARTMENU add constraint pk_PARTMENU primary key (PARTMENUID)
+
+]
+--body:--Tables
+
+
+
+if exists(select * from sysobjects where id=object_id(N'pk_FIELD') and xtype='PK' and type='K')
+ALTER TABLE FIELD DROP CONSTRAINT pk_FIELD
+------------------------
+[3725]The constraint 'pk_FIELD' is being referenced by table 'FIELDVALIDATOR', foreign key constraint 'fk_B40BBED584C54B0B8679172AA1ACDAD9'.
+[3727]Could not drop constraint. See previous errors.
+
+[
+
+
+if exists(select * from sysobjects where id=object_id(N'pk_FIELD') and xtype='PK' and type='K')
+ALTER TABLE FIELD DROP CONSTRAINT pk_FIELD]
+--body:--Tables
+
+alter table FIELD add constraint pk_FIELD primary key (FIELDID)
+
+
+------------------------
+[1779]Table 'FIELD' already has a primary key defined on it.
+[1750]Could not create constraint. See previous errors.
+
+[
+alter table FIELD add constraint pk_FIELD primary key (FIELDID)
+
+]
+--body:--Tables
+
+
+
+if exists(select * from sysobjects where id=object_id(N'pk_FIELDMENU') and xtype='PK' and type='K')
+ALTER TABLE FIELDMENU DROP CONSTRAINT pk_FIELDMENU
+------------------------
+[3725]The constraint 'pk_FIELDMENU' is being referenced by table 'FIELDPARAMMAP', foreign key constraint 'fk_54752AE806B04EC68DAA692E52A0D36C'.
+[3727]Could not drop constraint. See previous errors.
+
+[
+
+
+if exists(select * from sysobjects where id=object_id(N'pk_FIELDMENU') and xtype='PK' and type='K')
+ALTER TABLE FIELDMENU DROP CONSTRAINT pk_FIELDMENU]
+--body:--Tables
+
+alter table FIELDMENU add constraint pk_FIELDMENU primary key (FIELDMENUID)
+
+
+------------------------
+[1779]Table 'FIELDMENU' already has a primary key defined on it.
+[1750]Could not create constraint. See previous errors.
+
+[
+alter table FIELDMENU add constraint pk_FIELDMENU primary key (FIELDMENUID)
+
+]
+--body:--Tables
+
+
+
+if exists(select * from sysobjects where id=object_id(N'pk_PARTVIEW') and xtype='PK' and type='K')
+ALTER TABLE PARTVIEW DROP CONSTRAINT pk_PARTVIEW
+------------------------
+[3725]The constraint 'pk_PARTVIEW' is being referenced by table 'ViewColumn', foreign key constraint 'fk_3BF43D5E0EB54DDB8EFA62DF3261A272'.
+[3727]Could not drop constraint. See previous errors.
+
+[
+
+
+if exists(select * from sysobjects where id=object_id(N'pk_PARTVIEW') and xtype='PK' and type='K')
+ALTER TABLE PARTVIEW DROP CONSTRAINT pk_PARTVIEW]
+--body:--Tables
+
+alter table PARTVIEW add constraint pk_PARTVIEW primary key (PARTVIEWID)
+
+
+------------------------
+[1779]Table 'PARTVIEW' already has a primary key defined on it.
+[1750]Could not create constraint. See previous errors.
+
+[
+alter table PARTVIEW add constraint pk_PARTVIEW primary key (PARTVIEWID)
+
+]
+--body:--Tables
+
+
+
+if exists(select * from sysobjects where id=object_id(N'pk_UNIQUECONSTRAINT') and xtype='PK' and type='K')
+ALTER TABLE UNIQUECONSTRAINT DROP CONSTRAINT pk_UNIQUECONSTRAINT
+------------------------
+[3725]The constraint 'pk_UNIQUECONSTRAINT' is being referenced by table 'CONSTRAINTFIELD', foreign key constraint 'fk_C70106B1AA9541738097614495D6EF28'.
+[3727]Could not drop constraint. See previous errors.
+
+[
+
+
+if exists(select * from sysobjects where id=object_id(N'pk_UNIQUECONSTRAINT') and xtype='PK' and type='K')
+ALTER TABLE UNIQUECONSTRAINT DROP CONSTRAINT pk_UNIQUECONSTRAINT]
+--body:--Tables
+
+alter table UNIQUECONSTRAINT add constraint pk_UNIQUECONSTRAINT primary key (UNIQUECONSTRAINTID)
+
+
+------------------------
+[1779]Table 'UNIQUECONSTRAINT' already has a primary key defined on it.
+[1750]Could not create constraint. See previous errors.
+
+[
+alter table UNIQUECONSTRAINT add constraint pk_UNIQUECONSTRAINT primary key (UNIQUECONSTRAINTID)
+
+]
+--body:--Tables
+
+
+
+if exists(select * from sysobjects where id=object_id(N'pk_OBJSTATUS') and xtype='PK' and type='K')
+ALTER TABLE OBJSTATUS DROP CONSTRAINT pk_OBJSTATUS
+------------------------
+[3725]The constraint 'pk_OBJSTATUS' is being referenced by table 'NEXTSTATE', foreign key constraint 'fk_11C1A17929B24DDCBDB71EB21D2FF878'.
+[3727]Could not drop constraint. See previous errors.
+
+[
+
+
+if exists(select * from sysobjects where id=object_id(N'pk_OBJSTATUS') and xtype='PK' and type='K')
+ALTER TABLE OBJSTATUS DROP CONSTRAINT pk_OBJSTATUS]
+--body:--Tables
+
+alter table OBJSTATUS add constraint pk_OBJSTATUS primary key (OBJSTATUSID)
+
+
+------------------------
+[1779]Table 'OBJSTATUS' already has a primary key defined on it.
+[1750]Could not create constraint. See previous errors.
+
+[
+alter table OBJSTATUS add constraint pk_OBJSTATUS primary key (OBJSTATUSID)
+
+]
+--body:--Tables
+
+
+
+if exists(select * from sysobjects where id=object_id(N'pk_OBJECTMODE') and xtype='PK' and type='K')
+ALTER TABLE OBJECTMODE DROP CONSTRAINT pk_OBJECTMODE
+------------------------
+[3725]The constraint 'pk_OBJECTMODE' is being referenced by table 'STRUCTRESTRICTION', foreign key constraint 'fk_F448AC333B13489993EE47D3D62962EC'.
+[3727]Could not drop constraint. See previous errors.
+
+[
+
+
+if exists(select * from sysobjects where id=object_id(N'pk_OBJECTMODE') and xtype='PK' and type='K')
+ALTER TABLE OBJECTMODE DROP CONSTRAINT pk_OBJECTMODE]
+--body:--Tables
+
+alter table OBJECTMODE add constraint pk_OBJECTMODE primary key (OBJECTMODEID)
+
+
+------------------------
+[1779]Table 'OBJECTMODE' already has a primary key defined on it.
+[1750]Could not create constraint. See previous errors.
+
+[
+alter table OBJECTMODE add constraint pk_OBJECTMODE primary key (OBJECTMODEID)
+
+]
+--body:--Tables
+
+
+
+if exists(select * from sysobjects where id=object_id(N'pk_MTZAPP') and xtype='PK' and type='K')
+ALTER TABLE MTZAPP DROP CONSTRAINT pk_MTZAPP
+------------------------
+[3725]The constraint 'pk_MTZAPP' is being referenced by table 'ParentPackage', foreign key constraint 'fk_6EA00756B9804D23B209202389953A13'.
+[3727]Could not drop constraint. See previous errors.
+
+[
+
+
+if exists(select * from sysobjects where id=object_id(N'pk_MTZAPP') and xtype='PK' and type='K')
+ALTER TABLE MTZAPP DROP CONSTRAINT pk_MTZAPP]
+--body:--Tables
+
+alter table MTZAPP add constraint pk_MTZAPP primary key (MTZAPPID)
+
+
+------------------------
+[1779]Table 'MTZAPP' already has a primary key defined on it.
+[1750]Could not create constraint. See previous errors.
+
+[
+alter table MTZAPP add constraint pk_MTZAPP primary key (MTZAPPID)
+
+]
+--body:--Tables
+
+
+
+if exists(select * from sysobjects where id=object_id(N'pk_MTZAPP') and xtype='PK' and type='K')
+ALTER TABLE MTZAPP DROP CONSTRAINT pk_MTZAPP
+------------------------
+[3725]The constraint 'pk_MTZAPP' is being referenced by table 'ParentPackage', foreign key constraint 'fk_6EA00756B9804D23B209202389953A13'.
+[3727]Could not drop constraint. See previous errors.
+
+[
+
+
+if exists(select * from sysobjects where id=object_id(N'pk_MTZAPP') and xtype='PK' and type='K')
+ALTER TABLE MTZAPP DROP CONSTRAINT pk_MTZAPP]
+--body:--Tables
+
+alter table MTZAPP add constraint pk_MTZAPP primary key (MTZAPPID)
+
+
+------------------------
+[1779]Table 'MTZAPP' already has a primary key defined on it.
+[1750]Could not create constraint. See previous errors.
+
+[
+alter table MTZAPP add constraint pk_MTZAPP primary key (MTZAPPID)
+
+]
+--body:--Tables
+
+
+
+if exists(select * from sysobjects where id=object_id(N'pk_GENPACKAGE') and xtype='PK' and type='K')
+ALTER TABLE GENPACKAGE DROP CONSTRAINT pk_GENPACKAGE
+------------------------
+[3725]The constraint 'pk_GENPACKAGE' is being referenced by table 'GENERATOR_TARGET', foreign key constraint 'fk_0670EFB9512711D58822204C4F4F5020'.
+[3727]Could not drop constraint. See previous errors.
+
+[
+
+
+if exists(select * from sysobjects where id=object_id(N'pk_GENPACKAGE') and xtype='PK' and type='K')
+ALTER TABLE GENPACKAGE DROP CONSTRAINT pk_GENPACKAGE]
+--body:--Tables
+
+alter table GENPACKAGE add constraint pk_GENPACKAGE primary key (GENPACKAGEID)
+
+
+------------------------
+[1779]Table 'GENPACKAGE' already has a primary key defined on it.
+[1750]Could not create constraint. See previous errors.
+
+[
+alter table GENPACKAGE add constraint pk_GENPACKAGE primary key (GENPACKAGEID)
+
+]
+--body:--Tables
+
+
+
+if exists(select * from sysobjects where id=object_id(N'pk_GENERATOR_TARGET') and xtype='PK' and type='K')
+ALTER TABLE GENERATOR_TARGET DROP CONSTRAINT pk_GENERATOR_TARGET
+------------------------
+[3725]The constraint 'pk_GENERATOR_TARGET' is being referenced by table 'GENMANUALCODE', foreign key constraint 'fk_766993CA7DE64ADA82168BDDF2B0588E'.
+[3727]Could not drop constraint. See previous errors.
+
+[
+
+
+if exists(select * from sysobjects where id=object_id(N'pk_GENERATOR_TARGET') and xtype='PK' and type='K')
+ALTER TABLE GENERATOR_TARGET DROP CONSTRAINT pk_GENERATOR_TARGET]
+--body:--Tables
+
+alter table GENERATOR_TARGET add constraint pk_GENERATOR_TARGET primary key (GENERATOR_TARGETID)
+
+
+------------------------
+[1779]Table 'GENERATOR_TARGET' already has a primary key defined on it.
+[1750]Could not create constraint. See previous errors.
+
+[
+alter table GENERATOR_TARGET add constraint pk_GENERATOR_TARGET primary key (GENERATOR_TARGETID)
+
+]
+--body:--Tables
+
+
+
+if exists(select * from sysobjects where id=object_id(N'pk_GENPACKAGE') and xtype='PK' and type='K')
+ALTER TABLE GENPACKAGE DROP CONSTRAINT pk_GENPACKAGE
+------------------------
+[3725]The constraint 'pk_GENPACKAGE' is being referenced by table 'GENERATOR_TARGET', foreign key constraint 'fk_0670EFB9512711D58822204C4F4F5020'.
+[3727]Could not drop constraint. See previous errors.
+
+[
+
+
+if exists(select * from sysobjects where id=object_id(N'pk_GENPACKAGE') and xtype='PK' and type='K')
+ALTER TABLE GENPACKAGE DROP CONSTRAINT pk_GENPACKAGE]
+--body:--Tables
+
+alter table GENPACKAGE add constraint pk_GENPACKAGE primary key (GENPACKAGEID)
+
+
+------------------------
+[1779]Table 'GENPACKAGE' already has a primary key defined on it.
+[1750]Could not create constraint. See previous errors.
+
+[
+alter table GENPACKAGE add constraint pk_GENPACKAGE primary key (GENPACKAGEID)
+
+]
+--body:--Tables
+
+
+
+if exists(select * from sysobjects where id=object_id(N'pk_GENERATOR_TARGET') and xtype='PK' and type='K')
+ALTER TABLE GENERATOR_TARGET DROP CONSTRAINT pk_GENERATOR_TARGET
+------------------------
+[3725]The constraint 'pk_GENERATOR_TARGET' is being referenced by table 'GENMANUALCODE', foreign key constraint 'fk_766993CA7DE64ADA82168BDDF2B0588E'.
+[3727]Could not drop constraint. See previous errors.
+
+[
+
+
+if exists(select * from sysobjects where id=object_id(N'pk_GENERATOR_TARGET') and xtype='PK' and type='K')
+ALTER TABLE GENERATOR_TARGET DROP CONSTRAINT pk_GENERATOR_TARGET]
+--body:--Tables
+
+alter table GENERATOR_TARGET add constraint pk_GENERATOR_TARGET primary key (GENERATOR_TARGETID)
+
+
+------------------------
+[1779]Table 'GENERATOR_TARGET' already has a primary key defined on it.
+[1750]Could not create constraint. See previous errors.
+
+[
+alter table GENERATOR_TARGET add constraint pk_GENERATOR_TARGET primary key (GENERATOR_TARGETID)
+
+]
+--body:--Tables
+
+
+
+if exists(select * from sysobjects where id=object_id(N'pk_Ext_Photos') and xtype='PK' and type='K')
+ALTER TABLE Ext_Photos DROP CONSTRAINT pk_Ext_Photos
+------------------------
+[3725]The constraint 'pk_Ext_Photos' is being referenced by table 'Ext_Photo_Call', foreign key constraint 'fk_FD8017D32B28455EBDAF5D0D589442F6'.
+[3727]Could not drop constraint. See previous errors.
+
+[
+
+
+if exists(select * from sysobjects where id=object_id(N'pk_Ext_Photos') and xtype='PK' and type='K')
+ALTER TABLE Ext_Photos DROP CONSTRAINT pk_Ext_Photos]
+--body:--Tables
+
+alter table Ext_Photos add constraint pk_Ext_Photos primary key (Ext_PhotosID)
+
+
+------------------------
+[1779]Table 'Ext_Photos' already has a primary key defined on it.
+[1750]Could not create constraint. See previous errors.
+
+[
+alter table Ext_Photos add constraint pk_Ext_Photos primary key (Ext_PhotosID)
+
+]
+--body:--Tables
+
+
+
+if exists(select * from sysobjects where id=object_id(N'pk_Ext_Photos') and xtype='PK' and type='K')
+ALTER TABLE Ext_Photos DROP CONSTRAINT pk_Ext_Photos
+------------------------
+[3725]The constraint 'pk_Ext_Photos' is being referenced by table 'Ext_Photo_Call', foreign key constraint 'fk_FD8017D32B28455EBDAF5D0D589442F6'.
+[3727]Could not drop constraint. See previous errors.
+
+[
+
+
+if exists(select * from sysobjects where id=object_id(N'pk_Ext_Photos') and xtype='PK' and type='K')
+ALTER TABLE Ext_Photos DROP CONSTRAINT pk_Ext_Photos]
+--body:--Tables
+
+alter table Ext_Photos add constraint pk_Ext_Photos primary key (Ext_PhotosID)
+
+
+------------------------
+[1779]Table 'Ext_Photos' already has a primary key defined on it.
+[1750]Could not create constraint. See previous errors.
+
+[
+alter table Ext_Photos add constraint pk_Ext_Photos primary key (Ext_PhotosID)
+
+]
+--body:--Tables
+
+
+
+if exists(select * from sysobjects where id=object_id(N'pk_RPTStruct') and xtype='PK' and type='K')
+ALTER TABLE RPTStruct DROP CONSTRAINT pk_RPTStruct
+------------------------
+[3725]The constraint 'pk_RPTStruct' is being referenced by table 'RPTFields', foreign key constraint 'fk_0C77D0DE559E43FCB181156E126543F1'.
+[3727]Could not drop constraint. See previous errors.
+
+[
+
+
+if exists(select * from sysobjects where id=object_id(N'pk_RPTStruct') and xtype='PK' and type='K')
+ALTER TABLE RPTStruct DROP CONSTRAINT pk_RPTStruct]
+--body:--Tables
+
+alter table RPTStruct add constraint pk_RPTStruct primary key (RPTStructID)
+
+
+------------------------
+[1779]Table 'RPTStruct' already has a primary key defined on it.
+[1750]Could not create constraint. See previous errors.
+
+[
+alter table RPTStruct add constraint pk_RPTStruct primary key (RPTStructID)
+
+]
+--body:--Tables
+
+
+
+if exists(select * from sysobjects where id=object_id(N'pk_RPTStruct') and xtype='PK' and type='K')
+ALTER TABLE RPTStruct DROP CONSTRAINT pk_RPTStruct
+------------------------
+[3725]The constraint 'pk_RPTStruct' is being referenced by table 'RPTFields', foreign key constraint 'fk_0C77D0DE559E43FCB181156E126543F1'.
+[3727]Could not drop constraint. See previous errors.
+
+[
+
+
+if exists(select * from sysobjects where id=object_id(N'pk_RPTStruct') and xtype='PK' and type='K')
+ALTER TABLE RPTStruct DROP CONSTRAINT pk_RPTStruct]
+--body:--Tables
+
+alter table RPTStruct add constraint pk_RPTStruct primary key (RPTStructID)
+
+
+------------------------
+[1779]Table 'RPTStruct' already has a primary key defined on it.
+[1750]Could not create constraint. See previous errors.
+
+[
+alter table RPTStruct add constraint pk_RPTStruct primary key (RPTStructID)
+
+]
+--body:--Tables
+
+
+
+if exists(select * from sysobjects where id=object_id(N'pk_Folder') and xtype='PK' and type='K')
+ALTER TABLE Folder DROP CONSTRAINT pk_Folder
+------------------------
+[3725]The constraint 'pk_Folder' is being referenced by table 'Shortcut', foreign key constraint 'fk_F434820031D14C14B1881CFE15547265'.
+[3727]Could not drop constraint. See previous errors.
+
+[
+
+
+if exists(select * from sysobjects where id=object_id(N'pk_Folder') and xtype='PK' and type='K')
+ALTER TABLE Folder DROP CONSTRAINT pk_Folder]
+--body:--Tables
+
+alter table Folder add constraint pk_Folder primary key (FolderID)
+
+
+------------------------
+[1779]Table 'Folder' already has a primary key defined on it.
+[1750]Could not create constraint. See previous errors.
+
+[
+alter table Folder add constraint pk_Folder primary key (FolderID)
+
+]
+--body:--Tables
+
+
+
+if exists(select * from sysobjects where id=object_id(N'pk_Folder') and xtype='PK' and type='K')
+ALTER TABLE Folder DROP CONSTRAINT pk_Folder
+------------------------
+[3725]The constraint 'pk_Folder' is being referenced by table 'Shortcut', foreign key constraint 'fk_F434820031D14C14B1881CFE15547265'.
+[3727]Could not drop constraint. See previous errors.
+
+[
+
+
+if exists(select * from sysobjects where id=object_id(N'pk_Folder') and xtype='PK' and type='K')
+ALTER TABLE Folder DROP CONSTRAINT pk_Folder]
+--body:--Tables
+
+alter table Folder add constraint pk_Folder primary key (FolderID)
+
+
+------------------------
+[1779]Table 'Folder' already has a primary key defined on it.
+[1750]Could not create constraint. See previous errors.
+
+[
+alter table Folder add constraint pk_Folder primary key (FolderID)
+
+]
+--body:--Tables
+
+
+
+if exists(select * from sysobjects where id=object_id(N'pk_Groups') and xtype='PK' and type='K')
+ALTER TABLE Groups DROP CONSTRAINT pk_Groups
+------------------------
+[3725]The constraint 'pk_Groups' is being referenced by table 'GroupUser', foreign key constraint 'fk_FE2C9352E29A420B91343E3BDD832A6E'.
+[3727]Could not drop constraint. See previous errors.
+
+[
+
+
+if exists(select * from sysobjects where id=object_id(N'pk_Groups') and xtype='PK' and type='K')
+ALTER TABLE Groups DROP CONSTRAINT pk_Groups]
+--body:--Tables
+
+alter table Groups add constraint pk_Groups primary key (GroupsID)
+
+
+------------------------
+[1779]Table 'Groups' already has a primary key defined on it.
+[1750]Could not create constraint. See previous errors.
+
+[
+alter table Groups add constraint pk_Groups primary key (GroupsID)
+
+]
+--body:--Tables
+
+
+
+if exists(select * from sysobjects where id=object_id(N'pk_Groups') and xtype='PK' and type='K')
+ALTER TABLE Groups DROP CONSTRAINT pk_Groups
+------------------------
+[3725]The constraint 'pk_Groups' is being referenced by table 'GroupUser', foreign key constraint 'fk_FE2C9352E29A420B91343E3BDD832A6E'.
+[3727]Could not drop constraint. See previous errors.
+
+[
+
+
+if exists(select * from sysobjects where id=object_id(N'pk_Groups') and xtype='PK' and type='K')
+ALTER TABLE Groups DROP CONSTRAINT pk_Groups]
+--body:--Tables
+
+alter table Groups add constraint pk_Groups primary key (GroupsID)
+
+
+------------------------
+[1779]Table 'Groups' already has a primary key defined on it.
+[1750]Could not create constraint. See previous errors.
+
+[
+alter table Groups add constraint pk_Groups primary key (GroupsID)
+
+]
+--body:--Tables
+
+
+
+if exists(select * from sysobjects where id=object_id(N'pk_ROLES_DOC') and xtype='PK' and type='K')
+ALTER TABLE ROLES_DOC DROP CONSTRAINT pk_ROLES_DOC
+------------------------
+[3725]The constraint 'pk_ROLES_DOC' is being referenced by table 'ROLES_DOC_STATE', foreign key constraint 'fk_545E45954CC6489E8CF1B02AD530FC76'.
+[3727]Could not drop constraint. See previous errors.
+
+[
+
+
+if exists(select * from sysobjects where id=object_id(N'pk_ROLES_DOC') and xtype='PK' and type='K')
+ALTER TABLE ROLES_DOC DROP CONSTRAINT pk_ROLES_DOC]
+--body:--Tables
+
+alter table ROLES_DOC add constraint pk_ROLES_DOC primary key (ROLES_DOCID)
+
+
+------------------------
+[1779]Table 'ROLES_DOC' already has a primary key defined on it.
+[1750]Could not create constraint. See previous errors.
+
+[
+alter table ROLES_DOC add constraint pk_ROLES_DOC primary key (ROLES_DOCID)
+
+]
+--body:--Tables
+
+
+
+if exists(select * from sysobjects where id=object_id(N'pk_ROLES_DOC') and xtype='PK' and type='K')
+ALTER TABLE ROLES_DOC DROP CONSTRAINT pk_ROLES_DOC
+------------------------
+[3725]The constraint 'pk_ROLES_DOC' is being referenced by table 'ROLES_DOC_STATE', foreign key constraint 'fk_545E45954CC6489E8CF1B02AD530FC76'.
+[3727]Could not drop constraint. See previous errors.
+
+[
+
+
+if exists(select * from sysobjects where id=object_id(N'pk_ROLES_DOC') and xtype='PK' and type='K')
+ALTER TABLE ROLES_DOC DROP CONSTRAINT pk_ROLES_DOC]
+--body:--Tables
+
+alter table ROLES_DOC add constraint pk_ROLES_DOC primary key (ROLES_DOCID)
+
+
+------------------------
+[1779]Table 'ROLES_DOC' already has a primary key defined on it.
+[1750]Could not create constraint. See previous errors.
+
+[
+alter table ROLES_DOC add constraint pk_ROLES_DOC primary key (ROLES_DOCID)
+
+]
+--body:--Tables
+
+
+
+if exists(select * from sysobjects where id=object_id(N'pk_ROLES_WP') and xtype='PK' and type='K')
+ALTER TABLE ROLES_WP DROP CONSTRAINT pk_ROLES_WP
+------------------------
+[3725]The constraint 'pk_ROLES_WP' is being referenced by table 'ROLES_ACT', foreign key constraint 'fk_7F784C67AA8944E98020C6303671A273'.
+[3727]Could not drop constraint. See previous errors.
+
+[
+
+
+if exists(select * from sysobjects where id=object_id(N'pk_ROLES_WP') and xtype='PK' and type='K')
+ALTER TABLE ROLES_WP DROP CONSTRAINT pk_ROLES_WP]
+--body:--Tables
+
+alter table ROLES_WP add constraint pk_ROLES_WP primary key (ROLES_WPID)
+
+
+------------------------
+[1779]Table 'ROLES_WP' already has a primary key defined on it.
+[1750]Could not create constraint. See previous errors.
+
+[
+alter table ROLES_WP add constraint pk_ROLES_WP primary key (ROLES_WPID)
+
+]
+--body:--Tables
+
+
+
+if exists(select * from sysobjects where id=object_id(N'pk_ROLES_WP') and xtype='PK' and type='K')
+ALTER TABLE ROLES_WP DROP CONSTRAINT pk_ROLES_WP
+------------------------
+[3725]The constraint 'pk_ROLES_WP' is being referenced by table 'ROLES_ACT', foreign key constraint 'fk_7F784C67AA8944E98020C6303671A273'.
+[3727]Could not drop constraint. See previous errors.
+
+[
+
+
+if exists(select * from sysobjects where id=object_id(N'pk_ROLES_WP') and xtype='PK' and type='K')
+ALTER TABLE ROLES_WP DROP CONSTRAINT pk_ROLES_WP]
+--body:--Tables
+
+alter table ROLES_WP add constraint pk_ROLES_WP primary key (ROLES_WPID)
+
+
+------------------------
+[1779]Table 'ROLES_WP' already has a primary key defined on it.
+[1750]Could not create constraint. See previous errors.
+
+[
+alter table ROLES_WP add constraint pk_ROLES_WP primary key (ROLES_WPID)
+
+]
+--body:--Tables
+
+
+
+if exists(select * from sysobjects where id=object_id(N'pk_MTZ_Inst_Build') and xtype='PK' and type='K')
+ALTER TABLE MTZ_Inst_Build DROP CONSTRAINT pk_MTZ_Inst_Build
+------------------------
+[3725]The constraint 'pk_MTZ_Inst_Build' is being referenced by table 'MTZ_Inst_Build_Sec', foreign key constraint 'fk_F63DB35A0570462EA5D645115B484B5D'.
+[3727]Could not drop constraint. See previous errors.
+
+[
+
+
+if exists(select * from sysobjects where id=object_id(N'pk_MTZ_Inst_Build') and xtype='PK' and type='K')
+ALTER TABLE MTZ_Inst_Build DROP CONSTRAINT pk_MTZ_Inst_Build]
+--body:--Tables
+
+alter table MTZ_Inst_Build add constraint pk_MTZ_Inst_Build primary key (MTZ_Inst_BuildID)
+
+
+------------------------
+[1779]Table 'MTZ_Inst_Build' already has a primary key defined on it.
+[1750]Could not create constraint. See previous errors.
+
+[
+alter table MTZ_Inst_Build add constraint pk_MTZ_Inst_Build primary key (MTZ_Inst_BuildID)
+
+]
+--body:--Tables
+
+
+
+if exists(select * from sysobjects where id=object_id(N'pk_MTZ_Inst_Build') and xtype='PK' and type='K')
+ALTER TABLE MTZ_Inst_Build DROP CONSTRAINT pk_MTZ_Inst_Build
+------------------------
+[3725]The constraint 'pk_MTZ_Inst_Build' is being referenced by table 'MTZ_Inst_Build_Sec', foreign key constraint 'fk_F63DB35A0570462EA5D645115B484B5D'.
+[3727]Could not drop constraint. See previous errors.
+
+[
+
+
+if exists(select * from sysobjects where id=object_id(N'pk_MTZ_Inst_Build') and xtype='PK' and type='K')
+ALTER TABLE MTZ_Inst_Build DROP CONSTRAINT pk_MTZ_Inst_Build]
+--body:--Tables
+
+alter table MTZ_Inst_Build add constraint pk_MTZ_Inst_Build primary key (MTZ_Inst_BuildID)
+
+
+------------------------
+[1779]Table 'MTZ_Inst_Build' already has a primary key defined on it.
+[1750]Could not create constraint. See previous errors.
+
+[
+alter table MTZ_Inst_Build add constraint pk_MTZ_Inst_Build primary key (MTZ_Inst_BuildID)
+
+]
+--body:--Tables
+
+
+
+if exists(select * from sysobjects where id=object_id(N'pk_MTZ_Inst_Section') and xtype='PK' and type='K')
+ALTER TABLE MTZ_Inst_Section DROP CONSTRAINT pk_MTZ_Inst_Section
+------------------------
+[3725]The constraint 'pk_MTZ_Inst_Section' is being referenced by table 'MTZ_Inst_Sec_Files', foreign key constraint 'fk_2956E2B40FF041AEA7DA8ED03D26A1E8'.
+[3727]Could not drop constraint. See previous errors.
+
+[
+
+
+if exists(select * from sysobjects where id=object_id(N'pk_MTZ_Inst_Section') and xtype='PK' and type='K')
+ALTER TABLE MTZ_Inst_Section DROP CONSTRAINT pk_MTZ_Inst_Section]
+--body:--Tables
+
+alter table MTZ_Inst_Section add constraint pk_MTZ_Inst_Section primary key (MTZ_Inst_SectionID)
+
+
+------------------------
+[1779]Table 'MTZ_Inst_Section' already has a primary key defined on it.
+[1750]Could not create constraint. See previous errors.
+
+[
+alter table MTZ_Inst_Section add constraint pk_MTZ_Inst_Section primary key (MTZ_Inst_SectionID)
+
+]
+--body:--Tables
+
+
+
+if exists(select * from sysobjects where id=object_id(N'pk_MTZ_Inst_Section') and xtype='PK' and type='K')
+ALTER TABLE MTZ_Inst_Section DROP CONSTRAINT pk_MTZ_Inst_Section
+------------------------
+[3725]The constraint 'pk_MTZ_Inst_Section' is being referenced by table 'MTZ_Inst_Sec_Files', foreign key constraint 'fk_2956E2B40FF041AEA7DA8ED03D26A1E8'.
+[3727]Could not drop constraint. See previous errors.
+
+[
+
+
+if exists(select * from sysobjects where id=object_id(N'pk_MTZ_Inst_Section') and xtype='PK' and type='K')
+ALTER TABLE MTZ_Inst_Section DROP CONSTRAINT pk_MTZ_Inst_Section]
+--body:--Tables
+
+alter table MTZ_Inst_Section add constraint pk_MTZ_Inst_Section primary key (MTZ_Inst_SectionID)
+
+
+------------------------
+[1779]Table 'MTZ_Inst_Section' already has a primary key defined on it.
+[1750]Could not create constraint. See previous errors.
+
+[
+alter table MTZ_Inst_Section add constraint pk_MTZ_Inst_Section primary key (MTZ_Inst_SectionID)
+
+]
+--body:--Tables
+
+
+
+if exists(select * from sysobjects where id=object_id(N'pk_JournalColumn') and xtype='PK' and type='K')
+ALTER TABLE JournalColumn DROP CONSTRAINT pk_JournalColumn
+------------------------
+[3725]The constraint 'pk_JournalColumn' is being referenced by table 'JColumnSource', foreign key constraint 'fk_8D8C85EBD15E45D7B13B0B4001EB9AC2'.
+[3727]Could not drop constraint. See previous errors.
+
+[
+
+
+if exists(select * from sysobjects where id=object_id(N'pk_JournalColumn') and xtype='PK' and type='K')
+ALTER TABLE JournalColumn DROP CONSTRAINT pk_JournalColumn]
+--body:--Tables
+
+alter table JournalColumn add constraint pk_JournalColumn primary key (JournalColumnID)
+
+
+------------------------
+[1779]Table 'JournalColumn' already has a primary key defined on it.
+[1750]Could not create constraint. See previous errors.
+
+[
+alter table JournalColumn add constraint pk_JournalColumn primary key (JournalColumnID)
+
+]
+--body:--Tables
+
+
+
+if exists(select * from sysobjects where id=object_id(N'pk_JournalColumn') and xtype='PK' and type='K')
+ALTER TABLE JournalColumn DROP CONSTRAINT pk_JournalColumn
+------------------------
+[3725]The constraint 'pk_JournalColumn' is being referenced by table 'JColumnSource', foreign key constraint 'fk_8D8C85EBD15E45D7B13B0B4001EB9AC2'.
+[3727]Could not drop constraint. See previous errors.
+
+[
+
+
+if exists(select * from sysobjects where id=object_id(N'pk_JournalColumn') and xtype='PK' and type='K')
+ALTER TABLE JournalColumn DROP CONSTRAINT pk_JournalColumn]
+--body:--Tables
+
+alter table JournalColumn add constraint pk_JournalColumn primary key (JournalColumnID)
+
+
+------------------------
+[1779]Table 'JournalColumn' already has a primary key defined on it.
+[1750]Could not create constraint. See previous errors.
+
+[
+alter table JournalColumn add constraint pk_JournalColumn primary key (JournalColumnID)
+
+]
+--body:--Tables
+
+
+
+if exists(select * from sysobjects where id=object_id(N'pk_WEBS_PAGEDEF') and xtype='PK' and type='K')
+ALTER TABLE WEBS_PAGEDEF DROP CONSTRAINT pk_WEBS_PAGEDEF
+------------------------
+[3725]The constraint 'pk_WEBS_PAGEDEF' is being referenced by table 'WEBS_PICS', foreign key constraint 'fk_178E6578D2F444C6AF4B2F3B74C93FCB'.
+[3727]Could not drop constraint. See previous errors.
+
+[
+
+
+if exists(select * from sysobjects where id=object_id(N'pk_WEBS_PAGEDEF') and xtype='PK' and type='K')
+ALTER TABLE WEBS_PAGEDEF DROP CONSTRAINT pk_WEBS_PAGEDEF]
+--body:--Tables
+
+alter table WEBS_PAGEDEF add constraint pk_WEBS_PAGEDEF primary key (WEBS_PAGEDEFID)
+
+
+------------------------
+[1779]Table 'WEBS_PAGEDEF' already has a primary key defined on it.
+[1750]Could not create constraint. See previous errors.
+
+[
+alter table WEBS_PAGEDEF add constraint pk_WEBS_PAGEDEF primary key (WEBS_PAGEDEFID)
+
+]
+--body:--Tables
+
+
+
+if exists(select * from sysobjects where id=object_id(N'pk_WEBS_PAGECOMP') and xtype='PK' and type='K')
+ALTER TABLE WEBS_PAGECOMP DROP CONSTRAINT pk_WEBS_PAGECOMP
+------------------------
+[3725]The constraint 'pk_WEBS_PAGECOMP' is being referenced by table 'TablePart', foreign key constraint 'fk_B0633D6E726B42998D1C4DEAB0CB09C0'.
+[3727]Could not drop constraint. See previous errors.
+
+[
+
+
+if exists(select * from sysobjects where id=object_id(N'pk_WEBS_PAGECOMP') and xtype='PK' and type='K')
+ALTER TABLE WEBS_PAGECOMP DROP CONSTRAINT pk_WEBS_PAGECOMP]
+--body:--Tables
+
+alter table WEBS_PAGECOMP add constraint pk_WEBS_PAGECOMP primary key (WEBS_PAGECOMPID)
+
+
+------------------------
+[1779]Table 'WEBS_PAGECOMP' already has a primary key defined on it.
+[1750]Could not create constraint. See previous errors.
+
+[
+alter table WEBS_PAGECOMP add constraint pk_WEBS_PAGECOMP primary key (WEBS_PAGECOMPID)
+
+]
+--body:--Tables
+
+
+
+if exists(select * from sysobjects where id=object_id(N'pk_WEBS_PAGEDEF') and xtype='PK' and type='K')
+ALTER TABLE WEBS_PAGEDEF DROP CONSTRAINT pk_WEBS_PAGEDEF
+------------------------
+[3725]The constraint 'pk_WEBS_PAGEDEF' is being referenced by table 'WEBS_PICS', foreign key constraint 'fk_178E6578D2F444C6AF4B2F3B74C93FCB'.
+[3727]Could not drop constraint. See previous errors.
+
+[
+
+
+if exists(select * from sysobjects where id=object_id(N'pk_WEBS_PAGEDEF') and xtype='PK' and type='K')
+ALTER TABLE WEBS_PAGEDEF DROP CONSTRAINT pk_WEBS_PAGEDEF]
+--body:--Tables
+
+alter table WEBS_PAGEDEF add constraint pk_WEBS_PAGEDEF primary key (WEBS_PAGEDEFID)
+
+
+------------------------
+[1779]Table 'WEBS_PAGEDEF' already has a primary key defined on it.
+[1750]Could not create constraint. See previous errors.
+
+[
+alter table WEBS_PAGEDEF add constraint pk_WEBS_PAGEDEF primary key (WEBS_PAGEDEFID)
+
+]
+--body:--Tables
+
+
+
+if exists(select * from sysobjects where id=object_id(N'pk_WEBS_PAGECOMP') and xtype='PK' and type='K')
+ALTER TABLE WEBS_PAGECOMP DROP CONSTRAINT pk_WEBS_PAGECOMP
+------------------------
+[3725]The constraint 'pk_WEBS_PAGECOMP' is being referenced by table 'TablePart', foreign key constraint 'fk_B0633D6E726B42998D1C4DEAB0CB09C0'.
+[3727]Could not drop constraint. See previous errors.
+
+[
+
+
+if exists(select * from sysobjects where id=object_id(N'pk_WEBS_PAGECOMP') and xtype='PK' and type='K')
+ALTER TABLE WEBS_PAGECOMP DROP CONSTRAINT pk_WEBS_PAGECOMP]
+--body:--Tables
+
+alter table WEBS_PAGECOMP add constraint pk_WEBS_PAGECOMP primary key (WEBS_PAGECOMPID)
+
+
+------------------------
+[1779]Table 'WEBS_PAGECOMP' already has a primary key defined on it.
+[1750]Could not create constraint. See previous errors.
+
+[
+alter table WEBS_PAGECOMP add constraint pk_WEBS_PAGECOMP primary key (WEBS_PAGECOMPID)
+
+]
+--body:--Tables
+
+
+
+if exists(select * from sysobjects where id=object_id(N'pk_WEBS_ANKETA') and xtype='PK' and type='K')
+ALTER TABLE WEBS_ANKETA DROP CONSTRAINT pk_WEBS_ANKETA
+------------------------
+[3725]The constraint 'pk_WEBS_ANKETA' is being referenced by table 'WEBS_QUESTIONS', foreign key constraint 'fk_BF16E21953B3404192A3F86A60A4B94A'.
+[3727]Could not drop constraint. See previous errors.
+
+[
+
+
+if exists(select * from sysobjects where id=object_id(N'pk_WEBS_ANKETA') and xtype='PK' and type='K')
+ALTER TABLE WEBS_ANKETA DROP CONSTRAINT pk_WEBS_ANKETA]
+--body:--Tables
+
+alter table WEBS_ANKETA add constraint pk_WEBS_ANKETA primary key (WEBS_ANKETAID)
+
+
+------------------------
+[1779]Table 'WEBS_ANKETA' already has a primary key defined on it.
+[1750]Could not create constraint. See previous errors.
+
+[
+alter table WEBS_ANKETA add constraint pk_WEBS_ANKETA primary key (WEBS_ANKETAID)
+
+]
+--body:--Tables
+
+
+
+if exists(select * from sysobjects where id=object_id(N'pk_WEBS_QUESTIONS') and xtype='PK' and type='K')
+ALTER TABLE WEBS_QUESTIONS DROP CONSTRAINT pk_WEBS_QUESTIONS
+------------------------
+[3725]The constraint 'pk_WEBS_QUESTIONS' is being referenced by table 'WEBS_ANSWERS', foreign key constraint 'fk_4DE0F4C34F574A109462A08799B68ACA'.
+[3727]Could not drop constraint. See previous errors.
+
+[
+
+
+if exists(select * from sysobjects where id=object_id(N'pk_WEBS_QUESTIONS') and xtype='PK' and type='K')
+ALTER TABLE WEBS_QUESTIONS DROP CONSTRAINT pk_WEBS_QUESTIONS]
+--body:--Tables
+
+alter table WEBS_QUESTIONS add constraint pk_WEBS_QUESTIONS primary key (WEBS_QUESTIONSID)
+
+
+------------------------
+[1779]Table 'WEBS_QUESTIONS' already has a primary key defined on it.
+[1750]Could not create constraint. See previous errors.
+
+[
+alter table WEBS_QUESTIONS add constraint pk_WEBS_QUESTIONS primary key (WEBS_QUESTIONSID)
+
+]
+--body:--Tables
+
+
+
+if exists(select * from sysobjects where id=object_id(N'pk_WEBS_ANKETA') and xtype='PK' and type='K')
+ALTER TABLE WEBS_ANKETA DROP CONSTRAINT pk_WEBS_ANKETA
+------------------------
+[3725]The constraint 'pk_WEBS_ANKETA' is being referenced by table 'WEBS_QUESTIONS', foreign key constraint 'fk_BF16E21953B3404192A3F86A60A4B94A'.
+[3727]Could not drop constraint. See previous errors.
+
+[
+
+
+if exists(select * from sysobjects where id=object_id(N'pk_WEBS_ANKETA') and xtype='PK' and type='K')
+ALTER TABLE WEBS_ANKETA DROP CONSTRAINT pk_WEBS_ANKETA]
+--body:--Tables
+
+alter table WEBS_ANKETA add constraint pk_WEBS_ANKETA primary key (WEBS_ANKETAID)
+
+
+------------------------
+[1779]Table 'WEBS_ANKETA' already has a primary key defined on it.
+[1750]Could not create constraint. See previous errors.
+
+[
+alter table WEBS_ANKETA add constraint pk_WEBS_ANKETA primary key (WEBS_ANKETAID)
+
+]
+--body:--Tables
+
+
+
+if exists(select * from sysobjects where id=object_id(N'pk_WEBS_QUESTIONS') and xtype='PK' and type='K')
+ALTER TABLE WEBS_QUESTIONS DROP CONSTRAINT pk_WEBS_QUESTIONS
+------------------------
+[3725]The constraint 'pk_WEBS_QUESTIONS' is being referenced by table 'WEBS_ANSWERS', foreign key constraint 'fk_4DE0F4C34F574A109462A08799B68ACA'.
+[3727]Could not drop constraint. See previous errors.
+
+[
+
+
+if exists(select * from sysobjects where id=object_id(N'pk_WEBS_QUESTIONS') and xtype='PK' and type='K')
+ALTER TABLE WEBS_QUESTIONS DROP CONSTRAINT pk_WEBS_QUESTIONS]
+--body:--Tables
+
+alter table WEBS_QUESTIONS add constraint pk_WEBS_QUESTIONS primary key (WEBS_QUESTIONSID)
+
+
+------------------------
+[1779]Table 'WEBS_QUESTIONS' already has a primary key defined on it.
+[1750]Could not create constraint. See previous errors.
+
+[
+alter table WEBS_QUESTIONS add constraint pk_WEBS_QUESTIONS primary key (WEBS_QUESTIONSID)
+
+]
+--body:--Tables
+
+
+
+if exists(select * from sysobjects where id=object_id(N'pk_WEBS_NEWS') and xtype='PK' and type='K')
+ALTER TABLE WEBS_NEWS DROP CONSTRAINT pk_WEBS_NEWS
+------------------------
+[3725]The constraint 'pk_WEBS_NEWS' is being referenced by table 'NEWS_PICS', foreign key constraint 'fk_B8A15B7A74784CB4B59AB3D0F183DD0A'.
+[3727]Could not drop constraint. See previous errors.
+
+[
+
+
+if exists(select * from sysobjects where id=object_id(N'pk_WEBS_NEWS') and xtype='PK' and type='K')
+ALTER TABLE WEBS_NEWS DROP CONSTRAINT pk_WEBS_NEWS]
+--body:--Tables
+
+alter table WEBS_NEWS add constraint pk_WEBS_NEWS primary key (WEBS_NEWSID)
+
+
+------------------------
+[1779]Table 'WEBS_NEWS' already has a primary key defined on it.
+[1750]Could not create constraint. See previous errors.
+
+[
+alter table WEBS_NEWS add constraint pk_WEBS_NEWS primary key (WEBS_NEWSID)
+
+]
+--body:--Tables
+
+
+
+if exists(select * from sysobjects where id=object_id(N'pk_WEBS_NEWS') and xtype='PK' and type='K')
+ALTER TABLE WEBS_NEWS DROP CONSTRAINT pk_WEBS_NEWS
+------------------------
+[3725]The constraint 'pk_WEBS_NEWS' is being referenced by table 'NEWS_PICS', foreign key constraint 'fk_B8A15B7A74784CB4B59AB3D0F183DD0A'.
+[3727]Could not drop constraint. See previous errors.
+
+[
+
+
+if exists(select * from sysobjects where id=object_id(N'pk_WEBS_NEWS') and xtype='PK' and type='K')
+ALTER TABLE WEBS_NEWS DROP CONSTRAINT pk_WEBS_NEWS]
+--body:--Tables
+
+alter table WEBS_NEWS add constraint pk_WEBS_NEWS primary key (WEBS_NEWSID)
+
+
+------------------------
+[1779]Table 'WEBS_NEWS' already has a primary key defined on it.
+[1750]Could not create constraint. See previous errors.
+
+[
+alter table WEBS_NEWS add constraint pk_WEBS_NEWS primary key (WEBS_NEWSID)
+
+]
+--body:--Tables
+
+
+
+if exists(select * from sysobjects where id=object_id(N'pk_EntryPoints') and xtype='PK' and type='K')
+ALTER TABLE EntryPoints DROP CONSTRAINT pk_EntryPoints
+------------------------
+[3725]The constraint 'pk_EntryPoints' is being referenced by table 'EPFilterLink', foreign key constraint 'fk_D407359F220449699789956215E456E6'.
+[3727]Could not drop constraint. See previous errors.
+
+[
+
+
+if exists(select * from sysobjects where id=object_id(N'pk_EntryPoints') and xtype='PK' and type='K')
+ALTER TABLE EntryPoints DROP CONSTRAINT pk_EntryPoints]
+--body:--Tables
+
+alter table EntryPoints add constraint pk_EntryPoints primary key (EntryPointsID)
+
+
+------------------------
+[1779]Table 'EntryPoints' already has a primary key defined on it.
+[1750]Could not create constraint. See previous errors.
+
+[
+alter table EntryPoints add constraint pk_EntryPoints primary key (EntryPointsID)
+
+]
+--body:--Tables
+
+
+
+if exists(select * from sysobjects where id=object_id(N'pk_EntryPoints') and xtype='PK' and type='K')
+ALTER TABLE EntryPoints DROP CONSTRAINT pk_EntryPoints
+------------------------
+[3725]The constraint 'pk_EntryPoints' is being referenced by table 'EPFilterLink', foreign key constraint 'fk_D407359F220449699789956215E456E6'.
+[3727]Could not drop constraint. See previous errors.
+
+[
+
+
+if exists(select * from sysobjects where id=object_id(N'pk_EntryPoints') and xtype='PK' and type='K')
+ALTER TABLE EntryPoints DROP CONSTRAINT pk_EntryPoints]
+--body:--Tables
+
+alter table EntryPoints add constraint pk_EntryPoints primary key (EntryPointsID)
+
+
+------------------------
+[1779]Table 'EntryPoints' already has a primary key defined on it.
+[1750]Could not create constraint. See previous errors.
+
+[
+alter table EntryPoints add constraint pk_EntryPoints primary key (EntryPointsID)
+
+]
+--body:--Tables
+
+
+
+if exists(select * from sysobjects where id=object_id(N'pk_ARMJournal') and xtype='PK' and type='K')
+ALTER TABLE ARMJournal DROP CONSTRAINT pk_ARMJournal
+------------------------
+[3725]The constraint 'pk_ARMJournal' is being referenced by table 'ARMJRNLREP', foreign key constraint 'fk_C2763400BE344033B4B5756CD5252CEA'.
+[3727]Could not drop constraint. See previous errors.
+
+[
+
+
+if exists(select * from sysobjects where id=object_id(N'pk_ARMJournal') and xtype='PK' and type='K')
+ALTER TABLE ARMJournal DROP CONSTRAINT pk_ARMJournal]
+--body:--Tables
+
+alter table ARMJournal add constraint pk_ARMJournal primary key (ARMJournalID)
+
+
+------------------------
+[1779]Table 'ARMJournal' already has a primary key defined on it.
+[1750]Could not create constraint. See previous errors.
+
+[
+alter table ARMJournal add constraint pk_ARMJournal primary key (ARMJournalID)
+
+]
+--body:--Tables
+
+
+
+if exists(select * from sysobjects where id=object_id(N'pk_ARMJournal') and xtype='PK' and type='K')
+ALTER TABLE ARMJournal DROP CONSTRAINT pk_ARMJournal
+------------------------
+[3725]The constraint 'pk_ARMJournal' is being referenced by table 'ARMJRNLREP', foreign key constraint 'fk_C2763400BE344033B4B5756CD5252CEA'.
+[3727]Could not drop constraint. See previous errors.
+
+[
+
+
+if exists(select * from sysobjects where id=object_id(N'pk_ARMJournal') and xtype='PK' and type='K')
+ALTER TABLE ARMJournal DROP CONSTRAINT pk_ARMJournal]
+--body:--Tables
+
+alter table ARMJournal add constraint pk_ARMJournal primary key (ARMJournalID)
+
+
+------------------------
+[1779]Table 'ARMJournal' already has a primary key defined on it.
+[1750]Could not create constraint. See previous errors.
+
+[
+alter table ARMJournal add constraint pk_ARMJournal primary key (ARMJournalID)
+
+]
+--ForeignKey:--Tables
+
+
+if exists(select * from sysobjects where id=object_id(N'fk_CEB371FC52AE4C0A864EA5D3C23DC753') and type='F')
+ALTER TABLE osCli_def DROP CONSTRAINT fk_CEB371FC52AE4C0A864EA5D3C23DC753
+------------------------
+[3733]Constraint 'fk_CEB371FC52AE4C0A864EA5D3C23DC753' does not belong to table 'osCli_def'.
+[3727]Could not drop constraint. See previous errors.
+
+[
+
+if exists(select * from sysobjects where id=object_id(N'fk_CEB371FC52AE4C0A864EA5D3C23DC753') and type='F')
+ALTER TABLE osCli_def DROP CONSTRAINT fk_CEB371FC52AE4C0A864EA5D3C23DC753]
+--ForeignKey:--Tables
+
+alter table osCli_def add constraint fk_CEB371FC52AE4C0A864EA5D3C23DC753 foreign key(INSTANCEID) references INSTANCE (INSTANCEID)
+
+
+------------------------
+[2714]There is already an object named 'fk_CEB371FC52AE4C0A864EA5D3C23DC753' in the database.
+[1750]Could not create constraint. See previous errors.
+
+[
+alter table osCli_def add constraint fk_CEB371FC52AE4C0A864EA5D3C23DC753 foreign key(INSTANCEID) references INSTANCE (INSTANCEID)
+
+]
+--ForeignKey:--Tables
+
+
+if exists(select * from sysobjects where id=object_id(N'fk_CEB371FC52AE4C0A864EA5D3C23DC753') and type='F')
+ALTER TABLE osCli_def DROP CONSTRAINT fk_CEB371FC52AE4C0A864EA5D3C23DC753
+------------------------
+[3733]Constraint 'fk_CEB371FC52AE4C0A864EA5D3C23DC753' does not belong to table 'osCli_def'.
+[3727]Could not drop constraint. See previous errors.
+
+[
+
+if exists(select * from sysobjects where id=object_id(N'fk_CEB371FC52AE4C0A864EA5D3C23DC753') and type='F')
+ALTER TABLE osCli_def DROP CONSTRAINT fk_CEB371FC52AE4C0A864EA5D3C23DC753]
+--ForeignKey:--Tables
+
+alter table osCli_def add constraint fk_CEB371FC52AE4C0A864EA5D3C23DC753 foreign key(INSTANCEID) references INSTANCE (INSTANCEID)
+
+
+------------------------
+[2714]There is already an object named 'fk_CEB371FC52AE4C0A864EA5D3C23DC753' in the database.
+[1750]Could not create constraint. See previous errors.
+
+[
+alter table osCli_def add constraint fk_CEB371FC52AE4C0A864EA5D3C23DC753 foreign key(INSTANCEID) references INSTANCE (INSTANCEID)
+
+]
+--ForeignKey:--Tables
+
+
+if exists(select * from sysobjects where id=object_id(N'fk_451D170204304E2BBBFF6C83CC8C59DB') and type='F')
+ALTER TABLE osDic_SRV DROP CONSTRAINT fk_451D170204304E2BBBFF6C83CC8C59DB
+------------------------
+[3733]Constraint 'fk_451D170204304E2BBBFF6C83CC8C59DB' does not belong to table 'osDic_SRV'.
+[3727]Could not drop constraint. See previous errors.
+
+[
+
+if exists(select * from sysobjects where id=object_id(N'fk_451D170204304E2BBBFF6C83CC8C59DB') and type='F')
+ALTER TABLE osDic_SRV DROP CONSTRAINT fk_451D170204304E2BBBFF6C83CC8C59DB]
+--ForeignKey:--Tables
+
+alter table osDic_SRV add constraint fk_451D170204304E2BBBFF6C83CC8C59DB foreign key(INSTANCEID) references INSTANCE (INSTANCEID)
+
+
+------------------------
+[2714]There is already an object named 'fk_451D170204304E2BBBFF6C83CC8C59DB' in the database.
+[1750]Could not create constraint. See previous errors.
+
+[
+alter table osDic_SRV add constraint fk_451D170204304E2BBBFF6C83CC8C59DB foreign key(INSTANCEID) references INSTANCE (INSTANCEID)
+
+]
+--ForeignKey:--Tables
+
+
+if exists(select * from sysobjects where id=object_id(N'fk_451D170204304E2BBBFF6C83CC8C59DB') and type='F')
+ALTER TABLE osDic_SRV DROP CONSTRAINT fk_451D170204304E2BBBFF6C83CC8C59DB
+------------------------
+[3733]Constraint 'fk_451D170204304E2BBBFF6C83CC8C59DB' does not belong to table 'osDic_SRV'.
+[3727]Could not drop constraint. See previous errors.
+
+[
+
+if exists(select * from sysobjects where id=object_id(N'fk_451D170204304E2BBBFF6C83CC8C59DB') and type='F')
+ALTER TABLE osDic_SRV DROP CONSTRAINT fk_451D170204304E2BBBFF6C83CC8C59DB]
+--ForeignKey:--Tables
+
+alter table osDic_SRV add constraint fk_451D170204304E2BBBFF6C83CC8C59DB foreign key(INSTANCEID) references INSTANCE (INSTANCEID)
+
+
+------------------------
+[2714]There is already an object named 'fk_451D170204304E2BBBFF6C83CC8C59DB' in the database.
+[1750]Could not create constraint. See previous errors.
+
+[
+alter table osDic_SRV add constraint fk_451D170204304E2BBBFF6C83CC8C59DB foreign key(INSTANCEID) references INSTANCE (INSTANCEID)
+
+]
+--ForeignKey:--Tables
+
+
+if exists(select * from sysobjects where id=object_id(N'fk_D8A79B3B5F504EC888A5C96626505C35') and type='F')
+ALTER TABLE osDic_EDIZM DROP CONSTRAINT fk_D8A79B3B5F504EC888A5C96626505C35
+------------------------
+[3733]Constraint 'fk_D8A79B3B5F504EC888A5C96626505C35' does not belong to table 'osDic_EDIZM'.
+[3727]Could not drop constraint. See previous errors.
+
+[
+
+if exists(select * from sysobjects where id=object_id(N'fk_D8A79B3B5F504EC888A5C96626505C35') and type='F')
+ALTER TABLE osDic_EDIZM DROP CONSTRAINT fk_D8A79B3B5F504EC888A5C96626505C35]
+--ForeignKey:--Tables
+
+alter table osDic_EDIZM add constraint fk_D8A79B3B5F504EC888A5C96626505C35 foreign key(INSTANCEID) references INSTANCE (INSTANCEID)
+
+
+------------------------
+[2714]There is already an object named 'fk_D8A79B3B5F504EC888A5C96626505C35' in the database.
+[1750]Could not create constraint. See previous errors.
+
+[
+alter table osDic_EDIZM add constraint fk_D8A79B3B5F504EC888A5C96626505C35 foreign key(INSTANCEID) references INSTANCE (INSTANCEID)
+
+]
+--ForeignKey:--Tables
+
+
+if exists(select * from sysobjects where id=object_id(N'fk_D8A79B3B5F504EC888A5C96626505C35') and type='F')
+ALTER TABLE osDic_EDIZM DROP CONSTRAINT fk_D8A79B3B5F504EC888A5C96626505C35
+------------------------
+[3733]Constraint 'fk_D8A79B3B5F504EC888A5C96626505C35' does not belong to table 'osDic_EDIZM'.
+[3727]Could not drop constraint. See previous errors.
+
+[
+
+if exists(select * from sysobjects where id=object_id(N'fk_D8A79B3B5F504EC888A5C96626505C35') and type='F')
+ALTER TABLE osDic_EDIZM DROP CONSTRAINT fk_D8A79B3B5F504EC888A5C96626505C35]
+--ForeignKey:--Tables
+
+alter table osDic_EDIZM add constraint fk_D8A79B3B5F504EC888A5C96626505C35 foreign key(INSTANCEID) references INSTANCE (INSTANCEID)
+
+
+------------------------
+[2714]There is already an object named 'fk_D8A79B3B5F504EC888A5C96626505C35' in the database.
+[1750]Could not create constraint. See previous errors.
+
+[
+alter table osDic_EDIZM add constraint fk_D8A79B3B5F504EC888A5C96626505C35 foreign key(INSTANCEID) references INSTANCE (INSTANCEID)
+
+]
+--ForeignKey:--Tables
+
+
+if exists(select * from sysobjects where id=object_id(N'fk_C9789E2CF44D48F1844FCC7B69A5E592') and type='F')
+ALTER TABLE osDic_srvtype DROP CONSTRAINT fk_C9789E2CF44D48F1844FCC7B69A5E592
+------------------------
+[3733]Constraint 'fk_C9789E2CF44D48F1844FCC7B69A5E592' does not belong to table 'osDic_srvtype'.
+[3727]Could not drop constraint. See previous errors.
+
+[
+
+if exists(select * from sysobjects where id=object_id(N'fk_C9789E2CF44D48F1844FCC7B69A5E592') and type='F')
+ALTER TABLE osDic_srvtype DROP CONSTRAINT fk_C9789E2CF44D48F1844FCC7B69A5E592]
+--ForeignKey:--Tables
+
+alter table osDic_srvtype add constraint fk_C9789E2CF44D48F1844FCC7B69A5E592 foreign key(INSTANCEID) references INSTANCE (INSTANCEID)
+
+
+------------------------
+[2714]There is already an object named 'fk_C9789E2CF44D48F1844FCC7B69A5E592' in the database.
+[1750]Could not create constraint. See previous errors.
+
+[
+alter table osDic_srvtype add constraint fk_C9789E2CF44D48F1844FCC7B69A5E592 foreign key(INSTANCEID) references INSTANCE (INSTANCEID)
+
+]
+--ForeignKey:--Tables
+
+
+if exists(select * from sysobjects where id=object_id(N'fk_C9789E2CF44D48F1844FCC7B69A5E592') and type='F')
+ALTER TABLE osDic_srvtype DROP CONSTRAINT fk_C9789E2CF44D48F1844FCC7B69A5E592
+------------------------
+[3733]Constraint 'fk_C9789E2CF44D48F1844FCC7B69A5E592' does not belong to table 'osDic_srvtype'.
+[3727]Could not drop constraint. See previous errors.
+
+[
+
+if exists(select * from sysobjects where id=object_id(N'fk_C9789E2CF44D48F1844FCC7B69A5E592') and type='F')
+ALTER TABLE osDic_srvtype DROP CONSTRAINT fk_C9789E2CF44D48F1844FCC7B69A5E592]
+--ForeignKey:--Tables
+
+alter table osDic_srvtype add constraint fk_C9789E2CF44D48F1844FCC7B69A5E592 foreign key(INSTANCEID) references INSTANCE (INSTANCEID)
+
+
+------------------------
+[2714]There is already an object named 'fk_C9789E2CF44D48F1844FCC7B69A5E592' in the database.
+[1750]Could not create constraint. See previous errors.
+
+[
+alter table osDic_srvtype add constraint fk_C9789E2CF44D48F1844FCC7B69A5E592 foreign key(INSTANCEID) references INSTANCE (INSTANCEID)
+
+]
+--ForeignKey:--Tables
+
+
+if exists(select * from sysobjects where id=object_id(N'fk_9925A6B0C3414631B6B887DE1343CE91') and type='F')
+ALTER TABLE osemp_def DROP CONSTRAINT fk_9925A6B0C3414631B6B887DE1343CE91
+------------------------
+[3733]Constraint 'fk_9925A6B0C3414631B6B887DE1343CE91' does not belong to table 'osemp_def'.
+[3727]Could not drop constraint. See previous errors.
+
+[
+
+if exists(select * from sysobjects where id=object_id(N'fk_9925A6B0C3414631B6B887DE1343CE91') and type='F')
+ALTER TABLE osemp_def DROP CONSTRAINT fk_9925A6B0C3414631B6B887DE1343CE91]
+--ForeignKey:--Tables
+
+alter table osemp_def add constraint fk_9925A6B0C3414631B6B887DE1343CE91 foreign key(INSTANCEID) references INSTANCE (INSTANCEID)
+
+
+------------------------
+[2714]There is already an object named 'fk_9925A6B0C3414631B6B887DE1343CE91' in the database.
+[1750]Could not create constraint. See previous errors.
+
+[
+alter table osemp_def add constraint fk_9925A6B0C3414631B6B887DE1343CE91 foreign key(INSTANCEID) references INSTANCE (INSTANCEID)
+
+]
+--ForeignKey:--Tables
+
+
+if exists(select * from sysobjects where id=object_id(N'fk_9925A6B0C3414631B6B887DE1343CE91') and type='F')
+ALTER TABLE osemp_def DROP CONSTRAINT fk_9925A6B0C3414631B6B887DE1343CE91
+------------------------
+[3733]Constraint 'fk_9925A6B0C3414631B6B887DE1343CE91' does not belong to table 'osemp_def'.
+[3727]Could not drop constraint. See previous errors.
+
+[
+
+if exists(select * from sysobjects where id=object_id(N'fk_9925A6B0C3414631B6B887DE1343CE91') and type='F')
+ALTER TABLE osemp_def DROP CONSTRAINT fk_9925A6B0C3414631B6B887DE1343CE91]
+--ForeignKey:--Tables
+
+alter table osemp_def add constraint fk_9925A6B0C3414631B6B887DE1343CE91 foreign key(INSTANCEID) references INSTANCE (INSTANCEID)
+
+
+------------------------
+[2714]There is already an object named 'fk_9925A6B0C3414631B6B887DE1343CE91' in the database.
+[1750]Could not create constraint. See previous errors.
+
+[
+alter table osemp_def add constraint fk_9925A6B0C3414631B6B887DE1343CE91 foreign key(INSTANCEID) references INSTANCE (INSTANCEID)
+
+]
+--body:--ManualCode
+
+
+CREATE INDEX instance_objtype
+ON instance 
+	(objtype)
+------------------------
+[1913]There is already an index on table 'Instance' named 'instance_objtype'.
+
+[
+
+CREATE INDEX instance_objtype
+ON instance 
+	(objtype)]
+--body:--ManualCode
+
+
+/*V_ROLEENTRY (V_ROLEENTRY)*/
+
+create view V_RoleEntryPoints as
+select 
+Roles_WP.instanceid ROLEID ,
+Roles_WP.WP ARMID,
+Roles_ACT.Accesible,
+Entrypoints.Name,
+Entrypoints.Caption
+from ROLES_WP 
+join ROLES_ACT on ROLES_WP.ROLES_WPID=ROLES_ACT.parentstructrowid
+join entrypoints on 
+ROLES_ACT.entrypoints=entrypoints.entrypointsid
+------------------------
+[2714]There is already an object named 'V_RoleEntryPoints' in the database.
+
+[
+
+/*V_ROLEENTRY (V_ROLEENTRY)*/
+
+create view V_RoleEntryPoints as
+select 
+Roles_WP.instanceid ROLEID ,
+Roles_WP.WP ARMID,
+Roles_ACT.Accesible,
+Entrypoints.Name,
+Entrypoints.Caption
+from ROLES_WP 
+join ROLES_ACT on ROLES_WP.ROLES_WPID=ROLES_ACT.parentstructrowid
+join entrypoints on 
+ROLES_ACT.entrypoints=entrypoints.entrypointsid]
+--body:--ManualCode
+
+
+/*V_LOG (V_LOG)*/
+
+create view V_LOG as 
+select syslog.syslogid
+,syslog.changestamp
+,the_session.StartAt
+,the_session.Closed
+,syslog.the_Resource
+,syslog.LogStructID
+,syslog.LogInstanceID
+,syslog.VERB
+,users.login
+,users.Family
+,users.Name
+,users.Surname
+,instance.name instname
+,instance.objtype
+,part.caption
+,objecttype.the_comment
+ from  syslog
+join the_session on syslog.thesession=the_session.the_sessionid
+join users on the_session.usersid=users.usersid
+left join instance on syslog.loginstanceid = instance.instanceid
+left join part on syslog.logstructid = part.name
+left join objecttype on instance.objtype =objecttype.name
+
+------------------------
+[2714]There is already an object named 'V_LOG' in the database.
+
+[
+
+/*V_LOG (V_LOG)*/
+
+create view V_LOG as 
+select syslog.syslogid
+,syslog.changestamp
+,the_session.StartAt
+,the_session.Closed
+,syslog.the_Resource
+,syslog.LogStructID
+,syslog.LogInstanceID
+,syslog.VERB
+,users.login
+,users.Family
+,users.Name
+,users.Surname
+,instance.name instname
+,instance.objtype
+,part.caption
+,objecttype.the_comment
+ from  syslog
+join the_session on syslog.thesession=the_session.the_sessionid
+join users on the_session.usersid=users.usersid
+left join instance on syslog.loginstanceid = instance.instanceid
+left join part on syslog.logstructid = part.name
+left join objecttype on instance.objtype =objecttype.name
+]
+--body:--ManualCode
+
+
+create view V_SYSLOG as
+select 
+syslog.syslogid,syslog.changestamp,syslog.the_Resource,syslog.LogStructID,syslog.VERB,users.login,users.Family,users.Name,users.Surname,syslog.LogInstanceID 
+from  syslog 
+join the_session on syslog.thesession=the_session.the_sessionid 
+join users on the_session.usersid=users.usersid
+
+------------------------
+[2714]There is already an object named 'V_SYSLOG' in the database.
+
+[
+
+create view V_SYSLOG as
+select 
+syslog.syslogid,syslog.changestamp,syslog.the_Resource,syslog.LogStructID,syslog.VERB,users.login,users.Family,users.Name,users.Surname,syslog.LogInstanceID 
+from  syslog 
+join the_session on syslog.thesession=the_session.the_sessionid 
+join users on the_session.usersid=users.usersid
+]"

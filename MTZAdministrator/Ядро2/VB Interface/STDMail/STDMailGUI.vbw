@@ -1,0 +1,13 @@
+GUI = 88, 116, 872, 518, 
+STDMail_To = 0, 0, 0, 0, C, 132, 174, 916, 576, C
+STDMail_Attach = 0, 0, 0, 0, C, 44, 58, 828, 460, C
+STDMail_Info = 0, 0, 0, 0, C, 110, 145, 894, 547, C
+frmSTDMail_To_ = 0, 0, 0, 0, C, 22, 29, 806, 431, C
+frmSTDMail_Attach_ = 0, 0, 0, 0, C, 66, 87, 850, 489, C
+frmSTDMail_Info_ = 0, 0, 0, 0, C, 110, 145, 894, 547, C
+vpnSTDMail_Info_ = 0, 0, 0, 0, C, 0, 0, 784, 402, C
+vpnSTDMail_Attach_ = 0, 0, 0, 0, C, 66, 87, 850, 489, C
+vpnSTDMail_To_ = 0, 0, 0, 0, C, 132, 174, 916, 576, C
+ctl_main = 0, 0, 0, 0, C, 44, 58, 828, 460, C
+frm_main = 0, 0, 0, 0, C, 110, 145, 894, 547, C
+Util = 0, 0, 784, 402, 

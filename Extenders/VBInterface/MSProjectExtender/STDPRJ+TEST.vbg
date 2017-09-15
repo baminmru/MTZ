@@ -1,0 +1,3 @@
+VBGROUP 5.0
+Project=STDMSProject.vbp
+StartupProject=..\ARM client\model\VB Interface\ClientProj\ClientProjGUI.vbp

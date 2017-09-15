@@ -1,0 +1,63 @@
+Type=Control
+Reference=*\G{00020430-0000-0000-C000-000000000046}#2.0#0#..\..\..\WINDOWS\system32\stdole2.tlb#OLE Automation
+Reference=*\G{F5078F18-C551-11D3-89B9-0000F81FE221}#6.0#0#..\..\..\WINDOWS\system32\msxml6.dll#Microsoft XML, v6.0
+Object={831FDD16-0C5C-11D2-A9FC-0000F8754DA1}#2.0#0; MSCOMCTL.OCX
+UserControl=Border.ctl
+UserControl=GraphPanel.ctl
+Module=findPoints; findpoints2.bas
+Module=Globals; Globals2.bas
+Class=Node; Node.cls
+Class=Edge; Edge.cls
+Class=Edges; Edges.cls
+Class=Nodes; Nodes.cls
+Class=LineItem; LineItem.cls
+Class=LineItems; LineItems.cls
+Class=Graph; Graph.cls
+Class=Graphs; Graphs.cls
+Form=fmZoom.frm
+Module=Module1; Module1.bas
+Form=Form2.frm
+Class=Common; Common.cls
+Startup="(None)"
+HelpFile=""
+Title="DD Graph"
+ExeName32="MTZGraph.ocx"
+Command32=""
+Name="MTZGraph"
+HelpContextID="0"
+CompatibleMode="2"
+CompatibleEXE32="MTZGraph.ocx"
+VersionCompatible32="1"
+MajorVer=1
+MinorVer=0
+RevisionVer=0
+AutoIncrementVer=0
+ServerSupportFiles=0
+VersionCompanyName="master.bami"
+CompilationType=0
+OptimizationType=0
+FavorPentiumPro(tm)=0
+CodeViewDebugInfo=0
+NoAliasing=0
+BoundsCheck=0
+OverflowCheck=0
+FlPointCheck=0
+FDIVCheck=0
+UnroundedFP=0
+StartMode=1
+Unattended=0
+Retained=0
+ThreadPerObject=0
+MaxNumberOfThreads=1
+ThreadingModel=1
+DebugStartupOption=0
+
+[MS Transaction Server]
+AutoRefresh=1
+
+[RVB]
+DeleteClass1=Class1
+DeleteClass2=LMEShape
+DeleteClass3=LMELine
+
+

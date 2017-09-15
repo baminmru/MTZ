@@ -1,0 +1,3 @@
+VBGROUP 5.0
+Project=MTZSession.vbp
+StartupProject=..\..\Projects\ITT_WMS\ARM\WMS2.vbp

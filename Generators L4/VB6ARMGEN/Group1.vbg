@@ -1,0 +1,3 @@
+VBGROUP 5.0
+StartupProject=..\..\MTZAdministrator\MtzAdministrator.vbp
+Project=MTZ_VB6ARMGEN.vbp

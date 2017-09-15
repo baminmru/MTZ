@@ -1,0 +1,3 @@
+<!-- edited with XML Spy v4.1 U (http://www.xmlspy.com) by Gleb (V-real) -->
+<root>
+	<SITE Name="test" Server="lynx" DB="test3" USER="sa" PASSWORD="bami" TIMEOUT="100" PROVIDER="sqloledb" AT="@" INTEGRATED="0"/><SITE Name="old" Server="lynx" DB="27_01" USER="" PASSWORD="" TIMEOUT="100" PROVIDER="sqloledb" AT="@" INTEGRATED="-1"/><SITE Name="new" Server="lynx" DB="vr" USER="" PASSWORD="" TIMEOUT="100" PROVIDER="sqloledb" AT="@" INTEGRATED="-1"/></root>

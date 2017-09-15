@@ -1,0 +1,4 @@
+VBGROUP 5.0
+StartupProject=MtzAdministrator.vbp
+Project=VB Model\MTZUsers\MTZUsers.vbp
+Project=VB Interface\MTZUsers\MTZUsersGUI.vbp

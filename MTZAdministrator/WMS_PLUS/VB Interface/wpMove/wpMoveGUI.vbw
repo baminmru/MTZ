@@ -1,0 +1,12 @@
+GUI = 44, 58, 758, 460, 
+wpMove_record = 0, 0, 0, 0, C, 88, 116, 802, 518, C
+wpMove_recordmain = 0, 0, 0, 0, C, 0, 0, 714, 402, C
+frmwpMove_record_ = 0, 0, 0, 0, C, 66, 87, 780, 489, C
+frmwpMove_record_main = 0, 0, 0, 0, C, 110, 145, 824, 547, C
+vpnwpMove_record_main = 0, 0, 0, 0, C, 0, 0, 714, 402, C
+ctlmain_main = 0, 0, 0, 0, C, 66, 87, 780, 489, C
+frmmain_main = 0, 0, 0, 0, C, 132, 174, 846, 576, C
+vpnwpMove_record_ = 0, 0, 0, 0, C, 22, 29, 736, 431, C
+ctl_main = 0, 0, 0, 0, C, 88, 116, 802, 518, C
+frm_main = 0, 0, 0, 0, C, 0, 0, 714, 402, C
+Util = 44, 58, 758, 460, 

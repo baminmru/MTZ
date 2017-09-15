@@ -1,0 +1,17 @@
+GUI = 22, 29, 806, 431, 
+ITT2OPT_DEF = 0, 0, 0, 0, C, 66, 87, 850, 489, C
+ITT2OPT_DEFread = 0, 0, 0, 0, C, 132, 174, 916, 576, C
+ITT2OPT_DEFmain = 0, 0, 0, 0, C, 44, 58, 828, 460, C
+frmITT2OPT_DEF_ = 0, 0, 0, 0, C, 110, 145, 894, 547, C
+frmITT2OPT_DEF_read = 0, 0, 0, 0, C, 0, 0, 784, 402, C
+vpnITT2OPT_DEF_read = 0, 0, 0, 0, C, 44, 58, 828, 460, C
+ctlread_main = 0, 0, 0, 0, C, 110, 145, 894, 547, C
+frmread_main = 0, 0, 0, 0, C, 22, 29, 806, 431, C
+frmITT2OPT_DEF_main = 0, 0, 0, 0, C, 66, 87, 850, 489, C
+vpnITT2OPT_DEF_main = 0, 0, 0, 0, C, 110, 145, 894, 547, C
+ctlmain_main = 0, 0, 0, 0, C, 22, 29, 806, 431, C
+frmmain_main = 0, 0, 0, 0, C, 88, 116, 872, 518, C
+vpnITT2OPT_DEF_ = 0, 0, 0, 0, C, 132, 174, 916, 576, C
+ctl_main = 0, 0, 0, 0, C, 44, 58, 828, 460, C
+frm_main = 0, 0, 0, 0, C, 110, 145, 894, 547, C
+Util = 0, 0, 784, 402, 

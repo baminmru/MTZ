@@ -1,0 +1,4948 @@
+<?xml version="1.0"?>
+<root><AttributeHolder Name="Type" Value="ocx"/><AttributeHolder Name="Toolbox" Value="{E684D8A3-716C-4E59-AA94-7144C04B0074};{86CF1D34-0C5F-11D2-A9FC-0000F8754DA1};{EAB22AC0-30C1-11CF-A7EB-0000C05BAE0B};{1801C003-859D-471D-BF31-D4428050324B};{F9043C88-F6F2-101A-A3C9-08002B2F49FB};{831FDD16-0C5C-11D2-A9FC-0000F8754DA1};{C932BA88-4374-101B-A56C-00AA003668DC}"/><AttributeHolder Name="References" Value="{2A75196C-D9EB-4129-B803-931327F72D5C};{45D6DB85-69D5-45C6-AD58-BB2DA56CCC79};{27532C15-381F-49B2-83D7-087D2BB897B8};{58DF4A4A-346E-4A52-82D1-1DC4A6CB4A60};{F5078F18-C551-11D3-89B9-0000F81FE221};{B33EE44C-4362-4227-932E-7BAD125CC18D}"/><AttributeHolder Name="ProjectName" Value="Договор"/><AttributeHolder Name="Name" Value="wpDogGUI"/><ModuleHolder ModuleName="GUI" File=""><AttributeHolder Name="Instancing" Value="multiuse"/><AttributeHolder Name="Type" Value="class"/><BlockHolder BlockName="'description" BlockCode="' основной интерфейс компонента wpDogGUI
+private mOpenModal as Boolean
+Dim opf As OpenFormInfo
+Dim openForms As Collection
+
+"><AttributeHolder Name="Type" Value="description"/><FormData Name=""/></BlockHolder><BlockHolder BlockName="'codebody" BlockCode="
+
+'Конструктор класса wpDog
+'Parameters:
+' параметров нет
+'See Also:
+'Example:
+'  call me.Class_Initialize()
+Private Sub Class_Initialize()
+ Set openForms = New Collection
+ App.Title = &quot;Договор&quot;
+End Sub
+
+
+'Деструктор класса
+'Parameters:
+' параметров нет
+'See Also:
+'Example:
+'  call me.Class_Terminate()
+Private Sub Class_Terminate()
+  on error resume next
+CloseClass
+End Sub
+
+'Очистка обратных ссылок
+'Parameters:
+' параметров нет
+'See Also:
+'Example:
+'  call me.CloseClass()
+Public Sub CloseClass()
+Dim f As OpenFormInfo
+  on error resume next
+For Each f In openForms
+    Set f.Form.Host = Nothing
+    Unload f.Form
+    Set f.Form = Nothing
+Next
+Set openForms = Nothing
+End Sub
+
+'Поиск формы редактирования
+'Parameters:
+'[IN]   InstanceID , тип параметра: String, 
+'[IN]   mode , тип параметра: String  - ...
+'Returns:
+'  объект любого класса Visual Basic
+'  ,или Nothing 
+'See Also:
+'Example:
+' dim variable as object
+' Set variable = me.FindForm(...параметры...)
+Private Function FindForm(ByVal InstanceID As String, ByVal mode As String) as object
+  Dim f As OpenFormInfo
+  For Each f In openForms
+    If f.InstanceID = InstanceID And f.mode = mode and f.modal = false Then
+      Set FindForm = f
+      Exit Function
+    End If
+  Next
+End Function
+
+'Путь к текущей библиотеке
+'Parameters:
+' параметров нет
+'Returns:
+'  значение типа string
+'See Also:
+'Example:
+' dim variable as string
+'  variable = me.GUIPath() 
+Public function GUIPath() as string
+    GUIPath=app.path &amp; &quot;\&quot; &amp; app.exename &amp; &quot;.ocx&quot; 
+End function
+
+'Количество открытых форм
+'Parameters:
+'[IN]   InstanceID , тип параметра: String  - ...
+'Returns:
+'  значение типа long
+'See Also:
+'Example:
+' dim variable as long
+' variable = me.FormCount(...параметры...) 
+Public function FormCount(ByVal InstanceID As String) as long
+    Dim f As OpenFormInfo
+    Dim  cnt As Long
+    cnt = 0
+    For Each f In openForms
+      If f.InstanceID = InstanceID Then
+        cnt=cnt+1
+      End If
+    Next
+    FormCount = cnt
+End function
+
+'Очистить форму
+'Parameters:
+'[IN]   InstanceID , тип параметра: String, 
+'[IN]   mode , тип параметра: String, 
+'[IN]   ModalMode , тип параметра: boolean  - ...
+'See Also:
+'Example:
+'  call me.EraseForm({параметры})
+Public Sub EraseForm(ByVal InstanceID As String, ByVal mode As String, byval ModalMode as boolean)
+    on error resume next
+    Dim f As OpenFormInfo
+    Dim i As Long, cnt As Long
+    i = 1
+    cnt = FormCount(InstanceID)
+    For Each f In openForms
+      If f.InstanceID = InstanceID And f.mode = mode and f.modal=modalmode Then
+        goto found
+      End If
+      i = i + 1
+    Next
+    exit sub
+found:
+    openForms.Remove i
+    With f.Form
+      If Not .item Is Nothing Then
+         .item.Manager.FreeInstanceObject .item.ID
+      End If
+    end with
+    Set f.Form.Host = Nothing
+End Sub
+
+'Указатель модального режима работы
+'Parameters:
+' параметров нет
+'Returns:
+' Boolean, семантика результата:
+'   true  -
+'   false -
+'See Also:
+'Example:
+' dim variable as boolean
+' variable = me. IsModal
+public property get IsModal() as boolean
+ IsModal = mOpenModal
+end property
+
+'Показать форму редактирования документа
+'Parameters:
+'[IN]   mode , тип параметра: string, 
+'[IN][OUT]   ObjItem , тип параметра: object, 
+'[IN][OUT]   optional OpenModal , тип параметра: boolean = false  - ...
+'See Also:
+'Example:
+'  call me.Show({параметры})
+public sub Show(byval mode as string, ObjItem as object, optional OpenModal as boolean = false)
+ dim f as form
+ dim defaccess as boolean
+ on error resume next
+ mOpenModal = OpenModal
+ App.Title = ObjItem.Brief &amp; &quot; (тип: Договор)&quot; 
+ defaccess = ObjItem.MTZSession.CheckRight(objItem.SecureStyleID,&quot;OPEN&quot;) 
+if not OpenModal then
+  if defaccess or ( (not defaccess) and ObjItem.MTZSession.CheckRight(objItem.SecureStyleID,&quot;wpDog:&quot;)) then
+   set opf = FindForm(objitem.id,mode)
+   if opf is nothing then
+     set f = new frm_main
+     Set opf = New OpenFormInfo
+     Set opf.Form = f
+     opf.InstanceID = ObjItem.ID
+     opf.mode = mode
+     opf.modal = openmodal
+     openForms.Add opf
+   end if
+   set f = opf.Form
+   f.init objItem, me,openmodal
+   f.show
+   f.windowState=0
+  else
+   MsgBox &quot;Доступ к документу запрещен&quot;,vbokonly+vbCritical ,&quot;Договор&quot; 
+  end if
+end if
+if OpenModal then
+  if defaccess or ( (not defaccess) and ObjItem.MTZSession.CheckRight(objItem.SecureStyleID,&quot;wpDog:&quot;)) then
+    set f = new frm_main
+     Set opf = New OpenFormInfo
+     Set opf.Form = f
+     opf.InstanceID = ObjItem.ID
+     opf.mode = mode
+     opf.modal = openmodal
+     openForms.Add opf
+   f.init objItem, me,openmodal
+     f.show vbmodal
+     unload f
+     set f  =nothing
+  else
+   MsgBox &quot;Доступ к документу запрещен&quot;,vbokonly+vbCritical ,&quot;Договор&quot; 
+  end if
+end if
+end sub
+
+'Покзать форму редактирования строки раздела. RowItem -  объект строка, уже должен быть создан
+'Parameters:
+'[IN]   Mode , тип параметра: String, 
+'[IN][OUT]   RowItem , тип параметра: Object  - ...
+'Returns:
+' Boolean, семантика результата:
+'   true  -
+'   false -
+'See Also:
+'Example:
+' dim variable as Boolean
+' variable = me.ShowAddForm(...параметры...) 
+Public Function ShowAddForm(ByVal Mode As String, RowItem As Object) As Boolean
+ Dim f As Form
+ Dim OK As Boolean
+ On Error Resume Next
+ Set f = Nothing
+ Dim PartName As String
+ PartName = TypeName(RowItem)
+
+ If Mode = &quot;&quot; Then
+  If UCase(PartName) = &quot;WPDOG_DEF&quot; Then
+    Set f = New frmwpDog_def_
+  End If
+
+ If Mode = &quot;&quot; Then
+ End If
+  If UCase(PartName) = &quot;WPDOG_MAINSRV&quot; Then
+    Set f = New frmwpdog_mainSrv_
+  End If
+
+ If Mode = &quot;&quot; Then
+ End If
+  If UCase(PartName) = &quot;WPDOG_SRVPRICE&quot; Then
+    Set f = New frmwpDog_srvPrice_
+  End If
+
+ If Mode = &quot;&quot; Then
+ End If
+ End If
+  If f Is Nothing Then
+    OK = False
+  Else
+
+    Set f.Item = RowItem
+    f.OnInit
+    f.Show vbModal
+    Set f.Item = Nothing
+    OK = f.OK
+    Unload f
+    Set f = Nothing
+  End If
+  ShowAddForm = OK
+End Function
+
+
+"><AttributeHolder Name="Type" Value="code"/><FormData Name=""/></BlockHolder></ModuleHolder><ModuleHolder ModuleName="wpDog_def" File=""><AttributeHolder Name="Type" Value="control"/><BlockHolder BlockName="'form" BlockCode=""><AttributeHolder Name="Type" Value="form"/><FormData Name=""><ControlData Name="Panel" ControlIndex="0" PROGID="MTZ_PANEL.Scrolledwindow"><Properties Name="BackStyle" PropValue="0"/><Properties Name="NAME" PropValue="Panel"/><Properties Name="Top" PropValue="0"/><Properties Name="Left" PropValue="0"/><Properties Name="Height" PropValue="1000"/><Properties Name="Width" PropValue="1000"/><ControlData Name="" ControlIndex="0" PROGID="VB.Label"><Properties Name="BackStyle" PropValue="0"/><Properties Name="NAME" PropValue="lblTheNumber"/><Properties Name="Caption" PropValue="Номер договора:"/><Properties Name="Top" PropValue="75"/><Properties Name="Left" PropValue="300"/><Properties Name="Height" PropValue="300"/><Properties Name="Width" PropValue="3000"/><Properties Name="Enabled" PropValue="True"/><Properties Name="ForeColor" PropValue="255"/></ControlData><ControlData Name="" ControlIndex="0" PROGID="VB.textbox"><Properties Name="NAME" PropValue="txtTheNumber"/><Properties Name="Text" PropValue=""/><Properties Name="Top" PropValue="405"/><Properties Name="Left" PropValue="300"/><Properties Name="Height" PropValue="300"/><Properties Name="Width" PropValue="3000"/><Properties Name="MaxLength" PropValue="80"/><Properties Name="ToolTipText" PropValue="Номер договора"/><Properties Name="Locked" PropValue="False"/><Properties Name="Enabled" PropValue="True"/></ControlData><ControlData Name="" ControlIndex="0" PROGID="VB.Label"><Properties Name="BackStyle" PropValue="0"/><Properties Name="NAME" PropValue="lblDogDate"/><Properties Name="Caption" PropValue="Дата договора:"/><Properties Name="Top" PropValue="780"/><Properties Name="Left" PropValue="300"/><Properties Name="Height" PropValue="300"/><Properties Name="Width" PropValue="3000"/><Properties Name="Enabled" PropValue="True"/><Properties Name="ForeColor" PropValue="255"/></ControlData><ControlData Name="" ControlIndex="0" PROGID="MSComCtl2.DTPicker"><Properties Name="NAME" PropValue="dtpDogDate"/><Properties Name="Top" PropValue="1110"/><Properties Name="Left" PropValue="300"/><Properties Name="Height" PropValue="300"/><Properties Name="Format" PropValue="3"/><Properties Name="Enabled" PropValue="True"/><Properties Name="ToolTipText" PropValue="Дата договора"/><Properties Name="CustomFormat" PropValue="dd.MM.yyyy"/><Properties Name="Width" PropValue="1800"/><Properties Name="CheckBox" PropValue="False"/></ControlData><ControlData Name="" ControlIndex="0" PROGID="VB.Label"><Properties Name="BackStyle" PropValue="0"/><Properties Name="NAME" PropValue="lblMyOrg"/><Properties Name="Caption" PropValue="Наша организация:"/><Properties Name="Top" PropValue="1485"/><Properties Name="Left" PropValue="300"/><Properties Name="Height" PropValue="300"/><Properties Name="Width" PropValue="3000"/><Properties Name="Enabled" PropValue="True"/><Properties Name="ForeColor" PropValue="255"/></ControlData><ControlData Name="" ControlIndex="0" PROGID="VB.textbox"><Properties Name="NAME" PropValue="txtMyOrg"/><Properties Name="Text" PropValue=""/><Properties Name="Locked" PropValue="True"/><Properties Name="Enabled" PropValue="True"/><Properties Name="Top" PropValue="1815"/><Properties Name="Left" PropValue="300"/><Properties Name="Height" PropValue="300"/><Properties Name="Width" PropValue="2550"/><Properties Name="ToolTipText" PropValue="Наша организация"/></ControlData><ControlData Name="" ControlIndex="0" PROGID="MTZ_PANEL.DropButton"><Properties Name="NAME" PropValue="cmdMyOrg"/><Properties Name="Caption" PropValue=""/><Properties Name="Tag" PropValue="refopen.ico"/><Properties Name="Top" PropValue="1815"/><Properties Name="Enabled" PropValue="True"/><Properties Name="Left" PropValue="2850"/><Properties Name="Height" PropValue="300"/><Properties Name="Width" PropValue="450"/><Properties Name="ToolTipText" PropValue="Наша организация"/></ControlData><ControlData Name="" ControlIndex="0" PROGID="VB.Label"><Properties Name="BackStyle" PropValue="0"/><Properties Name="NAME" PropValue="lblTheClient"/><Properties Name="Caption" PropValue="Конрагент:"/><Properties Name="Top" PropValue="2190"/><Properties Name="Left" PropValue="300"/><Properties Name="Height" PropValue="300"/><Properties Name="Width" PropValue="3000"/><Properties Name="Enabled" PropValue="True"/><Properties Name="ForeColor" PropValue="255"/></ControlData><ControlData Name="" ControlIndex="0" PROGID="VB.textbox"><Properties Name="NAME" PropValue="txtTheClient"/><Properties Name="Text" PropValue=""/><Properties Name="Locked" PropValue="True"/><Properties Name="Enabled" PropValue="True"/><Properties Name="Top" PropValue="2520"/><Properties Name="Left" PropValue="300"/><Properties Name="Height" PropValue="300"/><Properties Name="Width" PropValue="2550"/><Properties Name="ToolTipText" PropValue="Конрагент"/></ControlData><ControlData Name="" ControlIndex="0" PROGID="MTZ_PANEL.DropButton"><Properties Name="NAME" PropValue="cmdTheClient"/><Properties Name="Caption" PropValue=""/><Properties Name="Tag" PropValue="refopen.ico"/><Properties Name="Top" PropValue="2520"/><Properties Name="Enabled" PropValue="True"/><Properties Name="Left" PropValue="2850"/><Properties Name="Height" PropValue="300"/><Properties Name="Width" PropValue="450"/><Properties Name="ToolTipText" PropValue="Конрагент"/></ControlData></ControlData></FormData></BlockHolder><BlockHolder BlockName="'description" BlockCode="'панель редактирования раздела 
+   public Item as object
+   private OnInit as boolean
+   public event Changed()
+   Private mIsChanged As Boolean
+
+"><AttributeHolder Name="Type" Value="description"/><FormData Name=""/></BlockHolder><BlockHolder BlockName="'codebody" BlockCode="
+
+'Функция поиска строки
+'Parameters:
+'[IN][OUT]  Runner , тип параметра: mtzmanager.main, 
+'[IN]   TypeName , тип параметра: String, 
+'[IN][OUT]   ID , тип параметра: string, 
+'[IN][OUT]   Brief , тип параметра: string, 
+'[IN][OUT]   Cancel , тип параметра: boolean  - ...
+'Returns:
+' Boolean, семантика результата:
+'   true  -
+'   false -
+'See Also:
+'Example:
+' dim variable as Boolean
+' variable = me.findObject(...параметры...) 
+Private Function findObject(Runner as mtzmanager.main, byval TypeName As String, byref ID as string, byref Brief as string, byref Cancel as boolean) As Boolean
+Dim objFinder As Object
+Dim result As Boolean
+result = False
+On Error GoTo bye
+Set objFinder = CreateObject(TypeName &amp; &quot;_FIND.Find&quot;)
+result = objFinder.Run(Runner, ID, Brief,Cancel)
+bye:
+findObject = result
+End Function
+
+'Признак изменения строки
+'Parameters:
+' параметров нет
+'Returns:
+' Boolean, семантика результата:
+'   true  -
+'   false -
+'See Also:
+'Example:
+' dim variable as Boolean
+'  variable = me.IsChanged() 
+Public Function IsChanged() As Boolean
+  IsChanged = mIsChanged
+End Function
+private sub Usercontrol_resize()
+  on error resume next
+  panel.width = usercontrol.width
+  panel.height = usercontrol.height
+end sub
+
+private sub txtTheNumber_Change()
+  Changing
+
+end sub
+private sub dtpDogDate_Change()
+  Changing
+
+end sub
+private sub txtMyOrg_Change()
+  if  not (OnInit) then 
+  Changing
+
+  end if 
+end sub
+private sub cmdMyOrg_CLick()
+  on error resume next
+        Dim id As String, brief As String
+        If item.Application.Manager.GetReferenceDialogEx2(&quot;wpDic_org&quot;, id, brief) Then
+          txtMyOrg.Tag = Left(id, 38)
+          txtMyOrg = brief
+        End If
+end sub
+private sub cmdMyOrg_MenuClick(ByVal sCaption As String)
+          txtMyOrg.Tag = &quot;&quot;
+          txtMyOrg = &quot;&quot;
+End sub
+private sub txtTheClient_Change()
+  if  not (OnInit) then 
+  Changing
+
+  end if 
+end sub
+private sub cmdTheClient_CLick()
+  on error resume next
+        Dim id As String, brief As String
+        If item.Application.Manager.GetReferenceDialogEx2(&quot;wpCli_def&quot;, id, brief) Then
+          txtTheClient.Tag = Left(id, 38)
+          txtTheClient = brief
+        End If
+end sub
+private sub cmdTheClient_MenuClick(ByVal sCaption As String)
+          txtTheClient.Tag = &quot;&quot;
+          txtTheClient = &quot;&quot;
+End sub
+Private Sub UserControl_Terminate()
+  Set item = Nothing
+End Sub
+
+'Контроль правильности заполнения данных на панели редактирования
+'Parameters:
+' параметров нет
+'Returns:
+' Boolean, семантика результата:
+'   true  -
+'   false -
+'See Also:
+'Example:
+' dim variable as boolean
+'  variable = me.IsOK() 
+public function IsOK() as boolean
+  On error resume next
+  dim mIsOK as boolean
+  mIsOk = true
+
+if mIsOK then mIsOK =IsSet(txtTheNumber.text)
+if mIsOK then mIsOK = IsSet(dtpDogDate.value)
+if mIsOK then mIsOK = txtMyOrg.Tag&lt;&gt;&quot;&quot;
+if mIsOK then mIsOK = txtTheClient.Tag&lt;&gt;&quot;&quot;
+  IsOk = mIsOk
+end function
+Private Function AddSQLRefIds(ByVal strTo As String, ByVal fldName As String, ByVal strFrom As String) As String
+  Dim XMLDocFrom As New DOMDocument
+  Dim XMLDocTo As New DOMDocument
+  AddSQLRefIds = strTo
+  On Error GoTo err
+  Call XMLDocTo.loadXML(strTo)
+  Call XMLDocFrom.loadXML(strFrom)
+  Dim Node As MSXML2.IXMLDOMNode
+  Dim ID As String
+  For Each Node In XMLDocFrom.childNodes.item(0).childNodes
+    If (Node.baseName = &quot;ID&quot;) Then
+      ID = Node.Text
+      Dim NodeTO As MSXML2.IXMLDOMNode
+      Dim bAdded As Boolean
+      bAdded = False
+      For Each NodeTO In XMLDocTo.childNodes.item(0).childNodes
+       If (NodeTO.baseName = fldName &amp; &quot;ID&quot;) Then
+         NodeTO.Text = ID
+         bAdded = True
+         Exit For
+       End If
+      Next
+      If (Not bAdded) Then
+       Dim newNode As MSXML2.IXMLDOMNode
+       Set newNode = XMLDocTo.createNode(MSXML2.NODE_ELEMENT, fldName &amp; &quot;ID&quot;, XMLDocTo.namespaceURI)
+        newNode.Text = ID
+       Call XMLDocTo.childNodes.item(0).appendChild(newNode)
+      End If
+      AddSQLRefIds = XMLDocTo.xml
+      Exit For
+    End If
+  Next
+err:
+End Function
+
+'Инициализация контролов панели
+'Parameters:
+' параметров нет
+'See Also:
+'Example:
+'  call me.InitPanel()
+public sub InitPanel()
+OnInit = true
+dim iii as long ' for combo only
+if item.CanChange then
+  panel.enabled = true
+else
+  panel.enabled = false
+end if
+
+  on error resume next
+txtTheNumber = item.TheNumber
+dtpDogDate = date
+if item.DogDate &lt;&gt; 0 then
+ dtpDogDate = item.DogDate
+end if
+If Not item.MyOrg Is Nothing Then
+  txtMyOrg.Tag = item.MyOrg.id
+  txtMyOrg = item.MyOrg.brief
+else
+  txtMyOrg.Tag = &quot;&quot; 
+  txtMyOrg = &quot;&quot; 
+End If
+ LoadBtnPictures cmdMyOrg,cmdMyOrg.tag
+  cmdMyOrg.RemoveAllMenu
+  cmdMyOrg.AddMenu &quot;Очистить&quot; 
+If Not item.TheClient Is Nothing Then
+  txtTheClient.Tag = item.TheClient.id
+  txtTheClient = item.TheClient.brief
+else
+  txtTheClient.Tag = &quot;&quot; 
+  txtTheClient = &quot;&quot; 
+End If
+ LoadBtnPictures cmdTheClient,cmdTheClient.tag
+  cmdTheClient.RemoveAllMenu
+  cmdTheClient.AddMenu &quot;Очистить&quot; 
+' Добавим значения ID ко всем SQLReference
+OnInit = false
+end sub
+private sub Changing
+if OnInit then exit sub
+
+ mIsChanged=true 
+ raiseevent Changed()
+end sub
+
+'Сохранение
+'Parameters:
+' параметров нет
+'See Also:
+'Example:
+'  call me.Save({параметры})
+Public sub Save
+if OnInit then exit sub
+
+item.TheNumber = txtTheNumber
+  if  isnull(dtpDogDate) then
+    item.DogDate = 0
+  else
+    item.DogDate = dtpDogDate.value
+  end if
+If txtMyOrg.Tag &lt;&gt; &quot;&quot; Then
+  Set item.MyOrg = Item.Application.FindRowObject(&quot;wpDic_org&quot;,txtMyOrg.Tag)
+Else
+  Set item.MyOrg = Nothing
+End If
+If txtTheClient.Tag &lt;&gt; &quot;&quot; Then
+  Set item.TheClient = Item.Application.FindRowObject(&quot;wpCli_def&quot;,txtTheClient.Tag)
+Else
+  Set item.TheClient = Nothing
+End If
+ mIsChanged=false 
+ raiseevent Changed()
+end sub
+
+'Подбор размера панели по размеру контролов
+'Parameters:
+'[IN][OUT]  x , тип параметра: Single, 
+'[IN][OUT]   y , тип параметра: single  - ...
+'See Also:
+'Example:
+'  call me.OptimalSize({параметры})
+ Public sub OptimalSize(x As Single, y as single)
+   Panel.OptimalSize x, y
+   x=x + panel.left
+   y=y + panel.top
+ End sub
+ 
+ 
+ Public Function OptimalY() As Single
+   Dim x As Single, y As Single
+   Panel.OptimalSize x, y
+   OptimalY = y
+ End Function
+
+'Открытие окна настройки панели
+'Parameters:
+' параметров нет
+'See Also:
+'Example:
+'  call me.Customize()
+ Public sub Customize()
+   Panel.Customize
+ End sub
+
+'Строка положения контролов на панели для сохранения позиций
+'Parameters:
+' параметров нет
+'Returns:
+'  значение типа string
+'See Also:
+'Example:
+' dim variable as string
+' variable = me. PanelCustomisationString
+ Public property get PanelCustomisationString() as string
+   PanelCustomisationString =Panel.PanelCustomisationString
+ End property
+
+'Восстановление  позиций контролов из строки
+'Parameters:
+'[IN][OUT]  s , тип параметра: string  - ...
+'See Also:
+'Example:
+' dim value as Variant
+' value = ...значение...
+' me. PanelCustomisationString = value
+ Public property Let PanelCustomisationString(s as string)
+   Panel.PanelCustomisationString = s
+ End property
+
+'Разрешения изменений контролов
+'Parameters:
+' параметров нет
+'Returns:
+' Boolean, семантика результата:
+'   true  -
+'   false -
+'See Also:
+'Example:
+' dim variable as boolean
+' variable = me. Enabled
+ Public property get Enabled() as boolean
+   Enabled =Panel.Enabled
+ End property
+
+'Запрет \ Разрешение изменений контролов
+'Parameters:
+'[IN]   v , тип параметра: boolean  - ...
+'See Also:
+'Example:
+' dim value as Variant
+' value = ...значение...
+' me. Enabled = value
+ Public property Let Enabled(byval v as boolean)
+   Panel.Enabled = v
+ End property
+
+"><AttributeHolder Name="Type" Value="code"/><FormData Name=""/></BlockHolder></ModuleHolder><ModuleHolder ModuleName="wpdog_mainSrv" File=""><AttributeHolder Name="Type" Value="control"/><BlockHolder BlockName="'form" BlockCode=""><AttributeHolder Name="Type" Value="form"/><FormData Name=""><ControlData Name="Panel" ControlIndex="0" PROGID="MTZ_PANEL.Scrolledwindow"><Properties Name="BackStyle" PropValue="0"/><Properties Name="NAME" PropValue="Panel"/><Properties Name="Top" PropValue="0"/><Properties Name="Left" PropValue="0"/><Properties Name="Height" PropValue="1000"/><Properties Name="Width" PropValue="1000"/><ControlData Name="" ControlIndex="0" PROGID="VB.Label"><Properties Name="BackStyle" PropValue="0"/><Properties Name="NAME" PropValue="lblPalletPerDay"/><Properties Name="Caption" PropValue="Палетоместо в сутки:"/><Properties Name="Top" PropValue="75"/><Properties Name="Left" PropValue="300"/><Properties Name="Height" PropValue="300"/><Properties Name="Width" PropValue="3000"/><Properties Name="Enabled" PropValue="True"/><Properties Name="ForeColor" PropValue="255"/></ControlData><ControlData Name="" ControlIndex="0" PROGID="MSMask.MaskEdBox"><Properties Name="NAME" PropValue="txtPalletPerDay"/><Properties Name="Text" PropValue=""/><Properties Name="Top" PropValue="405"/><Properties Name="Left" PropValue="300"/><Properties Name="Height" PropValue="300"/><Properties Name="Width" PropValue="1800"/><Properties Name="ToolTipText" PropValue="Палетоместо в сутки"/><Properties Name="CausesValidation" PropValue="True"/><Properties Name="Locked" PropValue="False"/><Properties Name="Enabled" PropValue="True"/><Properties Name="MaxLength" PropValue="27"/><Properties Name="Format" PropValue="#,##0.00;(#,##0.00)"/></ControlData><ControlData Name="" ControlIndex="0" PROGID="VB.Label"><Properties Name="BackStyle" PropValue="0"/><Properties Name="NAME" PropValue="lblCellPerDay"/><Properties Name="Caption" PropValue="Ячейка в сутки:"/><Properties Name="Top" PropValue="780"/><Properties Name="Left" PropValue="300"/><Properties Name="Height" PropValue="300"/><Properties Name="Width" PropValue="3000"/><Properties Name="Enabled" PropValue="True"/><Properties Name="ForeColor" PropValue="255"/></ControlData><ControlData Name="" ControlIndex="0" PROGID="MSMask.MaskEdBox"><Properties Name="NAME" PropValue="txtCellPerDay"/><Properties Name="Text" PropValue=""/><Properties Name="Top" PropValue="1110"/><Properties Name="Left" PropValue="300"/><Properties Name="Height" PropValue="300"/><Properties Name="Width" PropValue="1800"/><Properties Name="ToolTipText" PropValue="Ячейка в сутки"/><Properties Name="CausesValidation" PropValue="True"/><Properties Name="Locked" PropValue="False"/><Properties Name="Enabled" PropValue="True"/><Properties Name="MaxLength" PropValue="27"/><Properties Name="Format" PropValue="#,##0.00;(#,##0.00)"/></ControlData><ControlData Name="" ControlIndex="0" PROGID="VB.Label"><Properties Name="BackStyle" PropValue="0"/><Properties Name="NAME" PropValue="lblTonnPerDay"/><Properties Name="Caption" PropValue="Тонна в сутки:"/><Properties Name="Top" PropValue="1485"/><Properties Name="Left" PropValue="300"/><Properties Name="Height" PropValue="300"/><Properties Name="Width" PropValue="3000"/><Properties Name="Enabled" PropValue="True"/><Properties Name="ForeColor" PropValue="255"/></ControlData><ControlData Name="" ControlIndex="0" PROGID="MSMask.MaskEdBox"><Properties Name="NAME" PropValue="txtTonnPerDay"/><Properties Name="Text" PropValue=""/><Properties Name="Top" PropValue="1815"/><Properties Name="Left" PropValue="300"/><Properties Name="Height" PropValue="300"/><Properties Name="Width" PropValue="1800"/><Properties Name="ToolTipText" PropValue="Тонна в сутки"/><Properties Name="CausesValidation" PropValue="True"/><Properties Name="Locked" PropValue="False"/><Properties Name="Enabled" PropValue="True"/><Properties Name="MaxLength" PropValue="27"/><Properties Name="Format" PropValue="#,##0.00;(#,##0.00)"/></ControlData><ControlData Name="" ControlIndex="0" PROGID="VB.Label"><Properties Name="BackStyle" PropValue="0"/><Properties Name="NAME" PropValue="lblCameraPerDay"/><Properties Name="Caption" PropValue="Камера в сутки:"/><Properties Name="Top" PropValue="2190"/><Properties Name="Left" PropValue="300"/><Properties Name="Height" PropValue="300"/><Properties Name="Width" PropValue="3000"/><Properties Name="Enabled" PropValue="True"/><Properties Name="ForeColor" PropValue="255"/></ControlData><ControlData Name="" ControlIndex="0" PROGID="MSMask.MaskEdBox"><Properties Name="NAME" PropValue="txtCameraPerDay"/><Properties Name="Text" PropValue=""/><Properties Name="Top" PropValue="2520"/><Properties Name="Left" PropValue="300"/><Properties Name="Height" PropValue="300"/><Properties Name="Width" PropValue="1800"/><Properties Name="ToolTipText" PropValue="Камера в сутки"/><Properties Name="CausesValidation" PropValue="True"/><Properties Name="Locked" PropValue="False"/><Properties Name="Enabled" PropValue="True"/><Properties Name="MaxLength" PropValue="27"/><Properties Name="Format" PropValue="#,##0.00;(#,##0.00)"/></ControlData><ControlData Name="" ControlIndex="0" PROGID="VB.Label"><Properties Name="BackStyle" PropValue="0"/><Properties Name="NAME" PropValue="lblStorePerDay"/><Properties Name="Caption" PropValue="Склад в сутки:"/><Properties Name="Top" PropValue="2895"/><Properties Name="Left" PropValue="300"/><Properties Name="Height" PropValue="300"/><Properties Name="Width" PropValue="3000"/><Properties Name="Enabled" PropValue="True"/><Properties Name="ForeColor" PropValue="255"/></ControlData><ControlData Name="" ControlIndex="0" PROGID="MSMask.MaskEdBox"><Properties Name="NAME" PropValue="txtStorePerDay"/><Properties Name="Text" PropValue=""/><Properties Name="Top" PropValue="3225"/><Properties Name="Left" PropValue="300"/><Properties Name="Height" PropValue="300"/><Properties Name="Width" PropValue="1800"/><Properties Name="ToolTipText" PropValue="Склад в сутки"/><Properties Name="CausesValidation" PropValue="True"/><Properties Name="Locked" PropValue="False"/><Properties Name="Enabled" PropValue="True"/><Properties Name="MaxLength" PropValue="27"/><Properties Name="Format" PropValue="#,##0.00;(#,##0.00)"/></ControlData><ControlData Name="" ControlIndex="0" PROGID="VB.Label"><Properties Name="BackStyle" PropValue="0"/><Properties Name="NAME" PropValue="lblRowPerDay"/><Properties Name="Caption" PropValue="Стелаж в сутки:"/><Properties Name="Top" PropValue="3600"/><Properties Name="Left" PropValue="300"/><Properties Name="Height" PropValue="300"/><Properties Name="Width" PropValue="3000"/><Properties Name="Enabled" PropValue="True"/><Properties Name="ForeColor" PropValue="255"/></ControlData><ControlData Name="" ControlIndex="0" PROGID="MSMask.MaskEdBox"><Properties Name="NAME" PropValue="txtRowPerDay"/><Properties Name="Text" PropValue=""/><Properties Name="Top" PropValue="3930"/><Properties Name="Left" PropValue="300"/><Properties Name="Height" PropValue="300"/><Properties Name="Width" PropValue="1800"/><Properties Name="ToolTipText" PropValue="Стелаж в сутки"/><Properties Name="CausesValidation" PropValue="True"/><Properties Name="Locked" PropValue="False"/><Properties Name="Enabled" PropValue="True"/><Properties Name="MaxLength" PropValue="27"/><Properties Name="Format" PropValue="#,##0.00;(#,##0.00)"/></ControlData></ControlData></FormData></BlockHolder><BlockHolder BlockName="'description" BlockCode="'панель редактирования раздела 
+   public Item as object
+   private OnInit as boolean
+   public event Changed()
+   Private mIsChanged As Boolean
+
+"><AttributeHolder Name="Type" Value="description"/><FormData Name=""/></BlockHolder><BlockHolder BlockName="'codebody" BlockCode="
+
+'Функция поиска строки
+'Parameters:
+'[IN][OUT]  Runner , тип параметра: mtzmanager.main, 
+'[IN]   TypeName , тип параметра: String, 
+'[IN][OUT]   ID , тип параметра: string, 
+'[IN][OUT]   Brief , тип параметра: string, 
+'[IN][OUT]   Cancel , тип параметра: boolean  - ...
+'Returns:
+' Boolean, семантика результата:
+'   true  -
+'   false -
+'See Also:
+'Example:
+' dim variable as Boolean
+' variable = me.findObject(...параметры...) 
+Private Function findObject(Runner as mtzmanager.main, byval TypeName As String, byref ID as string, byref Brief as string, byref Cancel as boolean) As Boolean
+Dim objFinder As Object
+Dim result As Boolean
+result = False
+On Error GoTo bye
+Set objFinder = CreateObject(TypeName &amp; &quot;_FIND.Find&quot;)
+result = objFinder.Run(Runner, ID, Brief,Cancel)
+bye:
+findObject = result
+End Function
+
+'Признак изменения строки
+'Parameters:
+' параметров нет
+'Returns:
+' Boolean, семантика результата:
+'   true  -
+'   false -
+'See Also:
+'Example:
+' dim variable as Boolean
+'  variable = me.IsChanged() 
+Public Function IsChanged() As Boolean
+  IsChanged = mIsChanged
+End Function
+private sub Usercontrol_resize()
+  on error resume next
+  panel.width = usercontrol.width
+  panel.height = usercontrol.height
+end sub
+
+private sub txtPalletPerDay_Validate(cancel as boolean)
+if txtPalletPerDay.text&lt;&gt;&quot;&quot; then 
+ on error resume next 
+  if not isnumeric(txtPalletPerDay.text) then 
+     cancel=true 
+     msgbox &quot;Ожидалось число&quot;,vbokonly+vbexclamation,&quot;Внимание&quot; 
+     txtPalletPerDay.SetFocus 
+  elseif Val(txtPalletPerDay.text) &lt; -922337203685477.5808 or Val(txtPalletPerDay.text)&gt;+922337203685477.5807 then 
+     cancel=true 
+     msgbox &quot;Значение вне допустимого диапазона&quot;,vbokonly+vbexclamation,&quot;Внимание&quot; 
+     txtPalletPerDay.SetFocus 
+  end if
+end if
+end sub
+Private Sub txtPalletPerDay_KeyPess(KeyAscii As Integer)
+Dim s As String
+s = &quot;0123456789.,-&quot; &amp; Chr(8)
+If InStr(s, Chr(KeyAscii)) &gt; 0 Then Exit Sub
+KeyAscii = 0
+
+End Sub
+private sub txtPalletPerDay_Change()
+  Changing
+
+end sub
+private sub txtCellPerDay_Validate(cancel as boolean)
+if txtCellPerDay.text&lt;&gt;&quot;&quot; then 
+ on error resume next 
+  if not isnumeric(txtCellPerDay.text) then 
+     cancel=true 
+     msgbox &quot;Ожидалось число&quot;,vbokonly+vbexclamation,&quot;Внимание&quot; 
+     txtCellPerDay.SetFocus 
+  elseif Val(txtCellPerDay.text) &lt; -922337203685477.5808 or Val(txtCellPerDay.text)&gt;+922337203685477.5807 then 
+     cancel=true 
+     msgbox &quot;Значение вне допустимого диапазона&quot;,vbokonly+vbexclamation,&quot;Внимание&quot; 
+     txtCellPerDay.SetFocus 
+  end if
+end if
+end sub
+Private Sub txtCellPerDay_KeyPess(KeyAscii As Integer)
+Dim s As String
+s = &quot;0123456789.,-&quot; &amp; Chr(8)
+If InStr(s, Chr(KeyAscii)) &gt; 0 Then Exit Sub
+KeyAscii = 0
+
+End Sub
+private sub txtCellPerDay_Change()
+  Changing
+
+end sub
+private sub txtTonnPerDay_Validate(cancel as boolean)
+if txtTonnPerDay.text&lt;&gt;&quot;&quot; then 
+ on error resume next 
+  if not isnumeric(txtTonnPerDay.text) then 
+     cancel=true 
+     msgbox &quot;Ожидалось число&quot;,vbokonly+vbexclamation,&quot;Внимание&quot; 
+     txtTonnPerDay.SetFocus 
+  elseif Val(txtTonnPerDay.text) &lt; -922337203685477.5808 or Val(txtTonnPerDay.text)&gt;+922337203685477.5807 then 
+     cancel=true 
+     msgbox &quot;Значение вне допустимого диапазона&quot;,vbokonly+vbexclamation,&quot;Внимание&quot; 
+     txtTonnPerDay.SetFocus 
+  end if
+end if
+end sub
+Private Sub txtTonnPerDay_KeyPess(KeyAscii As Integer)
+Dim s As String
+s = &quot;0123456789.,-&quot; &amp; Chr(8)
+If InStr(s, Chr(KeyAscii)) &gt; 0 Then Exit Sub
+KeyAscii = 0
+
+End Sub
+private sub txtTonnPerDay_Change()
+  Changing
+
+end sub
+private sub txtCameraPerDay_Validate(cancel as boolean)
+if txtCameraPerDay.text&lt;&gt;&quot;&quot; then 
+ on error resume next 
+  if not isnumeric(txtCameraPerDay.text) then 
+     cancel=true 
+     msgbox &quot;Ожидалось число&quot;,vbokonly+vbexclamation,&quot;Внимание&quot; 
+     txtCameraPerDay.SetFocus 
+  elseif Val(txtCameraPerDay.text) &lt; -922337203685477.5808 or Val(txtCameraPerDay.text)&gt;+922337203685477.5807 then 
+     cancel=true 
+     msgbox &quot;Значение вне допустимого диапазона&quot;,vbokonly+vbexclamation,&quot;Внимание&quot; 
+     txtCameraPerDay.SetFocus 
+  end if
+end if
+end sub
+Private Sub txtCameraPerDay_KeyPess(KeyAscii As Integer)
+Dim s As String
+s = &quot;0123456789.,-&quot; &amp; Chr(8)
+If InStr(s, Chr(KeyAscii)) &gt; 0 Then Exit Sub
+KeyAscii = 0
+
+End Sub
+private sub txtCameraPerDay_Change()
+  Changing
+
+end sub
+private sub txtStorePerDay_Validate(cancel as boolean)
+if txtStorePerDay.text&lt;&gt;&quot;&quot; then 
+ on error resume next 
+  if not isnumeric(txtStorePerDay.text) then 
+     cancel=true 
+     msgbox &quot;Ожидалось число&quot;,vbokonly+vbexclamation,&quot;Внимание&quot; 
+     txtStorePerDay.SetFocus 
+  elseif Val(txtStorePerDay.text) &lt; -922337203685477.5808 or Val(txtStorePerDay.text)&gt;+922337203685477.5807 then 
+     cancel=true 
+     msgbox &quot;Значение вне допустимого диапазона&quot;,vbokonly+vbexclamation,&quot;Внимание&quot; 
+     txtStorePerDay.SetFocus 
+  end if
+end if
+end sub
+Private Sub txtStorePerDay_KeyPess(KeyAscii As Integer)
+Dim s As String
+s = &quot;0123456789.,-&quot; &amp; Chr(8)
+If InStr(s, Chr(KeyAscii)) &gt; 0 Then Exit Sub
+KeyAscii = 0
+
+End Sub
+private sub txtStorePerDay_Change()
+  Changing
+
+end sub
+private sub txtRowPerDay_Validate(cancel as boolean)
+if txtRowPerDay.text&lt;&gt;&quot;&quot; then 
+ on error resume next 
+  if not isnumeric(txtRowPerDay.text) then 
+     cancel=true 
+     msgbox &quot;Ожидалось число&quot;,vbokonly+vbexclamation,&quot;Внимание&quot; 
+     txtRowPerDay.SetFocus 
+  elseif Val(txtRowPerDay.text) &lt; -922337203685477.5808 or Val(txtRowPerDay.text)&gt;+922337203685477.5807 then 
+     cancel=true 
+     msgbox &quot;Значение вне допустимого диапазона&quot;,vbokonly+vbexclamation,&quot;Внимание&quot; 
+     txtRowPerDay.SetFocus 
+  end if
+end if
+end sub
+Private Sub txtRowPerDay_KeyPess(KeyAscii As Integer)
+Dim s As String
+s = &quot;0123456789.,-&quot; &amp; Chr(8)
+If InStr(s, Chr(KeyAscii)) &gt; 0 Then Exit Sub
+KeyAscii = 0
+
+End Sub
+private sub txtRowPerDay_Change()
+  Changing
+
+end sub
+Private Sub UserControl_Terminate()
+  Set item = Nothing
+End Sub
+
+'Контроль правильности заполнения данных на панели редактирования
+'Parameters:
+' параметров нет
+'Returns:
+' Boolean, семантика результата:
+'   true  -
+'   false -
+'See Also:
+'Example:
+' dim variable as boolean
+'  variable = me.IsOK() 
+public function IsOK() as boolean
+  On error resume next
+  dim mIsOK as boolean
+  mIsOk = true
+
+if mIsOK then mIsOK = IsSet(txtPalletPerDay.text)
+if mIsOK then mIsOK = IsSet(txtCellPerDay.text)
+if mIsOK then mIsOK = IsSet(txtTonnPerDay.text)
+if mIsOK then mIsOK = IsSet(txtCameraPerDay.text)
+if mIsOK then mIsOK = IsSet(txtStorePerDay.text)
+if mIsOK then mIsOK = IsSet(txtRowPerDay.text)
+  IsOk = mIsOk
+end function
+Private Function AddSQLRefIds(ByVal strTo As String, ByVal fldName As String, ByVal strFrom As String) As String
+  Dim XMLDocFrom As New DOMDocument
+  Dim XMLDocTo As New DOMDocument
+  AddSQLRefIds = strTo
+  On Error GoTo err
+  Call XMLDocTo.loadXML(strTo)
+  Call XMLDocFrom.loadXML(strFrom)
+  Dim Node As MSXML2.IXMLDOMNode
+  Dim ID As String
+  For Each Node In XMLDocFrom.childNodes.item(0).childNodes
+    If (Node.baseName = &quot;ID&quot;) Then
+      ID = Node.Text
+      Dim NodeTO As MSXML2.IXMLDOMNode
+      Dim bAdded As Boolean
+      bAdded = False
+      For Each NodeTO In XMLDocTo.childNodes.item(0).childNodes
+       If (NodeTO.baseName = fldName &amp; &quot;ID&quot;) Then
+         NodeTO.Text = ID
+         bAdded = True
+         Exit For
+       End If
+      Next
+      If (Not bAdded) Then
+       Dim newNode As MSXML2.IXMLDOMNode
+       Set newNode = XMLDocTo.createNode(MSXML2.NODE_ELEMENT, fldName &amp; &quot;ID&quot;, XMLDocTo.namespaceURI)
+        newNode.Text = ID
+       Call XMLDocTo.childNodes.item(0).appendChild(newNode)
+      End If
+      AddSQLRefIds = XMLDocTo.xml
+      Exit For
+    End If
+  Next
+err:
+End Function
+
+'Инициализация контролов панели
+'Parameters:
+' параметров нет
+'See Also:
+'Example:
+'  call me.InitPanel()
+public sub InitPanel()
+OnInit = true
+dim iii as long ' for combo only
+if item.CanChange then
+  panel.enabled = true
+else
+  panel.enabled = false
+end if
+
+txtPalletPerDay = item.PalletPerDay
+txtCellPerDay = item.CellPerDay
+txtTonnPerDay = item.TonnPerDay
+txtCameraPerDay = item.CameraPerDay
+txtStorePerDay = item.StorePerDay
+txtRowPerDay = item.RowPerDay
+' Добавим значения ID ко всем SQLReference
+OnInit = false
+end sub
+private sub Changing
+if OnInit then exit sub
+
+ mIsChanged=true 
+ raiseevent Changed()
+end sub
+
+'Сохранение
+'Parameters:
+' параметров нет
+'See Also:
+'Example:
+'  call me.Save({параметры})
+Public sub Save
+if OnInit then exit sub
+
+item.PalletPerDay = cdbl(txtPalletPerDay)
+item.CellPerDay = cdbl(txtCellPerDay)
+item.TonnPerDay = cdbl(txtTonnPerDay)
+item.CameraPerDay = cdbl(txtCameraPerDay)
+item.StorePerDay = cdbl(txtStorePerDay)
+item.RowPerDay = cdbl(txtRowPerDay)
+ mIsChanged=false 
+ raiseevent Changed()
+end sub
+
+'Подбор размера панели по размеру контролов
+'Parameters:
+'[IN][OUT]  x , тип параметра: Single, 
+'[IN][OUT]   y , тип параметра: single  - ...
+'See Also:
+'Example:
+'  call me.OptimalSize({параметры})
+ Public sub OptimalSize(x As Single, y as single)
+   Panel.OptimalSize x, y
+   x=x + panel.left
+   y=y + panel.top
+ End sub
+ 
+ 
+ Public Function OptimalY() As Single
+   Dim x As Single, y As Single
+   Panel.OptimalSize x, y
+   OptimalY = y
+ End Function
+
+'Открытие окна настройки панели
+'Parameters:
+' параметров нет
+'See Also:
+'Example:
+'  call me.Customize()
+ Public sub Customize()
+   Panel.Customize
+ End sub
+
+'Строка положения контролов на панели для сохранения позиций
+'Parameters:
+' параметров нет
+'Returns:
+'  значение типа string
+'See Also:
+'Example:
+' dim variable as string
+' variable = me. PanelCustomisationString
+ Public property get PanelCustomisationString() as string
+   PanelCustomisationString =Panel.PanelCustomisationString
+ End property
+
+'Восстановление  позиций контролов из строки
+'Parameters:
+'[IN][OUT]  s , тип параметра: string  - ...
+'See Also:
+'Example:
+' dim value as Variant
+' value = ...значение...
+' me. PanelCustomisationString = value
+ Public property Let PanelCustomisationString(s as string)
+   Panel.PanelCustomisationString = s
+ End property
+
+'Разрешения изменений контролов
+'Parameters:
+' параметров нет
+'Returns:
+' Boolean, семантика результата:
+'   true  -
+'   false -
+'See Also:
+'Example:
+' dim variable as boolean
+' variable = me. Enabled
+ Public property get Enabled() as boolean
+   Enabled =Panel.Enabled
+ End property
+
+'Запрет \ Разрешение изменений контролов
+'Parameters:
+'[IN]   v , тип параметра: boolean  - ...
+'See Also:
+'Example:
+' dim value as Variant
+' value = ...значение...
+' me. Enabled = value
+ Public property Let Enabled(byval v as boolean)
+   Panel.Enabled = v
+ End property
+
+"><AttributeHolder Name="Type" Value="code"/><FormData Name=""/></BlockHolder></ModuleHolder><ModuleHolder ModuleName="wpDog_srvPrice" File=""><AttributeHolder Name="Type" Value="control"/><BlockHolder BlockName="'form" BlockCode=""><AttributeHolder Name="Type" Value="form"/><FormData Name=""><ControlData Name="Panel" ControlIndex="0" PROGID="MTZ_PANEL.Scrolledwindow"><Properties Name="BackStyle" PropValue="0"/><Properties Name="NAME" PropValue="Panel"/><Properties Name="Top" PropValue="0"/><Properties Name="Left" PropValue="0"/><Properties Name="Height" PropValue="1000"/><Properties Name="Width" PropValue="1000"/><ControlData Name="" ControlIndex="0" PROGID="VB.Label"><Properties Name="BackStyle" PropValue="0"/><Properties Name="NAME" PropValue="lblTheSrv"/><Properties Name="Caption" PropValue="Услуга:"/><Properties Name="Top" PropValue="75"/><Properties Name="Left" PropValue="300"/><Properties Name="Height" PropValue="300"/><Properties Name="Width" PropValue="3000"/><Properties Name="Enabled" PropValue="True"/><Properties Name="ForeColor" PropValue="255"/></ControlData><ControlData Name="" ControlIndex="0" PROGID="VB.textbox"><Properties Name="NAME" PropValue="txtTheSrv"/><Properties Name="Text" PropValue=""/><Properties Name="Locked" PropValue="True"/><Properties Name="Enabled" PropValue="True"/><Properties Name="Top" PropValue="405"/><Properties Name="Left" PropValue="300"/><Properties Name="Height" PropValue="300"/><Properties Name="Width" PropValue="2550"/><Properties Name="ToolTipText" PropValue="Услуга"/></ControlData><ControlData Name="" ControlIndex="0" PROGID="MTZ_PANEL.DropButton"><Properties Name="NAME" PropValue="cmdTheSrv"/><Properties Name="Caption" PropValue=""/><Properties Name="Tag" PropValue="refopen.ico"/><Properties Name="Top" PropValue="405"/><Properties Name="Enabled" PropValue="True"/><Properties Name="Left" PropValue="2850"/><Properties Name="Height" PropValue="300"/><Properties Name="Width" PropValue="450"/><Properties Name="ToolTipText" PropValue="Услуга"/></ControlData><ControlData Name="" ControlIndex="0" PROGID="VB.Label"><Properties Name="BackStyle" PropValue="0"/><Properties Name="NAME" PropValue="lblPricePerUnit"/><Properties Name="Caption" PropValue="Цена за единицу:"/><Properties Name="Top" PropValue="780"/><Properties Name="Left" PropValue="300"/><Properties Name="Height" PropValue="300"/><Properties Name="Width" PropValue="3000"/><Properties Name="Enabled" PropValue="True"/><Properties Name="ForeColor" PropValue="255"/></ControlData><ControlData Name="" ControlIndex="0" PROGID="MSMask.MaskEdBox"><Properties Name="NAME" PropValue="txtPricePerUnit"/><Properties Name="Text" PropValue=""/><Properties Name="Top" PropValue="1110"/><Properties Name="Left" PropValue="300"/><Properties Name="Height" PropValue="300"/><Properties Name="Width" PropValue="1800"/><Properties Name="ToolTipText" PropValue="Цена за единицу"/><Properties Name="CausesValidation" PropValue="True"/><Properties Name="Locked" PropValue="False"/><Properties Name="Enabled" PropValue="True"/><Properties Name="MaxLength" PropValue="27"/><Properties Name="Format" PropValue="#,##0.00;(#,##0.00)"/></ControlData><ControlData Name="" ControlIndex="0" PROGID="VB.Label"><Properties Name="BackStyle" PropValue="0"/><Properties Name="NAME" PropValue="lblSrvUnit"/><Properties Name="Caption" PropValue="Единица измерения:"/><Properties Name="Top" PropValue="1485"/><Properties Name="Left" PropValue="300"/><Properties Name="Height" PropValue="300"/><Properties Name="Width" PropValue="3000"/><Properties Name="Enabled" PropValue="True"/><Properties Name="ForeColor" PropValue="255"/></ControlData><ControlData Name="" ControlIndex="0" PROGID="VB.textbox"><Properties Name="NAME" PropValue="txtSrvUnit"/><Properties Name="Text" PropValue=""/><Properties Name="Locked" PropValue="True"/><Properties Name="Enabled" PropValue="True"/><Properties Name="Top" PropValue="1815"/><Properties Name="Left" PropValue="300"/><Properties Name="Height" PropValue="300"/><Properties Name="Width" PropValue="2550"/><Properties Name="ToolTipText" PropValue="Единица измерения"/></ControlData><ControlData Name="" ControlIndex="0" PROGID="MTZ_PANEL.DropButton"><Properties Name="NAME" PropValue="cmdSrvUnit"/><Properties Name="Caption" PropValue=""/><Properties Name="Tag" PropValue="refopen.ico"/><Properties Name="Top" PropValue="1815"/><Properties Name="Enabled" PropValue="True"/><Properties Name="Left" PropValue="2850"/><Properties Name="Height" PropValue="300"/><Properties Name="Width" PropValue="450"/><Properties Name="ToolTipText" PropValue="Единица измерения"/></ControlData></ControlData></FormData></BlockHolder><BlockHolder BlockName="'description" BlockCode="'панель редактирования раздела 
+   public Item as object
+   private OnInit as boolean
+   public event Changed()
+   Private mIsChanged As Boolean
+
+"><AttributeHolder Name="Type" Value="description"/><FormData Name=""/></BlockHolder><BlockHolder BlockName="'codebody" BlockCode="
+
+'Функция поиска строки
+'Parameters:
+'[IN][OUT]  Runner , тип параметра: mtzmanager.main, 
+'[IN]   TypeName , тип параметра: String, 
+'[IN][OUT]   ID , тип параметра: string, 
+'[IN][OUT]   Brief , тип параметра: string, 
+'[IN][OUT]   Cancel , тип параметра: boolean  - ...
+'Returns:
+' Boolean, семантика результата:
+'   true  -
+'   false -
+'See Also:
+'Example:
+' dim variable as Boolean
+' variable = me.findObject(...параметры...) 
+Private Function findObject(Runner as mtzmanager.main, byval TypeName As String, byref ID as string, byref Brief as string, byref Cancel as boolean) As Boolean
+Dim objFinder As Object
+Dim result As Boolean
+result = False
+On Error GoTo bye
+Set objFinder = CreateObject(TypeName &amp; &quot;_FIND.Find&quot;)
+result = objFinder.Run(Runner, ID, Brief,Cancel)
+bye:
+findObject = result
+End Function
+
+'Признак изменения строки
+'Parameters:
+' параметров нет
+'Returns:
+' Boolean, семантика результата:
+'   true  -
+'   false -
+'See Also:
+'Example:
+' dim variable as Boolean
+'  variable = me.IsChanged() 
+Public Function IsChanged() As Boolean
+  IsChanged = mIsChanged
+End Function
+private sub Usercontrol_resize()
+  on error resume next
+  panel.width = usercontrol.width
+  panel.height = usercontrol.height
+end sub
+
+private sub txtTheSrv_Change()
+  if  not (OnInit) then 
+  Changing
+
+  end if 
+end sub
+private sub cmdTheSrv_CLick()
+  on error resume next
+        Dim id As String, brief As String
+        If item.Application.Manager.GetReferenceDialogEx2(&quot;wpDic_SRV&quot;, id, brief) Then
+          txtTheSrv.Tag = Left(id, 38)
+          txtTheSrv = brief
+        End If
+end sub
+private sub cmdTheSrv_MenuClick(ByVal sCaption As String)
+          txtTheSrv.Tag = &quot;&quot;
+          txtTheSrv = &quot;&quot;
+End sub
+private sub txtPricePerUnit_Validate(cancel as boolean)
+if txtPricePerUnit.text&lt;&gt;&quot;&quot; then 
+ on error resume next 
+  if not isnumeric(txtPricePerUnit.text) then 
+     cancel=true 
+     msgbox &quot;Ожидалось число&quot;,vbokonly+vbexclamation,&quot;Внимание&quot; 
+     txtPricePerUnit.SetFocus 
+  elseif Val(txtPricePerUnit.text) &lt; -922337203685477.5808 or Val(txtPricePerUnit.text)&gt;+922337203685477.5807 then 
+     cancel=true 
+     msgbox &quot;Значение вне допустимого диапазона&quot;,vbokonly+vbexclamation,&quot;Внимание&quot; 
+     txtPricePerUnit.SetFocus 
+  end if
+end if
+end sub
+Private Sub txtPricePerUnit_KeyPess(KeyAscii As Integer)
+Dim s As String
+s = &quot;0123456789.,-&quot; &amp; Chr(8)
+If InStr(s, Chr(KeyAscii)) &gt; 0 Then Exit Sub
+KeyAscii = 0
+
+End Sub
+private sub txtPricePerUnit_Change()
+  Changing
+
+end sub
+private sub txtSrvUnit_Change()
+  if  not (OnInit) then 
+  Changing
+
+  end if 
+end sub
+private sub cmdSrvUnit_CLick()
+  on error resume next
+        Dim id As String, brief As String
+        If item.Application.Manager.GetReferenceDialogEx2(&quot;wpDic_EDIZM&quot;, id, brief) Then
+          txtSrvUnit.Tag = Left(id, 38)
+          txtSrvUnit = brief
+        End If
+end sub
+private sub cmdSrvUnit_MenuClick(ByVal sCaption As String)
+          txtSrvUnit.Tag = &quot;&quot;
+          txtSrvUnit = &quot;&quot;
+End sub
+Private Sub UserControl_Terminate()
+  Set item = Nothing
+End Sub
+
+'Контроль правильности заполнения данных на панели редактирования
+'Parameters:
+' параметров нет
+'Returns:
+' Boolean, семантика результата:
+'   true  -
+'   false -
+'See Also:
+'Example:
+' dim variable as boolean
+'  variable = me.IsOK() 
+public function IsOK() as boolean
+  On error resume next
+  dim mIsOK as boolean
+  mIsOk = true
+
+if mIsOK then mIsOK = txtTheSrv.Tag&lt;&gt;&quot;&quot;
+if mIsOK then mIsOK = IsSet(txtPricePerUnit.text)
+if mIsOK then mIsOK = txtSrvUnit.Tag&lt;&gt;&quot;&quot;
+  IsOk = mIsOk
+end function
+Private Function AddSQLRefIds(ByVal strTo As String, ByVal fldName As String, ByVal strFrom As String) As String
+  Dim XMLDocFrom As New DOMDocument
+  Dim XMLDocTo As New DOMDocument
+  AddSQLRefIds = strTo
+  On Error GoTo err
+  Call XMLDocTo.loadXML(strTo)
+  Call XMLDocFrom.loadXML(strFrom)
+  Dim Node As MSXML2.IXMLDOMNode
+  Dim ID As String
+  For Each Node In XMLDocFrom.childNodes.item(0).childNodes
+    If (Node.baseName = &quot;ID&quot;) Then
+      ID = Node.Text
+      Dim NodeTO As MSXML2.IXMLDOMNode
+      Dim bAdded As Boolean
+      bAdded = False
+      For Each NodeTO In XMLDocTo.childNodes.item(0).childNodes
+       If (NodeTO.baseName = fldName &amp; &quot;ID&quot;) Then
+         NodeTO.Text = ID
+         bAdded = True
+         Exit For
+       End If
+      Next
+      If (Not bAdded) Then
+       Dim newNode As MSXML2.IXMLDOMNode
+       Set newNode = XMLDocTo.createNode(MSXML2.NODE_ELEMENT, fldName &amp; &quot;ID&quot;, XMLDocTo.namespaceURI)
+        newNode.Text = ID
+       Call XMLDocTo.childNodes.item(0).appendChild(newNode)
+      End If
+      AddSQLRefIds = XMLDocTo.xml
+      Exit For
+    End If
+  Next
+err:
+End Function
+
+'Инициализация контролов панели
+'Parameters:
+' параметров нет
+'See Also:
+'Example:
+'  call me.InitPanel()
+public sub InitPanel()
+OnInit = true
+dim iii as long ' for combo only
+if item.CanChange then
+  panel.enabled = true
+else
+  panel.enabled = false
+end if
+
+If Not item.TheSrv Is Nothing Then
+  txtTheSrv.Tag = item.TheSrv.id
+  txtTheSrv = item.TheSrv.brief
+else
+  txtTheSrv.Tag = &quot;&quot; 
+  txtTheSrv = &quot;&quot; 
+End If
+ LoadBtnPictures cmdTheSrv,cmdTheSrv.tag
+  cmdTheSrv.RemoveAllMenu
+  cmdTheSrv.AddMenu &quot;Очистить&quot; 
+txtPricePerUnit = item.PricePerUnit
+If Not item.SrvUnit Is Nothing Then
+  txtSrvUnit.Tag = item.SrvUnit.id
+  txtSrvUnit = item.SrvUnit.brief
+else
+  txtSrvUnit.Tag = &quot;&quot; 
+  txtSrvUnit = &quot;&quot; 
+End If
+ LoadBtnPictures cmdSrvUnit,cmdSrvUnit.tag
+  cmdSrvUnit.RemoveAllMenu
+  cmdSrvUnit.AddMenu &quot;Очистить&quot; 
+' Добавим значения ID ко всем SQLReference
+OnInit = false
+end sub
+private sub Changing
+if OnInit then exit sub
+
+ mIsChanged=true 
+ raiseevent Changed()
+end sub
+
+'Сохранение
+'Parameters:
+' параметров нет
+'See Also:
+'Example:
+'  call me.Save({параметры})
+Public sub Save
+if OnInit then exit sub
+
+If txtTheSrv.Tag &lt;&gt; &quot;&quot; Then
+  Set item.TheSrv = Item.Application.FindRowObject(&quot;wpDic_SRV&quot;,txtTheSrv.Tag)
+Else
+  Set item.TheSrv = Nothing
+End If
+item.PricePerUnit = cdbl(txtPricePerUnit)
+If txtSrvUnit.Tag &lt;&gt; &quot;&quot; Then
+  Set item.SrvUnit = Item.Application.FindRowObject(&quot;wpDic_EDIZM&quot;,txtSrvUnit.Tag)
+Else
+  Set item.SrvUnit = Nothing
+End If
+ mIsChanged=false 
+ raiseevent Changed()
+end sub
+
+'Подбор размера панели по размеру контролов
+'Parameters:
+'[IN][OUT]  x , тип параметра: Single, 
+'[IN][OUT]   y , тип параметра: single  - ...
+'See Also:
+'Example:
+'  call me.OptimalSize({параметры})
+ Public sub OptimalSize(x As Single, y as single)
+   Panel.OptimalSize x, y
+   x=x + panel.left
+   y=y + panel.top
+ End sub
+ 
+ 
+ Public Function OptimalY() As Single
+   Dim x As Single, y As Single
+   Panel.OptimalSize x, y
+   OptimalY = y
+ End Function
+
+'Открытие окна настройки панели
+'Parameters:
+' параметров нет
+'See Also:
+'Example:
+'  call me.Customize()
+ Public sub Customize()
+   Panel.Customize
+ End sub
+
+'Строка положения контролов на панели для сохранения позиций
+'Parameters:
+' параметров нет
+'Returns:
+'  значение типа string
+'See Also:
+'Example:
+' dim variable as string
+' variable = me. PanelCustomisationString
+ Public property get PanelCustomisationString() as string
+   PanelCustomisationString =Panel.PanelCustomisationString
+ End property
+
+'Восстановление  позиций контролов из строки
+'Parameters:
+'[IN][OUT]  s , тип параметра: string  - ...
+'See Also:
+'Example:
+' dim value as Variant
+' value = ...значение...
+' me. PanelCustomisationString = value
+ Public property Let PanelCustomisationString(s as string)
+   Panel.PanelCustomisationString = s
+ End property
+
+'Разрешения изменений контролов
+'Parameters:
+' параметров нет
+'Returns:
+' Boolean, семантика результата:
+'   true  -
+'   false -
+'See Also:
+'Example:
+' dim variable as boolean
+' variable = me. Enabled
+ Public property get Enabled() as boolean
+   Enabled =Panel.Enabled
+ End property
+
+'Запрет \ Разрешение изменений контролов
+'Parameters:
+'[IN]   v , тип параметра: boolean  - ...
+'See Also:
+'Example:
+' dim value as Variant
+' value = ...значение...
+' me. Enabled = value
+ Public property Let Enabled(byval v as boolean)
+   Panel.Enabled = v
+ End property
+
+"><AttributeHolder Name="Type" Value="code"/><FormData Name=""/></BlockHolder></ModuleHolder><ModuleHolder ModuleName="frmwpDog_def_" File=""><AttributeHolder Name="Type" Value="form"/><BlockHolder BlockName="'form" BlockCode=""><AttributeHolder Name="Type" Value="form"/><FormData Name=""><ControlData Name="" ControlIndex="0" PROGID="wpDogGUI.wpDog_def"><Properties Name="Name" PropValue="Panel"/><Properties Name="Top" PropValue="0"/><Properties Name="Left" PropValue="0"/><Properties Name="Height" PropValue="6000"/><Properties Name="Width" PropValue="9000"/></ControlData><ControlData Name="cmdOK" ControlIndex="0" PROGID="VB.CommandButton"><Properties Name="NAME" PropValue="cmdOK"/><Properties Name="Caption" PropValue="&amp;OK"/><Properties Name="Default" PropValue="False"/><Properties Name="Top" PropValue="6225"/><Properties Name="Left" PropValue="1275"/><Properties Name="Height" PropValue="345"/><Properties Name="Width" PropValue="825"/><Properties Name="ToolTipText" PropValue=""/><Properties Name="Visible" PropValue="True"/></ControlData><ControlData Name="cmdCancel" ControlIndex="0" PROGID="VB.CommandButton"><Properties Name="NAME" PropValue="cmdCancel"/><Properties Name="Caption" PropValue="Отмена"/><Properties Name="Cancel" PropValue="True"/><Properties Name="CausesValidation" PropValue="False"/><Properties Name="Top" PropValue="6225"/><Properties Name="Left" PropValue="2250"/><Properties Name="Height" PropValue="345"/><Properties Name="Width" PropValue="975"/><Properties Name="Visible" PropValue="True"/></ControlData><PropertyData Name="Caption" PropValue="Описание"/><PropertyData Name="BorderStyle" PropValue="5"/><PropertyData Name="Left" PropValue="0"/><PropertyData Name="Top" PropValue="0"/><PropertyData Name="StartupPosition" PropValue="1"/><PropertyData Name="Minbutton" PropValue="False"/><PropertyData Name="Height" PropValue="7200"/><PropertyData Name="Width" PropValue="9600"/></FormData></BlockHolder><BlockHolder BlockName="'description" BlockCode="' Форма редактирования раздела wpDog_def режим 
+   public OK as boolean
+   public item as object
+   Public NotFirstTime As Boolean
+
+
+"><AttributeHolder Name="Type" Value="description"/><FormData Name=""/></BlockHolder><BlockHolder BlockName="'codebody" BlockCode="
+sub cmdCancel_Click()
+OK=false
+me.hide
+end sub
+
+sub cmdOK_Click()
+ on error goto bye
+ if panel.isOK then
+   panel.save
+   OK=true
+   me.hide
+ else
+   MsgBox &quot;Не все обязательные поля заполнены&quot;,vbOKOnly + VBExclamation
+ end if
+bye:
+end sub
+
+Private Sub Form_QueryUnload(Cancel As Integer, UnloadMode As Integer)
+  on error resume next
+  'SaveToSkin
+end sub
+sub form_Unload(Cancel As Integer)
+      'SaveToSkin
+End sub
+sub form_resize()
+ if me.windowstate =1 then exit sub
+ on error resume next
+ panel.top=0
+ Panel.left=0
+ cmdOK.left=0
+ cmdCancel.left=cmdok.width + 5*screen.TwipsPerPixelY
+ cmdOK.Top = Me.ScaleHeight - cmdOK.Height 
+ cmdCancel.Top = Me.ScaleHeight - cmdCancel.Height
+ Panel.Width = Me.ScaleWidth
+ If (cmdOK.Visible) Then
+    panel.Height = cmdOK.Top - 3 * Screen.TwipsPerPixelY
+ Else
+    panel.Height = Me.ScaleHeight - 3 * Screen.TwipsPerPixelY
+ End If
+end sub
+sub form_load()
+ dim x as single, y as single
+ LoadFormSkin
+ panel.optimalsize x,y
+ Me.Move Me.Left, Me.Top, X + Me.panel.Left * 2 + 20 * Screen.TwipsPerPixelX, Me.panel.Top + Y + cmdOK.Height + 40 * Screen.TwipsPerPixelX
+ 
+end sub
+sub form_DblCLick()
+ panel.customize
+ SaveToSkin
+end sub
+sub panel_Changed()
+ cmdOK.Enabled = true
+end sub
+sub form_Activate()
+ if NotFirstTime then exit sub
+ OnInit
+ notFirsttime = true
+end sub
+
+'Инициализация формы
+'Parameters:
+' параметров нет
+'See Also:
+'Example:
+'  call me.OnInit()
+public sub OnInit()
+ set Panel.item = item
+ Panel.initPanel
+ cmdOK.Enabled = false
+end sub
+private sub LoadFormSkin
+  on error resume next
+  Dim s As String
+  s = GetSetting(&quot;MTZ&quot;, &quot;CONFIG&quot;, &quot;LAYOUTS&quot;,App.Path &amp; &quot;\LAYOUTS\&quot;)
+  SaveSetting &quot;MTZ&quot;, &quot;CONFIG&quot;, &quot;LAYOUTS&quot;, s
+  Dim ff As Long, buf As String
+  ff = FreeFile
+  Open s &amp; Me.name &amp; &quot;{9925A6B0-C341-4631-B6B8-87DE1343CE91}&quot; For Input As #ff
+  buf = Input(LOF(ff), ff)
+  Close #ff
+  If buf &lt;&gt; &quot;&quot; Then panel.PanelCustomisationString = buf
+end sub
+
+private sub SaveToSkin
+  on error resume next
+  Dim s As String
+  s = GetSetting(&quot;MTZ&quot;, &quot;CONFIG&quot;, &quot;LAYOUTS&quot;, App.Path &amp; &quot;\LAYOUTS\&quot;)
+  SaveSetting &quot;MTZ&quot;, &quot;CONFIG&quot;, &quot;LAYOUTS&quot;, s
+  Dim ff As Long
+  ff = FreeFile
+  kill s &amp; Me.name &amp; &quot;{9925A6B0-C341-4631-B6B8-87DE1343CE91}&quot;
+  Open s &amp; Me.name &amp; &quot;{9925A6B0-C341-4631-B6B8-87DE1343CE91}&quot; For output As #ff
+  print #ff, panel.PanelCustomisationString
+  Close #ff
+end sub
+
+
+"><AttributeHolder Name="Type" Value="code"/><FormData Name=""/></BlockHolder></ModuleHolder><ModuleHolder ModuleName="frmwpdog_mainSrv_" File=""><AttributeHolder Name="Type" Value="form"/><BlockHolder BlockName="'form" BlockCode=""><AttributeHolder Name="Type" Value="form"/><FormData Name=""><ControlData Name="" ControlIndex="0" PROGID="wpDogGUI.wpdog_mainSrv"><Properties Name="Name" PropValue="Panel"/><Properties Name="Top" PropValue="0"/><Properties Name="Left" PropValue="0"/><Properties Name="Height" PropValue="6000"/><Properties Name="Width" PropValue="9000"/></ControlData><ControlData Name="cmdOK" ControlIndex="0" PROGID="VB.CommandButton"><Properties Name="NAME" PropValue="cmdOK"/><Properties Name="Caption" PropValue="&amp;OK"/><Properties Name="Default" PropValue="False"/><Properties Name="Top" PropValue="6225"/><Properties Name="Left" PropValue="1275"/><Properties Name="Height" PropValue="345"/><Properties Name="Width" PropValue="825"/><Properties Name="ToolTipText" PropValue=""/><Properties Name="Visible" PropValue="True"/></ControlData><ControlData Name="cmdCancel" ControlIndex="0" PROGID="VB.CommandButton"><Properties Name="NAME" PropValue="cmdCancel"/><Properties Name="Caption" PropValue="Отмена"/><Properties Name="Cancel" PropValue="True"/><Properties Name="CausesValidation" PropValue="False"/><Properties Name="Top" PropValue="6225"/><Properties Name="Left" PropValue="2250"/><Properties Name="Height" PropValue="345"/><Properties Name="Width" PropValue="975"/><Properties Name="Visible" PropValue="True"/></ControlData><PropertyData Name="Caption" PropValue="Цены на основные услуги"/><PropertyData Name="BorderStyle" PropValue="5"/><PropertyData Name="Left" PropValue="0"/><PropertyData Name="Top" PropValue="0"/><PropertyData Name="StartupPosition" PropValue="1"/><PropertyData Name="Minbutton" PropValue="False"/><PropertyData Name="Height" PropValue="7200"/><PropertyData Name="Width" PropValue="9600"/></FormData></BlockHolder><BlockHolder BlockName="'description" BlockCode="' Форма редактирования раздела wpdog_mainSrv режим 
+   public OK as boolean
+   public item as object
+   Public NotFirstTime As Boolean
+
+
+"><AttributeHolder Name="Type" Value="description"/><FormData Name=""/></BlockHolder><BlockHolder BlockName="'codebody" BlockCode="
+sub cmdCancel_Click()
+OK=false
+me.hide
+end sub
+
+sub cmdOK_Click()
+ on error goto bye
+ if panel.isOK then
+   panel.save
+   OK=true
+   me.hide
+ else
+   MsgBox &quot;Не все обязательные поля заполнены&quot;,vbOKOnly + VBExclamation
+ end if
+bye:
+end sub
+
+Private Sub Form_QueryUnload(Cancel As Integer, UnloadMode As Integer)
+  on error resume next
+  'SaveToSkin
+end sub
+sub form_Unload(Cancel As Integer)
+      'SaveToSkin
+End sub
+sub form_resize()
+ if me.windowstate =1 then exit sub
+ on error resume next
+ panel.top=0
+ Panel.left=0
+ cmdOK.left=0
+ cmdCancel.left=cmdok.width + 5*screen.TwipsPerPixelY
+ cmdOK.Top = Me.ScaleHeight - cmdOK.Height 
+ cmdCancel.Top = Me.ScaleHeight - cmdCancel.Height
+ Panel.Width = Me.ScaleWidth
+ If (cmdOK.Visible) Then
+    panel.Height = cmdOK.Top - 3 * Screen.TwipsPerPixelY
+ Else
+    panel.Height = Me.ScaleHeight - 3 * Screen.TwipsPerPixelY
+ End If
+end sub
+sub form_load()
+ dim x as single, y as single
+ LoadFormSkin
+ panel.optimalsize x,y
+ Me.Move Me.Left, Me.Top, X + Me.panel.Left * 2 + 20 * Screen.TwipsPerPixelX, Me.panel.Top + Y + cmdOK.Height + 40 * Screen.TwipsPerPixelX
+ 
+end sub
+sub form_DblCLick()
+ panel.customize
+ SaveToSkin
+end sub
+sub panel_Changed()
+ cmdOK.Enabled = true
+end sub
+sub form_Activate()
+ if NotFirstTime then exit sub
+ OnInit
+ notFirsttime = true
+end sub
+
+'Инициализация формы
+'Parameters:
+' параметров нет
+'See Also:
+'Example:
+'  call me.OnInit()
+public sub OnInit()
+ set Panel.item = item
+ Panel.initPanel
+ cmdOK.Enabled = false
+end sub
+private sub LoadFormSkin
+  on error resume next
+  Dim s As String
+  s = GetSetting(&quot;MTZ&quot;, &quot;CONFIG&quot;, &quot;LAYOUTS&quot;,App.Path &amp; &quot;\LAYOUTS\&quot;)
+  SaveSetting &quot;MTZ&quot;, &quot;CONFIG&quot;, &quot;LAYOUTS&quot;, s
+  Dim ff As Long, buf As String
+  ff = FreeFile
+  Open s &amp; Me.name &amp; &quot;{365850D1-A72D-42E2-A4B5-C0E75087F668}&quot; For Input As #ff
+  buf = Input(LOF(ff), ff)
+  Close #ff
+  If buf &lt;&gt; &quot;&quot; Then panel.PanelCustomisationString = buf
+end sub
+
+private sub SaveToSkin
+  on error resume next
+  Dim s As String
+  s = GetSetting(&quot;MTZ&quot;, &quot;CONFIG&quot;, &quot;LAYOUTS&quot;, App.Path &amp; &quot;\LAYOUTS\&quot;)
+  SaveSetting &quot;MTZ&quot;, &quot;CONFIG&quot;, &quot;LAYOUTS&quot;, s
+  Dim ff As Long
+  ff = FreeFile
+  kill s &amp; Me.name &amp; &quot;{365850D1-A72D-42E2-A4B5-C0E75087F668}&quot;
+  Open s &amp; Me.name &amp; &quot;{365850D1-A72D-42E2-A4B5-C0E75087F668}&quot; For output As #ff
+  print #ff, panel.PanelCustomisationString
+  Close #ff
+end sub
+
+
+"><AttributeHolder Name="Type" Value="code"/><FormData Name=""/></BlockHolder></ModuleHolder><ModuleHolder ModuleName="frmwpDog_srvPrice_" File=""><AttributeHolder Name="Type" Value="form"/><BlockHolder BlockName="'form" BlockCode=""><AttributeHolder Name="Type" Value="form"/><FormData Name=""><ControlData Name="" ControlIndex="0" PROGID="wpDogGUI.wpDog_srvPrice"><Properties Name="Name" PropValue="Panel"/><Properties Name="Top" PropValue="0"/><Properties Name="Left" PropValue="0"/><Properties Name="Height" PropValue="6000"/><Properties Name="Width" PropValue="9000"/></ControlData><ControlData Name="cmdOK" ControlIndex="0" PROGID="VB.CommandButton"><Properties Name="NAME" PropValue="cmdOK"/><Properties Name="Caption" PropValue="&amp;OK"/><Properties Name="Default" PropValue="False"/><Properties Name="Top" PropValue="6225"/><Properties Name="Left" PropValue="1275"/><Properties Name="Height" PropValue="345"/><Properties Name="Width" PropValue="825"/><Properties Name="ToolTipText" PropValue=""/><Properties Name="Visible" PropValue="True"/></ControlData><ControlData Name="cmdCancel" ControlIndex="0" PROGID="VB.CommandButton"><Properties Name="NAME" PropValue="cmdCancel"/><Properties Name="Caption" PropValue="Отмена"/><Properties Name="Cancel" PropValue="True"/><Properties Name="CausesValidation" PropValue="False"/><Properties Name="Top" PropValue="6225"/><Properties Name="Left" PropValue="2250"/><Properties Name="Height" PropValue="345"/><Properties Name="Width" PropValue="975"/><Properties Name="Visible" PropValue="True"/></ControlData><PropertyData Name="Caption" PropValue="Цены на доп. услуги"/><PropertyData Name="BorderStyle" PropValue="5"/><PropertyData Name="Left" PropValue="0"/><PropertyData Name="Top" PropValue="0"/><PropertyData Name="StartupPosition" PropValue="1"/><PropertyData Name="Minbutton" PropValue="False"/><PropertyData Name="Height" PropValue="7200"/><PropertyData Name="Width" PropValue="9600"/></FormData></BlockHolder><BlockHolder BlockName="'description" BlockCode="' Форма редактирования раздела wpDog_srvPrice режим 
+   public OK as boolean
+   public item as object
+   Public NotFirstTime As Boolean
+
+
+"><AttributeHolder Name="Type" Value="description"/><FormData Name=""/></BlockHolder><BlockHolder BlockName="'codebody" BlockCode="
+sub cmdCancel_Click()
+OK=false
+me.hide
+end sub
+
+sub cmdOK_Click()
+ on error goto bye
+ if panel.isOK then
+   panel.save
+   OK=true
+   me.hide
+ else
+   MsgBox &quot;Не все обязательные поля заполнены&quot;,vbOKOnly + VBExclamation
+ end if
+bye:
+end sub
+
+Private Sub Form_QueryUnload(Cancel As Integer, UnloadMode As Integer)
+  on error resume next
+  'SaveToSkin
+end sub
+sub form_Unload(Cancel As Integer)
+      'SaveToSkin
+End sub
+sub form_resize()
+ if me.windowstate =1 then exit sub
+ on error resume next
+ panel.top=0
+ Panel.left=0
+ cmdOK.left=0
+ cmdCancel.left=cmdok.width + 5*screen.TwipsPerPixelY
+ cmdOK.Top = Me.ScaleHeight - cmdOK.Height 
+ cmdCancel.Top = Me.ScaleHeight - cmdCancel.Height
+ Panel.Width = Me.ScaleWidth
+ If (cmdOK.Visible) Then
+    panel.Height = cmdOK.Top - 3 * Screen.TwipsPerPixelY
+ Else
+    panel.Height = Me.ScaleHeight - 3 * Screen.TwipsPerPixelY
+ End If
+end sub
+sub form_load()
+ dim x as single, y as single
+ LoadFormSkin
+ panel.optimalsize x,y
+ Me.Move Me.Left, Me.Top, X + Me.panel.Left * 2 + 20 * Screen.TwipsPerPixelX, Me.panel.Top + Y + cmdOK.Height + 40 * Screen.TwipsPerPixelX
+ 
+end sub
+sub form_DblCLick()
+ panel.customize
+ SaveToSkin
+end sub
+sub panel_Changed()
+ cmdOK.Enabled = true
+end sub
+sub form_Activate()
+ if NotFirstTime then exit sub
+ OnInit
+ notFirsttime = true
+end sub
+
+'Инициализация формы
+'Parameters:
+' параметров нет
+'See Also:
+'Example:
+'  call me.OnInit()
+public sub OnInit()
+ set Panel.item = item
+ Panel.initPanel
+ cmdOK.Enabled = false
+end sub
+private sub LoadFormSkin
+  on error resume next
+  Dim s As String
+  s = GetSetting(&quot;MTZ&quot;, &quot;CONFIG&quot;, &quot;LAYOUTS&quot;,App.Path &amp; &quot;\LAYOUTS\&quot;)
+  SaveSetting &quot;MTZ&quot;, &quot;CONFIG&quot;, &quot;LAYOUTS&quot;, s
+  Dim ff As Long, buf As String
+  ff = FreeFile
+  Open s &amp; Me.name &amp; &quot;{8A0B57C3-A08B-4668-9C40-C69D46162916}&quot; For Input As #ff
+  buf = Input(LOF(ff), ff)
+  Close #ff
+  If buf &lt;&gt; &quot;&quot; Then panel.PanelCustomisationString = buf
+end sub
+
+private sub SaveToSkin
+  on error resume next
+  Dim s As String
+  s = GetSetting(&quot;MTZ&quot;, &quot;CONFIG&quot;, &quot;LAYOUTS&quot;, App.Path &amp; &quot;\LAYOUTS\&quot;)
+  SaveSetting &quot;MTZ&quot;, &quot;CONFIG&quot;, &quot;LAYOUTS&quot;, s
+  Dim ff As Long
+  ff = FreeFile
+  kill s &amp; Me.name &amp; &quot;{8A0B57C3-A08B-4668-9C40-C69D46162916}&quot;
+  Open s &amp; Me.name &amp; &quot;{8A0B57C3-A08B-4668-9C40-C69D46162916}&quot; For output As #ff
+  print #ff, panel.PanelCustomisationString
+  Close #ff
+end sub
+
+
+"><AttributeHolder Name="Type" Value="code"/><FormData Name=""/></BlockHolder></ModuleHolder><ModuleHolder ModuleName="vpnwpDog_def_" File=""><AttributeHolder Name="Type" Value="control"/><BlockHolder BlockName="'form" BlockCode=""><AttributeHolder Name="Type" Value="controlset"/><FormData Name=""><ControlData Name="pnlwpDog_def" ControlIndex="0" PROGID="VB.Frame"><Properties Name="Name" PropValue="pnlwpDog_def"/><Properties Name="visible" PropValue="True"/><Properties Name="Top" PropValue="0"/><Properties Name="Left" PropValue="0"/><Properties Name="Width" PropValue="9000"/><Properties Name="Height" PropValue="6000"/><Properties Name="BorderStyle" PropValue="0"/><ControlData Name="editwpDog_def" ControlIndex="0" PROGID="wpDogGUI.wpDog_def"><Properties Name="Name" PropValue="editwpDog_def"/></ControlData><ControlData Name="cmdwpDog_defSave" ControlIndex="0" PROGID="VB.CommandButton"><Properties Name="Name" PropValue="cmdwpDog_defSave"/><Properties Name="Caption" PropValue=""/><Properties Name="Tag" PropValue="SAVE.ico"/><Properties Name="ToolTipText" PropValue="Сохранить"/><Properties Name="Style" PropValue="1"/><Properties Name="Height" PropValue="330"/><Properties Name="Width" PropValue="330"/><Properties Name="Top" PropValue="30"/><Properties Name="Left" PropValue="75"/><Properties Name="UseMaskColor" PropValue="True"/><Properties Name="Enabled" PropValue="False"/><Properties Name="Visible" PropValue="True"/></ControlData><ControlData Name="cmdwpDog_defRef" ControlIndex="0" PROGID="VB.CommandButton"><Properties Name="Name" PropValue="cmdwpDog_defRef"/><Properties Name="Tag" PropValue="Refresh.ico"/><Properties Name="Caption" PropValue=""/><Properties Name="ToolTipText" PropValue="Обновить"/><Properties Name="Style" PropValue="1"/><Properties Name="Height" PropValue="330"/><Properties Name="Width" PropValue="330"/><Properties Name="Top" PropValue="30"/><Properties Name="Left" PropValue="450"/><Properties Name="UseMaskColor" PropValue="True"/><Properties Name="Enabled" PropValue="True"/><Properties Name="Visible" PropValue="True"/></ControlData><ControlData Name="cmdwpDog_defCfg" ControlIndex="0" PROGID="VB.CommandButton"><Properties Name="Name" PropValue="cmdwpDog_defCfg"/><Properties Name="Caption" PropValue=""/><Properties Name="Tag" PropValue="config.ico"/><Properties Name="ToolTipText" PropValue="Настройка внешнего вида"/><Properties Name="Style" PropValue="1"/><Properties Name="UseMaskColor" PropValue="True"/><Properties Name="Height" PropValue="330"/><Properties Name="Width" PropValue="330"/><Properties Name="Top" PropValue="30"/><Properties Name="Left" PropValue="825"/><Properties Name="Visible" PropValue="True"/></ControlData></ControlData></FormData></BlockHolder><BlockHolder BlockName="'description" BlockCode="'панель для работы со строками раздела 
+public Item as object
+public ParentForm as Object
+public ModalMode as boolean
+
+"><AttributeHolder Name="Type" Value="description"/><FormData Name=""/></BlockHolder><BlockHolder BlockName="'codebody" BlockCode="
+private sub opwpDog_def_wpDog_SetName_(RowItem as object)
+with RowItem
+Run_VBUpdateItemName  Name:=.brief,  RowItem:=RowItem
+end with
+end sub
+Private Sub cmdwpDog_defRef_Click()
+  on error resume next
+  Item.wpDog_def.Refresh
+  cmdwpDog_defAdd_Click
+End Sub
+Private Sub cmdwpDog_defCfg_Click()
+    on error resume next 
+    editwpDog_def.Customize
+    dim ff as long 
+    ff = FreeFile
+    Open GetSetting(&quot;MTZ&quot;, &quot;CONFIG&quot;, &quot;LAYOUTS&quot;, &quot;c:\&quot;) &amp; &quot;wpDog_editwpDog_def_&quot; For Output As #ff
+    print #ff, editwpDog_def.PanelCustomisationString
+    Close #ff
+End Sub
+Private Sub cmdwpDog_defAdd_Click()
+  on error resume next
+ dim u as object
+ If Item.wpDog_def.Count = 0 Then
+   set u=Item.wpDog_def.Add
+
+ End If
+ Set editwpDog_def.Item = Item.wpDog_def.Item(1)
+ editwpDog_def.InitPanel
+ cmdwpDog_defSave.Enabled = True
+End Sub
+Private Sub cmdwpDog_defDel_Click()
+  on error resume next
+  if  editwpDog_def.item is nothing then exit sub
+  If MsgBox(&quot;Удалить элемент&quot; &amp; vbCrLf &amp; editwpDog_def.item.Brief &amp; vbcrlf &amp; &quot;?&quot;, vbYesNo + vbQuestion, &quot;Внимание&quot;) = vbYes Then
+    on error goto bye
+    editwpDog_def.item.parent.Delete editwpDog_def.item.id
+    cmdwpDog_defSave.Enabled = false
+    editwpDog_def.Enabled = false
+    set editwpDog_def.item = nothing
+  End If
+Exit Sub
+bye:
+msgbox err.description,vbokonly+vbExclamation,&quot;Удаление&quot;
+End Sub
+Private Sub editwpDog_def_Changed()
+ cmdwpDog_defSave.Enabled = true
+End Sub
+Public Function IsOK() as BooLEAN
+    if editwpDog_def.IsOK then
+        IsOK=TRUE
+    end if
+End Function
+Private Sub cmdwpDog_defSave_Click()
+  on error resume next
+    if editwpDog_def.IsOK then
+    MousePointer = vbHourglass
+    editwpDog_def.Save
+  on error goto bye
+    editwpDog_def.item.Save
+    MousePointer = vbNormal
+        opwpDog_def_wpDog_SetName_ editwpDog_def.item
+    cmdwpDog_defSave.Enabled = false
+    else
+      MsgBox &quot;Не все обязательные поля заполнены&quot;,vbOKOnly+VBExclamation
+    end if
+Exit Sub
+bye:
+    MousePointer = vbNormal
+   MsgBox Err.Description, vbOKOnly + vbExclamation, &quot;Изменение&quot;
+  editwpDog_def.item.REFRESH
+  editwpDog_def.InitPanel
+End Sub
+
+'Функция инициализации панели данными
+'Parameters:
+'[IN][OUT]  aItem , тип параметра: object, 
+'[IN][OUT]   optional pForm , тип параметра: object = nothing  - ...
+'See Also:
+'Example:
+'  call me.OnInit({параметры})
+public sub OnInit(aItem as object, optional pForm as object = nothing)
+ on error resume next
+ set Item =aItem
+ set ParentForm = pForm
+
+  LoadBtnPictures cmdwpDog_defSave,cmdwpDog_defSave.tag
+  LoadBtnPictures cmdwpDog_defRef,cmdwpDog_defRef.tag
+  LoadBtnPictures cmdwpDog_defCfg,cmdwpDog_defCfg.tag
+  dim ff as long, buf as string
+  ff = FreeFile
+  On Error Resume Next
+  Open GetSetting(&quot;MTZ&quot;, &quot;CONFIG&quot;, &quot;LAYOUTS&quot;, App.PAth &amp; &quot;\LAYOUTS\&quot;) &amp; &quot;wpDog_editwpDog_def_&quot; For Input As #ff
+  buf = &quot;&quot;
+  buf = Input(LOF(ff), ff)
+  Close #ff
+  if buf &lt;&gt;&quot;&quot; then editwpDog_def.PanelCustomisationString = buf
+  cmdwpDog_defAdd_click
+end sub
+
+'Действие при активизации таба
+'Parameters:
+' параметров нет
+'See Also:
+'Example:
+'  call me.OnTabClick()
+private sub OnTabClick()
+
+      editwpDog_def.Top = 40 * Screen.TwipsPerPixelX
+      editwpDog_def.Left = 5 * Screen.TwipsPerPixelX
+      editwpDog_def.Width = usercontrol.Width - 10 * Screen.TwipsPerPixelX
+      editwpDog_def.Height = usercontrol.Height - 45 * Screen.TwipsPerPixelY
+end sub
+
+'Действие при активизации панели
+'Parameters:
+'[IN][OUT]  aItem , тип параметра: object, 
+'[IN][OUT]   optional pForm , тип параметра: object = nothing  - ...
+'See Also:
+'Example:
+'  call me.OnClick({параметры})
+public sub OnClick(aItem as object, optional pForm as object = nothing)
+  on error resume next
+  set Item =aItem
+  set ParentForm = pForm
+  OnTabClick
+end sub
+
+'Действие при сохранении
+'Parameters:
+' параметров нет
+'See Also:
+'Example:
+'  call me.OnSave()
+public sub OnSave()
+  
+  editwpDog_def.Save
+if editwpDog_def.item.Changed then
+  editwpDog_def.item.Save
+end if
+end sub
+
+'Признак изменения
+'Parameters:
+' параметров нет
+'Returns:
+' Boolean, семантика результата:
+'   true  -
+'   false -
+'See Also:
+'Example:
+' dim variable as boolean
+'  variable = me.IsChanged() 
+public function IsChanged() as boolean
+  dim m_IsChanged as boolean
+  on error resume next
+  
+ m_isChanged = m_isChanged or editwpDog_def.IsChanged
+  IsChanged = m_IsChanged
+end function
+private sub UserControl_Resize()
+  On Error Resume Next
+  pnlwpDog_def.Move 0, 0, UserControl.Width, UserControl.Height
+  OnTabClick
+end sub
+
+'Освобождение ресурсов
+'Parameters:
+' параметров нет
+'See Also:
+'Example:
+'  call me.CloseClass()
+public sub CloseClass()
+  On Error Resume Next
+  set parentForm = nothing
+  set item = nothing
+end sub
+private sub UserControl_Terminate()
+  On Error Resume Next
+  CloseClass
+end sub
+
+'переместить клиента в каталоге
+'{5CB1388C-1623-4B36-A775-00B70BEE27AF}
+private sub Run_VBMoveVRC ( VRCATFolder as variant , optional RowItem as object )
+On error resume next
+
+'do nothing
+end sub
+
+
+
+'Так же проверяет Square &gt;0
+'{53371FFA-B514-447A-A1F9-26EE4FD409C9}
+private sub Run_VBUpdateObjNamePEO ( Name as variant , optional RowItem as object )
+On error resume next
+
+on error resume next
+RowItem.Application.Name=name
+RowItem.Application.Save
+
+end sub
+
+
+
+'Передать права объекту контактное лицо от объекта клиент
+'{79DED4FD-045C-45F8-AC79-2E5A3D956D97}
+private sub Run_VBMigrateRight ( optional RowItem as object )
+On error resume next
+
+'Migrate security
+On Error GoTo bye
+  If RowItem.Person Is Nothing Then Exit Sub
+
+  RowItem.Person.Secure Item.SecureStyleID
+  RowItem.Person.propagate
+bye:
+  Exit Sub
+  MsgBox Err.Description, vbOKOnly + vbCritical, &quot;Усановка стиля защиты&quot;
+end sub
+
+
+
+'Проверка наличия коллекции характеристик
+'{79E6BDEB-91D5-4B2E-81F7-3E091FB65E3A}
+private sub Run_VBCheckDescrs ( DesPartName as variant , optional RowItem as object )
+On error resume next
+
+    On Error Resume Next
+
+    Dim part_col As Variant
+    Dim part_item As Object
+    Set part_col = CallByName(RowItem.Parent.Parent, DesPartName, VbGet, False)
+    Set part_item = part_col.Item(1)
+    If RowItem.Parent.Count = 1 Then
+        If part_item.HasDescrs = -1 Then
+            part_item.HasDescrs = 0
+        Else
+            part_item.HasDescrs = -1
+        End If
+    End If
+    part_item.Save
+
+end sub
+
+
+
+'Применить стиль защиты для объекта Предназначен для каталога клиентов
+'{31EC6CF7-8DBD-4EFE-BF12-4D168F653D34}
+private sub Run_VBApplySecurity ( optional RowItem as object )
+On error resume next
+
+'Apply security
+On Error GoTo bye
+  If RowItem.Client Is Nothing Then Exit Sub
+  If RowItem.Parent.Parent.AccessLevel Is Nothing Then Exit Sub
+  RowItem.Client.Secure RowItem.Parent.Parent.AccessLevel.id
+  RowItem.Client.propagate
+  Exit Sub
+bye:
+  MsgBox Err.Description, vbOKOnly + vbCritical, &quot;Усановка стиля защиты&quot;
+end sub
+
+
+
+'Создание отчета из разных карточек
+'{5B8FB7B9-D8B1-4CA0-90AF-55F83D1A6E5D}
+private sub Run_VBMakeReport ( ReportType as variant , optional RowItem as object )
+On error resume next
+
+On error goto bye
+Dim ID As String
+ Dim Obj As Object
+ 'ID = CreateGUID2
+ 'Call RowItem.Application.Manager.NewInstance(ID, &quot;VRRPT&quot;, &quot;Отчет &quot; &amp; Date)
+ 'Set RowItem.Report = RowItem.Application.Manager.GetInstanceObject(ID)
+ If RowItem.Report.VRRPT_MAIN.Count = 0 Then
+  Set Obj = RowItem.Report.VRRPT_MAIN.Add
+ Else
+  Set Obj = RowItem.Report.VRRPT_MAIN.Item(1)
+ End If
+ 
+ Set Obj.Author = RowItem.Application.FindRowObject(&quot;Users&quot;, Item.Application.MTZSession.GetSessionUserID())
+ Obj.TheDate = Date
+ 
+ If ReportType = &quot;CLNT&quot; Then
+   Set Obj.Client = RowItem.Application
+ End If
+ If ReportType = &quot;PRJ&quot; Then
+   Set Obj.Project = RowItem.Application
+ End If
+ If ReportType = &quot;CONT&quot; Then
+   Set Obj.Contract = RowItem.Application
+ End If
+ If ReportType = &quot;PERS&quot; Then
+   Set Obj.Person = RowItem.Application
+ End If
+ 
+ Obj.Save
+ RowItem.Save
+
+ Exit Sub
+bye:
+  MsgBox Err.Description, vbOKOnly + vbCritical, &quot;Создание отчета&quot;
+end sub
+
+
+
+'
+'{AA4085E6-745B-4A37-8EC4-65D99A653966}
+private sub Run_VBRemoveSymmetricObjRef ( ForwardFieldName as variant ,ObjTypeName as variant ,SymmetricPartName as variant ,SymmetricFieldName as variant , optional RowItem as object )
+On error resume next
+
+    Dim OK As Boolean
+    Dim ID As String
+    Dim brief As String
+
+    On Error Resume Next
+'     On Error GoTo bye
+
+    Dim Obj As Object
+    Dim part_col As Variant
+    Dim part_item As Object
+    Set Obj = CallByName(RowItem, ForwardFieldName, VbGet)
+    Set part_col = CallByName(Obj, SymmetricPartName, VbGet, False)
+    part_col.Filter = SymmetricFieldName + &quot;='&quot; + RowItem.Application.ID + &quot;'&quot;
+'    RowItem.Parent.Remove RowItem.ID
+    Set part_item = part_col.Item(1)
+    part_col.Delete part_item.ID
+    Exit Sub
+bye:
+Resume
+
+end sub
+
+
+
+'Создать новую оплату из клиента
+'{42A1A436-8AA2-4F1F-999B-6680DFF514DE}
+private sub Run_VBNewPayIn ( optional RowItem as object )
+On error resume next
+
+On error goto bye
+Dim ID As String
+ Dim Obj As Object
+ ID = CreateGUID2
+ Call RowItem.Application.Manager.NewInstance(ID, &quot;PEKP&quot;, &quot;Платеж &quot; &amp; Date)
+ Set RowItem.TheDocument = RowItem.Application.Manager.GetInstanceObject(ID)
+
+ If RowItem.TheDocument.PEKP_DEF.Count = 0 Then
+  Set Obj = RowItem.TheDocument.PEKP_DEF.Add
+ Else
+  Set Obj = RowItem.TheDocument.PEKP_DEF.Item(1)
+ End If
+ 
+ Set Obj.FromClient = RowItem.Application
+ Obj.PLPDate = Date
+ Obj.Save
+ RowItem.Save
+
+ Exit Sub
+bye:
+  MsgBox Err.Description, vbOKOnly + vbCritical, &quot;Создание Платежа&quot;
+end sub
+
+
+
+'Для раздела, в котором есть поле - ссылка, создает/выбирает объект без открытия окна редактирования ссылки
+'{A2EEE876-54D8-4AED-B124-775F5DA2D911}
+private sub Run_VBAddObjByRef ( ObjTypeName as variant ,ForwardFieldName as variant ,SymmetricPartName as variant ,SymmetricFieldName as variant , optional RowItem as object )
+On error resume next
+
+    Dim OK As Boolean
+    Dim ID As String
+    Dim brief As String
+    Dim Mode As String
+    Dim ResObject as Object
+    On Error Resume Next
+    Mode = Mid(TypeName(Me), InStr(TypeName(Me), &quot;_&quot;) + 1)
+    
+'     On Error GoTo bye
+    If Len(Mode) = 0 Then
+        OK = Item.Application.Manager.GetObjectListDialogEx(ID, brief, &quot;&quot;, ObjTypeName)
+    Else
+        ID = CreateGUID2
+        If Len(ObjTypeName) = 0 Then
+            Dim newObj As Object
+            Set newObj = Item.Application.Manager.GetNewObject
+            If Not (newObj Is Nothing) Then
+                OK = True
+                ID = newObj.ID
+            End If
+        Else
+            OK = Item.Application.Manager.NewInstance(ID, ObjTypeName, &quot;&quot;)
+        End If
+        Dim ref As Object, objGui As Object
+        Set ref = Item.Application.Manager.GetInstanceObject(ID)
+        If Not ref Is Nothing Then
+          Set objGui = Item.Application.Manager.GetInstanceGUI(ID)
+          If objGui Is Nothing Then Set ref = Nothing: Exit Sub
+          objGui.Show &quot;&quot;, ref, False
+          Set objGui = Nothing
+        Else
+          OK = False
+        End If
+    End If
+    Dim Obj As Object
+    Set Obj = Item.Application.Manager.GetInstanceObject(ID)
+    If Obj Is Nothing Then
+        OK = False
+    End If
+    If OK Then
+	Dim Coll as New Collection
+        Dim part_col As Variant
+        Dim part_item As Object
+        CallByName RowItem, ForwardFieldName, VbSet, Obj
+        Coll.Add TypeName(RowItem)+ &quot;:&quot; + RowItem.ID
+        RowItem.Save
+        If Len(SymmetricPartName) &gt; 0 And Len(SymmetricFieldName) &gt; 0 Then
+          Set part_col = CallByName(Obj, SymmetricPartName, VbGet, True)
+          Set part_item = part_col.Add
+          CallByName part_item, SymmetricFieldName, VbSet, RowItem.Application
+          part_item.Save
+          Coll.Add SymmetricPartName + &quot;:&quot; + part_item.ID
+        End If
+        Call Item.Application.Manager.AddCustomObjects(Coll, Obj.ID)
+    Else
+        RowItem.Parent.Remove RowItem.ID
+    End If
+    Exit Sub
+bye:
+Resume
+end sub
+
+
+
+'
+'{5B376AF5-339B-4365-BA80-785E28BCF4DA}
+private sub Run_VBUpdateSymmetricObjRef ( SymmetricFieldName as variant ,ForwardFieldName as variant ,SymmetricPartName as variant ,ObjTypeName as variant , optional RowItem as object )
+On error resume next
+
+ 
+end sub
+
+
+
+'Создать новый платеж из клиента
+'{2BB30818-90ED-4627-8ABB-85B3FBA46750}
+private sub Run_VBNewPayOut ( optional RowItem as object )
+On error resume next
+
+On error goto bye
+Dim ID As String
+ Dim Obj As Object
+ ID = CreateGUID2
+ Call RowItem.Application.Manager.NewInstance(ID, &quot;PEKO&quot;, &quot;Оплата &quot; &amp; Date)
+ Set RowItem.TheDocument = RowItem.Application.Manager.GetInstanceObject(ID)
+
+ If RowItem.TheDocument.PEKO_DEF.Count = 0 Then
+  Set Obj = RowItem.TheDocument.PEKO_DEF.Add
+ Else
+  Set Obj = RowItem.TheDocument.PEKO_DEF.Item(1)
+ End If
+ 
+ Set Obj.ToClient = RowItem.Application
+ Obj.PLPDate = Date
+ Obj.Save
+ RowItem.Save
+
+ Exit Sub
+bye:
+  MsgBox Err.Description, vbOKOnly + vbCritical, &quot;Создание Платежа&quot;
+end sub
+
+
+
+'открытие карточки по идентификатору
+'{94E8F6DB-106A-44DC-9483-86C801798FF0}
+private sub Run_VBOpenRef ( StartMode as variant ,ID as variant , optional RowItem as object )
+On error resume next
+
+on error resume next
+If ID &lt;&gt; &quot;&quot; Then
+    Dim Obj As Object
+    Set Obj = item.Manager.GetInstanceObject(ID)
+    If Not Obj Is Nothing Then
+      Dim objGui As Object
+      Set objGui =  item.Manager.GetInstanceGUI(Obj.ID)
+      If objGui Is Nothing Then Exit Sub
+
+       If StartMode = &quot;AUTO&quot; Then
+        StartMode = &quot;&quot;
+        dim i as long
+        For i = 100 To 0 Step -10
+          If Obj.MTZSession.CheckRight(Obj.SecureStyleid, Obj.TypeName &amp; &quot;:&quot; &amp; &quot;M&quot; &amp; i) Then
+            StartMode = &quot;M&quot; &amp; i
+            Exit For
+          End If
+        Next
+       End If
+      
+      objGui.Show StartMode &amp; &quot;&quot;, Obj
+      Set objGui = Nothing
+    End If
+  End If
+  
+end sub
+
+
+
+'
+'{069956DC-3305-45EF-9331-91CE323B5942}
+private sub Run_WFDefName ( optional RowItem as object )
+On error resume next
+
+on error resume next
+Item.Name = RowItem.Description
+parentform.caption = item.name
+Item.Save
+end sub
+
+
+
+'
+'{D8914FB4-6B5D-491A-A72F-985617727583}
+private sub Run_WFFuncName ( optional RowItem as object )
+On error resume next
+
+on error resume next
+Item.Name = RowItem.Name
+ParentForm.Caption = item.Name
+Item.Save
+end sub
+
+
+
+'Обновление Имени объекта
+'{61393545-ABF7-46F7-82F3-9B7E610DD9C0}
+private sub Run_VBUpdateObjName ( Name as variant , optional RowItem as object )
+On error resume next
+
+On error resume next
+RowItem.Application.Name=name
+RowItem.Application.Save
+end sub
+
+
+
+'Метод создает новый элемент в иерархии Имущественных Комплексов (приложение RealEstate) при создании нового элемента к нему линкуется объект ИК, форма которого и вызывается на редактирование
+'{477B8D25-4FF7-491A-A0B0-D3437EC16957}
+private sub Run_MakeNewFolderEC ( FolderID as variant , optional RowItem as object )
+On error resume next
+
+On Error GoTo bye
+ Dim ID As String
+ Dim Obj As Object ' EstComplex.Application ' Object
+ Dim GObj As Object
+ Dim fold As Object 'EstCatalog.Application ' Object
+ 
+ ID = CreateGUID2
+ Call RowItem.Application.Manager.NewInstance(ID, &quot;EstComplex&quot;, RowItem.TheName &amp; &quot; &quot; &amp; Date)
+ Set Obj = RowItem.Application.Manager.GetInstanceObject(ID)
+ If Obj.EC_Def.Count = 0 Then
+    With Obj.EC_Def.Add
+        .TheName = RowItem.TheName
+    End With
+ Else
+    Obj.EC_Def.Item(1).TheName = RowItem.TheName
+ End If
+ Obj.Save
+ Set RowItem.LinkedEC = Obj
+ RowItem.Save
+ Set GObj = RowItem.Application.Manager.GetInstanceGUI(Obj.ID)
+ GObj.Show &quot;&quot;, Obj, True 'False
+ Set Obj = RowItem.Application.Manager.GetInstanceObject(ID)
+ RowItem.TheName = Obj.EC_Def.Item(1).TheName
+ RowItem.Save
+ Exit Sub
+bye:
+  MsgBox Err.Description, vbOKOnly + vbCritical, &quot;Создание ИК&quot;
+
+end sub
+
+
+
+'Изменить название объекта
+'{4FB59D1A-0123-47D3-9F4F-E12085C5D074}
+private sub Run_VBUpdateItemName ( Name as variant , optional RowItem as object )
+On error resume next
+
+on error resume next
+item.name = Name
+' может не быть формы, если используем просто ActiveX
+ParentForm.Caption = item.Name
+item.Save
+end sub
+
+
+
+'Создать заявку из клиента
+'{49EA5CBF-93CF-41A8-B1F1-E37FE4D59EA5}
+private sub Run_VBNewZayavka ( optional RowItem as object )
+On error resume next
+
+On error goto bye
+Dim ID As String
+ Dim Obj As Object
+ ID = CreateGUID2
+ Call RowItem.Application.Manager.NewInstance(ID, &quot;PEKZ&quot;, &quot;Заявка &quot; &amp; Date)
+ Set RowItem.TheDocument = RowItem.Application.Manager.GetInstanceObject(ID)
+
+ If RowItem.TheDocument.PEKO_DEF.Count = 0 Then
+  Set Obj = RowItem.TheDocument.PEKz_DEF.Add
+ Else
+  Set Obj = RowItem.TheDocument.PEKZ_DEF.Item(1)
+ End If
+ 
+ Set Obj.ClientFrom = RowItem.Application
+ Obj.QueryDate = Date
+ Obj.Save
+ RowItem.Save
+
+ Exit Sub
+bye:
+  MsgBox Err.Description, vbOKOnly + vbCritical, &quot;Создание Заявки&quot;
+end sub
+
+
+
+'Создание номенклатуры по шаблону
+'{B91ABF3A-31F8-4A82-8D41-EF463DBA32D0}
+private sub Run_SSCreateNomen ( Name as variant , optional RowItem as object )
+On error resume next
+
+'pointCreateLine
+end sub
+
+
+
+"><AttributeHolder Name="Type" Value="code"/><FormData Name=""/></BlockHolder></ModuleHolder><ModuleHolder ModuleName="vpnwpdog_mainSrv_" File=""><AttributeHolder Name="Type" Value="control"/><BlockHolder BlockName="'form" BlockCode=""><AttributeHolder Name="Type" Value="controlset"/><FormData Name=""><ControlData Name="pnlwpdog_mainSrv" ControlIndex="0" PROGID="VB.Frame"><Properties Name="Name" PropValue="pnlwpdog_mainSrv"/><Properties Name="visible" PropValue="True"/><Properties Name="Top" PropValue="0"/><Properties Name="Left" PropValue="0"/><Properties Name="Width" PropValue="9000"/><Properties Name="Height" PropValue="6000"/><Properties Name="BorderStyle" PropValue="0"/><ControlData Name="editwpdog_mainSrv" ControlIndex="0" PROGID="wpDogGUI.wpdog_mainSrv"><Properties Name="Name" PropValue="editwpdog_mainSrv"/></ControlData><ControlData Name="cmdwpdog_mainSrvSave" ControlIndex="0" PROGID="VB.CommandButton"><Properties Name="Name" PropValue="cmdwpdog_mainSrvSave"/><Properties Name="Caption" PropValue=""/><Properties Name="Tag" PropValue="SAVE.ico"/><Properties Name="ToolTipText" PropValue="Сохранить"/><Properties Name="Style" PropValue="1"/><Properties Name="Height" PropValue="330"/><Properties Name="Width" PropValue="330"/><Properties Name="Top" PropValue="30"/><Properties Name="Left" PropValue="75"/><Properties Name="UseMaskColor" PropValue="True"/><Properties Name="Enabled" PropValue="False"/><Properties Name="Visible" PropValue="True"/></ControlData><ControlData Name="cmdwpdog_mainSrvRef" ControlIndex="0" PROGID="VB.CommandButton"><Properties Name="Name" PropValue="cmdwpdog_mainSrvRef"/><Properties Name="Tag" PropValue="Refresh.ico"/><Properties Name="Caption" PropValue=""/><Properties Name="ToolTipText" PropValue="Обновить"/><Properties Name="Style" PropValue="1"/><Properties Name="Height" PropValue="330"/><Properties Name="Width" PropValue="330"/><Properties Name="Top" PropValue="30"/><Properties Name="Left" PropValue="450"/><Properties Name="UseMaskColor" PropValue="True"/><Properties Name="Enabled" PropValue="True"/><Properties Name="Visible" PropValue="True"/></ControlData><ControlData Name="cmdwpdog_mainSrvCfg" ControlIndex="0" PROGID="VB.CommandButton"><Properties Name="Name" PropValue="cmdwpdog_mainSrvCfg"/><Properties Name="Caption" PropValue=""/><Properties Name="Tag" PropValue="config.ico"/><Properties Name="ToolTipText" PropValue="Настройка внешнего вида"/><Properties Name="Style" PropValue="1"/><Properties Name="UseMaskColor" PropValue="True"/><Properties Name="Height" PropValue="330"/><Properties Name="Width" PropValue="330"/><Properties Name="Top" PropValue="30"/><Properties Name="Left" PropValue="825"/><Properties Name="Visible" PropValue="True"/></ControlData></ControlData></FormData></BlockHolder><BlockHolder BlockName="'description" BlockCode="'панель для работы со строками раздела 
+public Item as object
+public ParentForm as Object
+public ModalMode as boolean
+
+"><AttributeHolder Name="Type" Value="description"/><FormData Name=""/></BlockHolder><BlockHolder BlockName="'codebody" BlockCode="
+Private Sub cmdwpdog_mainSrvRef_Click()
+  on error resume next
+  Item.wpdog_mainSrv.Refresh
+  cmdwpdog_mainSrvAdd_Click
+End Sub
+Private Sub cmdwpdog_mainSrvCfg_Click()
+    on error resume next 
+    editwpdog_mainSrv.Customize
+    dim ff as long 
+    ff = FreeFile
+    Open GetSetting(&quot;MTZ&quot;, &quot;CONFIG&quot;, &quot;LAYOUTS&quot;, &quot;c:\&quot;) &amp; &quot;wpDog_editwpdog_mainSrv_&quot; For Output As #ff
+    print #ff, editwpdog_mainSrv.PanelCustomisationString
+    Close #ff
+End Sub
+Private Sub cmdwpdog_mainSrvAdd_Click()
+  on error resume next
+ dim u as object
+ If Item.wpdog_mainSrv.Count = 0 Then
+   set u=Item.wpdog_mainSrv.Add
+
+ End If
+ Set editwpdog_mainSrv.Item = Item.wpdog_mainSrv.Item(1)
+ editwpdog_mainSrv.InitPanel
+ cmdwpdog_mainSrvSave.Enabled = True
+End Sub
+Private Sub cmdwpdog_mainSrvDel_Click()
+  on error resume next
+  if  editwpdog_mainSrv.item is nothing then exit sub
+  If MsgBox(&quot;Удалить элемент&quot; &amp; vbCrLf &amp; editwpdog_mainSrv.item.Brief &amp; vbcrlf &amp; &quot;?&quot;, vbYesNo + vbQuestion, &quot;Внимание&quot;) = vbYes Then
+    on error goto bye
+    editwpdog_mainSrv.item.parent.Delete editwpdog_mainSrv.item.id
+    cmdwpdog_mainSrvSave.Enabled = false
+    editwpdog_mainSrv.Enabled = false
+    set editwpdog_mainSrv.item = nothing
+  End If
+Exit Sub
+bye:
+msgbox err.description,vbokonly+vbExclamation,&quot;Удаление&quot;
+End Sub
+Private Sub editwpdog_mainSrv_Changed()
+ cmdwpdog_mainSrvSave.Enabled = true
+End Sub
+Public Function IsOK() as BooLEAN
+    if editwpdog_mainSrv.IsOK then
+        IsOK=TRUE
+    end if
+End Function
+Private Sub cmdwpdog_mainSrvSave_Click()
+  on error resume next
+    if editwpdog_mainSrv.IsOK then
+    MousePointer = vbHourglass
+    editwpdog_mainSrv.Save
+  on error goto bye
+    editwpdog_mainSrv.item.Save
+    MousePointer = vbNormal
+    cmdwpdog_mainSrvSave.Enabled = false
+    else
+      MsgBox &quot;Не все обязательные поля заполнены&quot;,vbOKOnly+VBExclamation
+    end if
+Exit Sub
+bye:
+    MousePointer = vbNormal
+   MsgBox Err.Description, vbOKOnly + vbExclamation, &quot;Изменение&quot;
+  editwpdog_mainSrv.item.REFRESH
+  editwpdog_mainSrv.InitPanel
+End Sub
+
+'Функция инициализации панели данными
+'Parameters:
+'[IN][OUT]  aItem , тип параметра: object, 
+'[IN][OUT]   optional pForm , тип параметра: object = nothing  - ...
+'See Also:
+'Example:
+'  call me.OnInit({параметры})
+public sub OnInit(aItem as object, optional pForm as object = nothing)
+ on error resume next
+ set Item =aItem
+ set ParentForm = pForm
+
+  LoadBtnPictures cmdwpdog_mainSrvSave,cmdwpdog_mainSrvSave.tag
+  LoadBtnPictures cmdwpdog_mainSrvRef,cmdwpdog_mainSrvRef.tag
+  LoadBtnPictures cmdwpdog_mainSrvCfg,cmdwpdog_mainSrvCfg.tag
+  dim ff as long, buf as string
+  ff = FreeFile
+  On Error Resume Next
+  Open GetSetting(&quot;MTZ&quot;, &quot;CONFIG&quot;, &quot;LAYOUTS&quot;, App.PAth &amp; &quot;\LAYOUTS\&quot;) &amp; &quot;wpDog_editwpdog_mainSrv_&quot; For Input As #ff
+  buf = &quot;&quot;
+  buf = Input(LOF(ff), ff)
+  Close #ff
+  if buf &lt;&gt;&quot;&quot; then editwpdog_mainSrv.PanelCustomisationString = buf
+  cmdwpdog_mainSrvAdd_click
+end sub
+
+'Действие при активизации таба
+'Parameters:
+' параметров нет
+'See Also:
+'Example:
+'  call me.OnTabClick()
+private sub OnTabClick()
+
+      editwpdog_mainSrv.Top = 40 * Screen.TwipsPerPixelX
+      editwpdog_mainSrv.Left = 5 * Screen.TwipsPerPixelX
+      editwpdog_mainSrv.Width = usercontrol.Width - 10 * Screen.TwipsPerPixelX
+      editwpdog_mainSrv.Height = usercontrol.Height - 45 * Screen.TwipsPerPixelY
+end sub
+
+'Действие при активизации панели
+'Parameters:
+'[IN][OUT]  aItem , тип параметра: object, 
+'[IN][OUT]   optional pForm , тип параметра: object = nothing  - ...
+'See Also:
+'Example:
+'  call me.OnClick({параметры})
+public sub OnClick(aItem as object, optional pForm as object = nothing)
+  on error resume next
+  set Item =aItem
+  set ParentForm = pForm
+  OnTabClick
+end sub
+
+'Действие при сохранении
+'Parameters:
+' параметров нет
+'See Also:
+'Example:
+'  call me.OnSave()
+public sub OnSave()
+  
+  editwpdog_mainSrv.Save
+if editwpdog_mainSrv.item.Changed then
+  editwpdog_mainSrv.item.Save
+end if
+end sub
+
+'Признак изменения
+'Parameters:
+' параметров нет
+'Returns:
+' Boolean, семантика результата:
+'   true  -
+'   false -
+'See Also:
+'Example:
+' dim variable as boolean
+'  variable = me.IsChanged() 
+public function IsChanged() as boolean
+  dim m_IsChanged as boolean
+  on error resume next
+  
+ m_isChanged = m_isChanged or editwpdog_mainSrv.IsChanged
+  IsChanged = m_IsChanged
+end function
+private sub UserControl_Resize()
+  On Error Resume Next
+  pnlwpdog_mainSrv.Move 0, 0, UserControl.Width, UserControl.Height
+  OnTabClick
+end sub
+
+'Освобождение ресурсов
+'Parameters:
+' параметров нет
+'See Also:
+'Example:
+'  call me.CloseClass()
+public sub CloseClass()
+  On Error Resume Next
+  set parentForm = nothing
+  set item = nothing
+end sub
+private sub UserControl_Terminate()
+  On Error Resume Next
+  CloseClass
+end sub
+
+'переместить клиента в каталоге
+'{5CB1388C-1623-4B36-A775-00B70BEE27AF}
+private sub Run_VBMoveVRC ( VRCATFolder as variant , optional RowItem as object )
+On error resume next
+
+'do nothing
+end sub
+
+
+
+'Так же проверяет Square &gt;0
+'{53371FFA-B514-447A-A1F9-26EE4FD409C9}
+private sub Run_VBUpdateObjNamePEO ( Name as variant , optional RowItem as object )
+On error resume next
+
+on error resume next
+RowItem.Application.Name=name
+RowItem.Application.Save
+
+end sub
+
+
+
+'Передать права объекту контактное лицо от объекта клиент
+'{79DED4FD-045C-45F8-AC79-2E5A3D956D97}
+private sub Run_VBMigrateRight ( optional RowItem as object )
+On error resume next
+
+'Migrate security
+On Error GoTo bye
+  If RowItem.Person Is Nothing Then Exit Sub
+
+  RowItem.Person.Secure Item.SecureStyleID
+  RowItem.Person.propagate
+bye:
+  Exit Sub
+  MsgBox Err.Description, vbOKOnly + vbCritical, &quot;Усановка стиля защиты&quot;
+end sub
+
+
+
+'Проверка наличия коллекции характеристик
+'{79E6BDEB-91D5-4B2E-81F7-3E091FB65E3A}
+private sub Run_VBCheckDescrs ( DesPartName as variant , optional RowItem as object )
+On error resume next
+
+    On Error Resume Next
+
+    Dim part_col As Variant
+    Dim part_item As Object
+    Set part_col = CallByName(RowItem.Parent.Parent, DesPartName, VbGet, False)
+    Set part_item = part_col.Item(1)
+    If RowItem.Parent.Count = 1 Then
+        If part_item.HasDescrs = -1 Then
+            part_item.HasDescrs = 0
+        Else
+            part_item.HasDescrs = -1
+        End If
+    End If
+    part_item.Save
+
+end sub
+
+
+
+'Применить стиль защиты для объекта Предназначен для каталога клиентов
+'{31EC6CF7-8DBD-4EFE-BF12-4D168F653D34}
+private sub Run_VBApplySecurity ( optional RowItem as object )
+On error resume next
+
+'Apply security
+On Error GoTo bye
+  If RowItem.Client Is Nothing Then Exit Sub
+  If RowItem.Parent.Parent.AccessLevel Is Nothing Then Exit Sub
+  RowItem.Client.Secure RowItem.Parent.Parent.AccessLevel.id
+  RowItem.Client.propagate
+  Exit Sub
+bye:
+  MsgBox Err.Description, vbOKOnly + vbCritical, &quot;Усановка стиля защиты&quot;
+end sub
+
+
+
+'Создание отчета из разных карточек
+'{5B8FB7B9-D8B1-4CA0-90AF-55F83D1A6E5D}
+private sub Run_VBMakeReport ( ReportType as variant , optional RowItem as object )
+On error resume next
+
+On error goto bye
+Dim ID As String
+ Dim Obj As Object
+ 'ID = CreateGUID2
+ 'Call RowItem.Application.Manager.NewInstance(ID, &quot;VRRPT&quot;, &quot;Отчет &quot; &amp; Date)
+ 'Set RowItem.Report = RowItem.Application.Manager.GetInstanceObject(ID)
+ If RowItem.Report.VRRPT_MAIN.Count = 0 Then
+  Set Obj = RowItem.Report.VRRPT_MAIN.Add
+ Else
+  Set Obj = RowItem.Report.VRRPT_MAIN.Item(1)
+ End If
+ 
+ Set Obj.Author = RowItem.Application.FindRowObject(&quot;Users&quot;, Item.Application.MTZSession.GetSessionUserID())
+ Obj.TheDate = Date
+ 
+ If ReportType = &quot;CLNT&quot; Then
+   Set Obj.Client = RowItem.Application
+ End If
+ If ReportType = &quot;PRJ&quot; Then
+   Set Obj.Project = RowItem.Application
+ End If
+ If ReportType = &quot;CONT&quot; Then
+   Set Obj.Contract = RowItem.Application
+ End If
+ If ReportType = &quot;PERS&quot; Then
+   Set Obj.Person = RowItem.Application
+ End If
+ 
+ Obj.Save
+ RowItem.Save
+
+ Exit Sub
+bye:
+  MsgBox Err.Description, vbOKOnly + vbCritical, &quot;Создание отчета&quot;
+end sub
+
+
+
+'
+'{AA4085E6-745B-4A37-8EC4-65D99A653966}
+private sub Run_VBRemoveSymmetricObjRef ( ForwardFieldName as variant ,ObjTypeName as variant ,SymmetricPartName as variant ,SymmetricFieldName as variant , optional RowItem as object )
+On error resume next
+
+    Dim OK As Boolean
+    Dim ID As String
+    Dim brief As String
+
+    On Error Resume Next
+'     On Error GoTo bye
+
+    Dim Obj As Object
+    Dim part_col As Variant
+    Dim part_item As Object
+    Set Obj = CallByName(RowItem, ForwardFieldName, VbGet)
+    Set part_col = CallByName(Obj, SymmetricPartName, VbGet, False)
+    part_col.Filter = SymmetricFieldName + &quot;='&quot; + RowItem.Application.ID + &quot;'&quot;
+'    RowItem.Parent.Remove RowItem.ID
+    Set part_item = part_col.Item(1)
+    part_col.Delete part_item.ID
+    Exit Sub
+bye:
+Resume
+
+end sub
+
+
+
+'Создать новую оплату из клиента
+'{42A1A436-8AA2-4F1F-999B-6680DFF514DE}
+private sub Run_VBNewPayIn ( optional RowItem as object )
+On error resume next
+
+On error goto bye
+Dim ID As String
+ Dim Obj As Object
+ ID = CreateGUID2
+ Call RowItem.Application.Manager.NewInstance(ID, &quot;PEKP&quot;, &quot;Платеж &quot; &amp; Date)
+ Set RowItem.TheDocument = RowItem.Application.Manager.GetInstanceObject(ID)
+
+ If RowItem.TheDocument.PEKP_DEF.Count = 0 Then
+  Set Obj = RowItem.TheDocument.PEKP_DEF.Add
+ Else
+  Set Obj = RowItem.TheDocument.PEKP_DEF.Item(1)
+ End If
+ 
+ Set Obj.FromClient = RowItem.Application
+ Obj.PLPDate = Date
+ Obj.Save
+ RowItem.Save
+
+ Exit Sub
+bye:
+  MsgBox Err.Description, vbOKOnly + vbCritical, &quot;Создание Платежа&quot;
+end sub
+
+
+
+'Для раздела, в котором есть поле - ссылка, создает/выбирает объект без открытия окна редактирования ссылки
+'{A2EEE876-54D8-4AED-B124-775F5DA2D911}
+private sub Run_VBAddObjByRef ( ObjTypeName as variant ,ForwardFieldName as variant ,SymmetricPartName as variant ,SymmetricFieldName as variant , optional RowItem as object )
+On error resume next
+
+    Dim OK As Boolean
+    Dim ID As String
+    Dim brief As String
+    Dim Mode As String
+    Dim ResObject as Object
+    On Error Resume Next
+    Mode = Mid(TypeName(Me), InStr(TypeName(Me), &quot;_&quot;) + 1)
+    
+'     On Error GoTo bye
+    If Len(Mode) = 0 Then
+        OK = Item.Application.Manager.GetObjectListDialogEx(ID, brief, &quot;&quot;, ObjTypeName)
+    Else
+        ID = CreateGUID2
+        If Len(ObjTypeName) = 0 Then
+            Dim newObj As Object
+            Set newObj = Item.Application.Manager.GetNewObject
+            If Not (newObj Is Nothing) Then
+                OK = True
+                ID = newObj.ID
+            End If
+        Else
+            OK = Item.Application.Manager.NewInstance(ID, ObjTypeName, &quot;&quot;)
+        End If
+        Dim ref As Object, objGui As Object
+        Set ref = Item.Application.Manager.GetInstanceObject(ID)
+        If Not ref Is Nothing Then
+          Set objGui = Item.Application.Manager.GetInstanceGUI(ID)
+          If objGui Is Nothing Then Set ref = Nothing: Exit Sub
+          objGui.Show &quot;&quot;, ref, False
+          Set objGui = Nothing
+        Else
+          OK = False
+        End If
+    End If
+    Dim Obj As Object
+    Set Obj = Item.Application.Manager.GetInstanceObject(ID)
+    If Obj Is Nothing Then
+        OK = False
+    End If
+    If OK Then
+	Dim Coll as New Collection
+        Dim part_col As Variant
+        Dim part_item As Object
+        CallByName RowItem, ForwardFieldName, VbSet, Obj
+        Coll.Add TypeName(RowItem)+ &quot;:&quot; + RowItem.ID
+        RowItem.Save
+        If Len(SymmetricPartName) &gt; 0 And Len(SymmetricFieldName) &gt; 0 Then
+          Set part_col = CallByName(Obj, SymmetricPartName, VbGet, True)
+          Set part_item = part_col.Add
+          CallByName part_item, SymmetricFieldName, VbSet, RowItem.Application
+          part_item.Save
+          Coll.Add SymmetricPartName + &quot;:&quot; + part_item.ID
+        End If
+        Call Item.Application.Manager.AddCustomObjects(Coll, Obj.ID)
+    Else
+        RowItem.Parent.Remove RowItem.ID
+    End If
+    Exit Sub
+bye:
+Resume
+end sub
+
+
+
+'
+'{5B376AF5-339B-4365-BA80-785E28BCF4DA}
+private sub Run_VBUpdateSymmetricObjRef ( SymmetricFieldName as variant ,ForwardFieldName as variant ,SymmetricPartName as variant ,ObjTypeName as variant , optional RowItem as object )
+On error resume next
+
+ 
+end sub
+
+
+
+'Создать новый платеж из клиента
+'{2BB30818-90ED-4627-8ABB-85B3FBA46750}
+private sub Run_VBNewPayOut ( optional RowItem as object )
+On error resume next
+
+On error goto bye
+Dim ID As String
+ Dim Obj As Object
+ ID = CreateGUID2
+ Call RowItem.Application.Manager.NewInstance(ID, &quot;PEKO&quot;, &quot;Оплата &quot; &amp; Date)
+ Set RowItem.TheDocument = RowItem.Application.Manager.GetInstanceObject(ID)
+
+ If RowItem.TheDocument.PEKO_DEF.Count = 0 Then
+  Set Obj = RowItem.TheDocument.PEKO_DEF.Add
+ Else
+  Set Obj = RowItem.TheDocument.PEKO_DEF.Item(1)
+ End If
+ 
+ Set Obj.ToClient = RowItem.Application
+ Obj.PLPDate = Date
+ Obj.Save
+ RowItem.Save
+
+ Exit Sub
+bye:
+  MsgBox Err.Description, vbOKOnly + vbCritical, &quot;Создание Платежа&quot;
+end sub
+
+
+
+'открытие карточки по идентификатору
+'{94E8F6DB-106A-44DC-9483-86C801798FF0}
+private sub Run_VBOpenRef ( StartMode as variant ,ID as variant , optional RowItem as object )
+On error resume next
+
+on error resume next
+If ID &lt;&gt; &quot;&quot; Then
+    Dim Obj As Object
+    Set Obj = item.Manager.GetInstanceObject(ID)
+    If Not Obj Is Nothing Then
+      Dim objGui As Object
+      Set objGui =  item.Manager.GetInstanceGUI(Obj.ID)
+      If objGui Is Nothing Then Exit Sub
+
+       If StartMode = &quot;AUTO&quot; Then
+        StartMode = &quot;&quot;
+        dim i as long
+        For i = 100 To 0 Step -10
+          If Obj.MTZSession.CheckRight(Obj.SecureStyleid, Obj.TypeName &amp; &quot;:&quot; &amp; &quot;M&quot; &amp; i) Then
+            StartMode = &quot;M&quot; &amp; i
+            Exit For
+          End If
+        Next
+       End If
+      
+      objGui.Show StartMode &amp; &quot;&quot;, Obj
+      Set objGui = Nothing
+    End If
+  End If
+  
+end sub
+
+
+
+'
+'{069956DC-3305-45EF-9331-91CE323B5942}
+private sub Run_WFDefName ( optional RowItem as object )
+On error resume next
+
+on error resume next
+Item.Name = RowItem.Description
+parentform.caption = item.name
+Item.Save
+end sub
+
+
+
+'
+'{D8914FB4-6B5D-491A-A72F-985617727583}
+private sub Run_WFFuncName ( optional RowItem as object )
+On error resume next
+
+on error resume next
+Item.Name = RowItem.Name
+ParentForm.Caption = item.Name
+Item.Save
+end sub
+
+
+
+'Обновление Имени объекта
+'{61393545-ABF7-46F7-82F3-9B7E610DD9C0}
+private sub Run_VBUpdateObjName ( Name as variant , optional RowItem as object )
+On error resume next
+
+On error resume next
+RowItem.Application.Name=name
+RowItem.Application.Save
+end sub
+
+
+
+'Метод создает новый элемент в иерархии Имущественных Комплексов (приложение RealEstate) при создании нового элемента к нему линкуется объект ИК, форма которого и вызывается на редактирование
+'{477B8D25-4FF7-491A-A0B0-D3437EC16957}
+private sub Run_MakeNewFolderEC ( FolderID as variant , optional RowItem as object )
+On error resume next
+
+On Error GoTo bye
+ Dim ID As String
+ Dim Obj As Object ' EstComplex.Application ' Object
+ Dim GObj As Object
+ Dim fold As Object 'EstCatalog.Application ' Object
+ 
+ ID = CreateGUID2
+ Call RowItem.Application.Manager.NewInstance(ID, &quot;EstComplex&quot;, RowItem.TheName &amp; &quot; &quot; &amp; Date)
+ Set Obj = RowItem.Application.Manager.GetInstanceObject(ID)
+ If Obj.EC_Def.Count = 0 Then
+    With Obj.EC_Def.Add
+        .TheName = RowItem.TheName
+    End With
+ Else
+    Obj.EC_Def.Item(1).TheName = RowItem.TheName
+ End If
+ Obj.Save
+ Set RowItem.LinkedEC = Obj
+ RowItem.Save
+ Set GObj = RowItem.Application.Manager.GetInstanceGUI(Obj.ID)
+ GObj.Show &quot;&quot;, Obj, True 'False
+ Set Obj = RowItem.Application.Manager.GetInstanceObject(ID)
+ RowItem.TheName = Obj.EC_Def.Item(1).TheName
+ RowItem.Save
+ Exit Sub
+bye:
+  MsgBox Err.Description, vbOKOnly + vbCritical, &quot;Создание ИК&quot;
+
+end sub
+
+
+
+'Изменить название объекта
+'{4FB59D1A-0123-47D3-9F4F-E12085C5D074}
+private sub Run_VBUpdateItemName ( Name as variant , optional RowItem as object )
+On error resume next
+
+on error resume next
+item.name = Name
+' может не быть формы, если используем просто ActiveX
+ParentForm.Caption = item.Name
+item.Save
+end sub
+
+
+
+'Создать заявку из клиента
+'{49EA5CBF-93CF-41A8-B1F1-E37FE4D59EA5}
+private sub Run_VBNewZayavka ( optional RowItem as object )
+On error resume next
+
+On error goto bye
+Dim ID As String
+ Dim Obj As Object
+ ID = CreateGUID2
+ Call RowItem.Application.Manager.NewInstance(ID, &quot;PEKZ&quot;, &quot;Заявка &quot; &amp; Date)
+ Set RowItem.TheDocument = RowItem.Application.Manager.GetInstanceObject(ID)
+
+ If RowItem.TheDocument.PEKO_DEF.Count = 0 Then
+  Set Obj = RowItem.TheDocument.PEKz_DEF.Add
+ Else
+  Set Obj = RowItem.TheDocument.PEKZ_DEF.Item(1)
+ End If
+ 
+ Set Obj.ClientFrom = RowItem.Application
+ Obj.QueryDate = Date
+ Obj.Save
+ RowItem.Save
+
+ Exit Sub
+bye:
+  MsgBox Err.Description, vbOKOnly + vbCritical, &quot;Создание Заявки&quot;
+end sub
+
+
+
+'Создание номенклатуры по шаблону
+'{B91ABF3A-31F8-4A82-8D41-EF463DBA32D0}
+private sub Run_SSCreateNomen ( Name as variant , optional RowItem as object )
+On error resume next
+
+'pointCreateLine
+end sub
+
+
+
+"><AttributeHolder Name="Type" Value="code"/><FormData Name=""/></BlockHolder></ModuleHolder><ModuleHolder ModuleName="vpnwpDog_srvPrice_" File=""><AttributeHolder Name="Type" Value="control"/><BlockHolder BlockName="'form" BlockCode=""><AttributeHolder Name="Type" Value="controlset"/><FormData Name=""><ControlData Name="pnlwpDog_srvPrice" ControlIndex="0" PROGID="VB.Frame"><Properties Name="Name" PropValue="pnlwpDog_srvPrice"/><Properties Name="visible" PropValue="True"/><Properties Name="Top" PropValue="0"/><Properties Name="Left" PropValue="0"/><Properties Name="Width" PropValue="9000"/><Properties Name="Height" PropValue="6000"/><Properties Name="BorderStyle" PropValue="0"/><ControlData Name="gridwpDog_srvPrice" ControlIndex="0" PROGID="GridEx20.GridEX"><Properties Name="Name" PropValue="gridwpDog_srvPrice"/><Properties Name="DataMode" PropValue="99"/><Properties Name="AllowEdit" PropValue="False"/><Properties Name="AllowAddNew" PropValue="False"/><Properties Name="AllowDelete" PropValue="True"/><Properties Name="ColumnAutoResize" PropValue="False"/><Properties Name="AutomaticSort" PropValue="True"/><Properties Name="RecordNavigator" PropValue="False"/><Properties Name="SelectionStyle" PropValue="1"/><Properties Name="HideSelection" PropValue="2"/><Properties Name="TabKeyBehavior" PropValue="1"/><Properties Name="RecordNavigatorString" PropValue="Запись:|из"/><Properties Name="GroupByBoxInfoText" PropValue="Группировка"/><Properties Name="ItemCount" PropValue="0"/></ControlData><ControlData Name="cmdwpDog_srvPriceAdd" ControlIndex="0" PROGID="VB.CommandButton"><Properties Name="Name" PropValue="cmdwpDog_srvPriceAdd"/><Properties Name="Caption" PropValue=""/><Properties Name="Tag" PropValue="NEW.ico"/><Properties Name="ToolTipText" PropValue="Добавить"/><Properties Name="Style" PropValue="1"/><Properties Name="Height" PropValue="330"/><Properties Name="Width" PropValue="330"/><Properties Name="Top" PropValue="30"/><Properties Name="Left" PropValue="75"/><Properties Name="UseMaskColor" PropValue="True"/><Properties Name="Enabled" PropValue="True"/></ControlData><ControlData Name="cmdwpDog_srvPriceEdit" ControlIndex="0" PROGID="VB.CommandButton"><Properties Name="Name" PropValue="cmdwpDog_srvPriceEdit"/><Properties Name="Tag" PropValue="PROP.ico"/><Properties Name="Caption" PropValue=""/><Properties Name="ToolTipText" PropValue="Свойства"/><Properties Name="Style" PropValue="1"/><Properties Name="Height" PropValue="330"/><Properties Name="Width" PropValue="330"/><Properties Name="Top" PropValue="30"/><Properties Name="Left" PropValue="450"/><Properties Name="UseMaskColor" PropValue="True"/><Properties Name="Enabled" PropValue="True"/></ControlData><ControlData Name="cmdwpDog_srvPriceDel" ControlIndex="0" PROGID="VB.CommandButton"><Properties Name="Name" PropValue="cmdwpDog_srvPriceDel"/><Properties Name="Tag" PropValue="DELETE.ico"/><Properties Name="Caption" PropValue=""/><Properties Name="ToolTipText" PropValue="Удалить"/><Properties Name="Style" PropValue="1"/><Properties Name="Height" PropValue="330"/><Properties Name="Width" PropValue="330"/><Properties Name="Top" PropValue="30"/><Properties Name="Left" PropValue="825"/><Properties Name="UseMaskColor" PropValue="True"/><Properties Name="Enabled" PropValue="True"/></ControlData><ControlData Name="cmdwpDog_srvPriceRef" ControlIndex="0" PROGID="VB.CommandButton"><Properties Name="Name" PropValue="cmdwpDog_srvPriceRef"/><Properties Name="Caption" PropValue=""/><Properties Name="Tag" PropValue="Refresh.ico"/><Properties Name="ToolTipText" PropValue="Обновить"/><Properties Name="Style" PropValue="1"/><Properties Name="UseMaskColor" PropValue="True"/><Properties Name="Height" PropValue="330"/><Properties Name="Width" PropValue="330"/><Properties Name="Top" PropValue="30"/><Properties Name="Left" PropValue="1200"/></ControlData><ControlData Name="cmdwpDog_srvPricePrn" ControlIndex="0" PROGID="VB.CommandButton"><Properties Name="Name" PropValue="cmdwpDog_srvPricePrn"/><Properties Name="Caption" PropValue=""/><Properties Name="Tag" PropValue="PrintPreview.ico"/><Properties Name="ToolTipText" PropValue="Печать"/><Properties Name="Style" PropValue="1"/><Properties Name="UseMaskColor" PropValue="True"/><Properties Name="Height" PropValue="330"/><Properties Name="Width" PropValue="330"/><Properties Name="Top" PropValue="30"/><Properties Name="Left" PropValue="1575"/></ControlData><ControlData Name="cmdwpDog_srvPriceCfg" ControlIndex="0" PROGID="VB.CommandButton"><Properties Name="Name" PropValue="cmdwpDog_srvPriceCfg"/><Properties Name="Caption" PropValue=""/><Properties Name="Tag" PropValue="config.ico"/><Properties Name="ToolTipText" PropValue="Настройка внешнего вида"/><Properties Name="Style" PropValue="1"/><Properties Name="UseMaskColor" PropValue="True"/><Properties Name="Height" PropValue="330"/><Properties Name="Width" PropValue="330"/><Properties Name="Top" PropValue="30"/><Properties Name="Left" PropValue="1950"/></ControlData><ControlData Name="cmdwpDog_srvPriceFnd" ControlIndex="0" PROGID="VB.CommandButton"><Properties Name="Name" PropValue="cmdwpDog_srvPriceFnd"/><Properties Name="Caption" PropValue=""/><Properties Name="Tag" PropValue="find.ico"/><Properties Name="ToolTipText" PropValue="Поиск"/><Properties Name="Style" PropValue="1"/><Properties Name="UseMaskColor" PropValue="True"/><Properties Name="Height" PropValue="330"/><Properties Name="Width" PropValue="330"/><Properties Name="Top" PropValue="30"/><Properties Name="Left" PropValue="2325"/></ControlData><ControlData Name="cmdwpDog_srvPriceRun" ControlIndex="0" PROGID="MTZ_PANEL.DropButton"><Properties Name="Name" PropValue="cmdwpDog_srvPriceRun"/><Properties Name="Caption" PropValue=""/><Properties Name="Tag" PropValue="run.ico"/><Properties Name="ToolTipText" PropValue="Открыть"/><Properties Name="Style" PropValue="1"/><Properties Name="Height" PropValue="330"/><Properties Name="Width" PropValue="330"/><Properties Name="Top" PropValue="30"/><Properties Name="Left" PropValue="2700"/></ControlData><ControlData Name="cmdwpDog_srvPriceAcc" ControlIndex="0" PROGID="VB.CommandButton"><Properties Name="Name" PropValue="cmdwpDog_srvPriceAcc"/><Properties Name="Caption" PropValue=""/><Properties Name="Tag" PropValue="security.ico"/><Properties Name="ToolTipText" PropValue="Стиль защиты"/><Properties Name="Style" PropValue="1"/><Properties Name="UseMaskColor" PropValue="True"/><Properties Name="Height" PropValue="330"/><Properties Name="Width" PropValue="330"/><Properties Name="Top" PropValue="30"/><Properties Name="Left" PropValue="3075"/></ControlData></ControlData><ControlData Name="mnuPopupwpDog_srvPrice" ControlIndex="0" PROGID="VB.Menu"><Properties Name="Caption" PropValue="Меню для Цены на доп. услуги"/><Properties Name="Name" PropValue="mnuPopupwpDog_srvPrice"/><Properties Name="Visible" PropValue="False"/><ControlData Name="mnuwpDog_srvPriceAdd" ControlIndex="0" PROGID="VB.Menu"><Properties Name="Caption" PropValue="Создать"/><Properties Name="Name" PropValue="mnuwpDog_srvPriceAdd"/><Properties Name="Enabled" PropValue="True"/></ControlData><ControlData Name="mnuwpDog_srvPriceEdit" ControlIndex="0" PROGID="VB.Menu"><Properties Name="Caption" PropValue="Свойства"/><Properties Name="Name" PropValue="mnuwpDog_srvPriceEdit"/><Properties Name="Enabled" PropValue="True"/></ControlData><ControlData Name="mnuwpDog_srvPriceDelete" ControlIndex="0" PROGID="VB.Menu"><Properties Name="Caption" PropValue="Удалить"/><Properties Name="Name" PropValue="mnuwpDog_srvPriceDelete"/><Properties Name="Enabled" PropValue="True"/></ControlData><ControlData Name="mnuwpDog_srvPriceOpen" ControlIndex="0" PROGID="VB.Menu"><Properties Name="Caption" PropValue="Открыть"/><Properties Name="Name" PropValue="mnuwpDog_srvPriceOpen"/></ControlData><ControlData Name="mnuwpDog_srvPriceRef" ControlIndex="0" PROGID="VB.Menu"><Properties Name="Caption" PropValue="Обновить"/><Properties Name="Name" PropValue="mnuwpDog_srvPriceRef"/></ControlData><ControlData Name="mnuwpDog_srvPriceS1" ControlIndex="0" PROGID="VB.Menu"><Properties Name="Caption" PropValue="-"/><Properties Name="Name" PropValue="mnuwpDog_srvPriceS1"/></ControlData><ControlData Name="mnuwpDog_srvPriceBuffer" ControlIndex="0" PROGID="VB.Menu"><Properties Name="Caption" PropValue="Буфер"/><Properties Name="Name" PropValue="mnuwpDog_srvPriceBuffer"/><Properties Name="Enabled" PropValue="True"/><Properties Name="Enabled" PropValue="True"/><Properties Name="Enabled" PropValue="True"/><ControlData Name="mnuwpDog_srvPriceCOPY" ControlIndex="0" PROGID="VB.Menu"><Properties Name="Caption" PropValue="Копировать"/><Properties Name="Name" PropValue="mnuwpDog_srvPriceCOPY"/></ControlData><ControlData Name="mnuwpDog_srvPriceCUT" ControlIndex="0" PROGID="VB.Menu"><Properties Name="Caption" PropValue="Вырезать"/><Properties Name="Name" PropValue="mnuwpDog_srvPriceCUT"/></ControlData><ControlData Name="mnuwpDog_srvPricePASTE" ControlIndex="0" PROGID="VB.Menu"><Properties Name="Caption" PropValue="Вставить"/><Properties Name="Name" PropValue="mnuwpDog_srvPricePASTE"/></ControlData><ControlData Name="mnuwpDog_srvPriceCHANGE" ControlIndex="0" PROGID="VB.Menu"><Properties Name="Caption" PropValue="Заменить"/><Properties Name="Name" PropValue="mnuwpDog_srvPriceCHANGE"/></ControlData><ControlData Name="mnuwpDog_srvPriceCLEAN" ControlIndex="0" PROGID="VB.Menu"><Properties Name="Caption" PropValue="Очистить"/><Properties Name="Name" PropValue="mnuwpDog_srvPriceCLEAN"/></ControlData></ControlData><ControlData Name="mnuwpDog_srvPricePrn" ControlIndex="0" PROGID="VB.Menu"><Properties Name="Caption" PropValue="Печать"/><Properties Name="Name" PropValue="mnuwpDog_srvPricePrn"/></ControlData><ControlData Name="mnuwpDog_srvPriceCfg" ControlIndex="0" PROGID="VB.Menu"><Properties Name="Caption" PropValue="Настроить"/><Properties Name="Name" PropValue="mnuwpDog_srvPriceCfg"/></ControlData><ControlData Name="mnuwpDog_srvPriceFind" ControlIndex="0" PROGID="VB.Menu"><Properties Name="Caption" PropValue="Поиск"/><Properties Name="Name" PropValue="mnuwpDog_srvPriceFind"/></ControlData><ControlData Name="mnuwpDog_srvPriceAcc" ControlIndex="0" PROGID="VB.Menu"><Properties Name="Caption" PropValue="Стиль защиты"/><Properties Name="Name" PropValue="mnuwpDog_srvPriceAcc"/></ControlData></ControlData><ControlData Name="menuTimerwpDog_srvPrice" ControlIndex="0" PROGID="VB.Timer"><Properties Name="Name" PropValue="menuTimerwpDog_srvPrice"/><Properties Name="Enabled" PropValue="False"/><Properties Name="Interval" PropValue="1"/></ControlData></FormData></BlockHolder><BlockHolder BlockName="'description" BlockCode="'панель для работы со строками раздела 
+public Item as object
+public ParentForm as Object
+public ModalMode as boolean
+private fndwpDog_srvPrice as object
+private menuActionwpDog_srvPrice as string
+
+"><AttributeHolder Name="Type" Value="description"/><FormData Name=""/></BlockHolder><BlockHolder BlockName="'codebody" BlockCode="
+Private Sub cmdwpDog_srvPriceCfg_Click()
+  on error resume next
+Dim jset As object 'MTZ_JSetup.Customizer
+Set jset = CreateObject(&quot;MTZ_JSetup.Customizer&quot;)
+jset.ShowSumary gridwpDog_srvPrice,&quot;gridwpDog_srvPrice&quot;
+Set jset = Nothing
+End Sub
+
+Private Sub cmdwpDog_srvPricePrn_Click()
+  on error resume next
+Dim jset As object 'MTZ_JSetup.Customizer
+Set jset = CreateObject(&quot;MTZ_JSetup.Customizer&quot;)
+jset.Preview gridwpDog_srvPrice,&quot;Цены на доп. услуги&quot;
+Set jset = Nothing
+End Sub
+
+Private Sub cmdwpDog_srvPriceRef_Click()
+  on error resume next
+  item.wpDog_srvPrice.Refresh
+  gridwpDog_srvPrice.itemCount = item.wpDog_srvPrice.count
+  gridwpDog_srvPrice.Refetch
+  gridwpDog_srvPrice.Refresh
+End Sub
+Private Sub cmdwpDog_srvPriceAcc_Click()
+On Error Resume Next
+If gridwpDog_srvPrice.ItemCount = 0 Then Exit Sub
+If gridwpDog_srvPrice.Row &gt; 0 Then
+ If gridwpDog_srvPrice.RowIndex(gridwpDog_srvPrice.Row) &gt; 0 Then
+    Dim u As Object
+    Dim bm
+    bm = gridwpDog_srvPrice.RowBookmark(gridwpDog_srvPrice.RowIndex(gridwpDog_srvPrice.Row))
+    Set u = Item.FindRowObject(Right(bm, Len(bm) - 38), Left(bm, 38))
+    Item.Application.Manager.ShowSecurityDialog u
+ End If
+End If
+End Sub
+Private Sub cmdwpDog_srvPriceEdit_Click()
+  on error resume next
+If gridwpDog_srvPrice.ItemCount = 0 Then Exit Sub
+If gridwpDog_srvPrice.Row &gt; 0 then
+ If gridwpDog_srvPrice.RowIndex(gridwpDog_srvPrice.Row ) &gt; 0 Then
+    Dim u As Object
+    Dim bm
+    bm = gridwpDog_srvPrice.RowBookmark(gridwpDog_srvPrice.RowIndex(gridwpDog_srvPrice.Row))
+    Set u = Item.FindRowObject(Right(bm, len(bm)-38), Left(bm, 38))
+    Set frmwpDog_srvPrice_.Item = u
+    again: frmwpDog_srvPrice_.NotFirstTime = False
+    frmwpDog_srvPrice_.OnInit
+    frmwpDog_srvPrice_.Show vbModal
+    If frmwpDog_srvPrice_.OK Then
+    on error resume next
+    err.clear
+    u.save
+    if err.number &lt;&gt;0 then 
+      msgbox err.description,vbokonly+vbExclamation,&quot;Изменение&quot;
+      goto again
+    end if 
+    gridwpDog_srvPrice.RefreshRowBookmark bm
+    else
+     u.refresh
+    End If
+ End If
+End If
+End Sub
+Private Sub cmdwpDog_srvPriceDel_Click()
+  on error resume next
+  gridwpDog_srvPrice.Delete
+End Sub
+Private Sub cmdwpDog_srvPriceAdd_Click()
+  on error resume next
+      Dim u As Object
+      Set u = Item.wpDog_srvPrice.Add()
+
+      Set frmwpDog_srvPrice_.Item = u
+      again: frmwpDog_srvPrice_.NotFirstTime = False
+      frmwpDog_srvPrice_.OnInit
+      frmwpDog_srvPrice_.Show vbModal
+      If frmwpDog_srvPrice_.OK Then
+        err.clear
+        u.save
+        if err.number &lt;&gt;0 then 
+          msgbox err.description,vbokonly+vbExclamation,&quot;Создание&quot;
+          goto again
+        end if 
+        gridwpDog_srvPrice.ItemCount = Item.wpDog_srvPrice.Count
+        gridwpDog_srvPrice.Refresh
+        gridwpDog_srvPrice.RefreshGroups
+        gridwpDog_srvPrice.Refreshsort
+        gridwpDog_srvPrice.MoveToBookmark u.ID &amp; &quot;wpDog_srvPrice&quot;
+      Else
+        Item.wpDog_srvPrice.Delete u.ID
+        Item.wpDog_srvPrice.Remove u.ID
+      End If
+      Exit Sub
+bye:
+   MsgBox Err.Description,vbokonly+vbExclamation,&quot;Создание&quot;
+End Sub
+Private Sub cmdwpDog_srvPriceFnd_Click()
+  on error resume next
+  fndwpDog_srvPrice.ShowForm
+End Sub
+Private Sub cmdwpDog_srvPriceRun_Click()
+  on error resume next
+  gridwpDog_srvPrice_DblClick
+End Sub
+Public Function IsOK() as BooLEAN
+        IsOK=TRUE
+End Function
+Private Sub gridwpDog_srvPrice_UnboundReadData(ByVal RowIndex As Long, ByVal Bookmark As Variant, ByVal Values As GridEX20.JSRowData)
+on error resume next
+Item.wpDog_srvPrice.LoadRow gridwpDog_srvPrice, RowIndex, Bookmark, Values
+End Sub
+Private Sub gridwpDog_srvPrice_BeforeDeleteEX(ByVal RowIndex As Long, ByVal Bookmark As Variant, ByVal Cancel As GridEX20.JSRetBoolean)
+  If gridwpDog_srvPrice.ItemCount = 0 Then Exit Sub
+  Dim u As Object
+  Set u = Item.FindRowObject(&quot;wpDog_srvPrice&quot;, Left(Bookmark, 38))
+  If Not u Is Nothing Then
+    on error resume next
+    If MsgBox(&quot;Удалить элемент&quot; &amp; vbCrLf &amp; u.Brief &amp; vbcrlf &amp; &quot;?&quot;, vbYesNo + vbQuestion, &quot;Внимание&quot;) = vbYes Then
+      on error goto bye
+      u.parent.Delete u.id
+    Else
+      Cancel = True
+    End If
+  End If
+Exit Sub
+bye:
+   Cancel = True
+   MsgBox Err.Description, vbOKOnly + vbExclamation, &quot;Удаление&quot;
+End Sub
+
+Private Sub gridwpDog_srvPrice_DblClick()
+  cmdwpDog_srvPriceEdit_Click
+End Sub
+Private Sub gridwpDog_srvPrice_KeyPress(KeyAscii As Integer)
+  If gridwpDog_srvPrice.ItemCount = 0 Then Exit Sub
+  On Error Resume Next
+  fndwpDog_srvPrice.FindOnPress KeyAscii
+End Sub
+
+Private Sub gridwpDog_srvPrice_RowColChange(ByVal LastRow As Long, ByVal LastCol As Integer)
+ ON ERROR RESUME NEXT
+If LastRow &lt;&gt; gridwpDog_srvPrice.Row And LastRow &gt; 0 Then
+  gridwpDog_srvPrice.GetRowData(LastRow).RowStyle = &quot;Default&quot;
+  gridwpDog_srvPrice.GetRowData(gridwpDog_srvPrice.Row).RowStyle = &quot;SelectedRow&quot;
+End If
+End Sub
+Private Sub mnuwpDog_srvPricePASTE_Click()
+On Error Resume Next
+    Dim u As Object
+    Set u = item.wpDog_srvPrice.Add()
+    If GetFromBuffer(u) Then
+      gridwpDog_srvPrice.ItemCount = u.parent.Count
+    End If
+End Sub
+'Hidden GRID Setup...
+private sub gridwpDog_srvPrice_KeyDown(KeyCode As Integer, Shift As Integer)
+    Dim ShiftDown, AltDown, CtrlDown
+    ShiftDown = (Shift And vbShiftMask) &gt; 0
+    AltDown = (Shift And vbAltMask) &gt; 0
+    CtrlDown = (Shift And vbCtrlMask) &gt; 0
+    If KeyCode = vbKeyF4 Then
+        If ShiftDown And CtrlDown And AltDown Then
+            cmdwpDog_srvPriceCfg_Click
+        End If
+    End If
+end sub
+
+private sub gridwpDog_srvPrice_MouseDown(Button As Integer, Shift As Integer, X As Single, Y As Single)
+  If Button = 2 And Shift = 0 Then
+  on error resume next
+  PopupMenu mnuPopupwpDog_srvPrice
+End If
+end sub
+private sub mnuwpDog_srvPriceAdd_click()
+   menuActionwpDog_srvPrice =&quot;ADD&quot;
+   menuTimerwpDog_srvPrice.enabled = true
+end sub
+private sub mnuwpDog_srvPriceEdit_click()
+   menuActionwpDog_srvPrice =&quot;EDIT&quot;
+   menuTimerwpDog_srvPrice.enabled = true
+end sub
+private sub mnuwpDog_srvPriceDelete_click()
+   menuActionwpDog_srvPrice =&quot;DEL&quot;
+   menuTimerwpDog_srvPrice.enabled = true
+end sub
+private sub mnuwpDog_srvPriceOpen_click()
+   menuActionwpDog_srvPrice =&quot;RUN&quot;
+   menuTimerwpDog_srvPrice.enabled = true
+end sub
+private sub mnuwpDog_srvPriceRef_click()
+   menuActionwpDog_srvPrice =&quot;REF&quot;
+   menuTimerwpDog_srvPrice.enabled = true
+end sub
+  Private Sub mnuwpDog_srvPriceCOPY_Click()
+    On Error Resume Next
+    If gridwpDog_srvPrice.ItemCount = 0 Then Exit Sub
+    If gridwpDog_srvPrice.Row &gt; 0 Then
+     If gridwpDog_srvPrice.RowIndex(gridwpDog_srvPrice.Row) &gt; 0 Then
+        Dim u As Object
+        Dim bm
+        bm = gridwpDog_srvPrice.RowBookmark(gridwpDog_srvPrice.RowIndex(gridwpDog_srvPrice.Row))
+        Set u = item.FindRowObject(Right(bm, Len(bm) - 38), Left(bm, 38))
+        SaveToBuffer u
+      End If
+    End If
+  End Sub
+  Private Sub mnuwpDog_srvPriceCUT_Click()
+    On Error Resume Next
+    If gridwpDog_srvPrice.ItemCount = 0 Then Exit Sub
+    If gridwpDog_srvPrice.Row &gt; 0 Then
+     If gridwpDog_srvPrice.RowIndex(gridwpDog_srvPrice.Row) &gt; 0 Then
+        Dim u As Object
+        Dim bm
+        bm = gridwpDog_srvPrice.RowBookmark(gridwpDog_srvPrice.RowIndex(gridwpDog_srvPrice.Row))
+        Set u = item.FindRowObject(Right(bm, Len(bm) - 38), Left(bm, 38))
+        SaveToBuffer u
+        SET BM = u.parent
+        u.parent.Delete u.ID
+        gridwpDog_srvPrice.ITEMCOUNT = BM.COUNT
+      End If
+    End If
+  End Sub
+Private Sub mnuwpDog_srvPriceCHANGE_Click()
+  On Error Resume Next
+  If gridwpDog_srvPrice.ItemCount = 0 Then Exit Sub
+  If gridwpDog_srvPrice.Row &gt; 0 Then
+   If gridwpDog_srvPrice.RowIndex(gridwpDog_srvPrice.Row) &gt; 0 Then
+    Dim u As Object
+    Dim bm
+    bm = gridwpDog_srvPrice.RowBookmark(gridwpDog_srvPrice.RowIndex(gridwpDog_srvPrice.Row))
+    Set u = item.FindRowObject(Right(bm, Len(bm) - 38), Left(bm, 38))
+    If GetFromBuffer(u) Then
+      gridwpDog_srvPrice.ItemCount = u.parent.Count
+      gridwpDog_srvPrice.RefreshRowIndex gridwpDog_srvPrice.RowIndex(gridwpDog_srvPrice.Row)
+    End If
+   End If
+  End If
+End Sub
+  Private Sub mnuwpDog_srvPriceCLEAN_Click()
+    item.Manager.ClearBuffer &quot; &amp; p.name &amp; &quot;
+  End Sub
+private sub mnuwpDog_srvPricePrn_click()
+   menuActionwpDog_srvPrice =&quot;PRN&quot;
+   menuTimerwpDog_srvPrice.enabled = true
+end sub
+private sub mnuwpDog_srvPriceCfg_click()
+   menuActionwpDog_srvPrice =&quot;CFG&quot;
+   menuTimerwpDog_srvPrice.enabled = true
+end sub
+private sub mnuwpDog_srvPriceFind_click()
+   menuActionwpDog_srvPrice =&quot;FND&quot;
+   menuTimerwpDog_srvPrice.enabled = true
+end sub
+private sub mnuwpDog_srvPriceAcc_click()
+   menuActionwpDog_srvPrice =&quot;ACC&quot;
+   menuTimerwpDog_srvPrice.enabled = true
+end sub
+private sub menuTimerwpDog_srvPrice_timer()
+   menuTimerwpDog_srvPrice.enabled = false
+   if menuActionwpDog_srvPrice =&quot;ADD&quot; then cmdwpDog_srvPriceADD_CLick
+   if menuActionwpDog_srvPrice =&quot;EDIT&quot; then cmdwpDog_srvPriceEDIT_CLick
+   if menuActionwpDog_srvPrice =&quot;DEL&quot; then cmdwpDog_srvPriceDEL_CLick
+   if menuActionwpDog_srvPrice =&quot;RUN&quot; then cmdwpDog_srvPriceRUN_CLick
+   if menuActionwpDog_srvPrice =&quot;REF&quot; then cmdwpDog_srvPriceREF_CLick
+   if menuActionwpDog_srvPrice =&quot;PRN&quot; then cmdwpDog_srvPricePRN_CLick
+   if menuActionwpDog_srvPrice =&quot;CFG&quot; then cmdwpDog_srvPriceCFG_CLick
+   if menuActionwpDog_srvPrice =&quot;FND&quot; then cmdwpDog_srvPriceFND_CLick
+   if menuActionwpDog_srvPrice =&quot;ACC&quot; then cmdwpDog_srvPriceACC_CLick
+   menuActionwpDog_srvPrice =&quot;&quot;
+end sub
+
+'Функция инициализации панели данными
+'Parameters:
+'[IN][OUT]  aItem , тип параметра: object, 
+'[IN][OUT]   optional pForm , тип параметра: object = nothing  - ...
+'See Also:
+'Example:
+'  call me.OnInit({параметры})
+public sub OnInit(aItem as object, optional pForm as object = nothing)
+ on error resume next
+ set Item =aItem
+ set ParentForm = pForm
+
+  LoadBtnPictures cmdwpDog_srvPriceAdd,cmdwpDog_srvPriceAdd.tag
+  LoadBtnPictures cmdwpDog_srvPriceEdit,cmdwpDog_srvPriceEdit.tag
+  LoadBtnPictures cmdwpDog_srvPriceDel,cmdwpDog_srvPriceDel.tag
+  LoadBtnPictures cmdwpDog_srvPriceRef,cmdwpDog_srvPriceRef.tag
+  LoadBtnPictures cmdwpDog_srvPricePrn,cmdwpDog_srvPricePrn.tag
+  LoadBtnPictures cmdwpDog_srvPriceFnd,cmdwpDog_srvPriceFnd.tag
+  LoadBtnPictures cmdwpDog_srvPriceRun,cmdwpDog_srvPriceRun.tag
+  LoadBtnPictures cmdwpDog_srvPriceAcc,cmdwpDog_srvPriceAcc.tag
+  LoadBtnPictures cmdwpDog_srvPriceCfg,cmdwpDog_srvPriceCfg.tag
+  item.wpDog_srvPrice.PrepareGrid gridwpDog_srvPrice
+  LoadGridLayout gridwpDog_srvPrice
+  Set fndwpDog_srvPrice = Nothing
+  On Error Resume Next
+  Set fndwpDog_srvPrice = CreateObject(&quot;MTZ_JSetup.GridFinder&quot;)
+  fndwpDog_srvPrice.Init gridwpDog_srvPrice
+end sub
+
+'Действие при активизации таба
+'Parameters:
+' параметров нет
+'See Also:
+'Example:
+'  call me.OnTabClick()
+private sub OnTabClick()
+
+      gridwpDog_srvPrice.Top = 40 * Screen.TwipsPerPixelX
+      gridwpDog_srvPrice.Left = 5 * Screen.TwipsPerPixelX
+      gridwpDog_srvPrice.Width = usercontrol.Width - 10 * Screen.TwipsPerPixelX
+      gridwpDog_srvPrice.Height = usercontrol.Height - 45 * Screen.TwipsPerPixelY
+      gridwpDog_srvPrice.Top = 40 * Screen.TwipsPerPixelX
+      gridwpDog_srvPrice.Left = 5 * Screen.TwipsPerPixelX
+      gridwpDog_srvPrice.Width = usercontrol.Width - 10 * Screen.TwipsPerPixelX
+      gridwpDog_srvPrice.Height = usercontrol.Height - 45 * Screen.TwipsPerPixelY
+end sub
+
+'Действие при активизации панели
+'Parameters:
+'[IN][OUT]  aItem , тип параметра: object, 
+'[IN][OUT]   optional pForm , тип параметра: object = nothing  - ...
+'See Also:
+'Example:
+'  call me.OnClick({параметры})
+public sub OnClick(aItem as object, optional pForm as object = nothing)
+  on error resume next
+  set Item =aItem
+  set ParentForm = pForm
+  OnTabClick
+end sub
+
+'Действие при сохранении
+'Parameters:
+' параметров нет
+'See Also:
+'Example:
+'  call me.OnSave()
+public sub OnSave()
+  
+end sub
+
+'Признак изменения
+'Parameters:
+' параметров нет
+'Returns:
+' Boolean, семантика результата:
+'   true  -
+'   false -
+'See Also:
+'Example:
+' dim variable as boolean
+'  variable = me.IsChanged() 
+public function IsChanged() as boolean
+  dim m_IsChanged as boolean
+  on error resume next
+  
+  IsChanged = m_IsChanged
+end function
+private sub UserControl_Resize()
+  On Error Resume Next
+  pnlwpDog_srvPrice.Move 0, 0, UserControl.Width, UserControl.Height
+  OnTabClick
+end sub
+
+'Освобождение ресурсов
+'Parameters:
+' параметров нет
+'See Also:
+'Example:
+'  call me.CloseClass()
+public sub CloseClass()
+  On Error Resume Next
+  set parentForm = nothing
+  set item = nothing
+  set fndwpDog_srvPrice = nothing
+end sub
+private sub UserControl_Terminate()
+  On Error Resume Next
+  CloseClass
+end sub
+
+'переместить клиента в каталоге
+'{5CB1388C-1623-4B36-A775-00B70BEE27AF}
+private sub Run_VBMoveVRC ( VRCATFolder as variant , optional RowItem as object )
+On error resume next
+
+'do nothing
+end sub
+
+
+
+'Так же проверяет Square &gt;0
+'{53371FFA-B514-447A-A1F9-26EE4FD409C9}
+private sub Run_VBUpdateObjNamePEO ( Name as variant , optional RowItem as object )
+On error resume next
+
+on error resume next
+RowItem.Application.Name=name
+RowItem.Application.Save
+
+end sub
+
+
+
+'Передать права объекту контактное лицо от объекта клиент
+'{79DED4FD-045C-45F8-AC79-2E5A3D956D97}
+private sub Run_VBMigrateRight ( optional RowItem as object )
+On error resume next
+
+'Migrate security
+On Error GoTo bye
+  If RowItem.Person Is Nothing Then Exit Sub
+
+  RowItem.Person.Secure Item.SecureStyleID
+  RowItem.Person.propagate
+bye:
+  Exit Sub
+  MsgBox Err.Description, vbOKOnly + vbCritical, &quot;Усановка стиля защиты&quot;
+end sub
+
+
+
+'Проверка наличия коллекции характеристик
+'{79E6BDEB-91D5-4B2E-81F7-3E091FB65E3A}
+private sub Run_VBCheckDescrs ( DesPartName as variant , optional RowItem as object )
+On error resume next
+
+    On Error Resume Next
+
+    Dim part_col As Variant
+    Dim part_item As Object
+    Set part_col = CallByName(RowItem.Parent.Parent, DesPartName, VbGet, False)
+    Set part_item = part_col.Item(1)
+    If RowItem.Parent.Count = 1 Then
+        If part_item.HasDescrs = -1 Then
+            part_item.HasDescrs = 0
+        Else
+            part_item.HasDescrs = -1
+        End If
+    End If
+    part_item.Save
+
+end sub
+
+
+
+'Применить стиль защиты для объекта Предназначен для каталога клиентов
+'{31EC6CF7-8DBD-4EFE-BF12-4D168F653D34}
+private sub Run_VBApplySecurity ( optional RowItem as object )
+On error resume next
+
+'Apply security
+On Error GoTo bye
+  If RowItem.Client Is Nothing Then Exit Sub
+  If RowItem.Parent.Parent.AccessLevel Is Nothing Then Exit Sub
+  RowItem.Client.Secure RowItem.Parent.Parent.AccessLevel.id
+  RowItem.Client.propagate
+  Exit Sub
+bye:
+  MsgBox Err.Description, vbOKOnly + vbCritical, &quot;Усановка стиля защиты&quot;
+end sub
+
+
+
+'Создание отчета из разных карточек
+'{5B8FB7B9-D8B1-4CA0-90AF-55F83D1A6E5D}
+private sub Run_VBMakeReport ( ReportType as variant , optional RowItem as object )
+On error resume next
+
+On error goto bye
+Dim ID As String
+ Dim Obj As Object
+ 'ID = CreateGUID2
+ 'Call RowItem.Application.Manager.NewInstance(ID, &quot;VRRPT&quot;, &quot;Отчет &quot; &amp; Date)
+ 'Set RowItem.Report = RowItem.Application.Manager.GetInstanceObject(ID)
+ If RowItem.Report.VRRPT_MAIN.Count = 0 Then
+  Set Obj = RowItem.Report.VRRPT_MAIN.Add
+ Else
+  Set Obj = RowItem.Report.VRRPT_MAIN.Item(1)
+ End If
+ 
+ Set Obj.Author = RowItem.Application.FindRowObject(&quot;Users&quot;, Item.Application.MTZSession.GetSessionUserID())
+ Obj.TheDate = Date
+ 
+ If ReportType = &quot;CLNT&quot; Then
+   Set Obj.Client = RowItem.Application
+ End If
+ If ReportType = &quot;PRJ&quot; Then
+   Set Obj.Project = RowItem.Application
+ End If
+ If ReportType = &quot;CONT&quot; Then
+   Set Obj.Contract = RowItem.Application
+ End If
+ If ReportType = &quot;PERS&quot; Then
+   Set Obj.Person = RowItem.Application
+ End If
+ 
+ Obj.Save
+ RowItem.Save
+
+ Exit Sub
+bye:
+  MsgBox Err.Description, vbOKOnly + vbCritical, &quot;Создание отчета&quot;
+end sub
+
+
+
+'
+'{AA4085E6-745B-4A37-8EC4-65D99A653966}
+private sub Run_VBRemoveSymmetricObjRef ( ForwardFieldName as variant ,ObjTypeName as variant ,SymmetricPartName as variant ,SymmetricFieldName as variant , optional RowItem as object )
+On error resume next
+
+    Dim OK As Boolean
+    Dim ID As String
+    Dim brief As String
+
+    On Error Resume Next
+'     On Error GoTo bye
+
+    Dim Obj As Object
+    Dim part_col As Variant
+    Dim part_item As Object
+    Set Obj = CallByName(RowItem, ForwardFieldName, VbGet)
+    Set part_col = CallByName(Obj, SymmetricPartName, VbGet, False)
+    part_col.Filter = SymmetricFieldName + &quot;='&quot; + RowItem.Application.ID + &quot;'&quot;
+'    RowItem.Parent.Remove RowItem.ID
+    Set part_item = part_col.Item(1)
+    part_col.Delete part_item.ID
+    Exit Sub
+bye:
+Resume
+
+end sub
+
+
+
+'Создать новую оплату из клиента
+'{42A1A436-8AA2-4F1F-999B-6680DFF514DE}
+private sub Run_VBNewPayIn ( optional RowItem as object )
+On error resume next
+
+On error goto bye
+Dim ID As String
+ Dim Obj As Object
+ ID = CreateGUID2
+ Call RowItem.Application.Manager.NewInstance(ID, &quot;PEKP&quot;, &quot;Платеж &quot; &amp; Date)
+ Set RowItem.TheDocument = RowItem.Application.Manager.GetInstanceObject(ID)
+
+ If RowItem.TheDocument.PEKP_DEF.Count = 0 Then
+  Set Obj = RowItem.TheDocument.PEKP_DEF.Add
+ Else
+  Set Obj = RowItem.TheDocument.PEKP_DEF.Item(1)
+ End If
+ 
+ Set Obj.FromClient = RowItem.Application
+ Obj.PLPDate = Date
+ Obj.Save
+ RowItem.Save
+
+ Exit Sub
+bye:
+  MsgBox Err.Description, vbOKOnly + vbCritical, &quot;Создание Платежа&quot;
+end sub
+
+
+
+'Для раздела, в котором есть поле - ссылка, создает/выбирает объект без открытия окна редактирования ссылки
+'{A2EEE876-54D8-4AED-B124-775F5DA2D911}
+private sub Run_VBAddObjByRef ( ObjTypeName as variant ,ForwardFieldName as variant ,SymmetricPartName as variant ,SymmetricFieldName as variant , optional RowItem as object )
+On error resume next
+
+    Dim OK As Boolean
+    Dim ID As String
+    Dim brief As String
+    Dim Mode As String
+    Dim ResObject as Object
+    On Error Resume Next
+    Mode = Mid(TypeName(Me), InStr(TypeName(Me), &quot;_&quot;) + 1)
+    
+'     On Error GoTo bye
+    If Len(Mode) = 0 Then
+        OK = Item.Application.Manager.GetObjectListDialogEx(ID, brief, &quot;&quot;, ObjTypeName)
+    Else
+        ID = CreateGUID2
+        If Len(ObjTypeName) = 0 Then
+            Dim newObj As Object
+            Set newObj = Item.Application.Manager.GetNewObject
+            If Not (newObj Is Nothing) Then
+                OK = True
+                ID = newObj.ID
+            End If
+        Else
+            OK = Item.Application.Manager.NewInstance(ID, ObjTypeName, &quot;&quot;)
+        End If
+        Dim ref As Object, objGui As Object
+        Set ref = Item.Application.Manager.GetInstanceObject(ID)
+        If Not ref Is Nothing Then
+          Set objGui = Item.Application.Manager.GetInstanceGUI(ID)
+          If objGui Is Nothing Then Set ref = Nothing: Exit Sub
+          objGui.Show &quot;&quot;, ref, False
+          Set objGui = Nothing
+        Else
+          OK = False
+        End If
+    End If
+    Dim Obj As Object
+    Set Obj = Item.Application.Manager.GetInstanceObject(ID)
+    If Obj Is Nothing Then
+        OK = False
+    End If
+    If OK Then
+	Dim Coll as New Collection
+        Dim part_col As Variant
+        Dim part_item As Object
+        CallByName RowItem, ForwardFieldName, VbSet, Obj
+        Coll.Add TypeName(RowItem)+ &quot;:&quot; + RowItem.ID
+        RowItem.Save
+        If Len(SymmetricPartName) &gt; 0 And Len(SymmetricFieldName) &gt; 0 Then
+          Set part_col = CallByName(Obj, SymmetricPartName, VbGet, True)
+          Set part_item = part_col.Add
+          CallByName part_item, SymmetricFieldName, VbSet, RowItem.Application
+          part_item.Save
+          Coll.Add SymmetricPartName + &quot;:&quot; + part_item.ID
+        End If
+        Call Item.Application.Manager.AddCustomObjects(Coll, Obj.ID)
+    Else
+        RowItem.Parent.Remove RowItem.ID
+    End If
+    Exit Sub
+bye:
+Resume
+end sub
+
+
+
+'
+'{5B376AF5-339B-4365-BA80-785E28BCF4DA}
+private sub Run_VBUpdateSymmetricObjRef ( SymmetricFieldName as variant ,ForwardFieldName as variant ,SymmetricPartName as variant ,ObjTypeName as variant , optional RowItem as object )
+On error resume next
+
+ 
+end sub
+
+
+
+'Создать новый платеж из клиента
+'{2BB30818-90ED-4627-8ABB-85B3FBA46750}
+private sub Run_VBNewPayOut ( optional RowItem as object )
+On error resume next
+
+On error goto bye
+Dim ID As String
+ Dim Obj As Object
+ ID = CreateGUID2
+ Call RowItem.Application.Manager.NewInstance(ID, &quot;PEKO&quot;, &quot;Оплата &quot; &amp; Date)
+ Set RowItem.TheDocument = RowItem.Application.Manager.GetInstanceObject(ID)
+
+ If RowItem.TheDocument.PEKO_DEF.Count = 0 Then
+  Set Obj = RowItem.TheDocument.PEKO_DEF.Add
+ Else
+  Set Obj = RowItem.TheDocument.PEKO_DEF.Item(1)
+ End If
+ 
+ Set Obj.ToClient = RowItem.Application
+ Obj.PLPDate = Date
+ Obj.Save
+ RowItem.Save
+
+ Exit Sub
+bye:
+  MsgBox Err.Description, vbOKOnly + vbCritical, &quot;Создание Платежа&quot;
+end sub
+
+
+
+'открытие карточки по идентификатору
+'{94E8F6DB-106A-44DC-9483-86C801798FF0}
+private sub Run_VBOpenRef ( StartMode as variant ,ID as variant , optional RowItem as object )
+On error resume next
+
+on error resume next
+If ID &lt;&gt; &quot;&quot; Then
+    Dim Obj As Object
+    Set Obj = item.Manager.GetInstanceObject(ID)
+    If Not Obj Is Nothing Then
+      Dim objGui As Object
+      Set objGui =  item.Manager.GetInstanceGUI(Obj.ID)
+      If objGui Is Nothing Then Exit Sub
+
+       If StartMode = &quot;AUTO&quot; Then
+        StartMode = &quot;&quot;
+        dim i as long
+        For i = 100 To 0 Step -10
+          If Obj.MTZSession.CheckRight(Obj.SecureStyleid, Obj.TypeName &amp; &quot;:&quot; &amp; &quot;M&quot; &amp; i) Then
+            StartMode = &quot;M&quot; &amp; i
+            Exit For
+          End If
+        Next
+       End If
+      
+      objGui.Show StartMode &amp; &quot;&quot;, Obj
+      Set objGui = Nothing
+    End If
+  End If
+  
+end sub
+
+
+
+'
+'{069956DC-3305-45EF-9331-91CE323B5942}
+private sub Run_WFDefName ( optional RowItem as object )
+On error resume next
+
+on error resume next
+Item.Name = RowItem.Description
+parentform.caption = item.name
+Item.Save
+end sub
+
+
+
+'
+'{D8914FB4-6B5D-491A-A72F-985617727583}
+private sub Run_WFFuncName ( optional RowItem as object )
+On error resume next
+
+on error resume next
+Item.Name = RowItem.Name
+ParentForm.Caption = item.Name
+Item.Save
+end sub
+
+
+
+'Обновление Имени объекта
+'{61393545-ABF7-46F7-82F3-9B7E610DD9C0}
+private sub Run_VBUpdateObjName ( Name as variant , optional RowItem as object )
+On error resume next
+
+On error resume next
+RowItem.Application.Name=name
+RowItem.Application.Save
+end sub
+
+
+
+'Метод создает новый элемент в иерархии Имущественных Комплексов (приложение RealEstate) при создании нового элемента к нему линкуется объект ИК, форма которого и вызывается на редактирование
+'{477B8D25-4FF7-491A-A0B0-D3437EC16957}
+private sub Run_MakeNewFolderEC ( FolderID as variant , optional RowItem as object )
+On error resume next
+
+On Error GoTo bye
+ Dim ID As String
+ Dim Obj As Object ' EstComplex.Application ' Object
+ Dim GObj As Object
+ Dim fold As Object 'EstCatalog.Application ' Object
+ 
+ ID = CreateGUID2
+ Call RowItem.Application.Manager.NewInstance(ID, &quot;EstComplex&quot;, RowItem.TheName &amp; &quot; &quot; &amp; Date)
+ Set Obj = RowItem.Application.Manager.GetInstanceObject(ID)
+ If Obj.EC_Def.Count = 0 Then
+    With Obj.EC_Def.Add
+        .TheName = RowItem.TheName
+    End With
+ Else
+    Obj.EC_Def.Item(1).TheName = RowItem.TheName
+ End If
+ Obj.Save
+ Set RowItem.LinkedEC = Obj
+ RowItem.Save
+ Set GObj = RowItem.Application.Manager.GetInstanceGUI(Obj.ID)
+ GObj.Show &quot;&quot;, Obj, True 'False
+ Set Obj = RowItem.Application.Manager.GetInstanceObject(ID)
+ RowItem.TheName = Obj.EC_Def.Item(1).TheName
+ RowItem.Save
+ Exit Sub
+bye:
+  MsgBox Err.Description, vbOKOnly + vbCritical, &quot;Создание ИК&quot;
+
+end sub
+
+
+
+'Изменить название объекта
+'{4FB59D1A-0123-47D3-9F4F-E12085C5D074}
+private sub Run_VBUpdateItemName ( Name as variant , optional RowItem as object )
+On error resume next
+
+on error resume next
+item.name = Name
+' может не быть формы, если используем просто ActiveX
+ParentForm.Caption = item.Name
+item.Save
+end sub
+
+
+
+'Создать заявку из клиента
+'{49EA5CBF-93CF-41A8-B1F1-E37FE4D59EA5}
+private sub Run_VBNewZayavka ( optional RowItem as object )
+On error resume next
+
+On error goto bye
+Dim ID As String
+ Dim Obj As Object
+ ID = CreateGUID2
+ Call RowItem.Application.Manager.NewInstance(ID, &quot;PEKZ&quot;, &quot;Заявка &quot; &amp; Date)
+ Set RowItem.TheDocument = RowItem.Application.Manager.GetInstanceObject(ID)
+
+ If RowItem.TheDocument.PEKO_DEF.Count = 0 Then
+  Set Obj = RowItem.TheDocument.PEKz_DEF.Add
+ Else
+  Set Obj = RowItem.TheDocument.PEKZ_DEF.Item(1)
+ End If
+ 
+ Set Obj.ClientFrom = RowItem.Application
+ Obj.QueryDate = Date
+ Obj.Save
+ RowItem.Save
+
+ Exit Sub
+bye:
+  MsgBox Err.Description, vbOKOnly + vbCritical, &quot;Создание Заявки&quot;
+end sub
+
+
+
+'Создание номенклатуры по шаблону
+'{B91ABF3A-31F8-4A82-8D41-EF463DBA32D0}
+private sub Run_SSCreateNomen ( Name as variant , optional RowItem as object )
+On error resume next
+
+'pointCreateLine
+end sub
+
+
+
+"><AttributeHolder Name="Type" Value="code"/><FormData Name=""/></BlockHolder></ModuleHolder><ModuleHolder ModuleName="ctl_main" File=""><AttributeHolder Name="Type" Value="control"/><BlockHolder BlockName="'form" BlockCode=""><AttributeHolder Name="Type" Value="controlset"/><FormData Name=""><ControlData Name="mnuCtl" ControlIndex="0" PROGID="VB.Menu"><Properties Name="Caption" PropValue="mnuCtl"/><Properties Name="Name" PropValue="mnuCtl"/><Properties Name="Visible" PropValue="False"/><ControlData Name="mnuSetup" ControlIndex="0" PROGID="VB.Menu"><Properties Name="Caption" PropValue="Настройка"/><Properties Name="Name" PropValue="mnuSetup"/><Properties Name="Enabled" PropValue="True"/><Properties Name="Visible" PropValue="True"/></ControlData></ControlData><ControlData Name="ts" ControlIndex="0" PROGID="mscomctllib.tabstrip"><Properties Name="Name" PropValue="ts"/><Properties Name="Top" PropValue="0"/><Properties Name="Left" PropValue="0"/><Properties Name="Width" PropValue="1500"/><Properties Name="Height" PropValue="1500"/></ControlData><ControlData Name="pnlwpDog_def" ControlIndex="0" PROGID="wpDogGUI.vpnwpDog_def_"><Properties Name="Name" PropValue="pnlwpDog_def"/><Properties Name="visible" PropValue="False"/><Properties Name="Top" PropValue="0"/><Properties Name="Left" PropValue="1500"/><Properties Name="Width" PropValue="1500"/><Properties Name="Height" PropValue="1500"/></ControlData><ControlData Name="pnlwpdog_mainSrv" ControlIndex="0" PROGID="wpDogGUI.vpnwpdog_mainSrv_"><Properties Name="Name" PropValue="pnlwpdog_mainSrv"/><Properties Name="visible" PropValue="False"/><Properties Name="Top" PropValue="0"/><Properties Name="Left" PropValue="3000"/><Properties Name="Width" PropValue="1500"/><Properties Name="Height" PropValue="1500"/></ControlData><ControlData Name="pnlwpDog_srvPrice" ControlIndex="0" PROGID="wpDogGUI.vpnwpDog_srvPrice_"><Properties Name="Name" PropValue="pnlwpDog_srvPrice"/><Properties Name="visible" PropValue="False"/><Properties Name="Top" PropValue="0"/><Properties Name="Left" PropValue="4500"/><Properties Name="Width" PropValue="1500"/><Properties Name="Height" PropValue="1500"/></ControlData><PropertyData Name="tag" PropValue="Card.ICO"/><PropertyData Name="caption" PropValue="Договор"/><PropertyData Name="ShowInTaskBar" PropValue="False"/></FormData></BlockHolder><BlockHolder BlockName="'description" BlockCode="' Главный контрольный элемент для редактирования документа режим 
+public Item as object
+public Host as GUI
+public ModalMode as boolean
+public ParentForm as object
+Private TSCustom As MTZ_CUSTOMTAB.TabStripCustomizer
+
+"><AttributeHolder Name="Type" Value="description"/><FormData Name=""/></BlockHolder><BlockHolder BlockName="'codebody" BlockCode="
+
+'Получить нужную ширину контрола
+'Parameters:
+' параметров нет
+'Returns:
+'  значение типа Long
+'See Also:
+'Example:
+' dim variable as Long
+' variable = me. PrefferedWidth
+Public Property Get PrefferedWidth() As Long
+    PrefferedWidth = 0
+End Property
+
+
+'Задать нужную ширину контрола
+'Parameters:
+' параметров нет
+'Returns:
+'  значение типа Long
+'See Also:
+'Example:
+' dim variable as Long
+' variable = me. PrefferedHeight
+Public Property Get PrefferedHeight() As Long
+    PrefferedHeight = 0
+End Property
+
+Private Sub mnuSetup_Click()
+TSCustom.Setup ts
+End Sub
+Private Sub ts_MouseUp(Button As Integer, Shift As Integer, X As Single, Y As Single)
+  If Button = 2 And Shift = 0 Then
+    PopupMenu mnuCtl
+  End If
+End Sub
+
+'Все панели заполнены правильно
+'Parameters:
+' параметров нет
+'Returns:
+' Boolean, семантика результата:
+'   true  -
+'   false -
+'See Also:
+'Example:
+' dim variable as BooLEAN
+'  variable = me.IsOK() 
+Public Function IsOK() as BooLEAN
+DIm IsItOk as Boolean
+IsItOk=True
+on error resume next
+if IsItOk then IsItOk = pnlwpDog_def.IsOK
+if IsItOk then IsItOk = pnlwpdog_mainSrv.IsOK
+if IsItOk then IsItOk = pnlwpDog_srvPrice.IsOK
+IsOK= IsItOk
+End Function
+private sub ts_click()
+  on error resume next
+  pnlwpDog_srvPrice.Visible = False
+  pnlwpdog_mainSrv.Visible = False
+  pnlwpDog_def.Visible = False
+
+   Select Case ts.SelectedItem.Key
+   Case &quot;wpDog_def&quot;
+     With pnlwpDog_def
+     .Top = ts.ClientTop
+     .Left = ts.ClientLeft
+     .Width = ts.ClientWidth
+     .Height = ts.ClientHeight
+     .Visible = True
+     .ZOrder 0
+     pnlwpDog_def.OnClick item,parentform
+     End With
+   Case &quot;wpdog_mainSrv&quot;
+     With pnlwpdog_mainSrv
+     .Top = ts.ClientTop
+     .Left = ts.ClientLeft
+     .Width = ts.ClientWidth
+     .Height = ts.ClientHeight
+     .Visible = True
+     .ZOrder 0
+     pnlwpdog_mainSrv.OnClick item,parentform
+     End With
+   Case &quot;wpDog_srvPrice&quot;
+     With pnlwpDog_srvPrice
+     .Top = ts.ClientTop
+     .Left = ts.ClientLeft
+     .Width = ts.ClientWidth
+     .Height = ts.ClientHeight
+     .Visible = True
+     .ZOrder 0
+     pnlwpDog_srvPrice.OnClick item,parentform
+     End With
+     End select
+end sub
+
+'Инициализация контрола
+'Parameters:
+'[IN][OUT]   ObjItem , тип параметра: object, 
+'[IN][OUT]   MyHost , тип параметра: GUI, 
+'[IN][OUT]  aModalMode , тип параметра: boolean , 
+'[IN][OUT]   aParentForm , тип параметра: object  - ...
+'See Also:
+'Example:
+'  call me.Init({параметры})
+public sub Init( ObjItem as object, MyHost as GUI,aModalMode as boolean , aParentForm as object)
+  on error resume next
+ set Item = objItem
+ set Host = myHost
+ set ParentForm = aParentForm
+ ModalMode = aModalMode
+  Dim ff As Long, buf As String
+
+ts.Tabs.Item(1).Caption = &quot;Описание&quot;
+ts.Tabs.Item(1).key = &quot;wpDog_def&quot;
+pnlwpDog_def.OnInit item, parentForm
+call ts.Tabs.Add(, &quot;wpdog_mainSrv&quot;, &quot;Цены на основные услуги&quot;)
+pnlwpdog_mainSrv.OnInit item, parentForm
+call ts.Tabs.Add(, &quot;wpDog_srvPrice&quot;, &quot;Цены на доп. услуги&quot;)
+pnlwpDog_srvPrice.OnInit item, parentForm
+  Set TSCustom = New MTZ_CUSTOMTAB.TabStripCustomizer
+  TSCustom.Init ts, &quot;wpDog&quot;, &quot;ctl_main&quot;
+  TSCustom.SetupFromRegistry ts
+ ts_click
+end sub
+Private Sub UserControl_Terminate()
+  on error resume next
+  set item=nothing
+  Set Host = Nothing
+  Set ParentForm = Nothing
+  Set TSCustom = Nothing
+ pnlwpDog_def.CloseClass
+ pnlwpdog_mainSrv.CloseClass
+ pnlwpDog_srvPrice.CloseClass
+End Sub
+
+'Действие при сохранении
+'Parameters:
+' параметров нет
+'See Also:
+'Example:
+'  call me.OnSave()
+public sub OnSave()
+ pnlwpDog_def.OnSave
+ pnlwpdog_mainSrv.OnSave
+ pnlwpDog_srvPrice.OnSave
+end sub
+
+'Был ли изменен после открытия
+'Parameters:
+' параметров нет
+'Returns:
+' Boolean, семантика результата:
+'   true  -
+'   false -
+'See Also:
+'Example:
+' dim variable as boolean
+'  variable = me.IsChanged() 
+public function IsChanged() as boolean
+  dim m_IsChanged as boolean
+  on error resume next
+m_IsChanged = m_IsChanged or pnlwpDog_def.IsChanged
+m_IsChanged = m_IsChanged or pnlwpdog_mainSrv.IsChanged
+m_IsChanged = m_IsChanged or pnlwpDog_srvPrice.IsChanged
+  IsChanged = m_IsChanged
+end function
+private sub UserControl_Resize()
+ on error resume next
+ts.Top = 0
+ts.Left = 0
+ts.Width = usercontrol.Width
+ts.Height = usercontrol.Height
+ts_Click
+end sub
+
+'переместить клиента в каталоге
+'{5CB1388C-1623-4B36-A775-00B70BEE27AF}
+private sub Run_VBMoveVRC ( VRCATFolder as variant , optional RowItem as object )
+On error resume next
+
+'do nothing
+end sub
+
+
+
+'Так же проверяет Square &gt;0
+'{53371FFA-B514-447A-A1F9-26EE4FD409C9}
+private sub Run_VBUpdateObjNamePEO ( Name as variant , optional RowItem as object )
+On error resume next
+
+on error resume next
+RowItem.Application.Name=name
+RowItem.Application.Save
+
+end sub
+
+
+
+'Передать права объекту контактное лицо от объекта клиент
+'{79DED4FD-045C-45F8-AC79-2E5A3D956D97}
+private sub Run_VBMigrateRight ( optional RowItem as object )
+On error resume next
+
+'Migrate security
+On Error GoTo bye
+  If RowItem.Person Is Nothing Then Exit Sub
+
+  RowItem.Person.Secure Item.SecureStyleID
+  RowItem.Person.propagate
+bye:
+  Exit Sub
+  MsgBox Err.Description, vbOKOnly + vbCritical, &quot;Усановка стиля защиты&quot;
+end sub
+
+
+
+'Проверка наличия коллекции характеристик
+'{79E6BDEB-91D5-4B2E-81F7-3E091FB65E3A}
+private sub Run_VBCheckDescrs ( DesPartName as variant , optional RowItem as object )
+On error resume next
+
+    On Error Resume Next
+
+    Dim part_col As Variant
+    Dim part_item As Object
+    Set part_col = CallByName(RowItem.Parent.Parent, DesPartName, VbGet, False)
+    Set part_item = part_col.Item(1)
+    If RowItem.Parent.Count = 1 Then
+        If part_item.HasDescrs = -1 Then
+            part_item.HasDescrs = 0
+        Else
+            part_item.HasDescrs = -1
+        End If
+    End If
+    part_item.Save
+
+end sub
+
+
+
+'Применить стиль защиты для объекта Предназначен для каталога клиентов
+'{31EC6CF7-8DBD-4EFE-BF12-4D168F653D34}
+private sub Run_VBApplySecurity ( optional RowItem as object )
+On error resume next
+
+'Apply security
+On Error GoTo bye
+  If RowItem.Client Is Nothing Then Exit Sub
+  If RowItem.Parent.Parent.AccessLevel Is Nothing Then Exit Sub
+  RowItem.Client.Secure RowItem.Parent.Parent.AccessLevel.id
+  RowItem.Client.propagate
+  Exit Sub
+bye:
+  MsgBox Err.Description, vbOKOnly + vbCritical, &quot;Усановка стиля защиты&quot;
+end sub
+
+
+
+'Создание отчета из разных карточек
+'{5B8FB7B9-D8B1-4CA0-90AF-55F83D1A6E5D}
+private sub Run_VBMakeReport ( ReportType as variant , optional RowItem as object )
+On error resume next
+
+On error goto bye
+Dim ID As String
+ Dim Obj As Object
+ 'ID = CreateGUID2
+ 'Call RowItem.Application.Manager.NewInstance(ID, &quot;VRRPT&quot;, &quot;Отчет &quot; &amp; Date)
+ 'Set RowItem.Report = RowItem.Application.Manager.GetInstanceObject(ID)
+ If RowItem.Report.VRRPT_MAIN.Count = 0 Then
+  Set Obj = RowItem.Report.VRRPT_MAIN.Add
+ Else
+  Set Obj = RowItem.Report.VRRPT_MAIN.Item(1)
+ End If
+ 
+ Set Obj.Author = RowItem.Application.FindRowObject(&quot;Users&quot;, Item.Application.MTZSession.GetSessionUserID())
+ Obj.TheDate = Date
+ 
+ If ReportType = &quot;CLNT&quot; Then
+   Set Obj.Client = RowItem.Application
+ End If
+ If ReportType = &quot;PRJ&quot; Then
+   Set Obj.Project = RowItem.Application
+ End If
+ If ReportType = &quot;CONT&quot; Then
+   Set Obj.Contract = RowItem.Application
+ End If
+ If ReportType = &quot;PERS&quot; Then
+   Set Obj.Person = RowItem.Application
+ End If
+ 
+ Obj.Save
+ RowItem.Save
+
+ Exit Sub
+bye:
+  MsgBox Err.Description, vbOKOnly + vbCritical, &quot;Создание отчета&quot;
+end sub
+
+
+
+'
+'{AA4085E6-745B-4A37-8EC4-65D99A653966}
+private sub Run_VBRemoveSymmetricObjRef ( ForwardFieldName as variant ,ObjTypeName as variant ,SymmetricPartName as variant ,SymmetricFieldName as variant , optional RowItem as object )
+On error resume next
+
+    Dim OK As Boolean
+    Dim ID As String
+    Dim brief As String
+
+    On Error Resume Next
+'     On Error GoTo bye
+
+    Dim Obj As Object
+    Dim part_col As Variant
+    Dim part_item As Object
+    Set Obj = CallByName(RowItem, ForwardFieldName, VbGet)
+    Set part_col = CallByName(Obj, SymmetricPartName, VbGet, False)
+    part_col.Filter = SymmetricFieldName + &quot;='&quot; + RowItem.Application.ID + &quot;'&quot;
+'    RowItem.Parent.Remove RowItem.ID
+    Set part_item = part_col.Item(1)
+    part_col.Delete part_item.ID
+    Exit Sub
+bye:
+Resume
+
+end sub
+
+
+
+'Создать новую оплату из клиента
+'{42A1A436-8AA2-4F1F-999B-6680DFF514DE}
+private sub Run_VBNewPayIn ( optional RowItem as object )
+On error resume next
+
+On error goto bye
+Dim ID As String
+ Dim Obj As Object
+ ID = CreateGUID2
+ Call RowItem.Application.Manager.NewInstance(ID, &quot;PEKP&quot;, &quot;Платеж &quot; &amp; Date)
+ Set RowItem.TheDocument = RowItem.Application.Manager.GetInstanceObject(ID)
+
+ If RowItem.TheDocument.PEKP_DEF.Count = 0 Then
+  Set Obj = RowItem.TheDocument.PEKP_DEF.Add
+ Else
+  Set Obj = RowItem.TheDocument.PEKP_DEF.Item(1)
+ End If
+ 
+ Set Obj.FromClient = RowItem.Application
+ Obj.PLPDate = Date
+ Obj.Save
+ RowItem.Save
+
+ Exit Sub
+bye:
+  MsgBox Err.Description, vbOKOnly + vbCritical, &quot;Создание Платежа&quot;
+end sub
+
+
+
+'Для раздела, в котором есть поле - ссылка, создает/выбирает объект без открытия окна редактирования ссылки
+'{A2EEE876-54D8-4AED-B124-775F5DA2D911}
+private sub Run_VBAddObjByRef ( ObjTypeName as variant ,ForwardFieldName as variant ,SymmetricPartName as variant ,SymmetricFieldName as variant , optional RowItem as object )
+On error resume next
+
+    Dim OK As Boolean
+    Dim ID As String
+    Dim brief As String
+    Dim Mode As String
+    Dim ResObject as Object
+    On Error Resume Next
+    Mode = Mid(TypeName(Me), InStr(TypeName(Me), &quot;_&quot;) + 1)
+    
+'     On Error GoTo bye
+    If Len(Mode) = 0 Then
+        OK = Item.Application.Manager.GetObjectListDialogEx(ID, brief, &quot;&quot;, ObjTypeName)
+    Else
+        ID = CreateGUID2
+        If Len(ObjTypeName) = 0 Then
+            Dim newObj As Object
+            Set newObj = Item.Application.Manager.GetNewObject
+            If Not (newObj Is Nothing) Then
+                OK = True
+                ID = newObj.ID
+            End If
+        Else
+            OK = Item.Application.Manager.NewInstance(ID, ObjTypeName, &quot;&quot;)
+        End If
+        Dim ref As Object, objGui As Object
+        Set ref = Item.Application.Manager.GetInstanceObject(ID)
+        If Not ref Is Nothing Then
+          Set objGui = Item.Application.Manager.GetInstanceGUI(ID)
+          If objGui Is Nothing Then Set ref = Nothing: Exit Sub
+          objGui.Show &quot;&quot;, ref, False
+          Set objGui = Nothing
+        Else
+          OK = False
+        End If
+    End If
+    Dim Obj As Object
+    Set Obj = Item.Application.Manager.GetInstanceObject(ID)
+    If Obj Is Nothing Then
+        OK = False
+    End If
+    If OK Then
+	Dim Coll as New Collection
+        Dim part_col As Variant
+        Dim part_item As Object
+        CallByName RowItem, ForwardFieldName, VbSet, Obj
+        Coll.Add TypeName(RowItem)+ &quot;:&quot; + RowItem.ID
+        RowItem.Save
+        If Len(SymmetricPartName) &gt; 0 And Len(SymmetricFieldName) &gt; 0 Then
+          Set part_col = CallByName(Obj, SymmetricPartName, VbGet, True)
+          Set part_item = part_col.Add
+          CallByName part_item, SymmetricFieldName, VbSet, RowItem.Application
+          part_item.Save
+          Coll.Add SymmetricPartName + &quot;:&quot; + part_item.ID
+        End If
+        Call Item.Application.Manager.AddCustomObjects(Coll, Obj.ID)
+    Else
+        RowItem.Parent.Remove RowItem.ID
+    End If
+    Exit Sub
+bye:
+Resume
+end sub
+
+
+
+'
+'{5B376AF5-339B-4365-BA80-785E28BCF4DA}
+private sub Run_VBUpdateSymmetricObjRef ( SymmetricFieldName as variant ,ForwardFieldName as variant ,SymmetricPartName as variant ,ObjTypeName as variant , optional RowItem as object )
+On error resume next
+
+ 
+end sub
+
+
+
+'Создать новый платеж из клиента
+'{2BB30818-90ED-4627-8ABB-85B3FBA46750}
+private sub Run_VBNewPayOut ( optional RowItem as object )
+On error resume next
+
+On error goto bye
+Dim ID As String
+ Dim Obj As Object
+ ID = CreateGUID2
+ Call RowItem.Application.Manager.NewInstance(ID, &quot;PEKO&quot;, &quot;Оплата &quot; &amp; Date)
+ Set RowItem.TheDocument = RowItem.Application.Manager.GetInstanceObject(ID)
+
+ If RowItem.TheDocument.PEKO_DEF.Count = 0 Then
+  Set Obj = RowItem.TheDocument.PEKO_DEF.Add
+ Else
+  Set Obj = RowItem.TheDocument.PEKO_DEF.Item(1)
+ End If
+ 
+ Set Obj.ToClient = RowItem.Application
+ Obj.PLPDate = Date
+ Obj.Save
+ RowItem.Save
+
+ Exit Sub
+bye:
+  MsgBox Err.Description, vbOKOnly + vbCritical, &quot;Создание Платежа&quot;
+end sub
+
+
+
+'открытие карточки по идентификатору
+'{94E8F6DB-106A-44DC-9483-86C801798FF0}
+private sub Run_VBOpenRef ( StartMode as variant ,ID as variant , optional RowItem as object )
+On error resume next
+
+on error resume next
+If ID &lt;&gt; &quot;&quot; Then
+    Dim Obj As Object
+    Set Obj = item.Manager.GetInstanceObject(ID)
+    If Not Obj Is Nothing Then
+      Dim objGui As Object
+      Set objGui =  item.Manager.GetInstanceGUI(Obj.ID)
+      If objGui Is Nothing Then Exit Sub
+
+       If StartMode = &quot;AUTO&quot; Then
+        StartMode = &quot;&quot;
+        dim i as long
+        For i = 100 To 0 Step -10
+          If Obj.MTZSession.CheckRight(Obj.SecureStyleid, Obj.TypeName &amp; &quot;:&quot; &amp; &quot;M&quot; &amp; i) Then
+            StartMode = &quot;M&quot; &amp; i
+            Exit For
+          End If
+        Next
+       End If
+      
+      objGui.Show StartMode &amp; &quot;&quot;, Obj
+      Set objGui = Nothing
+    End If
+  End If
+  
+end sub
+
+
+
+'
+'{069956DC-3305-45EF-9331-91CE323B5942}
+private sub Run_WFDefName ( optional RowItem as object )
+On error resume next
+
+on error resume next
+Item.Name = RowItem.Description
+parentform.caption = item.name
+Item.Save
+end sub
+
+
+
+'
+'{D8914FB4-6B5D-491A-A72F-985617727583}
+private sub Run_WFFuncName ( optional RowItem as object )
+On error resume next
+
+on error resume next
+Item.Name = RowItem.Name
+ParentForm.Caption = item.Name
+Item.Save
+end sub
+
+
+
+'Обновление Имени объекта
+'{61393545-ABF7-46F7-82F3-9B7E610DD9C0}
+private sub Run_VBUpdateObjName ( Name as variant , optional RowItem as object )
+On error resume next
+
+On error resume next
+RowItem.Application.Name=name
+RowItem.Application.Save
+end sub
+
+
+
+'Метод создает новый элемент в иерархии Имущественных Комплексов (приложение RealEstate) при создании нового элемента к нему линкуется объект ИК, форма которого и вызывается на редактирование
+'{477B8D25-4FF7-491A-A0B0-D3437EC16957}
+private sub Run_MakeNewFolderEC ( FolderID as variant , optional RowItem as object )
+On error resume next
+
+On Error GoTo bye
+ Dim ID As String
+ Dim Obj As Object ' EstComplex.Application ' Object
+ Dim GObj As Object
+ Dim fold As Object 'EstCatalog.Application ' Object
+ 
+ ID = CreateGUID2
+ Call RowItem.Application.Manager.NewInstance(ID, &quot;EstComplex&quot;, RowItem.TheName &amp; &quot; &quot; &amp; Date)
+ Set Obj = RowItem.Application.Manager.GetInstanceObject(ID)
+ If Obj.EC_Def.Count = 0 Then
+    With Obj.EC_Def.Add
+        .TheName = RowItem.TheName
+    End With
+ Else
+    Obj.EC_Def.Item(1).TheName = RowItem.TheName
+ End If
+ Obj.Save
+ Set RowItem.LinkedEC = Obj
+ RowItem.Save
+ Set GObj = RowItem.Application.Manager.GetInstanceGUI(Obj.ID)
+ GObj.Show &quot;&quot;, Obj, True 'False
+ Set Obj = RowItem.Application.Manager.GetInstanceObject(ID)
+ RowItem.TheName = Obj.EC_Def.Item(1).TheName
+ RowItem.Save
+ Exit Sub
+bye:
+  MsgBox Err.Description, vbOKOnly + vbCritical, &quot;Создание ИК&quot;
+
+end sub
+
+
+
+'Изменить название объекта
+'{4FB59D1A-0123-47D3-9F4F-E12085C5D074}
+private sub Run_VBUpdateItemName ( Name as variant , optional RowItem as object )
+On error resume next
+
+on error resume next
+item.name = Name
+' может не быть формы, если используем просто ActiveX
+ParentForm.Caption = item.Name
+item.Save
+end sub
+
+
+
+'Создать заявку из клиента
+'{49EA5CBF-93CF-41A8-B1F1-E37FE4D59EA5}
+private sub Run_VBNewZayavka ( optional RowItem as object )
+On error resume next
+
+On error goto bye
+Dim ID As String
+ Dim Obj As Object
+ ID = CreateGUID2
+ Call RowItem.Application.Manager.NewInstance(ID, &quot;PEKZ&quot;, &quot;Заявка &quot; &amp; Date)
+ Set RowItem.TheDocument = RowItem.Application.Manager.GetInstanceObject(ID)
+
+ If RowItem.TheDocument.PEKO_DEF.Count = 0 Then
+  Set Obj = RowItem.TheDocument.PEKz_DEF.Add
+ Else
+  Set Obj = RowItem.TheDocument.PEKZ_DEF.Item(1)
+ End If
+ 
+ Set Obj.ClientFrom = RowItem.Application
+ Obj.QueryDate = Date
+ Obj.Save
+ RowItem.Save
+
+ Exit Sub
+bye:
+  MsgBox Err.Description, vbOKOnly + vbCritical, &quot;Создание Заявки&quot;
+end sub
+
+
+
+'Создание номенклатуры по шаблону
+'{B91ABF3A-31F8-4A82-8D41-EF463DBA32D0}
+private sub Run_SSCreateNomen ( Name as variant , optional RowItem as object )
+On error resume next
+
+'pointCreateLine
+end sub
+
+
+
+'Количество пунктов меню состояний (строк в комбобоксе)
+'Parameters:
+' параметров нет
+'Returns:
+'  значение типа Integer
+'See Also:
+'Example:
+' dim variable as Integer
+'  variable = me.StatusMenuCount() 
+Public Function StatusMenuCount() As Integer
+  StatusMenuCount = 0
+End Function
+
+'Заполнить меню состояний
+'Parameters:
+' параметров нет
+'Returns:
+'  объект класса Object)
+'  ,или Nothing
+'See Also:
+'Example:
+' dim variable as Object)
+' Set variable = me.SetupStatusMenu()
+Public Function SetupStatusMenu(m() As Object)
+    Dim i As Long
+    On Error Resume Next
+    i = 0
+End function  
+
+'Отметить текущее состояние и разрешить переходные состояния
+'Parameters:
+' параметров нет
+'See Also:
+'Example:
+'  call me.CheckStatusMenu()
+Public sub CheckStatusMenu(m() As Object)
+    Dim i As Long
+    On Error Resume Next
+    For i = 1 To StatusMenuCount
+        m(i).Checked = False
+        m(i).Enabled = False
+        If Not Item Is Nothing Then
+          If m(i).Tag = Item.Statusid Then
+            m(i).Checked = True
+          End If
+        End If
+    Next
+    If Not Item Is Nothing Then
+   End If
+End sub  
+
+"><AttributeHolder Name="Type" Value="code"/><FormData Name=""/></BlockHolder></ModuleHolder><ModuleHolder ModuleName="frm_main" File=""><AttributeHolder Name="Type" Value="form"/><BlockHolder BlockName="'form" BlockCode=""><AttributeHolder Name="Type" Value="form"/><FormData Name=""><ControlData Name="mnuFile" ControlIndex="0" PROGID="VB.Menu"><Properties Name="Caption" PropValue="Файл"/><Properties Name="Name" PropValue="mnuFile"/><ControlData Name="mnuSaveAsXML" ControlIndex="0" PROGID="VB.Menu"><Properties Name="Caption" PropValue="Сохранить в формате XML"/><Properties Name="Name" PropValue="mnuSaveAsXML"/></ControlData><ControlData Name="mnuLoadFromXML" ControlIndex="0" PROGID="VB.Menu"><Properties Name="Caption" PropValue="Загрузить из XML"/><Properties Name="Name" PropValue="mnuLoadFromXML"/></ControlData><ControlData Name="mnuSecure" ControlIndex="0" PROGID="VB.Menu"><Properties Name="Caption" PropValue="Стиль защиты"/><Properties Name="Name" PropValue="mnuSecure"/></ControlData><ControlData Name="mnuLock" ControlIndex="0" PROGID="VB.Menu"><Properties Name="Caption" PropValue="Заблокировать"/><Properties Name="Name" PropValue="mnuLock"/></ControlData><ControlData Name="mnuUnlock" ControlIndex="0" PROGID="VB.Menu"><Properties Name="Caption" PropValue="Разблокировать"/><Properties Name="Name" PropValue="mnuUnlock"/></ControlData><ControlData Name="mnuRename" ControlIndex="0" PROGID="VB.Menu"><Properties Name="Caption" PropValue="Переименовать"/><Properties Name="Name" PropValue="mnuRename"/></ControlData><ControlData Name="mnuDelete" ControlIndex="0" PROGID="VB.Menu"><Properties Name="Caption" PropValue="Удалить"/><Properties Name="Name" PropValue="mnuDelete"/></ControlData><ControlData Name="mnuExit" ControlIndex="0" PROGID="VB.Menu"><Properties Name="Caption" PropValue="Выход"/><Properties Name="Name" PropValue="mnuExit"/></ControlData></ControlData><ControlData Name="mnuStatus" ControlIndex="0" PROGID="VB.Menu"><Properties Name="Caption" PropValue="Состояния"/><Properties Name="Name" PropValue="mnuStatus"/><ControlData Name="mnuState" ControlIndex="0" PROGID="VB.Menu"><Properties Name="Caption" PropValue="..."/><Properties Name="Name" PropValue="mnuState"/><Properties Name="Index" PropValue="1"/></ControlData></ControlData><ControlData Name="ctl" ControlIndex="0" PROGID="wpDogGUI.ctl_main"><Properties Name="Name" PropValue="ctl"/><Properties Name="Top" PropValue="0"/><Properties Name="Left" PropValue="0"/><Properties Name="Width" PropValue="1500"/><Properties Name="Height" PropValue="1500"/></ControlData><PropertyData Name="tag" PropValue="Card.ICO"/><PropertyData Name="caption" PropValue="Договор"/><PropertyData Name="ShowInTaskBar" PropValue="True"/></FormData></BlockHolder><BlockHolder BlockName="'description" BlockCode="' Главная форма редактирования режим 
+public Item as object
+public Host as GUI
+public ModalMode as boolean
+
+"><AttributeHolder Name="Type" Value="description"/><FormData Name=""/></BlockHolder><BlockHolder BlockName="'codebody" BlockCode="
+private sub mnuSaveAsXML_Click()
+  on error resume next
+ If item.application.MTZSession.CheckRight(item.SecureStyleID, &quot;XMLSAVE&quot;) Then
+   Item.LockResource True
+   Item.LoadAll
+   Item.WorkOffline = True
+   Dim xdom As MSXML2.DOMDocument
+   Set xdom = New MSXML2.DOMDocument
+   xdom.loadXML &quot;&lt;root&gt;&lt;/root&gt;&quot;
+   Item.XMLSave xdom.lastChild, xdom
+   xdom.Save App.Path &amp; &quot;\&quot; &amp; Item.ID &amp; &quot;.xml&quot;
+   Item.WorkOffline = False
+ end if
+end sub
+private sub mnuSecure_Click()
+  on error resume next
+  Item.Application.Manager.ShowSecurityDialog item
+end sub
+private sub mnuUnlock_Click()
+  on error resume next
+  if Item.IsLocked then 
+    Item.UnlockResource
+  else
+  msgbox &quot;Объект не заблокирован&quot;,vbInformation 
+  end if
+end sub
+private sub mnuLock_Click()
+  on error resume next
+    Item.LockResource true
+end sub
+private sub mnuRename_Click()
+  on error resume next
+  dim n as string
+  n=inputbox(&quot;Новое название&quot;,&quot;Переименовать&quot;,item.name)
+  if n &lt;&gt;&quot;&quot; and n &lt;&gt;item.name then
+    Item.name = n
+    Item.Save
+    me.caption = item.name
+  end if
+end sub
+private sub mnuExit_Click()
+  on error resume next
+  unload me
+end sub
+private sub mnuDelete_Click()
+  on error goto bye
+  If MsgBox(&quot;Удалить документ?&quot;, vbQuestion + vbYesNo) = vbYes Then
+    Item.UnlockResource
+    Item.WorkOffline = false
+    Item.Manager.DeleteInstance Item.id 
+    item.Manager.FreeInstanceObject item.ID
+    unload me
+  end if
+  exit sub
+bye:
+   MsgBox err.description, vbCritical,&quot;Ошибка при удалении&quot; 
+end sub
+private sub mnuLoadFromXML_Click()
+ on error resume next
+ If item.application.MTZSession.CheckRight(item.SecureStyleID, &quot;XMLLOAD&quot;) Then
+  Dim xdom As MSXML2.DOMDocument
+  Set xdom = New MSXML2.DOMDocument
+  xdom.load App.Path &amp; &quot;\&quot; &amp; Item.ID &amp; &quot;.xml&quot;
+  Item.XMLLoad xdom.lastChild, 1
+  Item.WorkOffline = False
+  Item.BatchUpdate
+  Set xdom = Nothing
+ end if
+end sub
+private function ParentForm() as form
+  set parentForm =me
+end function
+
+'Инициализация формы
+'Parameters:
+'[IN][OUT]   ObjItem , тип параметра: object, 
+'[IN][OUT]   MyHost , тип параметра: GUI, 
+'[IN][OUT]  aModalMode , тип параметра: boolean  - ...
+'See Also:
+'Example:
+'  call me.Init({параметры})
+public sub Init( ObjItem as object, MyHost as GUI,aModalMode as boolean)
+ set Item = objItem
+ set Host = myHost
+ ModalMode = aModalMode
+ ctl.Init ObjItem,MyHost,aModalMode,me
+ CheckStatus
+end sub
+Private Sub CheckStatus()
+ If ctl.StatusMenuCount &gt; 0 Then
+    Dim i As Long
+    Dim mm() As Object
+    ReDim mm(1 To ctl.StatusMenuCount)
+    For i = 1 To ctl.StatusMenuCount
+      Set mm(i) = mnuState(i)
+    Next
+    ctl.CheckStatusMenu mm
+  End If
+End Sub
+Private Sub Form_Activate()
+ CheckStatus
+end sub
+Private Sub Form_QueryUnload(Cancel As Integer, UnloadMode As Integer)
+  on error resume next
+  'SaveToSkin
+end sub
+Private Sub Form_Load()
+  on error resume next
+  me.caption = Item.brief
+  Dim ff As Long, buf As String
+  LoadFromSkin 
+  ctl.Move 0,0,Me.ScaleWidth,Me.ScaleHeight
+  If ctl.StatusMenuCount &gt; 0 Then
+    Dim i As Long
+    Dim mm() As Object
+    ReDim mm(1 To ctl.StatusMenuCount)
+    Set mm(1) = mnuState(1)
+    For i = 2 To ctl.StatusMenuCount
+     Load mnuState(i)
+     Set mm(i) = mnuState(i)
+    Next
+    ctl.SetupStatusMenu mm
+    CheckStatus
+  Else
+    mnuStatus.Visible = False
+  End If
+End Sub
+Private Sub mnuState_Click(Index As Integer)
+  On Error Resume Next
+  If BeforeChangeStatus(item, mnuState(Index).Tag) Then
+    Item.Statusid = mnuState(Index).Tag
+    CheckStatus
+  End If
+end sub
+
+'Отработка логики контроля изменения состояния
+'Parameters:
+'[IN][OUT]  item , тип параметра: Object, 
+'[IN][OUT]   NewStatus , тип параметра: String  - ...
+'Returns:
+' Boolean, семантика результата:
+'   true  -
+'   false -
+'See Also:
+'Example:
+' dim variable as Boolean
+' variable = me.BeforeChangeStatus(...параметры...) 
+Public Function BeforeChangeStatus(item As Object, NewStatus As String) As Boolean
+  Dim logic As Object
+  Dim result As Boolean
+  result = True
+  On Error Resume Next
+  Dim MyUser As Object
+  Set MyUser = item.FindRowObject(&quot;Users&quot;, item.mtzSession.GetSessionUserID())
+  Set logic = CreateObject(item.TypeName &amp; &quot;BST.BEFORESTATUS&quot;)
+  If Not logic Is Nothing Then
+    result = logic.Check(item, NewStatus, MyUser, item.TypeName)
+    Set logic = Nothing
+  End If
+  BeforeChangeStatus = result
+End Function
+Private Sub Form_Unload(Cancel As Integer)
+  If Not Host Is Nothing Then
+    If Not Item Is Nothing Then
+      If Not ctl Is Nothing Then
+On Error GoTo bye
+        If ctl.IsChanged Then
+            'If MsgBox(&quot;Закрыть без сохранения?&quot;, vbCritical + vbYesNo, Me.Caption) = vbYes Then
+                If Not CheckIsOk(Item) Then
+                    If MsgBox(&quot;Поля не заполнены. Удалить документ?&quot;, vbCritical + vbYesNo, Me.Caption) = vbYes Then
+                        On Error Resume Next
+                        Item.Manager.DeleteInstance Item.ID
+                        Host.EraseForm Item.ID,&quot;&quot;,ModalMode
+                        Set Item = Nothing
+                        Exit Sub
+                    End If
+                End If
+            'Else
+            '    Cancel = -1
+            '    Exit Sub
+            'End If
+        Else
+            If CheckIsNew(Item) Then
+              On Error Resume Next
+              Item.Manager.DeleteInstance Item.ID
+              Host.EraseForm Item.ID, &quot;&quot;,ModalMode
+              Set Item = Nothing
+              Exit Sub
+            End If
+
+            If Not CheckIsOk(Item) Then
+                If MsgBox(&quot;Поля не заполнены. Удалить документ?&quot;, vbCritical + vbYesNo, Me.Caption) = vbYes Then
+                    On Error Resume Next
+                    Item.Manager.DeleteInstance Item.ID
+                    Host.EraseForm Item.ID,&quot;&quot;,ModalMode
+                    Set Item = Nothing
+                    Exit Sub
+                End If
+            End If
+        End If
+On Error Resume Next
+      End If
+      Host.EraseForm Item.ID, &quot;&quot;,ModalMode
+    End If
+  End If
+  'SaveToSkin
+  Exit Sub
+bye:
+  If MsgBox(&quot;Ошибка при закрытии:&quot; &amp; vbCrLf &amp; Err.Description, vbCritical + vbYesNo, &quot;Закрыть окно?&quot;) = vbNo Then
+    Cancel = -1
+  End If
+
+
+End Sub
+
+'Проверка наличия данных в объекте
+'Parameters:
+'[IN][OUT]  o , тип параметра: Object  - ...
+'Returns:
+'  объект любого класса Visual Basic
+'  ,или Nothing
+'  ,или значение любого скалярного типа 
+'See Also:
+'Example:
+' dim variable as Variant
+' variable = me.CheckIsOk(...параметры...) 
+' Set variable = me.CheckIsOk(...параметры...)
+Public Function CheckIsOk(o As Object)
+    'get plain part
+    Dim res As Boolean
+    Dim p_col As Object
+    Dim p As Object
+    Dim rs As ADODB.Recordset
+    Dim rsf As ADODB.Recordset
+    Dim val As Object
+    Dim strval As String
+    Dim numres As Double
+
+    res = False
+    Set rs = o.MTZSession.GetData(&quot;select part.name as pName,PartType from part, objecttype where part.parentstructrowid=objecttype.objecttypeid and objecttype.Name='&quot; &amp; o.TypeName &amp; &quot;' and part.parentrowid is null&quot;) ' and part.Parttype=0&quot;)
+
+    While Not rs.EOF
+        Dim PartName As String
+        Dim FieldName As String
+        PartName = rs!pName &amp; &quot;&quot;
+        If rs!PartType = 0 Then
+          Set p_col = CallByName(o, PartName, VbGet, False)
+          Set p = p_col.Item(1)
+          Set rsf = o.Application.MTZSession.GetData(&quot;select field.name as fName from field, part where field.parentstructrowId=part.partid and part.name='&quot; &amp; PartName &amp; &quot;'&quot;)
+          While Not rsf.EOF
+              FieldName = rsf!fname &amp; &quot;&quot;
+              On Error Resume Next
+              Set val = CallByName(p, FieldName, VbGet)
+              If Err.Number &lt;&gt; 0 Then
+                  Err.Clear
+                  numres = CallByName(p, FieldName, VbGet)
+                  If Err.Number &lt;&gt; 0 Then
+                      Err.Clear
+                      strval = CallByName(p, FieldName, VbGet)
+                      If Len(strval) &gt; 0 Then
+                          CheckIsOk = True
+                      End If
+                  Else
+                      If numres &lt;&gt; 0 Then
+                          CheckIsOk = True
+                      End If
+                  End If
+              Else
+                  If Not (val Is Nothing) Then
+                      CheckIsOk = True
+                  End If
+              End If
+              rsf.MoveNext
+          Wend
+        ElseIf rs!PartType &lt;&gt; 3 and rs!PartType &lt;&gt; 4  Then
+          On Error Resume next
+          Set p_col = CallByName(o, PartName, VbGet, False)
+          if (Not p_col is nothing) then
+            If p_col.Count &gt; 0 Then
+              CheckIsOk = True
+            End If
+          End If
+        End If
+        rs.MoveNext
+    Wend
+End Function
+
+
+
+'Проверка на новый документ
+'Parameters:
+'[IN][OUT]  o , тип параметра: Object  - ...
+'Returns:
+'  объект любого класса Visual Basic
+'  ,или Nothing
+'  ,или значение любого скалярного типа 
+'See Also:
+'Example:
+' dim variable as Variant
+' variable = me.CheckIsNew(...параметры...) 
+' Set variable = me.CheckIsNew(...параметры...)
+Public Function CheckIsNew(o As Object)
+    'get plain part
+    Dim res As Boolean
+    Dim p_col As Object
+    Dim p As Object
+    Dim rs As ADODB.Recordset
+    Dim rsf As ADODB.Recordset
+    Dim rsfcheck As ADODB.Recordset
+    Dim val As Object
+    Dim strval As String
+    Dim numres As Double
+
+    res = False
+    CheckIsNew = True
+    Set rs = o.MTZSession.GetData(&quot;select part.name as pName from part, objecttype where part.parentrowid is null and  part.parentstructrowid=objecttype.objecttypeid and objecttype.Name='&quot; &amp; o.TypeName &amp; &quot;'&quot;) ' and part.Parttype=0&quot;)
+
+    While Not rs.EOF
+        Dim PartName As String
+        Dim FieldName As String
+        PartName = rs!pName &amp; &quot;&quot;
+        on error resume next
+        Set rsf = o.Application.MTZSession.GetData(&quot;select Count(*) cnt from &quot; &amp; PartName &amp; &quot; where instanceid='&quot; &amp; o.ID &amp; &quot;'&quot;)
+        on error goto 0
+        If Not rsf Is Nothing Then
+          If Not rsf.EOF Then
+            If rsf!cnt &gt; 0 Then
+              Set rsf = o.Application.MTZSession.GetData(&quot;select field.name as fName from field, part where field.parentstructrowId=part.partid and part.name='&quot; &amp; PartName &amp; &quot;'  and  IsAutoNumber=0&quot;) 'AllowNull=-1 and
+              while not rsf.eof
+                On error resume next 
+                Err.Clear 
+                Set rsfcheck = o.Application.MTZSession.GetData(&quot;select Count(*) cnt from &quot; &amp; PartName &amp; &quot; where instanceid='&quot; &amp; o.ID &amp; &quot;' and &quot; &amp; rsf!fname &amp; &quot; is not null&quot;)
+                if  (Err.Number = 0) then 
+                  If Not rsfcheck Is Nothing Then
+                    If Not rsfcheck.EOF Then
+                      If rsfcheck!cnt &gt; 0 Then
+                        CheckIsNew = False
+                       End If
+                    End If
+                  End If
+                Else 
+                  Err.Clear
+                End If
+                On Error Goto 0
+                rsf.movenext
+              Wend
+            End If
+          End If
+        End If
+        Set rsf = Nothing
+        rs.MoveNext
+    Wend
+    Set rs = Nothing
+End Function
+private sub Form_Resize()
+ if me.windowstate =1 then exit sub
+ on error resume next
+ ctl.Move 0,0,Me.ScaleWidth,Me.ScaleHeight
+end sub
+private sub LoadFromSkin()
+  on error resume next
+  Dim s As String, arr() as string
+  s = GetSetting(&quot;MTZ&quot;, &quot;CONFIG&quot;, &quot;LAYOUTS&quot;, App.Path &amp; &quot;\LAYOUTS\&quot;)
+  SaveSetting &quot;MTZ&quot;, &quot;CONFIG&quot;, &quot;LAYOUTS&quot;, s
+  Dim ff As Long, buf As String
+  ff = FreeFile
+  Open s &amp; &quot;MainForm&quot; &amp; &quot;wpDog&quot;  For Input As #ff
+  buf = Input(LOF(ff), ff)
+  Close #ff
+  arr = split(buf, vbcrlf)
+  Dim arr2() As String, i as long
+For i = 0 To UBound(arr)
+  arr2 = Split(arr(i), &quot;:&quot;)
+  Select Case arr2(0)
+  case &quot;FormTag&quot;
+    Tag = arr2(1)
+  Case &quot;FormTop&quot;
+    Top = arr2(1)
+  Case &quot;FormLeft&quot;
+    left = arr2(1)
+  Case &quot;FormWidth&quot;
+    Width = arr2(1)
+  Case &quot;FormHeight&quot;
+    Height = arr2(1)
+  Case Else
+    Controls(arr2(0)).tag = Val(arr2(1))
+  End Select
+Next
+  s = &quot;&quot; 
+  s = GetSetting(&quot;MTZ&quot;, &quot;CONFIG&quot;, &quot;IMAGEPATH&quot;, App.Path &amp; &quot;\IMAGES\&quot;)
+  SaveSetting &quot;MTZ&quot;, &quot;CONFIG&quot;, &quot;IMAGEPATH&quot;, s
+  set icon = LoadPicture(s &amp; Me.tag)
+end sub
+
+private sub SaveToSkin
+  on error resume next
+  Dim s As String, buf as string
+  s = GetSetting(&quot;MTZ&quot;, &quot;CONFIG&quot;, &quot;LAYOUTS&quot;, App.Path &amp; &quot;\LAYOUTS\&quot;)
+  SaveSetting &quot;MTZ&quot;, &quot;CONFIG&quot;, &quot;LAYOUTS&quot;, s
+  Me.WindowState =0 
+  Dim ff As Long
+  ff = FreeFile
+  kill s &amp; &quot;MainForm&quot; &amp; &quot;wpDog&quot;
+  Open s &amp; &quot;MainForm&quot; &amp; &quot;wpDog&quot;  For output As #ff
+  buf =  &quot;FormTag:&quot; &amp; Me.Tag 
+  buf = buf &amp; vbcrlf &amp; &quot;FormTop:&quot; &amp; Me.Top 
+  buf = buf &amp; vbCrLf &amp; &quot;FormLeft:&quot; &amp; Me.Left
+  buf = buf &amp; vbCrLf &amp; &quot;FormWidth:&quot; &amp; Me.Width
+  buf = buf &amp; vbCrLf &amp; &quot;FormHeight:&quot; &amp; Me.Height
+  print #ff, buf
+  Close #ff
+end sub
+
+
+"><AttributeHolder Name="Type" Value="code"/><FormData Name=""/></BlockHolder></ModuleHolder><ModuleHolder ModuleName="Util" File=""><AttributeHolder Name="Instancing" Value="private"/><AttributeHolder Name="Type" Value="module"/><BlockHolder BlockName="'description" BlockCode="' модуль общих функций
+
+
+
+"><AttributeHolder Name="Type" Value="description"/><FormData Name=""/></BlockHolder><BlockHolder BlockName="'codebody" BlockCode="
+
+'Найти форму по имени
+'Parameters:
+'[IN]   Name , тип параметра: string, 
+'[IN]   Mode , тип параметра: string =&quot;&quot;   - ...
+'Returns:
+'  объект класса form
+'  ,или Nothing
+'See Also:
+'Example:
+' dim variable as form
+' Set variable = me.FormByName(...параметры...)
+public function FormByName( byval Name as string, optional byval Mode as string =&quot;&quot; ) as form
+if Mode=&quot;&quot; then
+
+if Name=&quot;wpDog_def&quot; then 
+ set FormByName = new frmwpDog_def_
+ exit function
+end if
+
+if Name=&quot;wpdog_mainSrv&quot; then 
+ set FormByName = new frmwpdog_mainSrv_
+ exit function
+end if
+
+if Name=&quot;wpDog_srvPrice&quot; then 
+ set FormByName = new frmwpDog_srvPrice_
+ exit function
+end if
+
+end if
+end function
+
+'Скопировать объект в типизированный XML  буфер
+'Parameters:
+'[IN][OUT]  u , тип параметра: Object  - ...
+'See Also:
+'Example:
+'  call me.SaveToBuffer({параметры})
+Public Sub SaveToBuffer(u As Object)
+      Dim xdom As MSXML2.DOMDocument
+      Set xdom = New MSXML2.DOMDocument
+      xdom.loadXML &quot;&lt;I&gt;&lt;/I&gt;&quot;
+      u.XMLSave xdom.lastChild, xdom
+      u.Application.Manager.SetBuffer u.PartName, xdom.xml
+      Set xdom = Nothing
+End Sub
+
+
+'Получить объект из типизированного XML  буфера
+'Parameters:
+'[IN][OUT]  u , тип параметра: Object  - ...
+'Returns:
+' Boolean, семантика результата:
+'   true  -
+'   false -
+'See Also:
+'Example:
+' dim variable as Boolean
+' variable = me.GetFromBuffer(...параметры...) 
+Public Function GetFromBuffer(u As Object) As Boolean
+      On Error GoTo bye
+      Dim xdom As MSXML2.DOMDocument
+      Set xdom = New MSXML2.DOMDocument
+      GetFromBuffer = False
+      If u.Application.Manager.GetBuffer(u.PartName) &lt;&gt; &quot;&quot; Then
+        xdom.loadXML u.Application.Manager.GetBuffer(u.PartName)
+        u.XMLLoad xdom.lastChild, 2
+        U.BatchUpdate
+        GetFromBuffer = True
+      Else
+        MsgBox &quot;Буфер данных для этого раздела пуст&quot;, vbInformation
+      End If
+    Exit Function
+bye:
+    MsgBox Err.Description, vbCritical
+End Function
+
+"><AttributeHolder Name="Type" Value="code"/><FormData Name=""/></BlockHolder></ModuleHolder></root>

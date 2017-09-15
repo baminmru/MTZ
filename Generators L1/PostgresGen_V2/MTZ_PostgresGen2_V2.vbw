@@ -1,0 +1,13 @@
+Generator = 22, 22, 456, 388, 
+IDMAP = 0, 0, 0, 0, C
+frmOptions = 0, 0, 0, 0, C, 44, 44, 478, 410, C
+Writer = 0, 0, 0, 0, C
+wordcheck = 0, 0, 0, 0, C
+MakeType = 0, 0, 0, 0, C
+MakeFunc = 0, 0, 0, 0, C
+MakeKernel = 0, 0, 0, 0, C
+MakeCustom = 88, 116, 854, 467, Z
+MakeInit = 0, 0, 0, 0, C
+MakePart = 0, 0, 0, 0, C
+MakeSchema = 66, 66, 500, 432, 
+MakeView = 132, 132, 566, 498, 

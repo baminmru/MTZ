@@ -1,0 +1,2569 @@
+<?xml version="1.0"?>
+<root><AttributeHolder Name="Type" Value="exe"/><AttributeHolder Name="Template" Value="c:\bami\MTZ\Generators L4\VB6ARMGEN\Template\Template.vbp"/><AttributeHolder Name="Name" Value="TEPLO"/><AttributeHolder Name="ProjectName" Value="TEPLO"/><AttributeHolder Name="Description" Value="TEPLO"/><AttributeHolder Name="ExeName" Value="TEPLO.Exe"/><ModuleHolder ModuleName="frmMain" File=""><AttributeHolder Name="Type" Value="form"/><BlockHolder BlockName="'form" BlockCode=""><AttributeHolder Name="Type" Value="form"/><FormData Name=""><ControlData Name="mnuJRNL" ControlIndex="0" PROGID="VB.Menu"><Properties Name="Caption" PropValue="Журналы"/><Properties Name="Name" PropValue="mnuJRNL"/><ControlData Name="mnut_LOGCALL" ControlIndex="0" PROGID="VB.Menu"><Properties Name="Caption" PropValue="Журнал опроса"/><Properties Name="Name" PropValue="mnut_LOGCALL"/></ControlData><ControlData Name="mnut_BDEVICES" ControlIndex="0" PROGID="VB.Menu"><Properties Name="Caption" PropValue="Опрашиваемое устройство"/><Properties Name="Name" PropValue="mnut_BDEVICES"/></ControlData><ControlData Name="mnut_REPORT" ControlIndex="0" PROGID="VB.Menu"><Properties Name="Caption" PropValue="Отчет"/><Properties Name="Name" PropValue="mnut_REPORT"/></ControlData><ControlData Name="mnut_HCMESSAGES" ControlIndex="0" PROGID="VB.Menu"><Properties Name="Caption" PropValue="Сообщения о нештатных ситуациях"/><Properties Name="Name" PropValue="mnut_HCMESSAGES"/></ControlData><ControlData Name="mnut_DEVSCHEMA" ControlIndex="0" PROGID="VB.Menu"><Properties Name="Caption" PropValue="Схема подключения"/><Properties Name="Name" PropValue="mnut_DEVSCHEMA"/></ControlData><ControlData Name="mnut_DATACURR" ControlIndex="0" PROGID="VB.Menu"><Properties Name="Caption" PropValue="Текущие значения"/><Properties Name="Name" PropValue="mnut_DATACURR"/></ControlData><ControlData Name="mnut_MASKS" ControlIndex="0" PROGID="VB.Menu"><Properties Name="Caption" PropValue="Шаблон отображения"/><Properties Name="Name" PropValue="mnut_MASKS"/></ControlData></ControlData><ControlData Name="mnuDictionary" ControlIndex="0" PROGID="VB.Menu"><Properties Name="Caption" PropValue="Справочники"/><Properties Name="Name" PropValue="mnuDictionary"/><ControlData Name="mnut_BGROUPS" ControlIndex="0" PROGID="VB.Menu"><Properties Name="Caption" PropValue="Группы опрашиваемых устройств"/><Properties Name="Name" PropValue="mnut_BGROUPS"/></ControlData><ControlData Name="mnut_DEVCLASSES" ControlIndex="0" PROGID="VB.Menu"><Properties Name="Caption" PropValue="Классы приборов"/><Properties Name="Name" PropValue="mnut_DEVCLASSES"/></ControlData><ControlData Name="mnut_COMMONPARAM" ControlIndex="0" PROGID="VB.Menu"><Properties Name="Caption" PropValue="Общие параметры"/><Properties Name="Name" PropValue="mnut_COMMONPARAM"/></ControlData><ControlData Name="mnut_PLANCALL" ControlIndex="0" PROGID="VB.Menu"><Properties Name="Caption" PropValue="План опроса устройств"/><Properties Name="Name" PropValue="mnut_PLANCALL"/></ControlData><ControlData Name="mnut_DEVICES" ControlIndex="0" PROGID="VB.Menu"><Properties Name="Caption" PropValue="Прибор"/><Properties Name="Name" PropValue="mnut_DEVICES"/></ControlData><ControlData Name="mnut_WHOGIVETOP" ControlIndex="0" PROGID="VB.Menu"><Properties Name="Caption" PropValue="Снабжающая организация"/><Properties Name="Name" PropValue="mnut_WHOGIVETOP"/></ControlData><ControlData Name="mnut_PARAMTYPE" ControlIndex="0" PROGID="VB.Menu"><Properties Name="Caption" PropValue="Тип архива"/><Properties Name="Name" PropValue="mnut_PARAMTYPE"/></ControlData><ControlData Name="mnut_BBUILDINGS" ControlIndex="0" PROGID="VB.Menu"><Properties Name="Caption" PropValue="Узел подключения"/><Properties Name="Name" PropValue="mnut_BBUILDINGS"/></ControlData></ControlData></FormData></BlockHolder><BlockHolder BlockName="'description" BlockCode="dim withevents jfmnut_LOGCALL as frmJournalShow
+
+dim withevents jfmnut_BDEVICES as frmJournalShow
+
+dim withevents jfmnut_REPORT as frmJournalShow
+
+dim withevents jfmnut_HCMESSAGES as frmJournalShow
+
+dim withevents jfmnut_DEVSCHEMA as frmJournalShow
+
+dim withevents jfmnut_DATACURR as frmJournalShow
+
+dim withevents jfmnut_MASKS as frmJournalShow
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+"><AttributeHolder Name="Type" Value="description"/><FormData Name=""/></BlockHolder><BlockHolder BlockName="'codebody" BlockCode="
+private sub mnut_LOGCALL_Click()
+    Dim journal As Object
+    On Error Resume Next
+    If jfmnut_LOGCALL Is Nothing Then
+      Set jfmnut_LOGCALL = New frmJournalShow
+      Set journal = Manager.GetInstanceObject(&quot;{3C14AEEF-FA6B-4DA9-A55E-8EC28BC7686F}&quot;)
+      Manager.LockInstanceObject journal.ID
+      Set jfmnut_LOGCALL.jv.journal = journal
+      jfmnut_LOGCALL.jv.OpenModal = False
+      jfmnut_LOGCALL.Caption = &quot;Журнал опроса&quot;
+      Me.MousePointer = vbHourglass
+      DoEvents
+      Dim f As String
+    f=&quot;1=1&quot;
+    Dim fltr As frmt_LOGCALL
+    set fltr = new frmt_LOGCALL
+    fltr.show vbmodal
+    if fltr.ok then 
+    ' build flter expression 
+      if fltr.lblQMonth_LE.Value=vbChecked then
+        f=f &amp;  &quot; and LOG_HEADER_QMonth&lt;=&quot; &amp; val(fltr.txtQMonth_LE.Text)
+      end if
+      if fltr.lblQMonth_GE.Value=vbChecked then
+        f=f &amp;  &quot; and LOG_HEADER_QMonth&gt;=&quot; &amp; val(fltr.txtQMonth_GE.Text)
+      end if
+      if fltr.lblQDay_LE.Value=vbChecked then
+        f=f &amp;  &quot; and LOG_HEADER_QDay&lt;=&quot; &amp; val(fltr.txtQDay_LE.Text)
+      end if
+      if fltr.lblQDay_GE.Value=vbChecked then
+        f=f &amp;  &quot; and LOG_HEADER_QDay&gt;=&quot; &amp; val(fltr.txtQDay_GE.Text)
+      end if
+      if fltr.lblQYear_LE.Value=vbChecked then
+        f=f &amp;  &quot; and LOG_HEADER_QYear&lt;=&quot; &amp; val(fltr.txtQYear_LE.Text)
+      end if
+      if fltr.lblID_DU.Value=vbChecked then
+        f=f &amp;  &quot; and LOG_HEADER_ID_DU_ID='&quot; &amp; fltr.txtID_DU.Tag &amp; &quot;'&quot; 
+      end if
+      if fltr.lblID_BD.Value=vbChecked then
+        f=f &amp;  &quot; and LOG_HEADER_ID_BD_ID='&quot; &amp; fltr.txtID_BD.Tag &amp; &quot;'&quot; 
+      end if
+      if fltr.lblQYear_GE.Value=vbChecked then
+        f=f &amp;  &quot; and LOG_HEADER_QYear&gt;=&quot; &amp; val(fltr.txtQYear_GE.Text)
+      end if
+      if fltr.lblID_PTYPE.Value=vbChecked then
+        f=f &amp;  &quot; and LOG_HEADER_ID_PTYPE_ID='&quot; &amp; fltr.txtID_PTYPE.Tag &amp; &quot;'&quot; 
+      end if
+    jfmnut_LOGCALL.jv.Filter.Add &quot;AUTOLOG_HEADER&quot;, f
+    end if 
+      jfmnut_LOGCALL.jv.Refresh
+      Me.MousePointer = vbNormal
+    End If
+    jfmnut_LOGCALL.Show
+    jfmnut_LOGCALL.WindowState = 0
+    jfmnut_LOGCALL.ZOrder 0
+end sub 
+private sub   jfmnut_LOGCALL_OnFilter( usedefault as boolean)  
+    Dim fltr As frmt_LOGCALL
+    Dim f as string
+    set fltr = new frmt_LOGCALL
+    fltr.show vbmodal
+    if fltr.ok then 
+    ' build flter expression 
+    f=&quot;1=1&quot;
+      if fltr.lblQMonth_LE.Value=vbChecked then
+        f=f &amp;  &quot; and LOG_HEADER_QMonth&lt;=&quot; &amp; val(fltr.txtQMonth_LE.Text)
+      end if
+      if fltr.lblQMonth_GE.Value=vbChecked then
+        f=f &amp;  &quot; and LOG_HEADER_QMonth&gt;=&quot; &amp; val(fltr.txtQMonth_GE.Text)
+      end if
+      if fltr.lblQDay_LE.Value=vbChecked then
+        f=f &amp;  &quot; and LOG_HEADER_QDay&lt;=&quot; &amp; val(fltr.txtQDay_LE.Text)
+      end if
+      if fltr.lblQDay_GE.Value=vbChecked then
+        f=f &amp;  &quot; and LOG_HEADER_QDay&gt;=&quot; &amp; val(fltr.txtQDay_GE.Text)
+      end if
+      if fltr.lblQYear_LE.Value=vbChecked then
+        f=f &amp;  &quot; and LOG_HEADER_QYear&lt;=&quot; &amp; val(fltr.txtQYear_LE.Text)
+      end if
+      if fltr.lblID_DU.Value=vbChecked then
+        f=f &amp;  &quot; and LOG_HEADER_ID_DU_ID='&quot; &amp; fltr.txtID_DU.Tag &amp; &quot;'&quot; 
+      end if
+      if fltr.lblID_BD.Value=vbChecked then
+        f=f &amp;  &quot; and LOG_HEADER_ID_BD_ID='&quot; &amp; fltr.txtID_BD.Tag &amp; &quot;'&quot; 
+      end if
+      if fltr.lblQYear_GE.Value=vbChecked then
+        f=f &amp;  &quot; and LOG_HEADER_QYear&gt;=&quot; &amp; val(fltr.txtQYear_GE.Text)
+      end if
+      if fltr.lblID_PTYPE.Value=vbChecked then
+        f=f &amp;  &quot; and LOG_HEADER_ID_PTYPE_ID='&quot; &amp; fltr.txtID_PTYPE.Tag &amp; &quot;'&quot; 
+      end if
+    jfmnut_LOGCALL.jv.Filter.Add &quot;AUTOLOG_HEADER&quot;, f
+    end if 
+    unload fltr 
+    usedefault = false
+end sub 
+private sub   jfmnut_LOGCALL_OnClearFilter()  
+end sub 
+Private Sub jfmnut_LOGCALL_OnAdd(usedefaut As Boolean, Refesh As Boolean)
+  Dim objGui  As Object
+  Dim o As Object
+  Dim ID As String
+  ID = CreateGUID2
+  Manager.NewInstance ID, &quot;t_LOGCALL&quot;, &quot;Журнал опроса&quot; &amp; Now, Site
+  Set o = Manager.GetInstanceObject(ID)
+  If IsDocDenied(o) Then
+    MsgBox &quot;Не разрешен доступ к документам такого типа&quot;
+    Exit Sub
+  End If
+
+  Dim g  As Object
+  Set g = Manager.GetInstanceGUI(o.ID)
+  If Not g Is Nothing Then
+    g.Show GetDocumentMode(o), o, False
+  End If
+  usedefaut = False
+  Refesh = False
+End Sub
+
+
+private sub mnut_BDEVICES_Click()
+    Dim journal As Object
+    On Error Resume Next
+    If jfmnut_BDEVICES Is Nothing Then
+      Set jfmnut_BDEVICES = New frmJournalShow
+      Set journal = Manager.GetInstanceObject(&quot;{251EDAA2-8544-4DF5-B453-EC37CF28ABFE}&quot;)
+      Manager.LockInstanceObject journal.ID
+      Set jfmnut_BDEVICES.jv.journal = journal
+      jfmnut_BDEVICES.jv.OpenModal = False
+      jfmnut_BDEVICES.Caption = &quot;Опрашиваемое устройство&quot;
+      Me.MousePointer = vbHourglass
+      DoEvents
+      Dim f As String
+    f=&quot;1=1&quot;
+    Dim fltr As frmt_BDEVICES
+    set fltr = new frmt_BDEVICES
+    fltr.show vbmodal
+    if fltr.ok then 
+    ' build flter expression 
+      if fltr.lblNPPASSWORD.Value=vbChecked then
+        f=f &amp;  &quot; and BDEVICES_NPPASSWORD like '%&quot; &amp; fltr.txtNPPASSWORD.Text &amp; &quot;%'&quot; 
+      end if
+      if fltr.lblNPIP.Value=vbChecked then
+        f=f &amp;  &quot; and BDEVICES_NPIP like '%&quot; &amp; fltr.txtNPIP.Text &amp; &quot;%'&quot; 
+      end if
+      if fltr.lblreport_day.Value=vbChecked then
+        f=f &amp;  &quot; and BDEVICES_report_day_ID='&quot; &amp; fltr.txtreport_day.Tag &amp; &quot;'&quot; 
+      end if
+      if fltr.lblNPLOCK_GE.Value=vbChecked then
+        f=f &amp;  &quot; and BDEVICES_NPLOCK&gt;=&quot; &amp; MakeMSSQLDate(fltr.dtpNPLOCK_GE.value)
+      end if
+      if fltr.lblID_MD.Value=vbChecked then
+        f=f &amp;  &quot; and BDEVICES_ID_MD='&quot; &amp; fltr.cmbID_MD.Text &amp; &quot;'&quot; 
+      end if
+      if fltr.lblCONNECTED.Value=vbChecked then
+        f=f &amp;  &quot; and BDEVICES_CONNECTED='&quot; &amp; fltr.cmbCONNECTED.Text &amp; &quot;'&quot; 
+      end if
+      if fltr.lblNPLOCK_LE.Value=vbChecked then
+        f=f &amp;  &quot; and BDEVICES_NPLOCK&lt;=&quot; &amp; MakeMSSQLDate(fltr.dtpNPLOCK_LE.value)
+      end if
+      if fltr.lblreport_hour.Value=vbChecked then
+        f=f &amp;  &quot; and BDEVICES_report_hour_ID='&quot; &amp; fltr.txtreport_hour.Tag &amp; &quot;'&quot; 
+      end if
+      if fltr.lblID_MASK_CURR.Value=vbChecked then
+        f=f &amp;  &quot; and BDEVICES_ID_MASK_CURR_ID='&quot; &amp; fltr.txtID_MASK_CURR.Tag &amp; &quot;'&quot; 
+      end if
+      if fltr.lblID_DEV.Value=vbChecked then
+        f=f &amp;  &quot; and BDEVICES_ID_DEV_ID='&quot; &amp; fltr.txtID_DEV.Tag &amp; &quot;'&quot; 
+      end if
+      if fltr.lblID_BU.Value=vbChecked then
+        f=f &amp;  &quot; and BDEVICES_ID_BU_ID='&quot; &amp; fltr.txtID_BU.Tag &amp; &quot;'&quot; 
+      end if
+      if fltr.lblID_MASK_HOUR.Value=vbChecked then
+        f=f &amp;  &quot; and BDEVICES_ID_MASK_HOUR_ID='&quot; &amp; fltr.txtID_MASK_HOUR.Tag &amp; &quot;'&quot; 
+      end if
+      if fltr.lblSCHEMA_ID.Value=vbChecked then
+        f=f &amp;  &quot; and BDEVICES_SCHEMA_ID_ID='&quot; &amp; fltr.txtSCHEMA_ID.Tag &amp; &quot;'&quot; 
+      end if
+      if fltr.lblID_MASK_SUM.Value=vbChecked then
+        f=f &amp;  &quot; and BDEVICES_ID_MASK_SUM_ID='&quot; &amp; fltr.txtID_MASK_SUM.Tag &amp; &quot;'&quot; 
+      end if
+      if fltr.lblID_MASK_24.Value=vbChecked then
+        f=f &amp;  &quot; and BDEVICES_ID_MASK_24_ID='&quot; &amp; fltr.txtID_MASK_24.Tag &amp; &quot;'&quot; 
+      end if
+    jfmnut_BDEVICES.jv.Filter.Add &quot;AUTOBDEVICES&quot;, f
+    end if 
+      jfmnut_BDEVICES.jv.Refresh
+      Me.MousePointer = vbNormal
+    End If
+    jfmnut_BDEVICES.Show
+    jfmnut_BDEVICES.WindowState = 0
+    jfmnut_BDEVICES.ZOrder 0
+end sub 
+private sub   jfmnut_BDEVICES_OnFilter( usedefault as boolean)  
+    Dim fltr As frmt_BDEVICES
+    Dim f as string
+    set fltr = new frmt_BDEVICES
+    fltr.show vbmodal
+    if fltr.ok then 
+    ' build flter expression 
+    f=&quot;1=1&quot;
+      if fltr.lblNPPASSWORD.Value=vbChecked then
+        f=f &amp;  &quot; and BDEVICES_NPPASSWORD like '%&quot; &amp; fltr.txtNPPASSWORD.Text &amp; &quot;%'&quot; 
+      end if
+      if fltr.lblNPIP.Value=vbChecked then
+        f=f &amp;  &quot; and BDEVICES_NPIP like '%&quot; &amp; fltr.txtNPIP.Text &amp; &quot;%'&quot; 
+      end if
+      if fltr.lblreport_day.Value=vbChecked then
+        f=f &amp;  &quot; and BDEVICES_report_day_ID='&quot; &amp; fltr.txtreport_day.Tag &amp; &quot;'&quot; 
+      end if
+      if fltr.lblNPLOCK_GE.Value=vbChecked then
+        f=f &amp;  &quot; and BDEVICES_NPLOCK&gt;=&quot; &amp; MakeMSSQLDate(fltr.dtpNPLOCK_GE.value)
+      end if
+      if fltr.lblID_MD.Value=vbChecked then
+        f=f &amp;  &quot; and BDEVICES_ID_MD='&quot; &amp; fltr.cmbID_MD.Text &amp; &quot;'&quot; 
+      end if
+      if fltr.lblCONNECTED.Value=vbChecked then
+        f=f &amp;  &quot; and BDEVICES_CONNECTED='&quot; &amp; fltr.cmbCONNECTED.Text &amp; &quot;'&quot; 
+      end if
+      if fltr.lblNPLOCK_LE.Value=vbChecked then
+        f=f &amp;  &quot; and BDEVICES_NPLOCK&lt;=&quot; &amp; MakeMSSQLDate(fltr.dtpNPLOCK_LE.value)
+      end if
+      if fltr.lblreport_hour.Value=vbChecked then
+        f=f &amp;  &quot; and BDEVICES_report_hour_ID='&quot; &amp; fltr.txtreport_hour.Tag &amp; &quot;'&quot; 
+      end if
+      if fltr.lblID_MASK_CURR.Value=vbChecked then
+        f=f &amp;  &quot; and BDEVICES_ID_MASK_CURR_ID='&quot; &amp; fltr.txtID_MASK_CURR.Tag &amp; &quot;'&quot; 
+      end if
+      if fltr.lblID_DEV.Value=vbChecked then
+        f=f &amp;  &quot; and BDEVICES_ID_DEV_ID='&quot; &amp; fltr.txtID_DEV.Tag &amp; &quot;'&quot; 
+      end if
+      if fltr.lblID_BU.Value=vbChecked then
+        f=f &amp;  &quot; and BDEVICES_ID_BU_ID='&quot; &amp; fltr.txtID_BU.Tag &amp; &quot;'&quot; 
+      end if
+      if fltr.lblID_MASK_HOUR.Value=vbChecked then
+        f=f &amp;  &quot; and BDEVICES_ID_MASK_HOUR_ID='&quot; &amp; fltr.txtID_MASK_HOUR.Tag &amp; &quot;'&quot; 
+      end if
+      if fltr.lblSCHEMA_ID.Value=vbChecked then
+        f=f &amp;  &quot; and BDEVICES_SCHEMA_ID_ID='&quot; &amp; fltr.txtSCHEMA_ID.Tag &amp; &quot;'&quot; 
+      end if
+      if fltr.lblID_MASK_SUM.Value=vbChecked then
+        f=f &amp;  &quot; and BDEVICES_ID_MASK_SUM_ID='&quot; &amp; fltr.txtID_MASK_SUM.Tag &amp; &quot;'&quot; 
+      end if
+      if fltr.lblID_MASK_24.Value=vbChecked then
+        f=f &amp;  &quot; and BDEVICES_ID_MASK_24_ID='&quot; &amp; fltr.txtID_MASK_24.Tag &amp; &quot;'&quot; 
+      end if
+    jfmnut_BDEVICES.jv.Filter.Add &quot;AUTOBDEVICES&quot;, f
+    end if 
+    unload fltr 
+    usedefault = false
+end sub 
+private sub   jfmnut_BDEVICES_OnClearFilter()  
+end sub 
+Private Sub jfmnut_BDEVICES_OnAdd(usedefaut As Boolean, Refesh As Boolean)
+  Dim objGui  As Object
+  Dim o As Object
+  Dim ID As String
+  ID = CreateGUID2
+  Manager.NewInstance ID, &quot;t_BDEVICES&quot;, &quot;Опрашиваемое устройство&quot; &amp; Now, Site
+  Set o = Manager.GetInstanceObject(ID)
+  If IsDocDenied(o) Then
+    MsgBox &quot;Не разрешен доступ к документам такого типа&quot;
+    Exit Sub
+  End If
+
+  Dim g  As Object
+  Set g = Manager.GetInstanceGUI(o.ID)
+  If Not g Is Nothing Then
+    g.Show GetDocumentMode(o), o, False
+  End If
+  usedefaut = False
+  Refesh = False
+End Sub
+
+
+private sub mnut_REPORT_Click()
+    Dim journal As Object
+    On Error Resume Next
+    If jfmnut_REPORT Is Nothing Then
+      Set jfmnut_REPORT = New frmJournalShow
+      Set journal = Manager.GetInstanceObject(&quot;{5C2DC185-4170-4EC2-A44F-94C7E76B31D6}&quot;)
+      Manager.LockInstanceObject journal.ID
+      Set jfmnut_REPORT.jv.journal = journal
+      jfmnut_REPORT.jv.OpenModal = False
+      jfmnut_REPORT.Caption = &quot;Отчет&quot;
+      Me.MousePointer = vbHourglass
+      DoEvents
+      Dim f As String
+    f=&quot;1=1&quot;
+    Dim fltr As frmt_REPORT
+    set fltr = new frmt_REPORT
+    fltr.show vbmodal
+    if fltr.ok then 
+    ' build flter expression 
+      if fltr.lblNAME.Value=vbChecked then
+        f=f &amp;  &quot; and REPORT_NAME like '%&quot; &amp; fltr.txtNAME.Text &amp; &quot;%'&quot; 
+      end if
+    jfmnut_REPORT.jv.Filter.Add &quot;AUTOREPORT&quot;, f
+    end if 
+      jfmnut_REPORT.jv.Refresh
+      Me.MousePointer = vbNormal
+    End If
+    jfmnut_REPORT.Show
+    jfmnut_REPORT.WindowState = 0
+    jfmnut_REPORT.ZOrder 0
+end sub 
+private sub   jfmnut_REPORT_OnFilter( usedefault as boolean)  
+    Dim fltr As frmt_REPORT
+    Dim f as string
+    set fltr = new frmt_REPORT
+    fltr.show vbmodal
+    if fltr.ok then 
+    ' build flter expression 
+    f=&quot;1=1&quot;
+      if fltr.lblNAME.Value=vbChecked then
+        f=f &amp;  &quot; and REPORT_NAME like '%&quot; &amp; fltr.txtNAME.Text &amp; &quot;%'&quot; 
+      end if
+    jfmnut_REPORT.jv.Filter.Add &quot;AUTOREPORT&quot;, f
+    end if 
+    unload fltr 
+    usedefault = false
+end sub 
+private sub   jfmnut_REPORT_OnClearFilter()  
+end sub 
+Private Sub jfmnut_REPORT_OnAdd(usedefaut As Boolean, Refesh As Boolean)
+  Dim objGui  As Object
+  Dim o As Object
+  Dim ID As String
+  ID = CreateGUID2
+  Manager.NewInstance ID, &quot;t_REPORT&quot;, &quot;Отчет&quot; &amp; Now, Site
+  Set o = Manager.GetInstanceObject(ID)
+  If IsDocDenied(o) Then
+    MsgBox &quot;Не разрешен доступ к документам такого типа&quot;
+    Exit Sub
+  End If
+
+  Dim g  As Object
+  Set g = Manager.GetInstanceGUI(o.ID)
+  If Not g Is Nothing Then
+    g.Show GetDocumentMode(o), o, False
+  End If
+  usedefaut = False
+  Refesh = False
+End Sub
+
+
+private sub mnut_HCMESSAGES_Click()
+    Dim journal As Object
+    On Error Resume Next
+    If jfmnut_HCMESSAGES Is Nothing Then
+      Set jfmnut_HCMESSAGES = New frmJournalShow
+      Set journal = Manager.GetInstanceObject(&quot;{949A92F5-D67C-4689-8DB4-C99D14450476}&quot;)
+      Manager.LockInstanceObject journal.ID
+      Set jfmnut_HCMESSAGES.jv.journal = journal
+      jfmnut_HCMESSAGES.jv.OpenModal = False
+      jfmnut_HCMESSAGES.Caption = &quot;Сообщения о нештатных ситуациях&quot;
+      Me.MousePointer = vbHourglass
+      DoEvents
+      Dim f As String
+    f=&quot;1=1&quot;
+    Dim fltr As frmt_HCMESSAGES
+    set fltr = new frmt_HCMESSAGES
+    fltr.show vbmodal
+    if fltr.ok then 
+    ' build flter expression 
+      if fltr.lblQMonth_LE.Value=vbChecked then
+        f=f &amp;  &quot; and NS_HEADER_QMonth&lt;=&quot; &amp; val(fltr.txtQMonth_LE.Text)
+      end if
+      if fltr.lblQDay_GE.Value=vbChecked then
+        f=f &amp;  &quot; and NS_HEADER_QDay&gt;=&quot; &amp; val(fltr.txtQDay_GE.Text)
+      end if
+      if fltr.lblQDay_LE.Value=vbChecked then
+        f=f &amp;  &quot; and NS_HEADER_QDay&lt;=&quot; &amp; val(fltr.txtQDay_LE.Text)
+      end if
+      if fltr.lblQMonth_GE.Value=vbChecked then
+        f=f &amp;  &quot; and NS_HEADER_QMonth&gt;=&quot; &amp; val(fltr.txtQMonth_GE.Text)
+      end if
+      if fltr.lblID_BD.Value=vbChecked then
+        f=f &amp;  &quot; and NS_HEADER_ID_BD_ID='&quot; &amp; fltr.txtID_BD.Tag &amp; &quot;'&quot; 
+      end if
+      if fltr.lblQYear_GE.Value=vbChecked then
+        f=f &amp;  &quot; and NS_HEADER_QYear&gt;=&quot; &amp; val(fltr.txtQYear_GE.Text)
+      end if
+      if fltr.lblQYear_LE.Value=vbChecked then
+        f=f &amp;  &quot; and NS_HEADER_QYear&lt;=&quot; &amp; val(fltr.txtQYear_LE.Text)
+      end if
+    jfmnut_HCMESSAGES.jv.Filter.Add &quot;AUTONS_HEADER&quot;, f
+    end if 
+      jfmnut_HCMESSAGES.jv.Refresh
+      Me.MousePointer = vbNormal
+    End If
+    jfmnut_HCMESSAGES.Show
+    jfmnut_HCMESSAGES.WindowState = 0
+    jfmnut_HCMESSAGES.ZOrder 0
+end sub 
+private sub   jfmnut_HCMESSAGES_OnFilter( usedefault as boolean)  
+    Dim fltr As frmt_HCMESSAGES
+    Dim f as string
+    set fltr = new frmt_HCMESSAGES
+    fltr.show vbmodal
+    if fltr.ok then 
+    ' build flter expression 
+    f=&quot;1=1&quot;
+      if fltr.lblQMonth_LE.Value=vbChecked then
+        f=f &amp;  &quot; and NS_HEADER_QMonth&lt;=&quot; &amp; val(fltr.txtQMonth_LE.Text)
+      end if
+      if fltr.lblQDay_GE.Value=vbChecked then
+        f=f &amp;  &quot; and NS_HEADER_QDay&gt;=&quot; &amp; val(fltr.txtQDay_GE.Text)
+      end if
+      if fltr.lblQDay_LE.Value=vbChecked then
+        f=f &amp;  &quot; and NS_HEADER_QDay&lt;=&quot; &amp; val(fltr.txtQDay_LE.Text)
+      end if
+      if fltr.lblQMonth_GE.Value=vbChecked then
+        f=f &amp;  &quot; and NS_HEADER_QMonth&gt;=&quot; &amp; val(fltr.txtQMonth_GE.Text)
+      end if
+      if fltr.lblID_BD.Value=vbChecked then
+        f=f &amp;  &quot; and NS_HEADER_ID_BD_ID='&quot; &amp; fltr.txtID_BD.Tag &amp; &quot;'&quot; 
+      end if
+      if fltr.lblQYear_GE.Value=vbChecked then
+        f=f &amp;  &quot; and NS_HEADER_QYear&gt;=&quot; &amp; val(fltr.txtQYear_GE.Text)
+      end if
+      if fltr.lblQYear_LE.Value=vbChecked then
+        f=f &amp;  &quot; and NS_HEADER_QYear&lt;=&quot; &amp; val(fltr.txtQYear_LE.Text)
+      end if
+    jfmnut_HCMESSAGES.jv.Filter.Add &quot;AUTONS_HEADER&quot;, f
+    end if 
+    unload fltr 
+    usedefault = false
+end sub 
+private sub   jfmnut_HCMESSAGES_OnClearFilter()  
+end sub 
+Private Sub jfmnut_HCMESSAGES_OnAdd(usedefaut As Boolean, Refesh As Boolean)
+  Dim objGui  As Object
+  Dim o As Object
+  Dim ID As String
+  ID = CreateGUID2
+  Manager.NewInstance ID, &quot;t_HCMESSAGES&quot;, &quot;Сообщения о нештатных ситуациях&quot; &amp; Now, Site
+  Set o = Manager.GetInstanceObject(ID)
+  If IsDocDenied(o) Then
+    MsgBox &quot;Не разрешен доступ к документам такого типа&quot;
+    Exit Sub
+  End If
+
+  Dim g  As Object
+  Set g = Manager.GetInstanceGUI(o.ID)
+  If Not g Is Nothing Then
+    g.Show GetDocumentMode(o), o, False
+  End If
+  usedefaut = False
+  Refesh = False
+End Sub
+
+
+private sub mnut_DEVSCHEMA_Click()
+    Dim journal As Object
+    On Error Resume Next
+    If jfmnut_DEVSCHEMA Is Nothing Then
+      Set jfmnut_DEVSCHEMA = New frmJournalShow
+      Set journal = Manager.GetInstanceObject(&quot;{F354AB5E-8944-4B30-94ED-C56F26E8E69D}&quot;)
+      Manager.LockInstanceObject journal.ID
+      Set jfmnut_DEVSCHEMA.jv.journal = journal
+      jfmnut_DEVSCHEMA.jv.OpenModal = False
+      jfmnut_DEVSCHEMA.Caption = &quot;Схема подключения&quot;
+      Me.MousePointer = vbHourglass
+      DoEvents
+      Dim f As String
+    f=&quot;1=1&quot;
+    Dim fltr As frmt_DEVSCHEMA
+    set fltr = new frmt_DEVSCHEMA
+    fltr.show vbmodal
+    if fltr.ok then 
+    ' build flter expression 
+      if fltr.lblNAME.Value=vbChecked then
+        f=f &amp;  &quot; and DEVSCHEMA_NAME like '%&quot; &amp; fltr.txtNAME.Text &amp; &quot;%'&quot; 
+      end if
+    jfmnut_DEVSCHEMA.jv.Filter.Add &quot;AUTODEVSCHEMA&quot;, f
+    end if 
+      jfmnut_DEVSCHEMA.jv.Refresh
+      Me.MousePointer = vbNormal
+    End If
+    jfmnut_DEVSCHEMA.Show
+    jfmnut_DEVSCHEMA.WindowState = 0
+    jfmnut_DEVSCHEMA.ZOrder 0
+end sub 
+private sub   jfmnut_DEVSCHEMA_OnFilter( usedefault as boolean)  
+    Dim fltr As frmt_DEVSCHEMA
+    Dim f as string
+    set fltr = new frmt_DEVSCHEMA
+    fltr.show vbmodal
+    if fltr.ok then 
+    ' build flter expression 
+    f=&quot;1=1&quot;
+      if fltr.lblNAME.Value=vbChecked then
+        f=f &amp;  &quot; and DEVSCHEMA_NAME like '%&quot; &amp; fltr.txtNAME.Text &amp; &quot;%'&quot; 
+      end if
+    jfmnut_DEVSCHEMA.jv.Filter.Add &quot;AUTODEVSCHEMA&quot;, f
+    end if 
+    unload fltr 
+    usedefault = false
+end sub 
+private sub   jfmnut_DEVSCHEMA_OnClearFilter()  
+end sub 
+Private Sub jfmnut_DEVSCHEMA_OnAdd(usedefaut As Boolean, Refesh As Boolean)
+  Dim objGui  As Object
+  Dim o As Object
+  Dim ID As String
+  ID = CreateGUID2
+  Manager.NewInstance ID, &quot;t_DEVSCHEMA&quot;, &quot;Схема подключения&quot; &amp; Now, Site
+  Set o = Manager.GetInstanceObject(ID)
+  If IsDocDenied(o) Then
+    MsgBox &quot;Не разрешен доступ к документам такого типа&quot;
+    Exit Sub
+  End If
+
+  Dim g  As Object
+  Set g = Manager.GetInstanceGUI(o.ID)
+  If Not g Is Nothing Then
+    g.Show GetDocumentMode(o), o, False
+  End If
+  usedefaut = False
+  Refesh = False
+End Sub
+
+
+private sub mnut_DATACURR_Click()
+    Dim journal As Object
+    On Error Resume Next
+    If jfmnut_DATACURR Is Nothing Then
+      Set jfmnut_DATACURR = New frmJournalShow
+      Set journal = Manager.GetInstanceObject(&quot;{6FB8BB5C-5849-4BBC-968B-9D413E1E4A8A}&quot;)
+      Manager.LockInstanceObject journal.ID
+      Set jfmnut_DATACURR.jv.journal = journal
+      jfmnut_DATACURR.jv.OpenModal = False
+      jfmnut_DATACURR.Caption = &quot;Текущие значения&quot;
+      Me.MousePointer = vbHourglass
+      DoEvents
+      Dim f As String
+    f=&quot;1=1&quot;
+    Dim fltr As frmt_DATACURR
+    set fltr = new frmt_DATACURR
+    fltr.show vbmodal
+    if fltr.ok then 
+    ' build flter expression 
+      if fltr.lblQMonth_LE.Value=vbChecked then
+        f=f &amp;  &quot; and DC_HEADER_QMonth&lt;=&quot; &amp; val(fltr.txtQMonth_LE.Text)
+      end if
+      if fltr.lblQMonth_GE.Value=vbChecked then
+        f=f &amp;  &quot; and DC_HEADER_QMonth&gt;=&quot; &amp; val(fltr.txtQMonth_GE.Text)
+      end if
+      if fltr.lblQDay_LE.Value=vbChecked then
+        f=f &amp;  &quot; and DC_HEADER_QDay&lt;=&quot; &amp; val(fltr.txtQDay_LE.Text)
+      end if
+      if fltr.lblQDay_GE.Value=vbChecked then
+        f=f &amp;  &quot; and DC_HEADER_QDay&gt;=&quot; &amp; val(fltr.txtQDay_GE.Text)
+      end if
+      if fltr.lblID_DU.Value=vbChecked then
+        f=f &amp;  &quot; and DC_HEADER_ID_DU_ID='&quot; &amp; fltr.txtID_DU.Tag &amp; &quot;'&quot; 
+      end if
+      if fltr.lblID_BD.Value=vbChecked then
+        f=f &amp;  &quot; and DC_HEADER_ID_BD_ID='&quot; &amp; fltr.txtID_BD.Tag &amp; &quot;'&quot; 
+      end if
+      if fltr.lblQYear_LE.Value=vbChecked then
+        f=f &amp;  &quot; and DC_HEADER_QYear&lt;=&quot; &amp; val(fltr.txtQYear_LE.Text)
+      end if
+      if fltr.lblQYear_GE.Value=vbChecked then
+        f=f &amp;  &quot; and DC_HEADER_QYear&gt;=&quot; &amp; val(fltr.txtQYear_GE.Text)
+      end if
+    jfmnut_DATACURR.jv.Filter.Add &quot;AUTODC_HEADER&quot;, f
+    end if 
+      jfmnut_DATACURR.jv.Refresh
+      Me.MousePointer = vbNormal
+    End If
+    jfmnut_DATACURR.Show
+    jfmnut_DATACURR.WindowState = 0
+    jfmnut_DATACURR.ZOrder 0
+end sub 
+private sub   jfmnut_DATACURR_OnFilter( usedefault as boolean)  
+    Dim fltr As frmt_DATACURR
+    Dim f as string
+    set fltr = new frmt_DATACURR
+    fltr.show vbmodal
+    if fltr.ok then 
+    ' build flter expression 
+    f=&quot;1=1&quot;
+      if fltr.lblQMonth_LE.Value=vbChecked then
+        f=f &amp;  &quot; and DC_HEADER_QMonth&lt;=&quot; &amp; val(fltr.txtQMonth_LE.Text)
+      end if
+      if fltr.lblQMonth_GE.Value=vbChecked then
+        f=f &amp;  &quot; and DC_HEADER_QMonth&gt;=&quot; &amp; val(fltr.txtQMonth_GE.Text)
+      end if
+      if fltr.lblQDay_LE.Value=vbChecked then
+        f=f &amp;  &quot; and DC_HEADER_QDay&lt;=&quot; &amp; val(fltr.txtQDay_LE.Text)
+      end if
+      if fltr.lblQDay_GE.Value=vbChecked then
+        f=f &amp;  &quot; and DC_HEADER_QDay&gt;=&quot; &amp; val(fltr.txtQDay_GE.Text)
+      end if
+      if fltr.lblID_DU.Value=vbChecked then
+        f=f &amp;  &quot; and DC_HEADER_ID_DU_ID='&quot; &amp; fltr.txtID_DU.Tag &amp; &quot;'&quot; 
+      end if
+      if fltr.lblID_BD.Value=vbChecked then
+        f=f &amp;  &quot; and DC_HEADER_ID_BD_ID='&quot; &amp; fltr.txtID_BD.Tag &amp; &quot;'&quot; 
+      end if
+      if fltr.lblQYear_LE.Value=vbChecked then
+        f=f &amp;  &quot; and DC_HEADER_QYear&lt;=&quot; &amp; val(fltr.txtQYear_LE.Text)
+      end if
+      if fltr.lblQYear_GE.Value=vbChecked then
+        f=f &amp;  &quot; and DC_HEADER_QYear&gt;=&quot; &amp; val(fltr.txtQYear_GE.Text)
+      end if
+    jfmnut_DATACURR.jv.Filter.Add &quot;AUTODC_HEADER&quot;, f
+    end if 
+    unload fltr 
+    usedefault = false
+end sub 
+private sub   jfmnut_DATACURR_OnClearFilter()  
+end sub 
+Private Sub jfmnut_DATACURR_OnAdd(usedefaut As Boolean, Refesh As Boolean)
+  Dim objGui  As Object
+  Dim o As Object
+  Dim ID As String
+  ID = CreateGUID2
+  Manager.NewInstance ID, &quot;t_DATACURR&quot;, &quot;Текущие значения&quot; &amp; Now, Site
+  Set o = Manager.GetInstanceObject(ID)
+  If IsDocDenied(o) Then
+    MsgBox &quot;Не разрешен доступ к документам такого типа&quot;
+    Exit Sub
+  End If
+
+  Dim g  As Object
+  Set g = Manager.GetInstanceGUI(o.ID)
+  If Not g Is Nothing Then
+    g.Show GetDocumentMode(o), o, False
+  End If
+  usedefaut = False
+  Refesh = False
+End Sub
+
+
+private sub mnut_MASKS_Click()
+    Dim journal As Object
+    On Error Resume Next
+    If jfmnut_MASKS Is Nothing Then
+      Set jfmnut_MASKS = New frmJournalShow
+      Set journal = Manager.GetInstanceObject(&quot;{BA3BB21D-D5BF-4310-AA96-80627FDFAB35}&quot;)
+      Manager.LockInstanceObject journal.ID
+      Set jfmnut_MASKS.jv.journal = journal
+      jfmnut_MASKS.jv.OpenModal = False
+      jfmnut_MASKS.Caption = &quot;Шаблон отображения&quot;
+      Me.MousePointer = vbHourglass
+      DoEvents
+      Dim f As String
+    f=&quot;1=1&quot;
+    Dim fltr As frmt_MASKS
+    set fltr = new frmt_MASKS
+    fltr.show vbmodal
+    if fltr.ok then 
+    ' build flter expression 
+      if fltr.lblID_DEV.Value=vbChecked then
+        f=f &amp;  &quot; and MASKS_ID_DEV_ID='&quot; &amp; fltr.txtID_DEV.Tag &amp; &quot;'&quot; 
+      end if
+      if fltr.lblID_TYPE.Value=vbChecked then
+        f=f &amp;  &quot; and MASKS_ID_TYPE_ID='&quot; &amp; fltr.txtID_TYPE.Tag &amp; &quot;'&quot; 
+      end if
+      if fltr.lblCNAME.Value=vbChecked then
+        f=f &amp;  &quot; and MASKS_CNAME like '%&quot; &amp; fltr.txtCNAME.Text &amp; &quot;%'&quot; 
+      end if
+      if fltr.lblCTYPE.Value=vbChecked then
+        f=f &amp;  &quot; and MASKS_CTYPE='&quot; &amp; fltr.cmbCTYPE.Text &amp; &quot;'&quot; 
+      end if
+    jfmnut_MASKS.jv.Filter.Add &quot;AUTOMASKS&quot;, f
+    end if 
+      jfmnut_MASKS.jv.Refresh
+      Me.MousePointer = vbNormal
+    End If
+    jfmnut_MASKS.Show
+    jfmnut_MASKS.WindowState = 0
+    jfmnut_MASKS.ZOrder 0
+end sub 
+private sub   jfmnut_MASKS_OnFilter( usedefault as boolean)  
+    Dim fltr As frmt_MASKS
+    Dim f as string
+    set fltr = new frmt_MASKS
+    fltr.show vbmodal
+    if fltr.ok then 
+    ' build flter expression 
+    f=&quot;1=1&quot;
+      if fltr.lblID_DEV.Value=vbChecked then
+        f=f &amp;  &quot; and MASKS_ID_DEV_ID='&quot; &amp; fltr.txtID_DEV.Tag &amp; &quot;'&quot; 
+      end if
+      if fltr.lblID_TYPE.Value=vbChecked then
+        f=f &amp;  &quot; and MASKS_ID_TYPE_ID='&quot; &amp; fltr.txtID_TYPE.Tag &amp; &quot;'&quot; 
+      end if
+      if fltr.lblCNAME.Value=vbChecked then
+        f=f &amp;  &quot; and MASKS_CNAME like '%&quot; &amp; fltr.txtCNAME.Text &amp; &quot;%'&quot; 
+      end if
+      if fltr.lblCTYPE.Value=vbChecked then
+        f=f &amp;  &quot; and MASKS_CTYPE='&quot; &amp; fltr.cmbCTYPE.Text &amp; &quot;'&quot; 
+      end if
+    jfmnut_MASKS.jv.Filter.Add &quot;AUTOMASKS&quot;, f
+    end if 
+    unload fltr 
+    usedefault = false
+end sub 
+private sub   jfmnut_MASKS_OnClearFilter()  
+end sub 
+Private Sub jfmnut_MASKS_OnAdd(usedefaut As Boolean, Refesh As Boolean)
+  Dim objGui  As Object
+  Dim o As Object
+  Dim ID As String
+  ID = CreateGUID2
+  Manager.NewInstance ID, &quot;t_MASKS&quot;, &quot;Шаблон отображения&quot; &amp; Now, Site
+  Set o = Manager.GetInstanceObject(ID)
+  If IsDocDenied(o) Then
+    MsgBox &quot;Не разрешен доступ к документам такого типа&quot;
+    Exit Sub
+  End If
+
+  Dim g  As Object
+  Set g = Manager.GetInstanceGUI(o.ID)
+  If Not g Is Nothing Then
+    g.Show GetDocumentMode(o), o, False
+  End If
+  usedefaut = False
+  Refesh = False
+End Sub
+
+
+
+
+private sub mnut_BGROUPS_Click()
+ Dim o As Object
+ Dim rs  As ADODB.Recordset
+ Dim ID as string
+  Set rs = Manager.ListInstances(&quot;&quot;,&quot;t_BGROUPS&quot;)
+  if not  rs.eof then
+    id =rs!Instanceid 
+  else
+    id =createguid2
+    Manager.NewInstance id, &quot;t_BGROUPS&quot;, &quot;Группы опрашиваемых устройств&quot; 
+  End If
+    Set o = Manager.GetInstanceObject( id)
+    If IsDocDenied(o) Then
+      MsgBox &quot;Не разрешен доступ к документам такого типа&quot;
+      Exit Sub
+    End If
+
+    Dim g  As Object
+    Set g = Manager.GetInstanceGUI(o.ID)
+    If Not g Is Nothing Then
+      g.Show GetDocumentMode(o), o, False
+    End If
+  set rs = nothing
+end sub 
+
+
+private sub mnut_DEVCLASSES_Click()
+ Dim o As Object
+ Dim rs  As ADODB.Recordset
+ Dim ID as string
+  Set rs = Manager.ListInstances(&quot;&quot;,&quot;t_DEVCLASSES&quot;)
+  if not  rs.eof then
+    id =rs!Instanceid 
+  else
+    id =createguid2
+    Manager.NewInstance id, &quot;t_DEVCLASSES&quot;, &quot;Классы приборов&quot; 
+  End If
+    Set o = Manager.GetInstanceObject( id)
+    If IsDocDenied(o) Then
+      MsgBox &quot;Не разрешен доступ к документам такого типа&quot;
+      Exit Sub
+    End If
+
+    Dim g  As Object
+    Set g = Manager.GetInstanceGUI(o.ID)
+    If Not g Is Nothing Then
+      g.Show GetDocumentMode(o), o, False
+    End If
+  set rs = nothing
+end sub 
+
+
+private sub mnut_COMMONPARAM_Click()
+ Dim o As Object
+ Dim rs  As ADODB.Recordset
+ Dim ID as string
+  Set rs = Manager.ListInstances(&quot;&quot;,&quot;t_COMMONPARAM&quot;)
+  if not  rs.eof then
+    id =rs!Instanceid 
+  else
+    id =createguid2
+    Manager.NewInstance id, &quot;t_COMMONPARAM&quot;, &quot;Общие параметры&quot; 
+  End If
+    Set o = Manager.GetInstanceObject( id)
+    If IsDocDenied(o) Then
+      MsgBox &quot;Не разрешен доступ к документам такого типа&quot;
+      Exit Sub
+    End If
+
+    Dim g  As Object
+    Set g = Manager.GetInstanceGUI(o.ID)
+    If Not g Is Nothing Then
+      g.Show GetDocumentMode(o), o, False
+    End If
+  set rs = nothing
+end sub 
+
+
+private sub mnut_PLANCALL_Click()
+ Dim o As Object
+ Dim rs  As ADODB.Recordset
+ Dim ID as string
+  Set rs = Manager.ListInstances(&quot;&quot;,&quot;t_PLANCALL&quot;)
+  if not  rs.eof then
+    id =rs!Instanceid 
+  else
+    id =createguid2
+    Manager.NewInstance id, &quot;t_PLANCALL&quot;, &quot;План опроса устройств&quot; 
+  End If
+    Set o = Manager.GetInstanceObject( id)
+    If IsDocDenied(o) Then
+      MsgBox &quot;Не разрешен доступ к документам такого типа&quot;
+      Exit Sub
+    End If
+
+    Dim g  As Object
+    Set g = Manager.GetInstanceGUI(o.ID)
+    If Not g Is Nothing Then
+      g.Show GetDocumentMode(o), o, False
+    End If
+  set rs = nothing
+end sub 
+
+
+private sub mnut_DEVICES_Click()
+ Dim o As Object
+ Dim rs  As ADODB.Recordset
+ Dim ID as string
+  Set rs = Manager.ListInstances(&quot;&quot;,&quot;t_DEVICES&quot;)
+  if not  rs.eof then
+    id =rs!Instanceid 
+  else
+    id =createguid2
+    Manager.NewInstance id, &quot;t_DEVICES&quot;, &quot;Прибор&quot; 
+  End If
+    Set o = Manager.GetInstanceObject( id)
+    If IsDocDenied(o) Then
+      MsgBox &quot;Не разрешен доступ к документам такого типа&quot;
+      Exit Sub
+    End If
+
+    Dim g  As Object
+    Set g = Manager.GetInstanceGUI(o.ID)
+    If Not g Is Nothing Then
+      g.Show GetDocumentMode(o), o, False
+    End If
+  set rs = nothing
+end sub 
+
+
+private sub mnut_WHOGIVETOP_Click()
+ Dim o As Object
+ Dim rs  As ADODB.Recordset
+ Dim ID as string
+  Set rs = Manager.ListInstances(&quot;&quot;,&quot;t_WHOGIVETOP&quot;)
+  if not  rs.eof then
+    id =rs!Instanceid 
+  else
+    id =createguid2
+    Manager.NewInstance id, &quot;t_WHOGIVETOP&quot;, &quot;Снабжающая организация&quot; 
+  End If
+    Set o = Manager.GetInstanceObject( id)
+    If IsDocDenied(o) Then
+      MsgBox &quot;Не разрешен доступ к документам такого типа&quot;
+      Exit Sub
+    End If
+
+    Dim g  As Object
+    Set g = Manager.GetInstanceGUI(o.ID)
+    If Not g Is Nothing Then
+      g.Show GetDocumentMode(o), o, False
+    End If
+  set rs = nothing
+end sub 
+
+
+private sub mnut_PARAMTYPE_Click()
+ Dim o As Object
+ Dim rs  As ADODB.Recordset
+ Dim ID as string
+  Set rs = Manager.ListInstances(&quot;&quot;,&quot;t_PARAMTYPE&quot;)
+  if not  rs.eof then
+    id =rs!Instanceid 
+  else
+    id =createguid2
+    Manager.NewInstance id, &quot;t_PARAMTYPE&quot;, &quot;Тип архива&quot; 
+  End If
+    Set o = Manager.GetInstanceObject( id)
+    If IsDocDenied(o) Then
+      MsgBox &quot;Не разрешен доступ к документам такого типа&quot;
+      Exit Sub
+    End If
+
+    Dim g  As Object
+    Set g = Manager.GetInstanceGUI(o.ID)
+    If Not g Is Nothing Then
+      g.Show GetDocumentMode(o), o, False
+    End If
+  set rs = nothing
+end sub 
+
+
+private sub mnut_BBUILDINGS_Click()
+ Dim o As Object
+ Dim rs  As ADODB.Recordset
+ Dim ID as string
+  Set rs = Manager.ListInstances(&quot;&quot;,&quot;t_BBUILDINGS&quot;)
+  if not  rs.eof then
+    id =rs!Instanceid 
+  else
+    id =createguid2
+    Manager.NewInstance id, &quot;t_BBUILDINGS&quot;, &quot;Узел подключения&quot; 
+  End If
+    Set o = Manager.GetInstanceObject( id)
+    If IsDocDenied(o) Then
+      MsgBox &quot;Не разрешен доступ к документам такого типа&quot;
+      Exit Sub
+    End If
+
+    Dim g  As Object
+    Set g = Manager.GetInstanceGUI(o.ID)
+    If Not g Is Nothing Then
+      g.Show GetDocumentMode(o), o, False
+    End If
+  set rs = nothing
+end sub 
+
+
+
+
+private sub UnloadObjects() 
+
+
+unload  jfmnut_LOGCALL
+set  jfmnut_LOGCALL = nothing
+
+unload  jfmnut_BDEVICES
+set  jfmnut_BDEVICES = nothing
+
+unload  jfmnut_REPORT
+set  jfmnut_REPORT = nothing
+
+unload  jfmnut_HCMESSAGES
+set  jfmnut_HCMESSAGES = nothing
+
+unload  jfmnut_DEVSCHEMA
+set  jfmnut_DEVSCHEMA = nothing
+
+unload  jfmnut_DATACURR
+set  jfmnut_DATACURR = nothing
+
+unload  jfmnut_MASKS
+set  jfmnut_MASKS = nothing
+
+
+
+
+
+
+
+
+
+
+end sub
+
+"><AttributeHolder Name="Type" Value="code"/><FormData Name=""/></BlockHolder></ModuleHolder><ModuleHolder ModuleName="RoleSupport" File=""><AttributeHolder Name="Type" Value="module"/><BlockHolder BlockName="'description" BlockCode="
+
+"><AttributeHolder Name="Type" Value="description"/><FormData Name=""/></BlockHolder><BlockHolder BlockName="'codebody" BlockCode="
+public function ARMID() as string
+   ARMID=&quot;{C4E693C1-BA02-41B8-9B7C-585335C59D8B}&quot;
+end function
+
+"><AttributeHolder Name="Type" Value="code"/><FormData Name=""/></BlockHolder></ModuleHolder><ModuleHolder ModuleName="Module1" File=""><AttributeHolder Name="Type" Value="module"/><BlockHolder BlockName="'description" BlockCode="
+
+"><AttributeHolder Name="Type" Value="description"/><FormData Name=""/></BlockHolder><BlockHolder BlockName="'codebody" BlockCode="
+private sub RegisterMDIGUI()
+ Dim g As GUI
+Set g = New GUI
+g.Init &quot;t_BGROUPS&quot;
+Manager.RegisterGUI g, &quot;t_BGROUPS&quot;
+Set g = New GUI
+g.Init &quot;t_LOGCALL&quot;
+Manager.RegisterGUI g, &quot;t_LOGCALL&quot;
+Set g = New GUI
+g.Init &quot;t_DEVCLASSES&quot;
+Manager.RegisterGUI g, &quot;t_DEVCLASSES&quot;
+Set g = New GUI
+g.Init &quot;t_COMMONPARAM&quot;
+Manager.RegisterGUI g, &quot;t_COMMONPARAM&quot;
+Set g = New GUI
+g.Init &quot;t_BDEVICES&quot;
+Manager.RegisterGUI g, &quot;t_BDEVICES&quot;
+Set g = New GUI
+g.Init &quot;t_REPORT&quot;
+Manager.RegisterGUI g, &quot;t_REPORT&quot;
+Set g = New GUI
+g.Init &quot;t_PLANCALL&quot;
+Manager.RegisterGUI g, &quot;t_PLANCALL&quot;
+Set g = New GUI
+g.Init &quot;t_DEVICES&quot;
+Manager.RegisterGUI g, &quot;t_DEVICES&quot;
+Set g = New GUI
+g.Init &quot;t_WHOGIVETOP&quot;
+Manager.RegisterGUI g, &quot;t_WHOGIVETOP&quot;
+Set g = New GUI
+g.Init &quot;t_HCMESSAGES&quot;
+Manager.RegisterGUI g, &quot;t_HCMESSAGES&quot;
+Set g = New GUI
+g.Init &quot;t_DEVSCHEMA&quot;
+Manager.RegisterGUI g, &quot;t_DEVSCHEMA&quot;
+Set g = New GUI
+g.Init &quot;t_DATACURR&quot;
+Manager.RegisterGUI g, &quot;t_DATACURR&quot;
+Set g = New GUI
+g.Init &quot;t_PARAMTYPE&quot;
+Manager.RegisterGUI g, &quot;t_PARAMTYPE&quot;
+Set g = New GUI
+g.Init &quot;t_BBUILDINGS&quot;
+Manager.RegisterGUI g, &quot;t_BBUILDINGS&quot;
+Set g = New GUI
+g.Init &quot;t_MASKS&quot;
+Manager.RegisterGUI g, &quot;t_MASKS&quot;
+
+end sub
+
+"><AttributeHolder Name="Type" Value="code"/><FormData Name=""/></BlockHolder></ModuleHolder><ModuleHolder ModuleName="frmt_LOGCALL" File=""><AttributeHolder Name="Type" Value="form"/><BlockHolder BlockName="'form" BlockCode=""><AttributeHolder Name="Type" Value="form"/><FormData Name=""><ControlData Name="cmdOK" ControlIndex="0" PROGID="VB.CommandButton"><Properties Name="Name" PropValue="cmdOK"/><Properties Name="Caption" PropValue="OK"/><Properties Name="Tag" PropValue=""/><Properties Name="ToolTipText" PropValue="Применить фильтр"/><Properties Name="UseMaskColor" PropValue="True"/><Properties Name="Height" PropValue="330"/><Properties Name="Width" PropValue="750"/><Properties Name="Top" PropValue="0"/><Properties Name="Left" PropValue="0"/></ControlData><ControlData Name="cmdCancel" ControlIndex="0" PROGID="VB.CommandButton"><Properties Name="Name" PropValue="cmdCancel"/><Properties Name="Caption" PropValue="Отмена"/><Properties Name="Tag" PropValue=""/><Properties Name="ToolTipText" PropValue="Отказ от задания фильтра"/><Properties Name="UseMaskColor" PropValue="True"/><Properties Name="Height" PropValue="330"/><Properties Name="Width" PropValue="750"/><Properties Name="Top" PropValue="0"/><Properties Name="Left" PropValue="0"/></ControlData><ControlData Name="mnuCtl" ControlIndex="0" PROGID="VB.Menu"><Properties Name="Caption" PropValue="mnuCtl"/><Properties Name="Name" PropValue="mnuCtl"/><Properties Name="Visible" PropValue="False"/><ControlData Name="mnuSetup" ControlIndex="0" PROGID="VB.Menu"><Properties Name="Caption" PropValue="Настройка"/><Properties Name="Name" PropValue="mnuSetup"/><Properties Name="Enabled" PropValue="True"/><Properties Name="Visible" PropValue="True"/></ControlData></ControlData><ControlData Name="ts" ControlIndex="0" PROGID="mscomctllib.tabstrip"><Properties Name="Name" PropValue="ts"/><Properties Name="Top" PropValue="0"/><Properties Name="Left" PropValue="0"/><Properties Name="Width" PropValue="1500"/><Properties Name="Height" PropValue="1500"/></ControlData><ControlData Name="PanelfGroup" ControlIndex="0" PROGID="MTZ_panel.Scrolledwindow"><Properties Name="BackStyle" PropValue="0"/><Properties Name="NAME" PropValue="PanelfGroup"/><Properties Name="Top" PropValue="0"/><Properties Name="Left" PropValue="0"/><Properties Name="Height" PropValue="1000"/><Properties Name="Width" PropValue="1000"/><ControlData Name="" ControlIndex="0" PROGID="VB.CheckBox"><Properties Name="BackStyle" PropValue="0"/><Properties Name="NAME" PropValue="lblID_BD"/><Properties Name="Caption" PropValue="Устройство:"/><Properties Name="Top" PropValue="75"/><Properties Name="Left" PropValue="300"/><Properties Name="Height" PropValue="300"/><Properties Name="Width" PropValue="3000"/><Properties Name="ForeColor" PropValue="0"/></ControlData><ControlData Name="" ControlIndex="0" PROGID="VB.textbox"><Properties Name="NAME" PropValue="txtID_BD"/><Properties Name="Text" PropValue=""/><Properties Name="Locked" PropValue="True"/><Properties Name="Enabled" PropValue="True"/><Properties Name="Top" PropValue="405"/><Properties Name="Left" PropValue="300"/><Properties Name="Height" PropValue="300"/><Properties Name="Width" PropValue="2550"/><Properties Name="ToolTipText" PropValue="Устройство"/></ControlData><ControlData Name="" ControlIndex="0" PROGID="MTZ_PANEL.DropButton"><Properties Name="NAME" PropValue="cmdID_BD"/><Properties Name="Caption" PropValue=""/><Properties Name="Tag" PropValue="refopen.ico"/><Properties Name="Top" PropValue="405"/><Properties Name="Enabled" PropValue="True"/><Properties Name="Left" PropValue="2850"/><Properties Name="Height" PropValue="300"/><Properties Name="Width" PropValue="450"/><Properties Name="ToolTipText" PropValue="Устройство"/></ControlData><ControlData Name="" ControlIndex="0" PROGID="VB.CheckBox"><Properties Name="BackStyle" PropValue="0"/><Properties Name="NAME" PropValue="lblID_DU"/><Properties Name="Caption" PropValue="Подключенное устройство:"/><Properties Name="Top" PropValue="780"/><Properties Name="Left" PropValue="300"/><Properties Name="Height" PropValue="300"/><Properties Name="Width" PropValue="3000"/><Properties Name="ForeColor" PropValue="0"/></ControlData><ControlData Name="" ControlIndex="0" PROGID="VB.textbox"><Properties Name="NAME" PropValue="txtID_DU"/><Properties Name="Text" PropValue=""/><Properties Name="Locked" PropValue="True"/><Properties Name="Enabled" PropValue="True"/><Properties Name="Top" PropValue="1110"/><Properties Name="Left" PropValue="300"/><Properties Name="Height" PropValue="300"/><Properties Name="Width" PropValue="2550"/><Properties Name="ToolTipText" PropValue="Подключенное устройство"/></ControlData><ControlData Name="" ControlIndex="0" PROGID="MTZ_PANEL.DropButton"><Properties Name="NAME" PropValue="cmdID_DU"/><Properties Name="Caption" PropValue=""/><Properties Name="Tag" PropValue="refopen.ico"/><Properties Name="Top" PropValue="1110"/><Properties Name="Enabled" PropValue="True"/><Properties Name="Left" PropValue="2850"/><Properties Name="Height" PropValue="300"/><Properties Name="Width" PropValue="450"/><Properties Name="ToolTipText" PropValue="Подключенное устройство"/></ControlData><ControlData Name="" ControlIndex="0" PROGID="VB.CheckBox"><Properties Name="BackStyle" PropValue="0"/><Properties Name="NAME" PropValue="lblID_PTYPE"/><Properties Name="Caption" PropValue="Тип параметра:"/><Properties Name="Top" PropValue="1485"/><Properties Name="Left" PropValue="300"/><Properties Name="Height" PropValue="300"/><Properties Name="Width" PropValue="3000"/><Properties Name="ForeColor" PropValue="0"/></ControlData><ControlData Name="" ControlIndex="0" PROGID="VB.textbox"><Properties Name="NAME" PropValue="txtID_PTYPE"/><Properties Name="Text" PropValue=""/><Properties Name="Locked" PropValue="True"/><Properties Name="Enabled" PropValue="True"/><Properties Name="Top" PropValue="1815"/><Properties Name="Left" PropValue="300"/><Properties Name="Height" PropValue="300"/><Properties Name="Width" PropValue="2550"/><Properties Name="ToolTipText" PropValue="Тип параметра"/></ControlData><ControlData Name="" ControlIndex="0" PROGID="MTZ_PANEL.DropButton"><Properties Name="NAME" PropValue="cmdID_PTYPE"/><Properties Name="Caption" PropValue=""/><Properties Name="Tag" PropValue="refopen.ico"/><Properties Name="Top" PropValue="1815"/><Properties Name="Enabled" PropValue="True"/><Properties Name="Left" PropValue="2850"/><Properties Name="Height" PropValue="300"/><Properties Name="Width" PropValue="450"/><Properties Name="ToolTipText" PropValue="Тип параметра"/></ControlData><ControlData Name="" ControlIndex="0" PROGID="VB.CheckBox"><Properties Name="BackStyle" PropValue="0"/><Properties Name="NAME" PropValue="lblQYear_GE"/><Properties Name="Caption" PropValue="Год опроса больше или равно:"/><Properties Name="Top" PropValue="2190"/><Properties Name="Left" PropValue="300"/><Properties Name="Height" PropValue="300"/><Properties Name="Width" PropValue="3000"/><Properties Name="ForeColor" PropValue="0"/></ControlData><ControlData Name="" ControlIndex="0" PROGID="VB.textbox"><Properties Name="NAME" PropValue="txtQYear_GE"/><Properties Name="Text" PropValue=""/><Properties Name="Top" PropValue="2520"/><Properties Name="Left" PropValue="300"/><Properties Name="Height" PropValue="300"/><Properties Name="Width" PropValue="1800"/><Properties Name="ToolTipText" PropValue="Год опроса больше или равно"/><Properties Name="CausesValidation" PropValue="True"/><Properties Name="Locked" PropValue="False"/><Properties Name="Enabled" PropValue="True"/><Properties Name="MaxLength" PropValue="15"/></ControlData><ControlData Name="" ControlIndex="0" PROGID="VB.CheckBox"><Properties Name="BackStyle" PropValue="0"/><Properties Name="NAME" PropValue="lblQYear_LE"/><Properties Name="Caption" PropValue="Год опроса меньше или равно:"/><Properties Name="Top" PropValue="2895"/><Properties Name="Left" PropValue="300"/><Properties Name="Height" PropValue="300"/><Properties Name="Width" PropValue="3000"/><Properties Name="ForeColor" PropValue="0"/></ControlData><ControlData Name="" ControlIndex="0" PROGID="VB.textbox"><Properties Name="NAME" PropValue="txtQYear_LE"/><Properties Name="Text" PropValue=""/><Properties Name="Top" PropValue="3225"/><Properties Name="Left" PropValue="300"/><Properties Name="Height" PropValue="300"/><Properties Name="Width" PropValue="1800"/><Properties Name="ToolTipText" PropValue="Год опроса меньше или равно"/><Properties Name="CausesValidation" PropValue="True"/><Properties Name="Locked" PropValue="False"/><Properties Name="Enabled" PropValue="True"/><Properties Name="MaxLength" PropValue="15"/></ControlData><ControlData Name="" ControlIndex="0" PROGID="VB.CheckBox"><Properties Name="BackStyle" PropValue="0"/><Properties Name="NAME" PropValue="lblQMonth_GE"/><Properties Name="Caption" PropValue="Месяц опроса больше или равно:"/><Properties Name="Top" PropValue="3600"/><Properties Name="Left" PropValue="300"/><Properties Name="Height" PropValue="300"/><Properties Name="Width" PropValue="3000"/><Properties Name="ForeColor" PropValue="0"/></ControlData><ControlData Name="" ControlIndex="0" PROGID="VB.textbox"><Properties Name="NAME" PropValue="txtQMonth_GE"/><Properties Name="Text" PropValue=""/><Properties Name="Top" PropValue="3930"/><Properties Name="Left" PropValue="300"/><Properties Name="Height" PropValue="300"/><Properties Name="Width" PropValue="1800"/><Properties Name="ToolTipText" PropValue="Месяц опроса больше или равно"/><Properties Name="CausesValidation" PropValue="True"/><Properties Name="Locked" PropValue="False"/><Properties Name="Enabled" PropValue="True"/><Properties Name="MaxLength" PropValue="15"/></ControlData><ControlData Name="" ControlIndex="0" PROGID="VB.CheckBox"><Properties Name="BackStyle" PropValue="0"/><Properties Name="NAME" PropValue="lblQMonth_LE"/><Properties Name="Caption" PropValue="Месяц опроса меньше или равно:"/><Properties Name="Top" PropValue="4305"/><Properties Name="Left" PropValue="300"/><Properties Name="Height" PropValue="300"/><Properties Name="Width" PropValue="3000"/><Properties Name="ForeColor" PropValue="0"/></ControlData><ControlData Name="" ControlIndex="0" PROGID="VB.textbox"><Properties Name="NAME" PropValue="txtQMonth_LE"/><Properties Name="Text" PropValue=""/><Properties Name="Top" PropValue="4635"/><Properties Name="Left" PropValue="300"/><Properties Name="Height" PropValue="300"/><Properties Name="Width" PropValue="1800"/><Properties Name="ToolTipText" PropValue="Месяц опроса меньше или равно"/><Properties Name="CausesValidation" PropValue="True"/><Properties Name="Locked" PropValue="False"/><Properties Name="Enabled" PropValue="True"/><Properties Name="MaxLength" PropValue="15"/></ControlData><ControlData Name="" ControlIndex="0" PROGID="VB.CheckBox"><Properties Name="BackStyle" PropValue="0"/><Properties Name="NAME" PropValue="lblQDay_GE"/><Properties Name="Caption" PropValue="День опроса больше или равно:"/><Properties Name="Top" PropValue="5010"/><Properties Name="Left" PropValue="300"/><Properties Name="Height" PropValue="300"/><Properties Name="Width" PropValue="3000"/><Properties Name="ForeColor" PropValue="0"/></ControlData><ControlData Name="" ControlIndex="0" PROGID="VB.textbox"><Properties Name="NAME" PropValue="txtQDay_GE"/><Properties Name="Text" PropValue=""/><Properties Name="Top" PropValue="5340"/><Properties Name="Left" PropValue="300"/><Properties Name="Height" PropValue="300"/><Properties Name="Width" PropValue="1800"/><Properties Name="ToolTipText" PropValue="День опроса больше или равно"/><Properties Name="CausesValidation" PropValue="True"/><Properties Name="Locked" PropValue="False"/><Properties Name="Enabled" PropValue="True"/><Properties Name="MaxLength" PropValue="15"/></ControlData><ControlData Name="" ControlIndex="0" PROGID="VB.CheckBox"><Properties Name="BackStyle" PropValue="0"/><Properties Name="NAME" PropValue="lblQDay_LE"/><Properties Name="Caption" PropValue="День опроса меньше или равно:"/><Properties Name="Top" PropValue="5715"/><Properties Name="Left" PropValue="300"/><Properties Name="Height" PropValue="300"/><Properties Name="Width" PropValue="3000"/><Properties Name="ForeColor" PropValue="0"/></ControlData><ControlData Name="" ControlIndex="0" PROGID="VB.textbox"><Properties Name="NAME" PropValue="txtQDay_LE"/><Properties Name="Text" PropValue=""/><Properties Name="Top" PropValue="6045"/><Properties Name="Left" PropValue="300"/><Properties Name="Height" PropValue="300"/><Properties Name="Width" PropValue="1800"/><Properties Name="ToolTipText" PropValue="День опроса меньше или равно"/><Properties Name="CausesValidation" PropValue="True"/><Properties Name="Locked" PropValue="False"/><Properties Name="Enabled" PropValue="True"/><Properties Name="MaxLength" PropValue="15"/></ControlData></ControlData><PropertyData Name="tag" PropValue="Card.ICO"/><PropertyData Name="caption" PropValue="Фильтр для Журнал опроса"/><PropertyData Name="ShowInTaskBar" PropValue="True"/></FormData></BlockHolder><BlockHolder BlockName="'description" BlockCode="Public Item as object
+public OK as boolean
+private OnInit as boolean
+public event Changed
+Private TSCustom As MTZ_CUSTOMTAB.TabStripCustomizer
+
+
+
+"><AttributeHolder Name="Type" Value="description"/><FormData Name=""/></BlockHolder><BlockHolder BlockName="'codebody" BlockCode="
+Private Sub cmdOK_Click()
+    on error resume next 
+    OK = true
+    me.hide
+End Sub
+Private Sub cmdCancel_Click()
+    on error resume next 
+    OK = false
+    me.hide
+End Sub
+public sub Init( ObjItem as object)
+ set Item = objItem
+ if Item is nothing then set Item =Myuser.application
+ TInit
+end sub
+Private Sub Form_Load()
+  on error resume next
+  Dim ff As Long, buf As String
+  LoadFromSkin me
+  ts.Move 0,0,Me.ScaleWidth,Me.ScaleHeight-cmdOK.height
+  cmdOK.Move Me.ScaleWidth - 110 * screen.twipsperpixelx,Me.ScaleHeight-cmdOK.height,cmdok.width,cmdok.height
+  cmdCancel.Move Me.ScaleWidth - 55 * screen.twipsperpixelx,Me.ScaleHeight-cmdOK.height,cmdcancel.width,cmdok.height
+  if Item is nothing then Init Myuser.Application
+End Sub
+Private Sub Form_Unload(Cancel As Integer)
+  on error resume next
+  set item=nothing
+  Set TSCustom = Nothing
+  SaveToSkin me
+  exit sub
+bye:
+  msgbox err.description,vbokonly
+  cancel = -1
+End Sub
+private sub Form_Resize()
+ if me.windowstate =1 then exit sub
+ on error resume next
+  ts.Move 0,0,Me.ScaleWidth,Me.ScaleHeight-cmdOK.height
+  cmdOK.Move Me.ScaleWidth - 110 * screen.twipsperpixelx,Me.ScaleHeight-cmdOK.height,cmdok.width,cmdok.height
+  cmdCancel.Move Me.ScaleWidth - 55 * screen.twipsperpixelx,Me.ScaleHeight-cmdOK.height,cmdcancel.width,cmdok.height
+  ts_click
+end sub
+Private Sub mnuSetup_Click()
+TSCustom.Setup ts
+End Sub
+Private Sub ts_MouseUp(Button As Integer, Shift As Integer, X As Single, Y As Single)
+  If Button = 2 And Shift = 0 Then
+    PopupMenu mnuCtl
+  End If
+End Sub
+private sub ts_click()
+  on error resume next
+  panelfGroup.Visible = False
+
+   Select Case ts.SelectedItem.Key
+   Case &quot;fGroup&quot;
+     With panelfGroup
+     .Top = ts.ClientTop
+     .Left = ts.ClientLeft
+     .Width = ts.ClientWidth
+     .Height = ts.ClientHeight
+     .Visible = True
+     .ZOrder 0
+     End With
+     End select
+end sub
+private sub TInit()
+  on error resume next
+  Dim ff As Long, buf As String
+
+ts.Tabs.Item(1).Caption = &quot;Заголовок&quot;
+ts.Tabs.Item(1).key = &quot;fGroup&quot;
+panelfGroupInit
+  Set TSCustom = New MTZ_CUSTOMTAB.TabStripCustomizer
+  TSCustom.Init ts, &quot;t_LOGCALL&quot;, &quot;fctlt_LOGCALL&quot;
+  TSCustom.SetupFromRegistry ts
+ ts_click
+end sub
+
+
+private sub Changing
+if OnInit then exit sub
+ raiseevent Changed()
+end sub
+private sub txtID_BD_Change()
+  Changing
+end sub
+private sub cmdID_BD_Click()
+  on error resume next
+        Dim id As String, brief As String
+        If item.Application.Manager.GetReferenceDialogEx2(&quot;BDEVICES&quot;, id, brief) Then
+          txtID_BD.Tag = Left(id, 38)
+          txtID_BD = brief
+        End If
+end sub
+private sub cmdID_BD_MenuClick(ByVal sCaption As String)
+End sub
+private sub txtID_DU_Change()
+  Changing
+end sub
+private sub cmdID_DU_Click()
+  on error resume next
+        Dim id As String, brief As String
+        If item.Application.Manager.GetReferenceDialogEx2(&quot;DEVUNITS&quot;, id, brief) Then
+          txtID_DU.Tag = Left(id, 38)
+          txtID_DU = brief
+        End If
+end sub
+private sub cmdID_DU_MenuClick(ByVal sCaption As String)
+End sub
+private sub txtID_PTYPE_Change()
+  Changing
+end sub
+private sub cmdID_PTYPE_Click()
+  on error resume next
+        Dim id As String, brief As String
+        If item.Application.Manager.GetReferenceDialogEx2(&quot;PARAMTYPE&quot;, id, brief) Then
+          txtID_PTYPE.Tag = Left(id, 38)
+          txtID_PTYPE = brief
+        End If
+end sub
+private sub cmdID_PTYPE_MenuClick(ByVal sCaption As String)
+End sub
+private sub txtQYear_GE_Validate(cancel as boolean)
+if txtQYear_GE.text&lt;&gt;&quot;&quot; then 
+ on error resume next 
+  if not isnumeric(txtQYear_GE.text) then 
+     cancel=true 
+     msgbox &quot;Ожидалось число&quot;,vbokonly+vbexclamation,&quot;Внимание&quot; 
+  elseif Val(txtQYear_GE.text) &lt;&gt;clng(Val(txtQYear_GE.text)) then 
+     cancel=true 
+     msgbox &quot;Ожидалось целое число&quot;,vbokonly+vbexclamation,&quot;Внимание&quot; 
+  end if
+end if
+end sub
+Private Sub txtQYear_GE_KeyPess(KeyAscii As Integer)
+Dim s As String
+s = &quot;0123456789.,-&quot; &amp; Chr(8)
+If InStr(s, Chr(KeyAscii)) &gt; 0 Then Exit Sub
+KeyAscii = 0
+
+End Sub
+private sub txtQYear_GE_Change()
+  Changing
+end sub
+private sub txtQYear_LE_Validate(cancel as boolean)
+if txtQYear_LE.text&lt;&gt;&quot;&quot; then 
+ on error resume next 
+  if not isnumeric(txtQYear_LE.text) then 
+     cancel=true 
+     msgbox &quot;Ожидалось число&quot;,vbokonly+vbexclamation,&quot;Внимание&quot; 
+  elseif Val(txtQYear_LE.text) &lt;&gt;clng(Val(txtQYear_LE.text)) then 
+     cancel=true 
+     msgbox &quot;Ожидалось целое число&quot;,vbokonly+vbexclamation,&quot;Внимание&quot; 
+  end if
+end if
+end sub
+Private Sub txtQYear_LE_KeyPess(KeyAscii As Integer)
+Dim s As String
+s = &quot;0123456789.,-&quot; &amp; Chr(8)
+If InStr(s, Chr(KeyAscii)) &gt; 0 Then Exit Sub
+KeyAscii = 0
+
+End Sub
+private sub txtQYear_LE_Change()
+  Changing
+end sub
+private sub txtQMonth_GE_Validate(cancel as boolean)
+if txtQMonth_GE.text&lt;&gt;&quot;&quot; then 
+ on error resume next 
+  if not isnumeric(txtQMonth_GE.text) then 
+     cancel=true 
+     msgbox &quot;Ожидалось число&quot;,vbokonly+vbexclamation,&quot;Внимание&quot; 
+  elseif Val(txtQMonth_GE.text) &lt;&gt;clng(Val(txtQMonth_GE.text)) then 
+     cancel=true 
+     msgbox &quot;Ожидалось целое число&quot;,vbokonly+vbexclamation,&quot;Внимание&quot; 
+  end if
+end if
+end sub
+Private Sub txtQMonth_GE_KeyPess(KeyAscii As Integer)
+Dim s As String
+s = &quot;0123456789.,-&quot; &amp; Chr(8)
+If InStr(s, Chr(KeyAscii)) &gt; 0 Then Exit Sub
+KeyAscii = 0
+
+End Sub
+private sub txtQMonth_GE_Change()
+  Changing
+end sub
+private sub txtQMonth_LE_Validate(cancel as boolean)
+if txtQMonth_LE.text&lt;&gt;&quot;&quot; then 
+ on error resume next 
+  if not isnumeric(txtQMonth_LE.text) then 
+     cancel=true 
+     msgbox &quot;Ожидалось число&quot;,vbokonly+vbexclamation,&quot;Внимание&quot; 
+  elseif Val(txtQMonth_LE.text) &lt;&gt;clng(Val(txtQMonth_LE.text)) then 
+     cancel=true 
+     msgbox &quot;Ожидалось целое число&quot;,vbokonly+vbexclamation,&quot;Внимание&quot; 
+  end if
+end if
+end sub
+Private Sub txtQMonth_LE_KeyPess(KeyAscii As Integer)
+Dim s As String
+s = &quot;0123456789.,-&quot; &amp; Chr(8)
+If InStr(s, Chr(KeyAscii)) &gt; 0 Then Exit Sub
+KeyAscii = 0
+
+End Sub
+private sub txtQMonth_LE_Change()
+  Changing
+end sub
+private sub txtQDay_GE_Validate(cancel as boolean)
+if txtQDay_GE.text&lt;&gt;&quot;&quot; then 
+ on error resume next 
+  if not isnumeric(txtQDay_GE.text) then 
+     cancel=true 
+     msgbox &quot;Ожидалось число&quot;,vbokonly+vbexclamation,&quot;Внимание&quot; 
+  elseif Val(txtQDay_GE.text) &lt;&gt;clng(Val(txtQDay_GE.text)) then 
+     cancel=true 
+     msgbox &quot;Ожидалось целое число&quot;,vbokonly+vbexclamation,&quot;Внимание&quot; 
+  end if
+end if
+end sub
+Private Sub txtQDay_GE_KeyPess(KeyAscii As Integer)
+Dim s As String
+s = &quot;0123456789.,-&quot; &amp; Chr(8)
+If InStr(s, Chr(KeyAscii)) &gt; 0 Then Exit Sub
+KeyAscii = 0
+
+End Sub
+private sub txtQDay_GE_Change()
+  Changing
+end sub
+private sub txtQDay_LE_Validate(cancel as boolean)
+if txtQDay_LE.text&lt;&gt;&quot;&quot; then 
+ on error resume next 
+  if not isnumeric(txtQDay_LE.text) then 
+     cancel=true 
+     msgbox &quot;Ожидалось число&quot;,vbokonly+vbexclamation,&quot;Внимание&quot; 
+  elseif Val(txtQDay_LE.text) &lt;&gt;clng(Val(txtQDay_LE.text)) then 
+     cancel=true 
+     msgbox &quot;Ожидалось целое число&quot;,vbokonly+vbexclamation,&quot;Внимание&quot; 
+  end if
+end if
+end sub
+Private Sub txtQDay_LE_KeyPess(KeyAscii As Integer)
+Dim s As String
+s = &quot;0123456789.,-&quot; &amp; Chr(8)
+If InStr(s, Chr(KeyAscii)) &gt; 0 Then Exit Sub
+KeyAscii = 0
+
+End Sub
+private sub txtQDay_LE_Change()
+  Changing
+end sub
+private sub PanelfGroupInit()
+OnInit = true
+dim iii as long ' for combo only
+
+  txtID_BD.Tag = &quot;&quot; 
+  txtID_BD = &quot;&quot; 
+ LoadBtnPictures cmdID_BD,cmdID_BD.tag
+  cmdID_BD.RemoveAllMenu
+  txtID_DU.Tag = &quot;&quot; 
+  txtID_DU = &quot;&quot; 
+ LoadBtnPictures cmdID_DU,cmdID_DU.tag
+  cmdID_DU.RemoveAllMenu
+  txtID_PTYPE.Tag = &quot;&quot; 
+  txtID_PTYPE = &quot;&quot; 
+ LoadBtnPictures cmdID_PTYPE,cmdID_PTYPE.tag
+  cmdID_PTYPE.RemoveAllMenu
+OnInit = false
+end sub
+
+"><AttributeHolder Name="Type" Value="code"/><FormData Name=""/></BlockHolder></ModuleHolder><ModuleHolder ModuleName="frmt_BDEVICES" File=""><AttributeHolder Name="Type" Value="form"/><BlockHolder BlockName="'form" BlockCode=""><AttributeHolder Name="Type" Value="form"/><FormData Name=""><ControlData Name="cmdOK" ControlIndex="0" PROGID="VB.CommandButton"><Properties Name="Name" PropValue="cmdOK"/><Properties Name="Caption" PropValue="OK"/><Properties Name="Tag" PropValue=""/><Properties Name="ToolTipText" PropValue="Применить фильтр"/><Properties Name="UseMaskColor" PropValue="True"/><Properties Name="Height" PropValue="330"/><Properties Name="Width" PropValue="750"/><Properties Name="Top" PropValue="0"/><Properties Name="Left" PropValue="0"/></ControlData><ControlData Name="cmdCancel" ControlIndex="0" PROGID="VB.CommandButton"><Properties Name="Name" PropValue="cmdCancel"/><Properties Name="Caption" PropValue="Отмена"/><Properties Name="Tag" PropValue=""/><Properties Name="ToolTipText" PropValue="Отказ от задания фильтра"/><Properties Name="UseMaskColor" PropValue="True"/><Properties Name="Height" PropValue="330"/><Properties Name="Width" PropValue="750"/><Properties Name="Top" PropValue="0"/><Properties Name="Left" PropValue="0"/></ControlData><ControlData Name="mnuCtl" ControlIndex="0" PROGID="VB.Menu"><Properties Name="Caption" PropValue="mnuCtl"/><Properties Name="Name" PropValue="mnuCtl"/><Properties Name="Visible" PropValue="False"/><ControlData Name="mnuSetup" ControlIndex="0" PROGID="VB.Menu"><Properties Name="Caption" PropValue="Настройка"/><Properties Name="Name" PropValue="mnuSetup"/><Properties Name="Enabled" PropValue="True"/><Properties Name="Visible" PropValue="True"/></ControlData></ControlData><ControlData Name="ts" ControlIndex="0" PROGID="mscomctllib.tabstrip"><Properties Name="Name" PropValue="ts"/><Properties Name="Top" PropValue="0"/><Properties Name="Left" PropValue="0"/><Properties Name="Width" PropValue="1500"/><Properties Name="Height" PropValue="1500"/></ControlData><ControlData Name="PanelfGroup" ControlIndex="0" PROGID="MTZ_panel.Scrolledwindow"><Properties Name="BackStyle" PropValue="0"/><Properties Name="NAME" PropValue="PanelfGroup"/><Properties Name="Top" PropValue="0"/><Properties Name="Left" PropValue="0"/><Properties Name="Height" PropValue="1000"/><Properties Name="Width" PropValue="1000"/><ControlData Name="" ControlIndex="0" PROGID="VB.CheckBox"><Properties Name="BackStyle" PropValue="0"/><Properties Name="NAME" PropValue="lblID_BU"/><Properties Name="Caption" PropValue="Здание:"/><Properties Name="Top" PropValue="75"/><Properties Name="Left" PropValue="300"/><Properties Name="Height" PropValue="300"/><Properties Name="Width" PropValue="3000"/><Properties Name="ForeColor" PropValue="0"/></ControlData><ControlData Name="" ControlIndex="0" PROGID="VB.textbox"><Properties Name="NAME" PropValue="txtID_BU"/><Properties Name="Text" PropValue=""/><Properties Name="Locked" PropValue="True"/><Properties Name="Enabled" PropValue="True"/><Properties Name="Top" PropValue="405"/><Properties Name="Left" PropValue="300"/><Properties Name="Height" PropValue="300"/><Properties Name="Width" PropValue="2550"/><Properties Name="ToolTipText" PropValue="Здание"/></ControlData><ControlData Name="" ControlIndex="0" PROGID="MTZ_PANEL.DropButton"><Properties Name="NAME" PropValue="cmdID_BU"/><Properties Name="Caption" PropValue=""/><Properties Name="Tag" PropValue="refopen.ico"/><Properties Name="Top" PropValue="405"/><Properties Name="Enabled" PropValue="True"/><Properties Name="Left" PropValue="2850"/><Properties Name="Height" PropValue="300"/><Properties Name="Width" PropValue="450"/><Properties Name="ToolTipText" PropValue="Здание"/></ControlData><ControlData Name="" ControlIndex="0" PROGID="VB.CheckBox"><Properties Name="BackStyle" PropValue="0"/><Properties Name="NAME" PropValue="lblID_DEV"/><Properties Name="Caption" PropValue="Устройство:"/><Properties Name="Top" PropValue="780"/><Properties Name="Left" PropValue="300"/><Properties Name="Height" PropValue="300"/><Properties Name="Width" PropValue="3000"/><Properties Name="ForeColor" PropValue="0"/></ControlData><ControlData Name="" ControlIndex="0" PROGID="VB.textbox"><Properties Name="NAME" PropValue="txtID_DEV"/><Properties Name="Text" PropValue=""/><Properties Name="Locked" PropValue="True"/><Properties Name="Enabled" PropValue="True"/><Properties Name="Top" PropValue="1110"/><Properties Name="Left" PropValue="300"/><Properties Name="Height" PropValue="300"/><Properties Name="Width" PropValue="2550"/><Properties Name="ToolTipText" PropValue="Устройство"/></ControlData><ControlData Name="" ControlIndex="0" PROGID="MTZ_PANEL.DropButton"><Properties Name="NAME" PropValue="cmdID_DEV"/><Properties Name="Caption" PropValue=""/><Properties Name="Tag" PropValue="refopen.ico"/><Properties Name="Top" PropValue="1110"/><Properties Name="Enabled" PropValue="True"/><Properties Name="Left" PropValue="2850"/><Properties Name="Height" PropValue="300"/><Properties Name="Width" PropValue="450"/><Properties Name="ToolTipText" PropValue="Устройство"/></ControlData><ControlData Name="" ControlIndex="0" PROGID="VB.CheckBox"><Properties Name="BackStyle" PropValue="0"/><Properties Name="NAME" PropValue="lblID_MASK_CURR"/><Properties Name="Caption" PropValue="Шаблон отображения текущих:"/><Properties Name="Top" PropValue="1485"/><Properties Name="Left" PropValue="300"/><Properties Name="Height" PropValue="300"/><Properties Name="Width" PropValue="3000"/><Properties Name="ForeColor" PropValue="0"/></ControlData><ControlData Name="" ControlIndex="0" PROGID="VB.textbox"><Properties Name="NAME" PropValue="txtID_MASK_CURR"/><Properties Name="Text" PropValue=""/><Properties Name="Locked" PropValue="True"/><Properties Name="Enabled" PropValue="True"/><Properties Name="Top" PropValue="1815"/><Properties Name="Left" PropValue="300"/><Properties Name="Height" PropValue="300"/><Properties Name="Width" PropValue="2550"/><Properties Name="ToolTipText" PropValue="Шаблон отображения текущих"/></ControlData><ControlData Name="" ControlIndex="0" PROGID="MTZ_PANEL.DropButton"><Properties Name="NAME" PropValue="cmdID_MASK_CURR"/><Properties Name="Caption" PropValue=""/><Properties Name="Tag" PropValue="refopen.ico"/><Properties Name="Top" PropValue="1815"/><Properties Name="Enabled" PropValue="True"/><Properties Name="Left" PropValue="2850"/><Properties Name="Height" PropValue="300"/><Properties Name="Width" PropValue="450"/><Properties Name="ToolTipText" PropValue="Шаблон отображения текущих"/></ControlData><ControlData Name="" ControlIndex="0" PROGID="VB.CheckBox"><Properties Name="BackStyle" PropValue="0"/><Properties Name="NAME" PropValue="lblID_MASK_HOUR"/><Properties Name="Caption" PropValue="Шаблон отображения часовых:"/><Properties Name="Top" PropValue="2190"/><Properties Name="Left" PropValue="300"/><Properties Name="Height" PropValue="300"/><Properties Name="Width" PropValue="3000"/><Properties Name="ForeColor" PropValue="0"/></ControlData><ControlData Name="" ControlIndex="0" PROGID="VB.textbox"><Properties Name="NAME" PropValue="txtID_MASK_HOUR"/><Properties Name="Text" PropValue=""/><Properties Name="Locked" PropValue="True"/><Properties Name="Enabled" PropValue="True"/><Properties Name="Top" PropValue="2520"/><Properties Name="Left" PropValue="300"/><Properties Name="Height" PropValue="300"/><Properties Name="Width" PropValue="2550"/><Properties Name="ToolTipText" PropValue="Шаблон отображения часовых"/></ControlData><ControlData Name="" ControlIndex="0" PROGID="MTZ_PANEL.DropButton"><Properties Name="NAME" PropValue="cmdID_MASK_HOUR"/><Properties Name="Caption" PropValue=""/><Properties Name="Tag" PropValue="refopen.ico"/><Properties Name="Top" PropValue="2520"/><Properties Name="Enabled" PropValue="True"/><Properties Name="Left" PropValue="2850"/><Properties Name="Height" PropValue="300"/><Properties Name="Width" PropValue="450"/><Properties Name="ToolTipText" PropValue="Шаблон отображения часовых"/></ControlData><ControlData Name="" ControlIndex="0" PROGID="VB.CheckBox"><Properties Name="BackStyle" PropValue="0"/><Properties Name="NAME" PropValue="lblID_MASK_24"/><Properties Name="Caption" PropValue="Шаблон опроса суточных:"/><Properties Name="Top" PropValue="2895"/><Properties Name="Left" PropValue="300"/><Properties Name="Height" PropValue="300"/><Properties Name="Width" PropValue="3000"/><Properties Name="ForeColor" PropValue="0"/></ControlData><ControlData Name="" ControlIndex="0" PROGID="VB.textbox"><Properties Name="NAME" PropValue="txtID_MASK_24"/><Properties Name="Text" PropValue=""/><Properties Name="Locked" PropValue="True"/><Properties Name="Enabled" PropValue="True"/><Properties Name="Top" PropValue="3225"/><Properties Name="Left" PropValue="300"/><Properties Name="Height" PropValue="300"/><Properties Name="Width" PropValue="2550"/><Properties Name="ToolTipText" PropValue="Шаблон опроса суточных"/></ControlData><ControlData Name="" ControlIndex="0" PROGID="MTZ_PANEL.DropButton"><Properties Name="NAME" PropValue="cmdID_MASK_24"/><Properties Name="Caption" PropValue=""/><Properties Name="Tag" PropValue="refopen.ico"/><Properties Name="Top" PropValue="3225"/><Properties Name="Enabled" PropValue="True"/><Properties Name="Left" PropValue="2850"/><Properties Name="Height" PropValue="300"/><Properties Name="Width" PropValue="450"/><Properties Name="ToolTipText" PropValue="Шаблон опроса суточных"/></ControlData><ControlData Name="" ControlIndex="0" PROGID="VB.CheckBox"><Properties Name="BackStyle" PropValue="0"/><Properties Name="NAME" PropValue="lblID_MASK_SUM"/><Properties Name="Caption" PropValue="Шаблон опроса итоговых :"/><Properties Name="Top" PropValue="3600"/><Properties Name="Left" PropValue="300"/><Properties Name="Height" PropValue="300"/><Properties Name="Width" PropValue="3000"/><Properties Name="ForeColor" PropValue="0"/></ControlData><ControlData Name="" ControlIndex="0" PROGID="VB.textbox"><Properties Name="NAME" PropValue="txtID_MASK_SUM"/><Properties Name="Text" PropValue=""/><Properties Name="Locked" PropValue="True"/><Properties Name="Enabled" PropValue="True"/><Properties Name="Top" PropValue="3930"/><Properties Name="Left" PropValue="300"/><Properties Name="Height" PropValue="300"/><Properties Name="Width" PropValue="2550"/><Properties Name="ToolTipText" PropValue="Шаблон опроса итоговых "/></ControlData><ControlData Name="" ControlIndex="0" PROGID="MTZ_PANEL.DropButton"><Properties Name="NAME" PropValue="cmdID_MASK_SUM"/><Properties Name="Caption" PropValue=""/><Properties Name="Tag" PropValue="refopen.ico"/><Properties Name="Top" PropValue="3930"/><Properties Name="Enabled" PropValue="True"/><Properties Name="Left" PropValue="2850"/><Properties Name="Height" PropValue="300"/><Properties Name="Width" PropValue="450"/><Properties Name="ToolTipText" PropValue="Шаблон опроса итоговых "/></ControlData><ControlData Name="" ControlIndex="0" PROGID="VB.CheckBox"><Properties Name="BackStyle" PropValue="0"/><Properties Name="NAME" PropValue="lblSCHEMA_ID"/><Properties Name="Caption" PropValue="Схема подключения:"/><Properties Name="Top" PropValue="4305"/><Properties Name="Left" PropValue="300"/><Properties Name="Height" PropValue="300"/><Properties Name="Width" PropValue="3000"/><Properties Name="ForeColor" PropValue="0"/></ControlData><ControlData Name="" ControlIndex="0" PROGID="VB.textbox"><Properties Name="NAME" PropValue="txtSCHEMA_ID"/><Properties Name="Text" PropValue=""/><Properties Name="Locked" PropValue="True"/><Properties Name="Enabled" PropValue="True"/><Properties Name="Top" PropValue="4635"/><Properties Name="Left" PropValue="300"/><Properties Name="Height" PropValue="300"/><Properties Name="Width" PropValue="2550"/><Properties Name="ToolTipText" PropValue="Схема подключения"/></ControlData><ControlData Name="" ControlIndex="0" PROGID="MTZ_PANEL.DropButton"><Properties Name="NAME" PropValue="cmdSCHEMA_ID"/><Properties Name="Caption" PropValue=""/><Properties Name="Tag" PropValue="refopen.ico"/><Properties Name="Top" PropValue="4635"/><Properties Name="Enabled" PropValue="True"/><Properties Name="Left" PropValue="2850"/><Properties Name="Height" PropValue="300"/><Properties Name="Width" PropValue="450"/><Properties Name="ToolTipText" PropValue="Схема подключения"/></ControlData><ControlData Name="" ControlIndex="0" PROGID="VB.CheckBox"><Properties Name="BackStyle" PropValue="0"/><Properties Name="NAME" PropValue="lblreport_hour"/><Properties Name="Caption" PropValue="Отчет по часовым:"/><Properties Name="Top" PropValue="5010"/><Properties Name="Left" PropValue="300"/><Properties Name="Height" PropValue="300"/><Properties Name="Width" PropValue="3000"/><Properties Name="ForeColor" PropValue="0"/></ControlData><ControlData Name="" ControlIndex="0" PROGID="VB.textbox"><Properties Name="NAME" PropValue="txtreport_hour"/><Properties Name="Text" PropValue=""/><Properties Name="Locked" PropValue="True"/><Properties Name="Enabled" PropValue="True"/><Properties Name="Top" PropValue="5340"/><Properties Name="Left" PropValue="300"/><Properties Name="Height" PropValue="300"/><Properties Name="Width" PropValue="2550"/><Properties Name="ToolTipText" PropValue="Отчет по часовым"/></ControlData><ControlData Name="" ControlIndex="0" PROGID="MTZ_PANEL.DropButton"><Properties Name="NAME" PropValue="cmdreport_hour"/><Properties Name="Caption" PropValue=""/><Properties Name="Tag" PropValue="refopen.ico"/><Properties Name="Top" PropValue="5340"/><Properties Name="Enabled" PropValue="True"/><Properties Name="Left" PropValue="2850"/><Properties Name="Height" PropValue="300"/><Properties Name="Width" PropValue="450"/><Properties Name="ToolTipText" PropValue="Отчет по часовым"/></ControlData><ControlData Name="" ControlIndex="0" PROGID="VB.CheckBox"><Properties Name="BackStyle" PropValue="0"/><Properties Name="NAME" PropValue="lblreport_day"/><Properties Name="Caption" PropValue="Отчет по суточным:"/><Properties Name="Top" PropValue="5715"/><Properties Name="Left" PropValue="300"/><Properties Name="Height" PropValue="300"/><Properties Name="Width" PropValue="3000"/><Properties Name="ForeColor" PropValue="0"/></ControlData><ControlData Name="" ControlIndex="0" PROGID="VB.textbox"><Properties Name="NAME" PropValue="txtreport_day"/><Properties Name="Text" PropValue=""/><Properties Name="Locked" PropValue="True"/><Properties Name="Enabled" PropValue="True"/><Properties Name="Top" PropValue="6045"/><Properties Name="Left" PropValue="300"/><Properties Name="Height" PropValue="300"/><Properties Name="Width" PropValue="2550"/><Properties Name="ToolTipText" PropValue="Отчет по суточным"/></ControlData><ControlData Name="" ControlIndex="0" PROGID="MTZ_PANEL.DropButton"><Properties Name="NAME" PropValue="cmdreport_day"/><Properties Name="Caption" PropValue=""/><Properties Name="Tag" PropValue="refopen.ico"/><Properties Name="Top" PropValue="6045"/><Properties Name="Enabled" PropValue="True"/><Properties Name="Left" PropValue="2850"/><Properties Name="Height" PropValue="300"/><Properties Name="Width" PropValue="450"/><Properties Name="ToolTipText" PropValue="Отчет по суточным"/></ControlData><ControlData Name="" ControlIndex="0" PROGID="VB.CheckBox"><Properties Name="BackStyle" PropValue="0"/><Properties Name="NAME" PropValue="lblNPIP"/><Properties Name="Caption" PropValue="IP адрес NPORT:"/><Properties Name="Top" PropValue="75"/><Properties Name="Left" PropValue="3450"/><Properties Name="Height" PropValue="300"/><Properties Name="Width" PropValue="3000"/><Properties Name="ForeColor" PropValue="0"/></ControlData><ControlData Name="" ControlIndex="0" PROGID="VB.textbox"><Properties Name="NAME" PropValue="txtNPIP"/><Properties Name="Text" PropValue=""/><Properties Name="Top" PropValue="405"/><Properties Name="Left" PropValue="3450"/><Properties Name="Height" PropValue="300"/><Properties Name="Width" PropValue="3000"/><Properties Name="MaxLength" PropValue="80"/><Properties Name="ToolTipText" PropValue="IP адрес NPORT"/><Properties Name="Locked" PropValue="False"/><Properties Name="Enabled" PropValue="True"/></ControlData><ControlData Name="" ControlIndex="0" PROGID="VB.CheckBox"><Properties Name="BackStyle" PropValue="0"/><Properties Name="NAME" PropValue="lblNPPASSWORD"/><Properties Name="Caption" PropValue="Пароль к NPORT:"/><Properties Name="Top" PropValue="780"/><Properties Name="Left" PropValue="3450"/><Properties Name="Height" PropValue="300"/><Properties Name="Width" PropValue="3000"/><Properties Name="ForeColor" PropValue="0"/></ControlData><ControlData Name="" ControlIndex="0" PROGID="VB.textbox"><Properties Name="NAME" PropValue="txtNPPASSWORD"/><Properties Name="Text" PropValue=""/><Properties Name="Top" PropValue="1110"/><Properties Name="Left" PropValue="3450"/><Properties Name="Height" PropValue="300"/><Properties Name="Width" PropValue="3000"/><Properties Name="MaxLength" PropValue="160"/><Properties Name="ToolTipText" PropValue="Пароль к NPORT"/><Properties Name="Locked" PropValue="False"/><Properties Name="Enabled" PropValue="True"/></ControlData><ControlData Name="" ControlIndex="0" PROGID="VB.CheckBox"><Properties Name="BackStyle" PropValue="0"/><Properties Name="NAME" PropValue="lblNPLOCK_GE"/><Properties Name="Caption" PropValue="Время до которого устройство считается заблокированным C:"/><Properties Name="Top" PropValue="1485"/><Properties Name="Left" PropValue="3450"/><Properties Name="Height" PropValue="300"/><Properties Name="Width" PropValue="3000"/><Properties Name="ForeColor" PropValue="0"/></ControlData><ControlData Name="" ControlIndex="0" PROGID="MSComCtl2.DTPicker"><Properties Name="NAME" PropValue="dtpNPLOCK_GE"/><Properties Name="Top" PropValue="1815"/><Properties Name="Left" PropValue="3450"/><Properties Name="Height" PropValue="300"/><Properties Name="Format" PropValue="3"/><Properties Name="Enabled" PropValue="True"/><Properties Name="ToolTipText" PropValue="Время до которого устройство считается заблокированным C"/><Properties Name="CustomFormat" PropValue="dd/MM/yyyy HH:mm:ss"/><Properties Name="Width" PropValue="2250"/><Properties Name="CheckBox" PropValue="False"/></ControlData><ControlData Name="" ControlIndex="0" PROGID="VB.CheckBox"><Properties Name="BackStyle" PropValue="0"/><Properties Name="NAME" PropValue="lblNPLOCK_LE"/><Properties Name="Caption" PropValue="Время до которого устройство считается заблокированным по:"/><Properties Name="Top" PropValue="2190"/><Properties Name="Left" PropValue="3450"/><Properties Name="Height" PropValue="300"/><Properties Name="Width" PropValue="3000"/><Properties Name="ForeColor" PropValue="0"/></ControlData><ControlData Name="" ControlIndex="0" PROGID="MSComCtl2.DTPicker"><Properties Name="NAME" PropValue="dtpNPLOCK_LE"/><Properties Name="Top" PropValue="2520"/><Properties Name="Left" PropValue="3450"/><Properties Name="Height" PropValue="300"/><Properties Name="Format" PropValue="3"/><Properties Name="Enabled" PropValue="True"/><Properties Name="ToolTipText" PropValue="Время до которого устройство считается заблокированным по"/><Properties Name="CustomFormat" PropValue="dd/MM/yyyy HH:mm:ss"/><Properties Name="Width" PropValue="2250"/><Properties Name="CheckBox" PropValue="False"/></ControlData><ControlData Name="" ControlIndex="0" PROGID="VB.CheckBox"><Properties Name="BackStyle" PropValue="0"/><Properties Name="NAME" PropValue="lblCONNECTED"/><Properties Name="Caption" PropValue="1 - подключен 0 - отключен:"/><Properties Name="Top" PropValue="2895"/><Properties Name="Left" PropValue="3450"/><Properties Name="Height" PropValue="300"/><Properties Name="Width" PropValue="3000"/><Properties Name="ForeColor" PropValue="0"/></ControlData><ControlData Name="" ControlIndex="0" PROGID="VB.ComboBox"><Properties Name="NAME" PropValue="cmbCONNECTED"/><Properties Name="Style" PropValue="2"/><Properties Name="Sorted" PropValue="True"/><Properties Name="Top" PropValue="3225"/><Properties Name="Left" PropValue="3450"/><Properties Name="ToolTipText" PropValue="1 - подключен 0 - отключен"/><Properties Name="Width" PropValue="3000"/><Properties Name="Enabled" PropValue="True"/></ControlData><ControlData Name="" ControlIndex="0" PROGID="VB.CheckBox"><Properties Name="BackStyle" PropValue="0"/><Properties Name="NAME" PropValue="lblID_MD"/><Properties Name="Caption" PropValue="Автоматический опрос:"/><Properties Name="Top" PropValue="3600"/><Properties Name="Left" PropValue="3450"/><Properties Name="Height" PropValue="300"/><Properties Name="Width" PropValue="3000"/><Properties Name="ForeColor" PropValue="0"/></ControlData><ControlData Name="" ControlIndex="0" PROGID="VB.ComboBox"><Properties Name="NAME" PropValue="cmbID_MD"/><Properties Name="Style" PropValue="2"/><Properties Name="Sorted" PropValue="True"/><Properties Name="Top" PropValue="3930"/><Properties Name="Left" PropValue="3450"/><Properties Name="ToolTipText" PropValue="Автоматический опрос"/><Properties Name="Width" PropValue="3000"/><Properties Name="Enabled" PropValue="True"/></ControlData></ControlData><PropertyData Name="tag" PropValue="Card.ICO"/><PropertyData Name="caption" PropValue="Фильтр для Опрашиваемое устройство"/><PropertyData Name="ShowInTaskBar" PropValue="True"/></FormData></BlockHolder><BlockHolder BlockName="'description" BlockCode="Public Item as object
+public OK as boolean
+private OnInit as boolean
+public event Changed
+Private TSCustom As MTZ_CUSTOMTAB.TabStripCustomizer
+
+
+
+"><AttributeHolder Name="Type" Value="description"/><FormData Name=""/></BlockHolder><BlockHolder BlockName="'codebody" BlockCode="
+Private Sub cmdOK_Click()
+    on error resume next 
+    OK = true
+    me.hide
+End Sub
+Private Sub cmdCancel_Click()
+    on error resume next 
+    OK = false
+    me.hide
+End Sub
+public sub Init( ObjItem as object)
+ set Item = objItem
+ if Item is nothing then set Item =Myuser.application
+ TInit
+end sub
+Private Sub Form_Load()
+  on error resume next
+  Dim ff As Long, buf As String
+  LoadFromSkin me
+  ts.Move 0,0,Me.ScaleWidth,Me.ScaleHeight-cmdOK.height
+  cmdOK.Move Me.ScaleWidth - 110 * screen.twipsperpixelx,Me.ScaleHeight-cmdOK.height,cmdok.width,cmdok.height
+  cmdCancel.Move Me.ScaleWidth - 55 * screen.twipsperpixelx,Me.ScaleHeight-cmdOK.height,cmdcancel.width,cmdok.height
+  if Item is nothing then Init Myuser.Application
+End Sub
+Private Sub Form_Unload(Cancel As Integer)
+  on error resume next
+  set item=nothing
+  Set TSCustom = Nothing
+  SaveToSkin me
+  exit sub
+bye:
+  msgbox err.description,vbokonly
+  cancel = -1
+End Sub
+private sub Form_Resize()
+ if me.windowstate =1 then exit sub
+ on error resume next
+  ts.Move 0,0,Me.ScaleWidth,Me.ScaleHeight-cmdOK.height
+  cmdOK.Move Me.ScaleWidth - 110 * screen.twipsperpixelx,Me.ScaleHeight-cmdOK.height,cmdok.width,cmdok.height
+  cmdCancel.Move Me.ScaleWidth - 55 * screen.twipsperpixelx,Me.ScaleHeight-cmdOK.height,cmdcancel.width,cmdok.height
+  ts_click
+end sub
+Private Sub mnuSetup_Click()
+TSCustom.Setup ts
+End Sub
+Private Sub ts_MouseUp(Button As Integer, Shift As Integer, X As Single, Y As Single)
+  If Button = 2 And Shift = 0 Then
+    PopupMenu mnuCtl
+  End If
+End Sub
+private sub ts_click()
+  on error resume next
+  panelfGroup.Visible = False
+
+   Select Case ts.SelectedItem.Key
+   Case &quot;fGroup&quot;
+     With panelfGroup
+     .Top = ts.ClientTop
+     .Left = ts.ClientLeft
+     .Width = ts.ClientWidth
+     .Height = ts.ClientHeight
+     .Visible = True
+     .ZOrder 0
+     End With
+     End select
+end sub
+private sub TInit()
+  on error resume next
+  Dim ff As Long, buf As String
+
+ts.Tabs.Item(1).Caption = &quot;Подключенные к узлу устройства&quot;
+ts.Tabs.Item(1).key = &quot;fGroup&quot;
+panelfGroupInit
+  Set TSCustom = New MTZ_CUSTOMTAB.TabStripCustomizer
+  TSCustom.Init ts, &quot;t_BDEVICES&quot;, &quot;fctlt_BDEVICES&quot;
+  TSCustom.SetupFromRegistry ts
+ ts_click
+end sub
+
+
+private sub Changing
+if OnInit then exit sub
+ raiseevent Changed()
+end sub
+private sub txtID_BU_Change()
+  Changing
+end sub
+private sub cmdID_BU_Click()
+  on error resume next
+        Dim id As String, brief As String
+        If item.Application.Manager.GetReferenceDialogEx2(&quot;BBUILDINGS&quot;, id, brief) Then
+          txtID_BU.Tag = Left(id, 38)
+          txtID_BU = brief
+        End If
+end sub
+private sub cmdID_BU_MenuClick(ByVal sCaption As String)
+End sub
+private sub txtID_DEV_Change()
+  Changing
+end sub
+private sub cmdID_DEV_Click()
+  on error resume next
+        Dim id As String, brief As String
+        If item.Application.Manager.GetReferenceDialogEx2(&quot;DEVICES&quot;, id, brief) Then
+          txtID_DEV.Tag = Left(id, 38)
+          txtID_DEV = brief
+        End If
+end sub
+private sub cmdID_DEV_MenuClick(ByVal sCaption As String)
+End sub
+private sub txtID_MASK_CURR_Change()
+  Changing
+end sub
+private sub cmdID_MASK_CURR_Click()
+  on error resume next
+        Dim id As String, brief As String
+        If item.Application.Manager.GetReferenceDialogEx2(&quot;MASKS&quot;, id, brief) Then
+          txtID_MASK_CURR.Tag = Left(id, 38)
+          txtID_MASK_CURR = brief
+        End If
+end sub
+private sub cmdID_MASK_CURR_MenuClick(ByVal sCaption As String)
+End sub
+private sub txtID_MASK_HOUR_Change()
+  Changing
+end sub
+private sub cmdID_MASK_HOUR_Click()
+  on error resume next
+        Dim id As String, brief As String
+        If item.Application.Manager.GetReferenceDialogEx2(&quot;MASKS&quot;, id, brief) Then
+          txtID_MASK_HOUR.Tag = Left(id, 38)
+          txtID_MASK_HOUR = brief
+        End If
+end sub
+private sub cmdID_MASK_HOUR_MenuClick(ByVal sCaption As String)
+End sub
+private sub txtID_MASK_24_Change()
+  Changing
+end sub
+private sub cmdID_MASK_24_Click()
+  on error resume next
+        Dim id As String, brief As String
+        If item.Application.Manager.GetReferenceDialogEx2(&quot;MASKS&quot;, id, brief) Then
+          txtID_MASK_24.Tag = Left(id, 38)
+          txtID_MASK_24 = brief
+        End If
+end sub
+private sub cmdID_MASK_24_MenuClick(ByVal sCaption As String)
+End sub
+private sub txtID_MASK_SUM_Change()
+  Changing
+end sub
+private sub cmdID_MASK_SUM_Click()
+  on error resume next
+        Dim id As String, brief As String
+        If item.Application.Manager.GetReferenceDialogEx2(&quot;MASKS&quot;, id, brief) Then
+          txtID_MASK_SUM.Tag = Left(id, 38)
+          txtID_MASK_SUM = brief
+        End If
+end sub
+private sub cmdID_MASK_SUM_MenuClick(ByVal sCaption As String)
+End sub
+private sub txtSCHEMA_ID_Change()
+  Changing
+end sub
+private sub cmdSCHEMA_ID_Click()
+  on error resume next
+        Dim id As String, brief As String
+        If item.Application.Manager.GetReferenceDialogEx2(&quot;DEVSCHEMA&quot;, id, brief) Then
+          txtSCHEMA_ID.Tag = Left(id, 38)
+          txtSCHEMA_ID = brief
+        End If
+end sub
+private sub cmdSCHEMA_ID_MenuClick(ByVal sCaption As String)
+End sub
+private sub txtreport_hour_Change()
+  Changing
+end sub
+private sub cmdreport_hour_Click()
+  on error resume next
+        Dim id As String, brief As String
+        If item.Application.Manager.GetReferenceDialogEx2(&quot;REPORT&quot;, id, brief) Then
+          txtreport_hour.Tag = Left(id, 38)
+          txtreport_hour = brief
+        End If
+end sub
+private sub cmdreport_hour_MenuClick(ByVal sCaption As String)
+End sub
+private sub txtreport_day_Change()
+  Changing
+end sub
+private sub cmdreport_day_Click()
+  on error resume next
+        Dim id As String, brief As String
+        If item.Application.Manager.GetReferenceDialogEx2(&quot;REPORT&quot;, id, brief) Then
+          txtreport_day.Tag = Left(id, 38)
+          txtreport_day = brief
+        End If
+end sub
+private sub cmdreport_day_MenuClick(ByVal sCaption As String)
+End sub
+private sub txtNPIP_Change()
+  Changing
+end sub
+private sub txtNPPASSWORD_Change()
+  Changing
+end sub
+private sub dtpNPLOCK_GE_Change()
+  Changing
+end sub
+private sub dtpNPLOCK_LE_Change()
+  Changing
+end sub
+private sub cmbCONNECTED_Click()
+  on error resume next
+  Changing
+end sub
+private sub cmbID_MD_Click()
+  on error resume next
+  Changing
+end sub
+private sub PanelfGroupInit()
+OnInit = true
+dim iii as long ' for combo only
+
+  txtID_BU.Tag = &quot;&quot; 
+  txtID_BU = &quot;&quot; 
+ LoadBtnPictures cmdID_BU,cmdID_BU.tag
+  cmdID_BU.RemoveAllMenu
+  txtID_DEV.Tag = &quot;&quot; 
+  txtID_DEV = &quot;&quot; 
+ LoadBtnPictures cmdID_DEV,cmdID_DEV.tag
+  cmdID_DEV.RemoveAllMenu
+  txtID_MASK_CURR.Tag = &quot;&quot; 
+  txtID_MASK_CURR = &quot;&quot; 
+ LoadBtnPictures cmdID_MASK_CURR,cmdID_MASK_CURR.tag
+  cmdID_MASK_CURR.RemoveAllMenu
+  txtID_MASK_HOUR.Tag = &quot;&quot; 
+  txtID_MASK_HOUR = &quot;&quot; 
+ LoadBtnPictures cmdID_MASK_HOUR,cmdID_MASK_HOUR.tag
+  cmdID_MASK_HOUR.RemoveAllMenu
+  txtID_MASK_24.Tag = &quot;&quot; 
+  txtID_MASK_24 = &quot;&quot; 
+ LoadBtnPictures cmdID_MASK_24,cmdID_MASK_24.tag
+  cmdID_MASK_24.RemoveAllMenu
+  txtID_MASK_SUM.Tag = &quot;&quot; 
+  txtID_MASK_SUM = &quot;&quot; 
+ LoadBtnPictures cmdID_MASK_SUM,cmdID_MASK_SUM.tag
+  cmdID_MASK_SUM.RemoveAllMenu
+  txtSCHEMA_ID.Tag = &quot;&quot; 
+  txtSCHEMA_ID = &quot;&quot; 
+ LoadBtnPictures cmdSCHEMA_ID,cmdSCHEMA_ID.tag
+  cmdSCHEMA_ID.RemoveAllMenu
+  txtreport_hour.Tag = &quot;&quot; 
+  txtreport_hour = &quot;&quot; 
+ LoadBtnPictures cmdreport_hour,cmdreport_hour.tag
+  cmdreport_hour.RemoveAllMenu
+  txtreport_day.Tag = &quot;&quot; 
+  txtreport_day = &quot;&quot; 
+ LoadBtnPictures cmdreport_day,cmdreport_day.tag
+  cmdreport_day.RemoveAllMenu
+txtNPIP = &quot;&quot;
+txtNPPASSWORD = &quot;&quot;
+dtpNPLOCK_GE = now
+dtpNPLOCK_LE = now
+cmbCONNECTED.Clear
+cmbCONNECTED.additem &quot;Да&quot;
+cmbCONNECTED.itemdata(cmbCONNECTED.newindex)= -1
+cmbCONNECTED.additem &quot;Нет&quot;
+cmbCONNECTED.itemdata(cmbCONNECTED.newindex)= 0
+cmbID_MD.Clear
+cmbID_MD.additem &quot;Да&quot;
+cmbID_MD.itemdata(cmbID_MD.newindex)= -1
+cmbID_MD.additem &quot;Нет&quot;
+cmbID_MD.itemdata(cmbID_MD.newindex)= 0
+OnInit = false
+end sub
+
+"><AttributeHolder Name="Type" Value="code"/><FormData Name=""/></BlockHolder></ModuleHolder><ModuleHolder ModuleName="frmt_REPORT" File=""><AttributeHolder Name="Type" Value="form"/><BlockHolder BlockName="'form" BlockCode=""><AttributeHolder Name="Type" Value="form"/><FormData Name=""><ControlData Name="cmdOK" ControlIndex="0" PROGID="VB.CommandButton"><Properties Name="Name" PropValue="cmdOK"/><Properties Name="Caption" PropValue="OK"/><Properties Name="Tag" PropValue=""/><Properties Name="ToolTipText" PropValue="Применить фильтр"/><Properties Name="UseMaskColor" PropValue="True"/><Properties Name="Height" PropValue="330"/><Properties Name="Width" PropValue="750"/><Properties Name="Top" PropValue="0"/><Properties Name="Left" PropValue="0"/></ControlData><ControlData Name="cmdCancel" ControlIndex="0" PROGID="VB.CommandButton"><Properties Name="Name" PropValue="cmdCancel"/><Properties Name="Caption" PropValue="Отмена"/><Properties Name="Tag" PropValue=""/><Properties Name="ToolTipText" PropValue="Отказ от задания фильтра"/><Properties Name="UseMaskColor" PropValue="True"/><Properties Name="Height" PropValue="330"/><Properties Name="Width" PropValue="750"/><Properties Name="Top" PropValue="0"/><Properties Name="Left" PropValue="0"/></ControlData><ControlData Name="mnuCtl" ControlIndex="0" PROGID="VB.Menu"><Properties Name="Caption" PropValue="mnuCtl"/><Properties Name="Name" PropValue="mnuCtl"/><Properties Name="Visible" PropValue="False"/><ControlData Name="mnuSetup" ControlIndex="0" PROGID="VB.Menu"><Properties Name="Caption" PropValue="Настройка"/><Properties Name="Name" PropValue="mnuSetup"/><Properties Name="Enabled" PropValue="True"/><Properties Name="Visible" PropValue="True"/></ControlData></ControlData><ControlData Name="ts" ControlIndex="0" PROGID="mscomctllib.tabstrip"><Properties Name="Name" PropValue="ts"/><Properties Name="Top" PropValue="0"/><Properties Name="Left" PropValue="0"/><Properties Name="Width" PropValue="1500"/><Properties Name="Height" PropValue="1500"/></ControlData><ControlData Name="PanelfGroup" ControlIndex="0" PROGID="MTZ_panel.Scrolledwindow"><Properties Name="BackStyle" PropValue="0"/><Properties Name="NAME" PropValue="PanelfGroup"/><Properties Name="Top" PropValue="0"/><Properties Name="Left" PropValue="0"/><Properties Name="Height" PropValue="1000"/><Properties Name="Width" PropValue="1000"/><ControlData Name="" ControlIndex="0" PROGID="VB.CheckBox"><Properties Name="BackStyle" PropValue="0"/><Properties Name="NAME" PropValue="lblNAME"/><Properties Name="Caption" PropValue="Название:"/><Properties Name="Top" PropValue="75"/><Properties Name="Left" PropValue="300"/><Properties Name="Height" PropValue="300"/><Properties Name="Width" PropValue="3000"/><Properties Name="ForeColor" PropValue="0"/></ControlData><ControlData Name="" ControlIndex="0" PROGID="VB.textbox"><Properties Name="NAME" PropValue="txtNAME"/><Properties Name="Text" PropValue=""/><Properties Name="Top" PropValue="405"/><Properties Name="Left" PropValue="300"/><Properties Name="Height" PropValue="300"/><Properties Name="Width" PropValue="3000"/><Properties Name="MaxLength" PropValue="255"/><Properties Name="ToolTipText" PropValue="Название"/><Properties Name="Locked" PropValue="False"/><Properties Name="Enabled" PropValue="True"/></ControlData><ControlData Name="" ControlIndex="0" PROGID="VB.CheckBox"><Properties Name="BackStyle" PropValue="0"/><Properties Name="NAME" PropValue="lblTheFile"/><Properties Name="Caption" PropValue="Файл шаблона:"/><Properties Name="Top" PropValue="780"/><Properties Name="Left" PropValue="300"/><Properties Name="Height" PropValue="300"/><Properties Name="Width" PropValue="3000"/><Properties Name="ForeColor" PropValue="0"/></ControlData></ControlData><PropertyData Name="tag" PropValue="Card.ICO"/><PropertyData Name="caption" PropValue="Фильтр для Отчет"/><PropertyData Name="ShowInTaskBar" PropValue="True"/></FormData></BlockHolder><BlockHolder BlockName="'description" BlockCode="Public Item as object
+public OK as boolean
+private OnInit as boolean
+public event Changed
+Private TSCustom As MTZ_CUSTOMTAB.TabStripCustomizer
+
+
+
+"><AttributeHolder Name="Type" Value="description"/><FormData Name=""/></BlockHolder><BlockHolder BlockName="'codebody" BlockCode="
+Private Sub cmdOK_Click()
+    on error resume next 
+    OK = true
+    me.hide
+End Sub
+Private Sub cmdCancel_Click()
+    on error resume next 
+    OK = false
+    me.hide
+End Sub
+public sub Init( ObjItem as object)
+ set Item = objItem
+ if Item is nothing then set Item =Myuser.application
+ TInit
+end sub
+Private Sub Form_Load()
+  on error resume next
+  Dim ff As Long, buf As String
+  LoadFromSkin me
+  ts.Move 0,0,Me.ScaleWidth,Me.ScaleHeight-cmdOK.height
+  cmdOK.Move Me.ScaleWidth - 110 * screen.twipsperpixelx,Me.ScaleHeight-cmdOK.height,cmdok.width,cmdok.height
+  cmdCancel.Move Me.ScaleWidth - 55 * screen.twipsperpixelx,Me.ScaleHeight-cmdOK.height,cmdcancel.width,cmdok.height
+  if Item is nothing then Init Myuser.Application
+End Sub
+Private Sub Form_Unload(Cancel As Integer)
+  on error resume next
+  set item=nothing
+  Set TSCustom = Nothing
+  SaveToSkin me
+  exit sub
+bye:
+  msgbox err.description,vbokonly
+  cancel = -1
+End Sub
+private sub Form_Resize()
+ if me.windowstate =1 then exit sub
+ on error resume next
+  ts.Move 0,0,Me.ScaleWidth,Me.ScaleHeight-cmdOK.height
+  cmdOK.Move Me.ScaleWidth - 110 * screen.twipsperpixelx,Me.ScaleHeight-cmdOK.height,cmdok.width,cmdok.height
+  cmdCancel.Move Me.ScaleWidth - 55 * screen.twipsperpixelx,Me.ScaleHeight-cmdOK.height,cmdcancel.width,cmdok.height
+  ts_click
+end sub
+Private Sub mnuSetup_Click()
+TSCustom.Setup ts
+End Sub
+Private Sub ts_MouseUp(Button As Integer, Shift As Integer, X As Single, Y As Single)
+  If Button = 2 And Shift = 0 Then
+    PopupMenu mnuCtl
+  End If
+End Sub
+private sub ts_click()
+  on error resume next
+  panelfGroup.Visible = False
+
+   Select Case ts.SelectedItem.Key
+   Case &quot;fGroup&quot;
+     With panelfGroup
+     .Top = ts.ClientTop
+     .Left = ts.ClientLeft
+     .Width = ts.ClientWidth
+     .Height = ts.ClientHeight
+     .Visible = True
+     .ZOrder 0
+     End With
+     End select
+end sub
+private sub TInit()
+  on error resume next
+  Dim ff As Long, buf As String
+
+ts.Tabs.Item(1).Caption = &quot;Описание отчета&quot;
+ts.Tabs.Item(1).key = &quot;fGroup&quot;
+panelfGroupInit
+  Set TSCustom = New MTZ_CUSTOMTAB.TabStripCustomizer
+  TSCustom.Init ts, &quot;t_REPORT&quot;, &quot;fctlt_REPORT&quot;
+  TSCustom.SetupFromRegistry ts
+ ts_click
+end sub
+
+
+private sub Changing
+if OnInit then exit sub
+ raiseevent Changed()
+end sub
+private sub txtNAME_Change()
+  Changing
+end sub
+private sub PanelfGroupInit()
+OnInit = true
+dim iii as long ' for combo only
+
+txtNAME = &quot;&quot;
+OnInit = false
+end sub
+
+"><AttributeHolder Name="Type" Value="code"/><FormData Name=""/></BlockHolder></ModuleHolder><ModuleHolder ModuleName="frmt_HCMESSAGES" File=""><AttributeHolder Name="Type" Value="form"/><BlockHolder BlockName="'form" BlockCode=""><AttributeHolder Name="Type" Value="form"/><FormData Name=""><ControlData Name="cmdOK" ControlIndex="0" PROGID="VB.CommandButton"><Properties Name="Name" PropValue="cmdOK"/><Properties Name="Caption" PropValue="OK"/><Properties Name="Tag" PropValue=""/><Properties Name="ToolTipText" PropValue="Применить фильтр"/><Properties Name="UseMaskColor" PropValue="True"/><Properties Name="Height" PropValue="330"/><Properties Name="Width" PropValue="750"/><Properties Name="Top" PropValue="0"/><Properties Name="Left" PropValue="0"/></ControlData><ControlData Name="cmdCancel" ControlIndex="0" PROGID="VB.CommandButton"><Properties Name="Name" PropValue="cmdCancel"/><Properties Name="Caption" PropValue="Отмена"/><Properties Name="Tag" PropValue=""/><Properties Name="ToolTipText" PropValue="Отказ от задания фильтра"/><Properties Name="UseMaskColor" PropValue="True"/><Properties Name="Height" PropValue="330"/><Properties Name="Width" PropValue="750"/><Properties Name="Top" PropValue="0"/><Properties Name="Left" PropValue="0"/></ControlData><ControlData Name="mnuCtl" ControlIndex="0" PROGID="VB.Menu"><Properties Name="Caption" PropValue="mnuCtl"/><Properties Name="Name" PropValue="mnuCtl"/><Properties Name="Visible" PropValue="False"/><ControlData Name="mnuSetup" ControlIndex="0" PROGID="VB.Menu"><Properties Name="Caption" PropValue="Настройка"/><Properties Name="Name" PropValue="mnuSetup"/><Properties Name="Enabled" PropValue="True"/><Properties Name="Visible" PropValue="True"/></ControlData></ControlData><ControlData Name="ts" ControlIndex="0" PROGID="mscomctllib.tabstrip"><Properties Name="Name" PropValue="ts"/><Properties Name="Top" PropValue="0"/><Properties Name="Left" PropValue="0"/><Properties Name="Width" PropValue="1500"/><Properties Name="Height" PropValue="1500"/></ControlData><ControlData Name="PanelfGroup" ControlIndex="0" PROGID="MTZ_panel.Scrolledwindow"><Properties Name="BackStyle" PropValue="0"/><Properties Name="NAME" PropValue="PanelfGroup"/><Properties Name="Top" PropValue="0"/><Properties Name="Left" PropValue="0"/><Properties Name="Height" PropValue="1000"/><Properties Name="Width" PropValue="1000"/><ControlData Name="" ControlIndex="0" PROGID="VB.CheckBox"><Properties Name="BackStyle" PropValue="0"/><Properties Name="NAME" PropValue="lblID_BD"/><Properties Name="Caption" PropValue="Устройство:"/><Properties Name="Top" PropValue="75"/><Properties Name="Left" PropValue="300"/><Properties Name="Height" PropValue="300"/><Properties Name="Width" PropValue="3000"/><Properties Name="ForeColor" PropValue="0"/></ControlData><ControlData Name="" ControlIndex="0" PROGID="VB.textbox"><Properties Name="NAME" PropValue="txtID_BD"/><Properties Name="Text" PropValue=""/><Properties Name="Locked" PropValue="True"/><Properties Name="Enabled" PropValue="True"/><Properties Name="Top" PropValue="405"/><Properties Name="Left" PropValue="300"/><Properties Name="Height" PropValue="300"/><Properties Name="Width" PropValue="2550"/><Properties Name="ToolTipText" PropValue="Устройство"/></ControlData><ControlData Name="" ControlIndex="0" PROGID="MTZ_PANEL.DropButton"><Properties Name="NAME" PropValue="cmdID_BD"/><Properties Name="Caption" PropValue=""/><Properties Name="Tag" PropValue="refopen.ico"/><Properties Name="Top" PropValue="405"/><Properties Name="Enabled" PropValue="True"/><Properties Name="Left" PropValue="2850"/><Properties Name="Height" PropValue="300"/><Properties Name="Width" PropValue="450"/><Properties Name="ToolTipText" PropValue="Устройство"/></ControlData><ControlData Name="" ControlIndex="0" PROGID="VB.CheckBox"><Properties Name="BackStyle" PropValue="0"/><Properties Name="NAME" PropValue="lblQYear_GE"/><Properties Name="Caption" PropValue="Год опроса больше или равно:"/><Properties Name="Top" PropValue="780"/><Properties Name="Left" PropValue="300"/><Properties Name="Height" PropValue="300"/><Properties Name="Width" PropValue="3000"/><Properties Name="ForeColor" PropValue="0"/></ControlData><ControlData Name="" ControlIndex="0" PROGID="VB.textbox"><Properties Name="NAME" PropValue="txtQYear_GE"/><Properties Name="Text" PropValue=""/><Properties Name="Top" PropValue="1110"/><Properties Name="Left" PropValue="300"/><Properties Name="Height" PropValue="300"/><Properties Name="Width" PropValue="1800"/><Properties Name="ToolTipText" PropValue="Год опроса больше или равно"/><Properties Name="CausesValidation" PropValue="True"/><Properties Name="Locked" PropValue="False"/><Properties Name="Enabled" PropValue="True"/><Properties Name="MaxLength" PropValue="15"/></ControlData><ControlData Name="" ControlIndex="0" PROGID="VB.CheckBox"><Properties Name="BackStyle" PropValue="0"/><Properties Name="NAME" PropValue="lblQYear_LE"/><Properties Name="Caption" PropValue="Год опроса меньше или равно:"/><Properties Name="Top" PropValue="1485"/><Properties Name="Left" PropValue="300"/><Properties Name="Height" PropValue="300"/><Properties Name="Width" PropValue="3000"/><Properties Name="ForeColor" PropValue="0"/></ControlData><ControlData Name="" ControlIndex="0" PROGID="VB.textbox"><Properties Name="NAME" PropValue="txtQYear_LE"/><Properties Name="Text" PropValue=""/><Properties Name="Top" PropValue="1815"/><Properties Name="Left" PropValue="300"/><Properties Name="Height" PropValue="300"/><Properties Name="Width" PropValue="1800"/><Properties Name="ToolTipText" PropValue="Год опроса меньше или равно"/><Properties Name="CausesValidation" PropValue="True"/><Properties Name="Locked" PropValue="False"/><Properties Name="Enabled" PropValue="True"/><Properties Name="MaxLength" PropValue="15"/></ControlData><ControlData Name="" ControlIndex="0" PROGID="VB.CheckBox"><Properties Name="BackStyle" PropValue="0"/><Properties Name="NAME" PropValue="lblQMonth_GE"/><Properties Name="Caption" PropValue="Месяц опроса больше или равно:"/><Properties Name="Top" PropValue="2190"/><Properties Name="Left" PropValue="300"/><Properties Name="Height" PropValue="300"/><Properties Name="Width" PropValue="3000"/><Properties Name="ForeColor" PropValue="0"/></ControlData><ControlData Name="" ControlIndex="0" PROGID="VB.textbox"><Properties Name="NAME" PropValue="txtQMonth_GE"/><Properties Name="Text" PropValue=""/><Properties Name="Top" PropValue="2520"/><Properties Name="Left" PropValue="300"/><Properties Name="Height" PropValue="300"/><Properties Name="Width" PropValue="1800"/><Properties Name="ToolTipText" PropValue="Месяц опроса больше или равно"/><Properties Name="CausesValidation" PropValue="True"/><Properties Name="Locked" PropValue="False"/><Properties Name="Enabled" PropValue="True"/><Properties Name="MaxLength" PropValue="15"/></ControlData><ControlData Name="" ControlIndex="0" PROGID="VB.CheckBox"><Properties Name="BackStyle" PropValue="0"/><Properties Name="NAME" PropValue="lblQMonth_LE"/><Properties Name="Caption" PropValue="Месяц опроса меньше или равно:"/><Properties Name="Top" PropValue="2895"/><Properties Name="Left" PropValue="300"/><Properties Name="Height" PropValue="300"/><Properties Name="Width" PropValue="3000"/><Properties Name="ForeColor" PropValue="0"/></ControlData><ControlData Name="" ControlIndex="0" PROGID="VB.textbox"><Properties Name="NAME" PropValue="txtQMonth_LE"/><Properties Name="Text" PropValue=""/><Properties Name="Top" PropValue="3225"/><Properties Name="Left" PropValue="300"/><Properties Name="Height" PropValue="300"/><Properties Name="Width" PropValue="1800"/><Properties Name="ToolTipText" PropValue="Месяц опроса меньше или равно"/><Properties Name="CausesValidation" PropValue="True"/><Properties Name="Locked" PropValue="False"/><Properties Name="Enabled" PropValue="True"/><Properties Name="MaxLength" PropValue="15"/></ControlData><ControlData Name="" ControlIndex="0" PROGID="VB.CheckBox"><Properties Name="BackStyle" PropValue="0"/><Properties Name="NAME" PropValue="lblQDay_GE"/><Properties Name="Caption" PropValue="День опроса больше или равно:"/><Properties Name="Top" PropValue="3600"/><Properties Name="Left" PropValue="300"/><Properties Name="Height" PropValue="300"/><Properties Name="Width" PropValue="3000"/><Properties Name="ForeColor" PropValue="0"/></ControlData><ControlData Name="" ControlIndex="0" PROGID="VB.textbox"><Properties Name="NAME" PropValue="txtQDay_GE"/><Properties Name="Text" PropValue=""/><Properties Name="Top" PropValue="3930"/><Properties Name="Left" PropValue="300"/><Properties Name="Height" PropValue="300"/><Properties Name="Width" PropValue="1800"/><Properties Name="ToolTipText" PropValue="День опроса больше или равно"/><Properties Name="CausesValidation" PropValue="True"/><Properties Name="Locked" PropValue="False"/><Properties Name="Enabled" PropValue="True"/><Properties Name="MaxLength" PropValue="15"/></ControlData><ControlData Name="" ControlIndex="0" PROGID="VB.CheckBox"><Properties Name="BackStyle" PropValue="0"/><Properties Name="NAME" PropValue="lblQDay_LE"/><Properties Name="Caption" PropValue="День опроса меньше или равно:"/><Properties Name="Top" PropValue="4305"/><Properties Name="Left" PropValue="300"/><Properties Name="Height" PropValue="300"/><Properties Name="Width" PropValue="3000"/><Properties Name="ForeColor" PropValue="0"/></ControlData><ControlData Name="" ControlIndex="0" PROGID="VB.textbox"><Properties Name="NAME" PropValue="txtQDay_LE"/><Properties Name="Text" PropValue=""/><Properties Name="Top" PropValue="4635"/><Properties Name="Left" PropValue="300"/><Properties Name="Height" PropValue="300"/><Properties Name="Width" PropValue="1800"/><Properties Name="ToolTipText" PropValue="День опроса меньше или равно"/><Properties Name="CausesValidation" PropValue="True"/><Properties Name="Locked" PropValue="False"/><Properties Name="Enabled" PropValue="True"/><Properties Name="MaxLength" PropValue="15"/></ControlData></ControlData><PropertyData Name="tag" PropValue="Card.ICO"/><PropertyData Name="caption" PropValue="Фильтр для Сообщения о нештатных ситуациях"/><PropertyData Name="ShowInTaskBar" PropValue="True"/></FormData></BlockHolder><BlockHolder BlockName="'description" BlockCode="Public Item as object
+public OK as boolean
+private OnInit as boolean
+public event Changed
+Private TSCustom As MTZ_CUSTOMTAB.TabStripCustomizer
+
+
+
+"><AttributeHolder Name="Type" Value="description"/><FormData Name=""/></BlockHolder><BlockHolder BlockName="'codebody" BlockCode="
+Private Sub cmdOK_Click()
+    on error resume next 
+    OK = true
+    me.hide
+End Sub
+Private Sub cmdCancel_Click()
+    on error resume next 
+    OK = false
+    me.hide
+End Sub
+public sub Init( ObjItem as object)
+ set Item = objItem
+ if Item is nothing then set Item =Myuser.application
+ TInit
+end sub
+Private Sub Form_Load()
+  on error resume next
+  Dim ff As Long, buf As String
+  LoadFromSkin me
+  ts.Move 0,0,Me.ScaleWidth,Me.ScaleHeight-cmdOK.height
+  cmdOK.Move Me.ScaleWidth - 110 * screen.twipsperpixelx,Me.ScaleHeight-cmdOK.height,cmdok.width,cmdok.height
+  cmdCancel.Move Me.ScaleWidth - 55 * screen.twipsperpixelx,Me.ScaleHeight-cmdOK.height,cmdcancel.width,cmdok.height
+  if Item is nothing then Init Myuser.Application
+End Sub
+Private Sub Form_Unload(Cancel As Integer)
+  on error resume next
+  set item=nothing
+  Set TSCustom = Nothing
+  SaveToSkin me
+  exit sub
+bye:
+  msgbox err.description,vbokonly
+  cancel = -1
+End Sub
+private sub Form_Resize()
+ if me.windowstate =1 then exit sub
+ on error resume next
+  ts.Move 0,0,Me.ScaleWidth,Me.ScaleHeight-cmdOK.height
+  cmdOK.Move Me.ScaleWidth - 110 * screen.twipsperpixelx,Me.ScaleHeight-cmdOK.height,cmdok.width,cmdok.height
+  cmdCancel.Move Me.ScaleWidth - 55 * screen.twipsperpixelx,Me.ScaleHeight-cmdOK.height,cmdcancel.width,cmdok.height
+  ts_click
+end sub
+Private Sub mnuSetup_Click()
+TSCustom.Setup ts
+End Sub
+Private Sub ts_MouseUp(Button As Integer, Shift As Integer, X As Single, Y As Single)
+  If Button = 2 And Shift = 0 Then
+    PopupMenu mnuCtl
+  End If
+End Sub
+private sub ts_click()
+  on error resume next
+  panelfGroup.Visible = False
+
+   Select Case ts.SelectedItem.Key
+   Case &quot;fGroup&quot;
+     With panelfGroup
+     .Top = ts.ClientTop
+     .Left = ts.ClientLeft
+     .Width = ts.ClientWidth
+     .Height = ts.ClientHeight
+     .Visible = True
+     .ZOrder 0
+     End With
+     End select
+end sub
+private sub TInit()
+  on error resume next
+  Dim ff As Long, buf As String
+
+ts.Tabs.Item(1).Caption = &quot;Заголовок&quot;
+ts.Tabs.Item(1).key = &quot;fGroup&quot;
+panelfGroupInit
+  Set TSCustom = New MTZ_CUSTOMTAB.TabStripCustomizer
+  TSCustom.Init ts, &quot;t_HCMESSAGES&quot;, &quot;fctlt_HCMESSAGES&quot;
+  TSCustom.SetupFromRegistry ts
+ ts_click
+end sub
+
+
+private sub Changing
+if OnInit then exit sub
+ raiseevent Changed()
+end sub
+private sub txtID_BD_Change()
+  Changing
+end sub
+private sub cmdID_BD_Click()
+  on error resume next
+        Dim id As String, brief As String
+        If item.Application.Manager.GetReferenceDialogEx2(&quot;BDEVICES&quot;, id, brief) Then
+          txtID_BD.Tag = Left(id, 38)
+          txtID_BD = brief
+        End If
+end sub
+private sub cmdID_BD_MenuClick(ByVal sCaption As String)
+End sub
+private sub txtQYear_GE_Validate(cancel as boolean)
+if txtQYear_GE.text&lt;&gt;&quot;&quot; then 
+ on error resume next 
+  if not isnumeric(txtQYear_GE.text) then 
+     cancel=true 
+     msgbox &quot;Ожидалось число&quot;,vbokonly+vbexclamation,&quot;Внимание&quot; 
+  elseif Val(txtQYear_GE.text) &lt;&gt;clng(Val(txtQYear_GE.text)) then 
+     cancel=true 
+     msgbox &quot;Ожидалось целое число&quot;,vbokonly+vbexclamation,&quot;Внимание&quot; 
+  end if
+end if
+end sub
+Private Sub txtQYear_GE_KeyPess(KeyAscii As Integer)
+Dim s As String
+s = &quot;0123456789.,-&quot; &amp; Chr(8)
+If InStr(s, Chr(KeyAscii)) &gt; 0 Then Exit Sub
+KeyAscii = 0
+
+End Sub
+private sub txtQYear_GE_Change()
+  Changing
+end sub
+private sub txtQYear_LE_Validate(cancel as boolean)
+if txtQYear_LE.text&lt;&gt;&quot;&quot; then 
+ on error resume next 
+  if not isnumeric(txtQYear_LE.text) then 
+     cancel=true 
+     msgbox &quot;Ожидалось число&quot;,vbokonly+vbexclamation,&quot;Внимание&quot; 
+  elseif Val(txtQYear_LE.text) &lt;&gt;clng(Val(txtQYear_LE.text)) then 
+     cancel=true 
+     msgbox &quot;Ожидалось целое число&quot;,vbokonly+vbexclamation,&quot;Внимание&quot; 
+  end if
+end if
+end sub
+Private Sub txtQYear_LE_KeyPess(KeyAscii As Integer)
+Dim s As String
+s = &quot;0123456789.,-&quot; &amp; Chr(8)
+If InStr(s, Chr(KeyAscii)) &gt; 0 Then Exit Sub
+KeyAscii = 0
+
+End Sub
+private sub txtQYear_LE_Change()
+  Changing
+end sub
+private sub txtQMonth_GE_Validate(cancel as boolean)
+if txtQMonth_GE.text&lt;&gt;&quot;&quot; then 
+ on error resume next 
+  if not isnumeric(txtQMonth_GE.text) then 
+     cancel=true 
+     msgbox &quot;Ожидалось число&quot;,vbokonly+vbexclamation,&quot;Внимание&quot; 
+  elseif Val(txtQMonth_GE.text) &lt;&gt;clng(Val(txtQMonth_GE.text)) then 
+     cancel=true 
+     msgbox &quot;Ожидалось целое число&quot;,vbokonly+vbexclamation,&quot;Внимание&quot; 
+  end if
+end if
+end sub
+Private Sub txtQMonth_GE_KeyPess(KeyAscii As Integer)
+Dim s As String
+s = &quot;0123456789.,-&quot; &amp; Chr(8)
+If InStr(s, Chr(KeyAscii)) &gt; 0 Then Exit Sub
+KeyAscii = 0
+
+End Sub
+private sub txtQMonth_GE_Change()
+  Changing
+end sub
+private sub txtQMonth_LE_Validate(cancel as boolean)
+if txtQMonth_LE.text&lt;&gt;&quot;&quot; then 
+ on error resume next 
+  if not isnumeric(txtQMonth_LE.text) then 
+     cancel=true 
+     msgbox &quot;Ожидалось число&quot;,vbokonly+vbexclamation,&quot;Внимание&quot; 
+  elseif Val(txtQMonth_LE.text) &lt;&gt;clng(Val(txtQMonth_LE.text)) then 
+     cancel=true 
+     msgbox &quot;Ожидалось целое число&quot;,vbokonly+vbexclamation,&quot;Внимание&quot; 
+  end if
+end if
+end sub
+Private Sub txtQMonth_LE_KeyPess(KeyAscii As Integer)
+Dim s As String
+s = &quot;0123456789.,-&quot; &amp; Chr(8)
+If InStr(s, Chr(KeyAscii)) &gt; 0 Then Exit Sub
+KeyAscii = 0
+
+End Sub
+private sub txtQMonth_LE_Change()
+  Changing
+end sub
+private sub txtQDay_GE_Validate(cancel as boolean)
+if txtQDay_GE.text&lt;&gt;&quot;&quot; then 
+ on error resume next 
+  if not isnumeric(txtQDay_GE.text) then 
+     cancel=true 
+     msgbox &quot;Ожидалось число&quot;,vbokonly+vbexclamation,&quot;Внимание&quot; 
+  elseif Val(txtQDay_GE.text) &lt;&gt;clng(Val(txtQDay_GE.text)) then 
+     cancel=true 
+     msgbox &quot;Ожидалось целое число&quot;,vbokonly+vbexclamation,&quot;Внимание&quot; 
+  end if
+end if
+end sub
+Private Sub txtQDay_GE_KeyPess(KeyAscii As Integer)
+Dim s As String
+s = &quot;0123456789.,-&quot; &amp; Chr(8)
+If InStr(s, Chr(KeyAscii)) &gt; 0 Then Exit Sub
+KeyAscii = 0
+
+End Sub
+private sub txtQDay_GE_Change()
+  Changing
+end sub
+private sub txtQDay_LE_Validate(cancel as boolean)
+if txtQDay_LE.text&lt;&gt;&quot;&quot; then 
+ on error resume next 
+  if not isnumeric(txtQDay_LE.text) then 
+     cancel=true 
+     msgbox &quot;Ожидалось число&quot;,vbokonly+vbexclamation,&quot;Внимание&quot; 
+  elseif Val(txtQDay_LE.text) &lt;&gt;clng(Val(txtQDay_LE.text)) then 
+     cancel=true 
+     msgbox &quot;Ожидалось целое число&quot;,vbokonly+vbexclamation,&quot;Внимание&quot; 
+  end if
+end if
+end sub
+Private Sub txtQDay_LE_KeyPess(KeyAscii As Integer)
+Dim s As String
+s = &quot;0123456789.,-&quot; &amp; Chr(8)
+If InStr(s, Chr(KeyAscii)) &gt; 0 Then Exit Sub
+KeyAscii = 0
+
+End Sub
+private sub txtQDay_LE_Change()
+  Changing
+end sub
+private sub PanelfGroupInit()
+OnInit = true
+dim iii as long ' for combo only
+
+  txtID_BD.Tag = &quot;&quot; 
+  txtID_BD = &quot;&quot; 
+ LoadBtnPictures cmdID_BD,cmdID_BD.tag
+  cmdID_BD.RemoveAllMenu
+OnInit = false
+end sub
+
+"><AttributeHolder Name="Type" Value="code"/><FormData Name=""/></BlockHolder></ModuleHolder><ModuleHolder ModuleName="frmt_DEVSCHEMA" File=""><AttributeHolder Name="Type" Value="form"/><BlockHolder BlockName="'form" BlockCode=""><AttributeHolder Name="Type" Value="form"/><FormData Name=""><ControlData Name="cmdOK" ControlIndex="0" PROGID="VB.CommandButton"><Properties Name="Name" PropValue="cmdOK"/><Properties Name="Caption" PropValue="OK"/><Properties Name="Tag" PropValue=""/><Properties Name="ToolTipText" PropValue="Применить фильтр"/><Properties Name="UseMaskColor" PropValue="True"/><Properties Name="Height" PropValue="330"/><Properties Name="Width" PropValue="750"/><Properties Name="Top" PropValue="0"/><Properties Name="Left" PropValue="0"/></ControlData><ControlData Name="cmdCancel" ControlIndex="0" PROGID="VB.CommandButton"><Properties Name="Name" PropValue="cmdCancel"/><Properties Name="Caption" PropValue="Отмена"/><Properties Name="Tag" PropValue=""/><Properties Name="ToolTipText" PropValue="Отказ от задания фильтра"/><Properties Name="UseMaskColor" PropValue="True"/><Properties Name="Height" PropValue="330"/><Properties Name="Width" PropValue="750"/><Properties Name="Top" PropValue="0"/><Properties Name="Left" PropValue="0"/></ControlData><ControlData Name="mnuCtl" ControlIndex="0" PROGID="VB.Menu"><Properties Name="Caption" PropValue="mnuCtl"/><Properties Name="Name" PropValue="mnuCtl"/><Properties Name="Visible" PropValue="False"/><ControlData Name="mnuSetup" ControlIndex="0" PROGID="VB.Menu"><Properties Name="Caption" PropValue="Настройка"/><Properties Name="Name" PropValue="mnuSetup"/><Properties Name="Enabled" PropValue="True"/><Properties Name="Visible" PropValue="True"/></ControlData></ControlData><ControlData Name="ts" ControlIndex="0" PROGID="mscomctllib.tabstrip"><Properties Name="Name" PropValue="ts"/><Properties Name="Top" PropValue="0"/><Properties Name="Left" PropValue="0"/><Properties Name="Width" PropValue="1500"/><Properties Name="Height" PropValue="1500"/></ControlData><ControlData Name="PanelfGroup" ControlIndex="0" PROGID="MTZ_panel.Scrolledwindow"><Properties Name="BackStyle" PropValue="0"/><Properties Name="NAME" PropValue="PanelfGroup"/><Properties Name="Top" PropValue="0"/><Properties Name="Left" PropValue="0"/><Properties Name="Height" PropValue="1000"/><Properties Name="Width" PropValue="1000"/><ControlData Name="" ControlIndex="0" PROGID="VB.CheckBox"><Properties Name="BackStyle" PropValue="0"/><Properties Name="NAME" PropValue="lblNAME"/><Properties Name="Caption" PropValue="Название:"/><Properties Name="Top" PropValue="75"/><Properties Name="Left" PropValue="300"/><Properties Name="Height" PropValue="300"/><Properties Name="Width" PropValue="3000"/><Properties Name="ForeColor" PropValue="0"/></ControlData><ControlData Name="" ControlIndex="0" PROGID="VB.textbox"><Properties Name="NAME" PropValue="txtNAME"/><Properties Name="Text" PropValue=""/><Properties Name="Top" PropValue="405"/><Properties Name="Left" PropValue="300"/><Properties Name="Height" PropValue="300"/><Properties Name="Width" PropValue="3000"/><Properties Name="MaxLength" PropValue="255"/><Properties Name="ToolTipText" PropValue="Название"/><Properties Name="Locked" PropValue="False"/><Properties Name="Enabled" PropValue="True"/></ControlData><ControlData Name="" ControlIndex="0" PROGID="VB.CheckBox"><Properties Name="BackStyle" PropValue="0"/><Properties Name="NAME" PropValue="lblSCHEMA_IMAGE"/><Properties Name="Caption" PropValue="Изображение:"/><Properties Name="Top" PropValue="780"/><Properties Name="Left" PropValue="300"/><Properties Name="Height" PropValue="300"/><Properties Name="Width" PropValue="3000"/><Properties Name="ForeColor" PropValue="0"/></ControlData></ControlData><PropertyData Name="tag" PropValue="Card.ICO"/><PropertyData Name="caption" PropValue="Фильтр для Схема подключения"/><PropertyData Name="ShowInTaskBar" PropValue="True"/></FormData></BlockHolder><BlockHolder BlockName="'description" BlockCode="Public Item as object
+public OK as boolean
+private OnInit as boolean
+public event Changed
+Private TSCustom As MTZ_CUSTOMTAB.TabStripCustomizer
+
+
+
+"><AttributeHolder Name="Type" Value="description"/><FormData Name=""/></BlockHolder><BlockHolder BlockName="'codebody" BlockCode="
+Private Sub cmdOK_Click()
+    on error resume next 
+    OK = true
+    me.hide
+End Sub
+Private Sub cmdCancel_Click()
+    on error resume next 
+    OK = false
+    me.hide
+End Sub
+public sub Init( ObjItem as object)
+ set Item = objItem
+ if Item is nothing then set Item =Myuser.application
+ TInit
+end sub
+Private Sub Form_Load()
+  on error resume next
+  Dim ff As Long, buf As String
+  LoadFromSkin me
+  ts.Move 0,0,Me.ScaleWidth,Me.ScaleHeight-cmdOK.height
+  cmdOK.Move Me.ScaleWidth - 110 * screen.twipsperpixelx,Me.ScaleHeight-cmdOK.height,cmdok.width,cmdok.height
+  cmdCancel.Move Me.ScaleWidth - 55 * screen.twipsperpixelx,Me.ScaleHeight-cmdOK.height,cmdcancel.width,cmdok.height
+  if Item is nothing then Init Myuser.Application
+End Sub
+Private Sub Form_Unload(Cancel As Integer)
+  on error resume next
+  set item=nothing
+  Set TSCustom = Nothing
+  SaveToSkin me
+  exit sub
+bye:
+  msgbox err.description,vbokonly
+  cancel = -1
+End Sub
+private sub Form_Resize()
+ if me.windowstate =1 then exit sub
+ on error resume next
+  ts.Move 0,0,Me.ScaleWidth,Me.ScaleHeight-cmdOK.height
+  cmdOK.Move Me.ScaleWidth - 110 * screen.twipsperpixelx,Me.ScaleHeight-cmdOK.height,cmdok.width,cmdok.height
+  cmdCancel.Move Me.ScaleWidth - 55 * screen.twipsperpixelx,Me.ScaleHeight-cmdOK.height,cmdcancel.width,cmdok.height
+  ts_click
+end sub
+Private Sub mnuSetup_Click()
+TSCustom.Setup ts
+End Sub
+Private Sub ts_MouseUp(Button As Integer, Shift As Integer, X As Single, Y As Single)
+  If Button = 2 And Shift = 0 Then
+    PopupMenu mnuCtl
+  End If
+End Sub
+private sub ts_click()
+  on error resume next
+  panelfGroup.Visible = False
+
+   Select Case ts.SelectedItem.Key
+   Case &quot;fGroup&quot;
+     With panelfGroup
+     .Top = ts.ClientTop
+     .Left = ts.ClientLeft
+     .Width = ts.ClientWidth
+     .Height = ts.ClientHeight
+     .Visible = True
+     .ZOrder 0
+     End With
+     End select
+end sub
+private sub TInit()
+  on error resume next
+  Dim ff As Long, buf As String
+
+ts.Tabs.Item(1).Caption = &quot;Схема подключения&quot;
+ts.Tabs.Item(1).key = &quot;fGroup&quot;
+panelfGroupInit
+  Set TSCustom = New MTZ_CUSTOMTAB.TabStripCustomizer
+  TSCustom.Init ts, &quot;t_DEVSCHEMA&quot;, &quot;fctlt_DEVSCHEMA&quot;
+  TSCustom.SetupFromRegistry ts
+ ts_click
+end sub
+
+
+private sub Changing
+if OnInit then exit sub
+ raiseevent Changed()
+end sub
+private sub txtNAME_Change()
+  Changing
+end sub
+private sub PanelfGroupInit()
+OnInit = true
+dim iii as long ' for combo only
+
+txtNAME = &quot;&quot;
+OnInit = false
+end sub
+
+"><AttributeHolder Name="Type" Value="code"/><FormData Name=""/></BlockHolder></ModuleHolder><ModuleHolder ModuleName="frmt_DATACURR" File=""><AttributeHolder Name="Type" Value="form"/><BlockHolder BlockName="'form" BlockCode=""><AttributeHolder Name="Type" Value="form"/><FormData Name=""><ControlData Name="cmdOK" ControlIndex="0" PROGID="VB.CommandButton"><Properties Name="Name" PropValue="cmdOK"/><Properties Name="Caption" PropValue="OK"/><Properties Name="Tag" PropValue=""/><Properties Name="ToolTipText" PropValue="Применить фильтр"/><Properties Name="UseMaskColor" PropValue="True"/><Properties Name="Height" PropValue="330"/><Properties Name="Width" PropValue="750"/><Properties Name="Top" PropValue="0"/><Properties Name="Left" PropValue="0"/></ControlData><ControlData Name="cmdCancel" ControlIndex="0" PROGID="VB.CommandButton"><Properties Name="Name" PropValue="cmdCancel"/><Properties Name="Caption" PropValue="Отмена"/><Properties Name="Tag" PropValue=""/><Properties Name="ToolTipText" PropValue="Отказ от задания фильтра"/><Properties Name="UseMaskColor" PropValue="True"/><Properties Name="Height" PropValue="330"/><Properties Name="Width" PropValue="750"/><Properties Name="Top" PropValue="0"/><Properties Name="Left" PropValue="0"/></ControlData><ControlData Name="mnuCtl" ControlIndex="0" PROGID="VB.Menu"><Properties Name="Caption" PropValue="mnuCtl"/><Properties Name="Name" PropValue="mnuCtl"/><Properties Name="Visible" PropValue="False"/><ControlData Name="mnuSetup" ControlIndex="0" PROGID="VB.Menu"><Properties Name="Caption" PropValue="Настройка"/><Properties Name="Name" PropValue="mnuSetup"/><Properties Name="Enabled" PropValue="True"/><Properties Name="Visible" PropValue="True"/></ControlData></ControlData><ControlData Name="ts" ControlIndex="0" PROGID="mscomctllib.tabstrip"><Properties Name="Name" PropValue="ts"/><Properties Name="Top" PropValue="0"/><Properties Name="Left" PropValue="0"/><Properties Name="Width" PropValue="1500"/><Properties Name="Height" PropValue="1500"/></ControlData><ControlData Name="PanelfGroup" ControlIndex="0" PROGID="MTZ_panel.Scrolledwindow"><Properties Name="BackStyle" PropValue="0"/><Properties Name="NAME" PropValue="PanelfGroup"/><Properties Name="Top" PropValue="0"/><Properties Name="Left" PropValue="0"/><Properties Name="Height" PropValue="1000"/><Properties Name="Width" PropValue="1000"/><ControlData Name="" ControlIndex="0" PROGID="VB.CheckBox"><Properties Name="BackStyle" PropValue="0"/><Properties Name="NAME" PropValue="lblID_BD"/><Properties Name="Caption" PropValue="Устройство:"/><Properties Name="Top" PropValue="75"/><Properties Name="Left" PropValue="300"/><Properties Name="Height" PropValue="300"/><Properties Name="Width" PropValue="3000"/><Properties Name="ForeColor" PropValue="0"/></ControlData><ControlData Name="" ControlIndex="0" PROGID="VB.textbox"><Properties Name="NAME" PropValue="txtID_BD"/><Properties Name="Text" PropValue=""/><Properties Name="Locked" PropValue="True"/><Properties Name="Enabled" PropValue="True"/><Properties Name="Top" PropValue="405"/><Properties Name="Left" PropValue="300"/><Properties Name="Height" PropValue="300"/><Properties Name="Width" PropValue="2550"/><Properties Name="ToolTipText" PropValue="Устройство"/></ControlData><ControlData Name="" ControlIndex="0" PROGID="MTZ_PANEL.DropButton"><Properties Name="NAME" PropValue="cmdID_BD"/><Properties Name="Caption" PropValue=""/><Properties Name="Tag" PropValue="refopen.ico"/><Properties Name="Top" PropValue="405"/><Properties Name="Enabled" PropValue="True"/><Properties Name="Left" PropValue="2850"/><Properties Name="Height" PropValue="300"/><Properties Name="Width" PropValue="450"/><Properties Name="ToolTipText" PropValue="Устройство"/></ControlData><ControlData Name="" ControlIndex="0" PROGID="VB.CheckBox"><Properties Name="BackStyle" PropValue="0"/><Properties Name="NAME" PropValue="lblID_DU"/><Properties Name="Caption" PropValue="Подключенное устройство:"/><Properties Name="Top" PropValue="780"/><Properties Name="Left" PropValue="300"/><Properties Name="Height" PropValue="300"/><Properties Name="Width" PropValue="3000"/><Properties Name="ForeColor" PropValue="0"/></ControlData><ControlData Name="" ControlIndex="0" PROGID="VB.textbox"><Properties Name="NAME" PropValue="txtID_DU"/><Properties Name="Text" PropValue=""/><Properties Name="Locked" PropValue="True"/><Properties Name="Enabled" PropValue="True"/><Properties Name="Top" PropValue="1110"/><Properties Name="Left" PropValue="300"/><Properties Name="Height" PropValue="300"/><Properties Name="Width" PropValue="2550"/><Properties Name="ToolTipText" PropValue="Подключенное устройство"/></ControlData><ControlData Name="" ControlIndex="0" PROGID="MTZ_PANEL.DropButton"><Properties Name="NAME" PropValue="cmdID_DU"/><Properties Name="Caption" PropValue=""/><Properties Name="Tag" PropValue="refopen.ico"/><Properties Name="Top" PropValue="1110"/><Properties Name="Enabled" PropValue="True"/><Properties Name="Left" PropValue="2850"/><Properties Name="Height" PropValue="300"/><Properties Name="Width" PropValue="450"/><Properties Name="ToolTipText" PropValue="Подключенное устройство"/></ControlData><ControlData Name="" ControlIndex="0" PROGID="VB.CheckBox"><Properties Name="BackStyle" PropValue="0"/><Properties Name="NAME" PropValue="lblQYear_GE"/><Properties Name="Caption" PropValue="Год опроса больше или равно:"/><Properties Name="Top" PropValue="1485"/><Properties Name="Left" PropValue="300"/><Properties Name="Height" PropValue="300"/><Properties Name="Width" PropValue="3000"/><Properties Name="ForeColor" PropValue="0"/></ControlData><ControlData Name="" ControlIndex="0" PROGID="VB.textbox"><Properties Name="NAME" PropValue="txtQYear_GE"/><Properties Name="Text" PropValue=""/><Properties Name="Top" PropValue="1815"/><Properties Name="Left" PropValue="300"/><Properties Name="Height" PropValue="300"/><Properties Name="Width" PropValue="1800"/><Properties Name="ToolTipText" PropValue="Год опроса больше или равно"/><Properties Name="CausesValidation" PropValue="True"/><Properties Name="Locked" PropValue="False"/><Properties Name="Enabled" PropValue="True"/><Properties Name="MaxLength" PropValue="15"/></ControlData><ControlData Name="" ControlIndex="0" PROGID="VB.CheckBox"><Properties Name="BackStyle" PropValue="0"/><Properties Name="NAME" PropValue="lblQYear_LE"/><Properties Name="Caption" PropValue="Год опроса меньше или равно:"/><Properties Name="Top" PropValue="2190"/><Properties Name="Left" PropValue="300"/><Properties Name="Height" PropValue="300"/><Properties Name="Width" PropValue="3000"/><Properties Name="ForeColor" PropValue="0"/></ControlData><ControlData Name="" ControlIndex="0" PROGID="VB.textbox"><Properties Name="NAME" PropValue="txtQYear_LE"/><Properties Name="Text" PropValue=""/><Properties Name="Top" PropValue="2520"/><Properties Name="Left" PropValue="300"/><Properties Name="Height" PropValue="300"/><Properties Name="Width" PropValue="1800"/><Properties Name="ToolTipText" PropValue="Год опроса меньше или равно"/><Properties Name="CausesValidation" PropValue="True"/><Properties Name="Locked" PropValue="False"/><Properties Name="Enabled" PropValue="True"/><Properties Name="MaxLength" PropValue="15"/></ControlData><ControlData Name="" ControlIndex="0" PROGID="VB.CheckBox"><Properties Name="BackStyle" PropValue="0"/><Properties Name="NAME" PropValue="lblQMonth_GE"/><Properties Name="Caption" PropValue="Месяц опроса больше или равно:"/><Properties Name="Top" PropValue="2895"/><Properties Name="Left" PropValue="300"/><Properties Name="Height" PropValue="300"/><Properties Name="Width" PropValue="3000"/><Properties Name="ForeColor" PropValue="0"/></ControlData><ControlData Name="" ControlIndex="0" PROGID="VB.textbox"><Properties Name="NAME" PropValue="txtQMonth_GE"/><Properties Name="Text" PropValue=""/><Properties Name="Top" PropValue="3225"/><Properties Name="Left" PropValue="300"/><Properties Name="Height" PropValue="300"/><Properties Name="Width" PropValue="1800"/><Properties Name="ToolTipText" PropValue="Месяц опроса больше или равно"/><Properties Name="CausesValidation" PropValue="True"/><Properties Name="Locked" PropValue="False"/><Properties Name="Enabled" PropValue="True"/><Properties Name="MaxLength" PropValue="15"/></ControlData><ControlData Name="" ControlIndex="0" PROGID="VB.CheckBox"><Properties Name="BackStyle" PropValue="0"/><Properties Name="NAME" PropValue="lblQMonth_LE"/><Properties Name="Caption" PropValue="Месяц опроса меньше или равно:"/><Properties Name="Top" PropValue="3600"/><Properties Name="Left" PropValue="300"/><Properties Name="Height" PropValue="300"/><Properties Name="Width" PropValue="3000"/><Properties Name="ForeColor" PropValue="0"/></ControlData><ControlData Name="" ControlIndex="0" PROGID="VB.textbox"><Properties Name="NAME" PropValue="txtQMonth_LE"/><Properties Name="Text" PropValue=""/><Properties Name="Top" PropValue="3930"/><Properties Name="Left" PropValue="300"/><Properties Name="Height" PropValue="300"/><Properties Name="Width" PropValue="1800"/><Properties Name="ToolTipText" PropValue="Месяц опроса меньше или равно"/><Properties Name="CausesValidation" PropValue="True"/><Properties Name="Locked" PropValue="False"/><Properties Name="Enabled" PropValue="True"/><Properties Name="MaxLength" PropValue="15"/></ControlData><ControlData Name="" ControlIndex="0" PROGID="VB.CheckBox"><Properties Name="BackStyle" PropValue="0"/><Properties Name="NAME" PropValue="lblQDay_GE"/><Properties Name="Caption" PropValue="День опроса больше или равно:"/><Properties Name="Top" PropValue="4305"/><Properties Name="Left" PropValue="300"/><Properties Name="Height" PropValue="300"/><Properties Name="Width" PropValue="3000"/><Properties Name="ForeColor" PropValue="0"/></ControlData><ControlData Name="" ControlIndex="0" PROGID="VB.textbox"><Properties Name="NAME" PropValue="txtQDay_GE"/><Properties Name="Text" PropValue=""/><Properties Name="Top" PropValue="4635"/><Properties Name="Left" PropValue="300"/><Properties Name="Height" PropValue="300"/><Properties Name="Width" PropValue="1800"/><Properties Name="ToolTipText" PropValue="День опроса больше или равно"/><Properties Name="CausesValidation" PropValue="True"/><Properties Name="Locked" PropValue="False"/><Properties Name="Enabled" PropValue="True"/><Properties Name="MaxLength" PropValue="15"/></ControlData><ControlData Name="" ControlIndex="0" PROGID="VB.CheckBox"><Properties Name="BackStyle" PropValue="0"/><Properties Name="NAME" PropValue="lblQDay_LE"/><Properties Name="Caption" PropValue="День опроса меньше или равно:"/><Properties Name="Top" PropValue="5010"/><Properties Name="Left" PropValue="300"/><Properties Name="Height" PropValue="300"/><Properties Name="Width" PropValue="3000"/><Properties Name="ForeColor" PropValue="0"/></ControlData><ControlData Name="" ControlIndex="0" PROGID="VB.textbox"><Properties Name="NAME" PropValue="txtQDay_LE"/><Properties Name="Text" PropValue=""/><Properties Name="Top" PropValue="5340"/><Properties Name="Left" PropValue="300"/><Properties Name="Height" PropValue="300"/><Properties Name="Width" PropValue="1800"/><Properties Name="ToolTipText" PropValue="День опроса меньше или равно"/><Properties Name="CausesValidation" PropValue="True"/><Properties Name="Locked" PropValue="False"/><Properties Name="Enabled" PropValue="True"/><Properties Name="MaxLength" PropValue="15"/></ControlData></ControlData><PropertyData Name="tag" PropValue="Card.ICO"/><PropertyData Name="caption" PropValue="Фильтр для Текущие значения"/><PropertyData Name="ShowInTaskBar" PropValue="True"/></FormData></BlockHolder><BlockHolder BlockName="'description" BlockCode="Public Item as object
+public OK as boolean
+private OnInit as boolean
+public event Changed
+Private TSCustom As MTZ_CUSTOMTAB.TabStripCustomizer
+
+
+
+"><AttributeHolder Name="Type" Value="description"/><FormData Name=""/></BlockHolder><BlockHolder BlockName="'codebody" BlockCode="
+Private Sub cmdOK_Click()
+    on error resume next 
+    OK = true
+    me.hide
+End Sub
+Private Sub cmdCancel_Click()
+    on error resume next 
+    OK = false
+    me.hide
+End Sub
+public sub Init( ObjItem as object)
+ set Item = objItem
+ if Item is nothing then set Item =Myuser.application
+ TInit
+end sub
+Private Sub Form_Load()
+  on error resume next
+  Dim ff As Long, buf As String
+  LoadFromSkin me
+  ts.Move 0,0,Me.ScaleWidth,Me.ScaleHeight-cmdOK.height
+  cmdOK.Move Me.ScaleWidth - 110 * screen.twipsperpixelx,Me.ScaleHeight-cmdOK.height,cmdok.width,cmdok.height
+  cmdCancel.Move Me.ScaleWidth - 55 * screen.twipsperpixelx,Me.ScaleHeight-cmdOK.height,cmdcancel.width,cmdok.height
+  if Item is nothing then Init Myuser.Application
+End Sub
+Private Sub Form_Unload(Cancel As Integer)
+  on error resume next
+  set item=nothing
+  Set TSCustom = Nothing
+  SaveToSkin me
+  exit sub
+bye:
+  msgbox err.description,vbokonly
+  cancel = -1
+End Sub
+private sub Form_Resize()
+ if me.windowstate =1 then exit sub
+ on error resume next
+  ts.Move 0,0,Me.ScaleWidth,Me.ScaleHeight-cmdOK.height
+  cmdOK.Move Me.ScaleWidth - 110 * screen.twipsperpixelx,Me.ScaleHeight-cmdOK.height,cmdok.width,cmdok.height
+  cmdCancel.Move Me.ScaleWidth - 55 * screen.twipsperpixelx,Me.ScaleHeight-cmdOK.height,cmdcancel.width,cmdok.height
+  ts_click
+end sub
+Private Sub mnuSetup_Click()
+TSCustom.Setup ts
+End Sub
+Private Sub ts_MouseUp(Button As Integer, Shift As Integer, X As Single, Y As Single)
+  If Button = 2 And Shift = 0 Then
+    PopupMenu mnuCtl
+  End If
+End Sub
+private sub ts_click()
+  on error resume next
+  panelfGroup.Visible = False
+
+   Select Case ts.SelectedItem.Key
+   Case &quot;fGroup&quot;
+     With panelfGroup
+     .Top = ts.ClientTop
+     .Left = ts.ClientLeft
+     .Width = ts.ClientWidth
+     .Height = ts.ClientHeight
+     .Visible = True
+     .ZOrder 0
+     End With
+     End select
+end sub
+private sub TInit()
+  on error resume next
+  Dim ff As Long, buf As String
+
+ts.Tabs.Item(1).Caption = &quot;Заголовок&quot;
+ts.Tabs.Item(1).key = &quot;fGroup&quot;
+panelfGroupInit
+  Set TSCustom = New MTZ_CUSTOMTAB.TabStripCustomizer
+  TSCustom.Init ts, &quot;t_DATACURR&quot;, &quot;fctlt_DATACURR&quot;
+  TSCustom.SetupFromRegistry ts
+ ts_click
+end sub
+
+
+private sub Changing
+if OnInit then exit sub
+ raiseevent Changed()
+end sub
+private sub txtID_BD_Change()
+  Changing
+end sub
+private sub cmdID_BD_Click()
+  on error resume next
+        Dim id As String, brief As String
+        If item.Application.Manager.GetReferenceDialogEx2(&quot;BDEVICES&quot;, id, brief) Then
+          txtID_BD.Tag = Left(id, 38)
+          txtID_BD = brief
+        End If
+end sub
+private sub cmdID_BD_MenuClick(ByVal sCaption As String)
+End sub
+private sub txtID_DU_Change()
+  Changing
+end sub
+private sub cmdID_DU_Click()
+  on error resume next
+        Dim id As String, brief As String
+        If item.Application.Manager.GetReferenceDialogEx2(&quot;DEVUNITS&quot;, id, brief) Then
+          txtID_DU.Tag = Left(id, 38)
+          txtID_DU = brief
+        End If
+end sub
+private sub cmdID_DU_MenuClick(ByVal sCaption As String)
+End sub
+private sub txtQYear_GE_Validate(cancel as boolean)
+if txtQYear_GE.text&lt;&gt;&quot;&quot; then 
+ on error resume next 
+  if not isnumeric(txtQYear_GE.text) then 
+     cancel=true 
+     msgbox &quot;Ожидалось число&quot;,vbokonly+vbexclamation,&quot;Внимание&quot; 
+  elseif Val(txtQYear_GE.text) &lt;&gt;clng(Val(txtQYear_GE.text)) then 
+     cancel=true 
+     msgbox &quot;Ожидалось целое число&quot;,vbokonly+vbexclamation,&quot;Внимание&quot; 
+  end if
+end if
+end sub
+Private Sub txtQYear_GE_KeyPess(KeyAscii As Integer)
+Dim s As String
+s = &quot;0123456789.,-&quot; &amp; Chr(8)
+If InStr(s, Chr(KeyAscii)) &gt; 0 Then Exit Sub
+KeyAscii = 0
+
+End Sub
+private sub txtQYear_GE_Change()
+  Changing
+end sub
+private sub txtQYear_LE_Validate(cancel as boolean)
+if txtQYear_LE.text&lt;&gt;&quot;&quot; then 
+ on error resume next 
+  if not isnumeric(txtQYear_LE.text) then 
+     cancel=true 
+     msgbox &quot;Ожидалось число&quot;,vbokonly+vbexclamation,&quot;Внимание&quot; 
+  elseif Val(txtQYear_LE.text) &lt;&gt;clng(Val(txtQYear_LE.text)) then 
+     cancel=true 
+     msgbox &quot;Ожидалось целое число&quot;,vbokonly+vbexclamation,&quot;Внимание&quot; 
+  end if
+end if
+end sub
+Private Sub txtQYear_LE_KeyPess(KeyAscii As Integer)
+Dim s As String
+s = &quot;0123456789.,-&quot; &amp; Chr(8)
+If InStr(s, Chr(KeyAscii)) &gt; 0 Then Exit Sub
+KeyAscii = 0
+
+End Sub
+private sub txtQYear_LE_Change()
+  Changing
+end sub
+private sub txtQMonth_GE_Validate(cancel as boolean)
+if txtQMonth_GE.text&lt;&gt;&quot;&quot; then 
+ on error resume next 
+  if not isnumeric(txtQMonth_GE.text) then 
+     cancel=true 
+     msgbox &quot;Ожидалось число&quot;,vbokonly+vbexclamation,&quot;Внимание&quot; 
+  elseif Val(txtQMonth_GE.text) &lt;&gt;clng(Val(txtQMonth_GE.text)) then 
+     cancel=true 
+     msgbox &quot;Ожидалось целое число&quot;,vbokonly+vbexclamation,&quot;Внимание&quot; 
+  end if
+end if
+end sub
+Private Sub txtQMonth_GE_KeyPess(KeyAscii As Integer)
+Dim s As String
+s = &quot;0123456789.,-&quot; &amp; Chr(8)
+If InStr(s, Chr(KeyAscii)) &gt; 0 Then Exit Sub
+KeyAscii = 0
+
+End Sub
+private sub txtQMonth_GE_Change()
+  Changing
+end sub
+private sub txtQMonth_LE_Validate(cancel as boolean)
+if txtQMonth_LE.text&lt;&gt;&quot;&quot; then 
+ on error resume next 
+  if not isnumeric(txtQMonth_LE.text) then 
+     cancel=true 
+     msgbox &quot;Ожидалось число&quot;,vbokonly+vbexclamation,&quot;Внимание&quot; 
+  elseif Val(txtQMonth_LE.text) &lt;&gt;clng(Val(txtQMonth_LE.text)) then 
+     cancel=true 
+     msgbox &quot;Ожидалось целое число&quot;,vbokonly+vbexclamation,&quot;Внимание&quot; 
+  end if
+end if
+end sub
+Private Sub txtQMonth_LE_KeyPess(KeyAscii As Integer)
+Dim s As String
+s = &quot;0123456789.,-&quot; &amp; Chr(8)
+If InStr(s, Chr(KeyAscii)) &gt; 0 Then Exit Sub
+KeyAscii = 0
+
+End Sub
+private sub txtQMonth_LE_Change()
+  Changing
+end sub
+private sub txtQDay_GE_Validate(cancel as boolean)
+if txtQDay_GE.text&lt;&gt;&quot;&quot; then 
+ on error resume next 
+  if not isnumeric(txtQDay_GE.text) then 
+     cancel=true 
+     msgbox &quot;Ожидалось число&quot;,vbokonly+vbexclamation,&quot;Внимание&quot; 
+  elseif Val(txtQDay_GE.text) &lt;&gt;clng(Val(txtQDay_GE.text)) then 
+     cancel=true 
+     msgbox &quot;Ожидалось целое число&quot;,vbokonly+vbexclamation,&quot;Внимание&quot; 
+  end if
+end if
+end sub
+Private Sub txtQDay_GE_KeyPess(KeyAscii As Integer)
+Dim s As String
+s = &quot;0123456789.,-&quot; &amp; Chr(8)
+If InStr(s, Chr(KeyAscii)) &gt; 0 Then Exit Sub
+KeyAscii = 0
+
+End Sub
+private sub txtQDay_GE_Change()
+  Changing
+end sub
+private sub txtQDay_LE_Validate(cancel as boolean)
+if txtQDay_LE.text&lt;&gt;&quot;&quot; then 
+ on error resume next 
+  if not isnumeric(txtQDay_LE.text) then 
+     cancel=true 
+     msgbox &quot;Ожидалось число&quot;,vbokonly+vbexclamation,&quot;Внимание&quot; 
+  elseif Val(txtQDay_LE.text) &lt;&gt;clng(Val(txtQDay_LE.text)) then 
+     cancel=true 
+     msgbox &quot;Ожидалось целое число&quot;,vbokonly+vbexclamation,&quot;Внимание&quot; 
+  end if
+end if
+end sub
+Private Sub txtQDay_LE_KeyPess(KeyAscii As Integer)
+Dim s As String
+s = &quot;0123456789.,-&quot; &amp; Chr(8)
+If InStr(s, Chr(KeyAscii)) &gt; 0 Then Exit Sub
+KeyAscii = 0
+
+End Sub
+private sub txtQDay_LE_Change()
+  Changing
+end sub
+private sub PanelfGroupInit()
+OnInit = true
+dim iii as long ' for combo only
+
+  txtID_BD.Tag = &quot;&quot; 
+  txtID_BD = &quot;&quot; 
+ LoadBtnPictures cmdID_BD,cmdID_BD.tag
+  cmdID_BD.RemoveAllMenu
+  txtID_DU.Tag = &quot;&quot; 
+  txtID_DU = &quot;&quot; 
+ LoadBtnPictures cmdID_DU,cmdID_DU.tag
+  cmdID_DU.RemoveAllMenu
+OnInit = false
+end sub
+
+"><AttributeHolder Name="Type" Value="code"/><FormData Name=""/></BlockHolder></ModuleHolder><ModuleHolder ModuleName="frmt_MASKS" File=""><AttributeHolder Name="Type" Value="form"/><BlockHolder BlockName="'form" BlockCode=""><AttributeHolder Name="Type" Value="form"/><FormData Name=""><ControlData Name="cmdOK" ControlIndex="0" PROGID="VB.CommandButton"><Properties Name="Name" PropValue="cmdOK"/><Properties Name="Caption" PropValue="OK"/><Properties Name="Tag" PropValue=""/><Properties Name="ToolTipText" PropValue="Применить фильтр"/><Properties Name="UseMaskColor" PropValue="True"/><Properties Name="Height" PropValue="330"/><Properties Name="Width" PropValue="750"/><Properties Name="Top" PropValue="0"/><Properties Name="Left" PropValue="0"/></ControlData><ControlData Name="cmdCancel" ControlIndex="0" PROGID="VB.CommandButton"><Properties Name="Name" PropValue="cmdCancel"/><Properties Name="Caption" PropValue="Отмена"/><Properties Name="Tag" PropValue=""/><Properties Name="ToolTipText" PropValue="Отказ от задания фильтра"/><Properties Name="UseMaskColor" PropValue="True"/><Properties Name="Height" PropValue="330"/><Properties Name="Width" PropValue="750"/><Properties Name="Top" PropValue="0"/><Properties Name="Left" PropValue="0"/></ControlData><ControlData Name="mnuCtl" ControlIndex="0" PROGID="VB.Menu"><Properties Name="Caption" PropValue="mnuCtl"/><Properties Name="Name" PropValue="mnuCtl"/><Properties Name="Visible" PropValue="False"/><ControlData Name="mnuSetup" ControlIndex="0" PROGID="VB.Menu"><Properties Name="Caption" PropValue="Настройка"/><Properties Name="Name" PropValue="mnuSetup"/><Properties Name="Enabled" PropValue="True"/><Properties Name="Visible" PropValue="True"/></ControlData></ControlData><ControlData Name="ts" ControlIndex="0" PROGID="mscomctllib.tabstrip"><Properties Name="Name" PropValue="ts"/><Properties Name="Top" PropValue="0"/><Properties Name="Left" PropValue="0"/><Properties Name="Width" PropValue="1500"/><Properties Name="Height" PropValue="1500"/></ControlData><ControlData Name="PanelfGroup" ControlIndex="0" PROGID="MTZ_panel.Scrolledwindow"><Properties Name="BackStyle" PropValue="0"/><Properties Name="NAME" PropValue="PanelfGroup"/><Properties Name="Top" PropValue="0"/><Properties Name="Left" PropValue="0"/><Properties Name="Height" PropValue="1000"/><Properties Name="Width" PropValue="1000"/><ControlData Name="" ControlIndex="0" PROGID="VB.CheckBox"><Properties Name="BackStyle" PropValue="0"/><Properties Name="NAME" PropValue="lblCNAME"/><Properties Name="Caption" PropValue="Название:"/><Properties Name="Top" PropValue="75"/><Properties Name="Left" PropValue="300"/><Properties Name="Height" PropValue="300"/><Properties Name="Width" PropValue="3000"/><Properties Name="ForeColor" PropValue="0"/></ControlData><ControlData Name="" ControlIndex="0" PROGID="VB.textbox"><Properties Name="NAME" PropValue="txtCNAME"/><Properties Name="Text" PropValue=""/><Properties Name="Top" PropValue="405"/><Properties Name="Left" PropValue="300"/><Properties Name="Height" PropValue="300"/><Properties Name="Width" PropValue="3000"/><Properties Name="MaxLength" PropValue="80"/><Properties Name="ToolTipText" PropValue="Название"/><Properties Name="Locked" PropValue="False"/><Properties Name="Enabled" PropValue="True"/></ControlData><ControlData Name="" ControlIndex="0" PROGID="VB.CheckBox"><Properties Name="BackStyle" PropValue="0"/><Properties Name="NAME" PropValue="lblCTYPE"/><Properties Name="Caption" PropValue="Системные:"/><Properties Name="Top" PropValue="780"/><Properties Name="Left" PropValue="300"/><Properties Name="Height" PropValue="300"/><Properties Name="Width" PropValue="3000"/><Properties Name="ForeColor" PropValue="0"/></ControlData><ControlData Name="" ControlIndex="0" PROGID="VB.ComboBox"><Properties Name="NAME" PropValue="cmbCTYPE"/><Properties Name="Style" PropValue="2"/><Properties Name="Sorted" PropValue="True"/><Properties Name="Top" PropValue="1110"/><Properties Name="Left" PropValue="300"/><Properties Name="ToolTipText" PropValue="Системные"/><Properties Name="Width" PropValue="3000"/><Properties Name="Enabled" PropValue="True"/></ControlData><ControlData Name="" ControlIndex="0" PROGID="VB.CheckBox"><Properties Name="BackStyle" PropValue="0"/><Properties Name="NAME" PropValue="lblID_DEV"/><Properties Name="Caption" PropValue="Тип устройства:"/><Properties Name="Top" PropValue="1485"/><Properties Name="Left" PropValue="300"/><Properties Name="Height" PropValue="300"/><Properties Name="Width" PropValue="3000"/><Properties Name="ForeColor" PropValue="0"/></ControlData><ControlData Name="" ControlIndex="0" PROGID="VB.textbox"><Properties Name="NAME" PropValue="txtID_DEV"/><Properties Name="Text" PropValue=""/><Properties Name="Locked" PropValue="True"/><Properties Name="Enabled" PropValue="True"/><Properties Name="Top" PropValue="1815"/><Properties Name="Left" PropValue="300"/><Properties Name="Height" PropValue="300"/><Properties Name="Width" PropValue="2550"/><Properties Name="ToolTipText" PropValue="Тип устройства"/></ControlData><ControlData Name="" ControlIndex="0" PROGID="MTZ_PANEL.DropButton"><Properties Name="NAME" PropValue="cmdID_DEV"/><Properties Name="Caption" PropValue=""/><Properties Name="Tag" PropValue="refopen.ico"/><Properties Name="Top" PropValue="1815"/><Properties Name="Enabled" PropValue="True"/><Properties Name="Left" PropValue="2850"/><Properties Name="Height" PropValue="300"/><Properties Name="Width" PropValue="450"/><Properties Name="ToolTipText" PropValue="Тип устройства"/></ControlData><ControlData Name="" ControlIndex="0" PROGID="VB.CheckBox"><Properties Name="BackStyle" PropValue="0"/><Properties Name="NAME" PropValue="lblID_TYPE"/><Properties Name="Caption" PropValue="Тип архива:"/><Properties Name="Top" PropValue="2190"/><Properties Name="Left" PropValue="300"/><Properties Name="Height" PropValue="300"/><Properties Name="Width" PropValue="3000"/><Properties Name="ForeColor" PropValue="0"/></ControlData><ControlData Name="" ControlIndex="0" PROGID="VB.textbox"><Properties Name="NAME" PropValue="txtID_TYPE"/><Properties Name="Text" PropValue=""/><Properties Name="Locked" PropValue="True"/><Properties Name="Enabled" PropValue="True"/><Properties Name="Top" PropValue="2520"/><Properties Name="Left" PropValue="300"/><Properties Name="Height" PropValue="300"/><Properties Name="Width" PropValue="2550"/><Properties Name="ToolTipText" PropValue="Тип архива"/></ControlData><ControlData Name="" ControlIndex="0" PROGID="MTZ_PANEL.DropButton"><Properties Name="NAME" PropValue="cmdID_TYPE"/><Properties Name="Caption" PropValue=""/><Properties Name="Tag" PropValue="refopen.ico"/><Properties Name="Top" PropValue="2520"/><Properties Name="Enabled" PropValue="True"/><Properties Name="Left" PropValue="2850"/><Properties Name="Height" PropValue="300"/><Properties Name="Width" PropValue="450"/><Properties Name="ToolTipText" PropValue="Тип архива"/></ControlData></ControlData><PropertyData Name="tag" PropValue="Card.ICO"/><PropertyData Name="caption" PropValue="Фильтр для Шаблон отображения"/><PropertyData Name="ShowInTaskBar" PropValue="True"/></FormData></BlockHolder><BlockHolder BlockName="'description" BlockCode="Public Item as object
+public OK as boolean
+private OnInit as boolean
+public event Changed
+Private TSCustom As MTZ_CUSTOMTAB.TabStripCustomizer
+
+
+
+"><AttributeHolder Name="Type" Value="description"/><FormData Name=""/></BlockHolder><BlockHolder BlockName="'codebody" BlockCode="
+Private Sub cmdOK_Click()
+    on error resume next 
+    OK = true
+    me.hide
+End Sub
+Private Sub cmdCancel_Click()
+    on error resume next 
+    OK = false
+    me.hide
+End Sub
+public sub Init( ObjItem as object)
+ set Item = objItem
+ if Item is nothing then set Item =Myuser.application
+ TInit
+end sub
+Private Sub Form_Load()
+  on error resume next
+  Dim ff As Long, buf As String
+  LoadFromSkin me
+  ts.Move 0,0,Me.ScaleWidth,Me.ScaleHeight-cmdOK.height
+  cmdOK.Move Me.ScaleWidth - 110 * screen.twipsperpixelx,Me.ScaleHeight-cmdOK.height,cmdok.width,cmdok.height
+  cmdCancel.Move Me.ScaleWidth - 55 * screen.twipsperpixelx,Me.ScaleHeight-cmdOK.height,cmdcancel.width,cmdok.height
+  if Item is nothing then Init Myuser.Application
+End Sub
+Private Sub Form_Unload(Cancel As Integer)
+  on error resume next
+  set item=nothing
+  Set TSCustom = Nothing
+  SaveToSkin me
+  exit sub
+bye:
+  msgbox err.description,vbokonly
+  cancel = -1
+End Sub
+private sub Form_Resize()
+ if me.windowstate =1 then exit sub
+ on error resume next
+  ts.Move 0,0,Me.ScaleWidth,Me.ScaleHeight-cmdOK.height
+  cmdOK.Move Me.ScaleWidth - 110 * screen.twipsperpixelx,Me.ScaleHeight-cmdOK.height,cmdok.width,cmdok.height
+  cmdCancel.Move Me.ScaleWidth - 55 * screen.twipsperpixelx,Me.ScaleHeight-cmdOK.height,cmdcancel.width,cmdok.height
+  ts_click
+end sub
+Private Sub mnuSetup_Click()
+TSCustom.Setup ts
+End Sub
+Private Sub ts_MouseUp(Button As Integer, Shift As Integer, X As Single, Y As Single)
+  If Button = 2 And Shift = 0 Then
+    PopupMenu mnuCtl
+  End If
+End Sub
+private sub ts_click()
+  on error resume next
+  panelfGroup.Visible = False
+
+   Select Case ts.SelectedItem.Key
+   Case &quot;fGroup&quot;
+     With panelfGroup
+     .Top = ts.ClientTop
+     .Left = ts.ClientLeft
+     .Width = ts.ClientWidth
+     .Height = ts.ClientHeight
+     .Visible = True
+     .ZOrder 0
+     End With
+     End select
+end sub
+private sub TInit()
+  on error resume next
+  Dim ff As Long, buf As String
+
+ts.Tabs.Item(1).Caption = &quot;Описание шаблона&quot;
+ts.Tabs.Item(1).key = &quot;fGroup&quot;
+panelfGroupInit
+  Set TSCustom = New MTZ_CUSTOMTAB.TabStripCustomizer
+  TSCustom.Init ts, &quot;t_MASKS&quot;, &quot;fctlt_MASKS&quot;
+  TSCustom.SetupFromRegistry ts
+ ts_click
+end sub
+
+
+private sub Changing
+if OnInit then exit sub
+ raiseevent Changed()
+end sub
+private sub txtCNAME_Change()
+  Changing
+end sub
+private sub cmbCTYPE_Click()
+  on error resume next
+  Changing
+end sub
+private sub txtID_DEV_Change()
+  Changing
+end sub
+private sub cmdID_DEV_Click()
+  on error resume next
+        Dim id As String, brief As String
+        If item.Application.Manager.GetReferenceDialogEx2(&quot;DEVCLASSES&quot;, id, brief) Then
+          txtID_DEV.Tag = Left(id, 38)
+          txtID_DEV = brief
+        End If
+end sub
+private sub cmdID_DEV_MenuClick(ByVal sCaption As String)
+End sub
+private sub txtID_TYPE_Change()
+  Changing
+end sub
+private sub cmdID_TYPE_Click()
+  on error resume next
+        Dim id As String, brief As String
+        If item.Application.Manager.GetReferenceDialogEx2(&quot;PARAMTYPE&quot;, id, brief) Then
+          txtID_TYPE.Tag = Left(id, 38)
+          txtID_TYPE = brief
+        End If
+end sub
+private sub cmdID_TYPE_MenuClick(ByVal sCaption As String)
+End sub
+private sub PanelfGroupInit()
+OnInit = true
+dim iii as long ' for combo only
+
+txtCNAME = &quot;&quot;
+cmbCTYPE.Clear
+cmbCTYPE.additem &quot;Да&quot;
+cmbCTYPE.itemdata(cmbCTYPE.newindex)= -1
+cmbCTYPE.additem &quot;Нет&quot;
+cmbCTYPE.itemdata(cmbCTYPE.newindex)= 0
+  txtID_DEV.Tag = &quot;&quot; 
+  txtID_DEV = &quot;&quot; 
+ LoadBtnPictures cmdID_DEV,cmdID_DEV.tag
+  cmdID_DEV.RemoveAllMenu
+  txtID_TYPE.Tag = &quot;&quot; 
+  txtID_TYPE = &quot;&quot; 
+ LoadBtnPictures cmdID_TYPE,cmdID_TYPE.tag
+  cmdID_TYPE.RemoveAllMenu
+OnInit = false
+end sub
+
+"><AttributeHolder Name="Type" Value="code"/><FormData Name=""/></BlockHolder></ModuleHolder><ModuleHolder ModuleName="Util" File=""><AttributeHolder Name="Instancing" Value="private"/><AttributeHolder Name="Type" Value="module"/><BlockHolder BlockName="'description" BlockCode="
+
+"><AttributeHolder Name="Type" Value="description"/><FormData Name=""/></BlockHolder><BlockHolder BlockName="'codebody" BlockCode="
+public sub LoadFromSkin( frm as form )
+  on error resume next
+  Dim s As String, arr() as string
+  s = GetSetting(&quot;MTZ&quot;, &quot;CONFIG&quot;, &quot;LAYOUTS&quot;, &quot;&quot;)
+  If s = &quot;&quot; Then Exit Sub
+  Dim ff As Long, buf As String
+  ff = FreeFile
+  Open s &amp; frm.name For Input As #ff
+  buf = Input(LOF(ff), ff)
+  Close #ff
+  arr = split(buf, vbcrlf)
+  Dim arr2() As String, i as long
+For i = 0 To UBound(arr)
+  arr2 = Split(arr(i), &quot;:&quot;)
+  Select Case arr2(0)
+  case &quot;FormTag&quot;
+    frm.Tag = arr2(1)
+  Case &quot;FormTop&quot;
+    frm.Top = arr2(1)
+  Case &quot;FormLeft&quot;
+    frm.left = arr2(1)
+  Case &quot;FormWidth&quot;
+    frm.Width = arr2(1)
+  Case &quot;FormHeight&quot;
+    frm.Height = arr2(1)
+  Case Else
+    frm.Controls(arr2(0)).tag = Val(arr2(1))
+  End Select
+Next
+  s =&quot;&quot; 
+  s = GetSetting(&quot;MTZ&quot;, &quot;CONFIG&quot;, &quot;IMAGEPATH&quot;, &quot;&quot;)
+  If s = &quot;&quot; Then Exit Sub
+  set frm.icon = LoadPicture(s &amp; frm.tag)
+end sub
+
+public sub SaveToSkin( frm as form )
+  on error resume next
+  Dim s As String, buf as string
+  s = GetSetting(&quot;MTZ&quot;, &quot;CONFIG&quot;, &quot;LAYOUTS&quot;, &quot;&quot;)
+  If s = &quot;&quot; Then Exit Sub
+  frm.WindowState =0 
+  Dim ff As Long
+  ff = FreeFile
+  kill s &amp; frm.name
+  Open s &amp; frm.name For output As #ff
+  buf =  &quot;FormTag:&quot; &amp; frm.Tag 
+  buf = buf &amp; vbcrlf &amp; &quot;FormTop:&quot; &amp; frm.Top 
+  buf = buf &amp; vbCrLf &amp; &quot;FormLeft:&quot; &amp; frm.Left
+  buf = buf &amp; vbCrLf &amp; &quot;FormWidth:&quot; &amp; frm.Width
+  buf = buf &amp; vbCrLf &amp; &quot;FormHeight:&quot; &amp; frm.Height
+  print #ff, buf
+  Close #ff
+end sub
+
+
+"><AttributeHolder Name="Type" Value="code"/><FormData Name=""/></BlockHolder></ModuleHolder></root>

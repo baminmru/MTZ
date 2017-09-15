@@ -1,0 +1,5 @@
+VBGROUP 5.0
+StartupProject=..\..\MTZAdministrator\MtzAdministrator.vbp
+Project=MTZ_SQLGen2_V2.vbp
+Project=..\OCXGen_V2\MTZ_OCXGen2_V2.vbp
+Project=..\ObjGen_V2\MTZ_ModelGen2_V2.vbp

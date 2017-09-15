@@ -1,0 +1,10 @@
+GUI = 132, 174, 870, 597, 
+RFIDLOG_LINES = 0, 0, 0, 0, C, 0, 0, 738, 423, C
+RFIDLOG_DEF = 0, 0, 0, 0, C, 66, 87, 804, 510, C
+frmRFIDLOG_LINES_ = 0, 0, 0, 0, C, 132, 174, 870, 597, C
+frmRFIDLOG_DEF_ = 0, 0, 0, 0, C, 0, 0, 738, 423, C
+vpnRFIDLOG_DEF_ = 0, 0, 0, 0, C, 44, 58, 782, 481, C
+vpnRFIDLOG_LINES_ = 0, 0, 0, 0, C, 110, 145, 848, 568, C
+ctl_main = 0, 0, 0, 0, C, 0, 0, 738, 423, C
+frm_main = 0, 0, 0, 0, C, 66, 87, 804, 510, C
+Util = 110, 145, 848, 568, 

@@ -1,0 +1,20 @@
+// WFServerService.idl : IDL source for WFServerService.dll
+//
+
+// This file will be processed by the MIDL tool to
+// produce the type library (WFServerService.tlb) and marshalling code.
+
+import "oaidl.idl";
+import "ocidl.idl";
+
+[
+	uuid(E5A171CD-AF64-486D-AD37-68BFD745E289),
+	version(1.0),
+	helpstring("WFServerService 1.0 Type Library")
+]
+library WFSERVERSERVICELib
+{
+	importlib("stdole32.tlb");
+	importlib("stdole2.tlb");
+
+};

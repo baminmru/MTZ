@@ -1,0 +1,395 @@
+<?xml version="1.0"?>
+<?mso-application progid="Excel.Sheet"?>
+<Workbook xmlns="urn:schemas-microsoft-com:office:spreadsheet"
+ xmlns:o="urn:schemas-microsoft-com:office:office"
+ xmlns:x="urn:schemas-microsoft-com:office:excel"
+ xmlns:ss="urn:schemas-microsoft-com:office:spreadsheet"
+ xmlns:html="http://www.w3.org/TR/REC-html40"
+ xmlns:x2="http://schemas.microsoft.com/office/excel/2003/xml">
+ <DocumentProperties xmlns="urn:schemas-microsoft-com:office:office">
+  <Author>Pavel V. Sazykin</Author>
+  <LastAuthor>Pavel V. Sazykin</LastAuthor>
+  <Created>2005-09-08T08:34:50Z</Created>
+  <LastSaved>2005-09-08T14:21:15Z</LastSaved>
+  <Company>RBH</Company>
+  <Version>11.5606</Version>
+ </DocumentProperties>
+ <ExcelWorkbook xmlns="urn:schemas-microsoft-com:office:excel">
+  <WindowHeight>12150</WindowHeight>
+  <WindowWidth>19980</WindowWidth>
+  <WindowTopX>480</WindowTopX>
+  <WindowTopY>90</WindowTopY>
+  <TabRatio>486</TabRatio>
+  <ActiveSheet>1</ActiveSheet>
+  <ProtectStructure>False</ProtectStructure>
+  <ProtectWindows>False</ProtectWindows>
+  <FutureVer>11</FutureVer>
+ </ExcelWorkbook>
+ <Styles>
+  <Style ss:ID="Default" ss:Name="Normal">
+   <Alignment ss:Vertical="Bottom"/>
+   <Borders/>
+   <Font x:CharSet="204"/>
+   <Interior/>
+   <NumberFormat/>
+   <Protection/>
+  </Style>
+  <Style ss:ID="s21">
+   <Font ss:FontName="Times New Roman" x:CharSet="204" x:Family="Roman"
+    ss:Size="22" ss:Bold="1"/>
+  </Style>
+  <Style ss:ID="s22">
+   <Font ss:FontName="Times New Roman" x:CharSet="204" x:Family="Roman"
+    ss:Size="14" ss:Bold="1"/>
+  </Style>
+  <Style ss:ID="s23">
+   <Font ss:FontName="Times New Roman" x:CharSet="204" x:Family="Roman"
+    ss:Size="12"/>
+  </Style>
+  <Style ss:ID="s24">
+   <Alignment ss:Horizontal="Center" ss:Vertical="Top" ss:WrapText="1"/>
+   <Borders>
+    <Border ss:Position="Bottom" ss:LineStyle="Continuous" ss:Weight="2"/>
+    <Border ss:Position="Left" ss:LineStyle="Continuous" ss:Weight="2"/>
+    <Border ss:Position="Right" ss:LineStyle="Continuous" ss:Weight="2"/>
+    <Border ss:Position="Top" ss:LineStyle="Continuous" ss:Weight="2"/>
+   </Borders>
+   <Font ss:FontName="Times New Roman" x:CharSet="204" x:Family="Roman"
+    ss:Size="12" ss:Bold="1"/>
+   <Interior ss:Color="#C0C0C0" ss:Pattern="Solid"/>
+  </Style>
+  <Style ss:ID="s25">
+   <Alignment ss:Horizontal="Center" ss:Vertical="Top" ss:WrapText="1"/>
+   <Borders>
+    <Border ss:Position="Bottom" ss:LineStyle="Continuous" ss:Weight="2"/>
+    <Border ss:Position="Right" ss:LineStyle="Continuous" ss:Weight="2"/>
+    <Border ss:Position="Top" ss:LineStyle="Continuous" ss:Weight="2"/>
+   </Borders>
+   <Font ss:FontName="Times New Roman" x:CharSet="204" x:Family="Roman"
+    ss:Size="12" ss:Bold="1"/>
+   <Interior ss:Color="#C0C0C0" ss:Pattern="Solid"/>
+  </Style>
+  <Style ss:ID="s26">
+   <Alignment ss:Vertical="Top" ss:WrapText="1"/>
+   <Borders>
+    <Border ss:Position="Bottom" ss:LineStyle="Continuous" ss:Weight="2"/>
+    <Border ss:Position="Left" ss:LineStyle="Continuous" ss:Weight="2"/>
+    <Border ss:Position="Right" ss:LineStyle="Continuous" ss:Weight="2"/>
+   </Borders>
+   <Font ss:FontName="Times New Roman" x:CharSet="204" x:Family="Roman"
+    ss:Size="12"/>
+  </Style>
+  <Style ss:ID="s27">
+   <Alignment ss:Vertical="Top" ss:WrapText="1"/>
+   <Borders>
+    <Border ss:Position="Bottom" ss:LineStyle="Continuous" ss:Weight="2"/>
+    <Border ss:Position="Right" ss:LineStyle="Continuous" ss:Weight="2"/>
+   </Borders>
+   <Font ss:FontName="Times New Roman" x:CharSet="204" x:Family="Roman"
+    ss:Size="12"/>
+  </Style>
+  <Style ss:ID="s28">
+   <Alignment ss:Vertical="Top" ss:WrapText="1"/>
+   <Borders>
+    <Border ss:Position="Bottom" ss:LineStyle="Continuous" ss:Weight="3"/>
+    <Border ss:Position="Left" ss:LineStyle="Continuous" ss:Weight="3"/>
+    <Border ss:Position="Right" ss:LineStyle="Continuous" ss:Weight="3"/>
+   </Borders>
+   <Font ss:FontName="Times New Roman" x:CharSet="204" x:Family="Roman"
+    ss:Size="12" ss:Bold="1"/>
+  </Style>
+  <Style ss:ID="s29">
+   <Alignment ss:Vertical="Top" ss:WrapText="1"/>
+   <Borders>
+    <Border ss:Position="Bottom" ss:LineStyle="Continuous" ss:Weight="3"/>
+    <Border ss:Position="Right" ss:LineStyle="Continuous" ss:Weight="3"/>
+   </Borders>
+   <Font ss:FontName="Times New Roman" x:CharSet="204" x:Family="Roman"
+    ss:Size="14" ss:Bold="1"/>
+  </Style>
+  <Style ss:ID="s30">
+   <Font x:CharSet="204" ss:Bold="1"/>
+  </Style>
+  <Style ss:ID="s31">
+   <NumberFormat ss:Format="@"/>
+  </Style>
+ </Styles>
+ <Worksheet ss:Name="Sheet1">
+  <Table ss:ExpandedColumnCount="4" ss:ExpandedRowCount="19" x:FullColumns="1"
+   x:FullRows="1">
+   <Column ss:AutoFitWidth="0" ss:Width="168"/>
+   <Column ss:AutoFitWidth="0" ss:Width="290.25"/>
+   <Column ss:AutoFitWidth="0" ss:Width="121.5"/>
+   <Row ss:Height="27">
+    <Cell ss:StyleID="s21"><ss:Data ss:Type="String"
+      xmlns="http://www.w3.org/TR/REC-html40"><B>Описание раздела: <U>REPD_LOCKED</U></B></ss:Data></Cell>
+   </Row>
+   <Row ss:Height="18.75">
+    <Cell ss:StyleID="s22"><ss:Data ss:Type="String"
+      xmlns="http://www.w3.org/TR/REC-html40"><B>Заголовок: <U>Очередь заблокированных объектов</U></B></ss:Data></Cell>
+   </Row>
+   <Row ss:Height="15.75">
+    <Cell ss:StyleID="s23"/>
+   </Row>
+   <Row ss:Height="15.75">
+    <Cell ss:StyleID="s23"><Data ss:Type="String">&lt;&gt;</Data></Cell>
+   </Row>
+   <Row ss:Height="19.5">
+    <Cell ss:StyleID="s22"><Data ss:Type="String">Поля (всего полей: 11)</Data></Cell>
+   </Row>
+   <Row ss:Height="32.25">
+    <Cell ss:StyleID="s24"/>
+    <Cell ss:StyleID="s25"><Data ss:Type="String">Название</Data></Cell>
+    <Cell ss:StyleID="s25"><Data ss:Type="String">Тип</Data></Cell>
+    <Cell ss:StyleID="s25"><Data ss:Type="String">Описание</Data></Cell>
+   </Row>
+   <Row ss:Height="16.5">
+    <Cell ss:StyleID="s26"><Data ss:Type="Number">1</Data></Cell>
+    <Cell ss:StyleID="s27"><Data ss:Type="String">ObjectType [Тип объекта]</Data></Cell>
+    <Cell ss:StyleID="s27"><Data ss:Type="String">String</Data></Cell>
+    <Cell ss:StyleID="s27"/>
+   </Row>
+   <Row ss:Height="16.5">
+    <Cell ss:StyleID="s26"><Data ss:Type="Number">2</Data></Cell>
+    <Cell ss:StyleID="s27"><Data ss:Type="String">LastTry [Последняя разработка]</Data></Cell>
+    <Cell ss:StyleID="s27"><Data ss:Type="String">DateTime</Data></Cell>
+    <Cell ss:StyleID="s27"/>
+   </Row>
+   <Row ss:Height="16.5">
+    <Cell ss:StyleID="s26"><Data ss:Type="Number">3</Data></Cell>
+    <Cell ss:StyleID="s27"><Data ss:Type="String">StructType [Тип строки]</Data></Cell>
+    <Cell ss:StyleID="s27"><Data ss:Type="String">String</Data></Cell>
+    <Cell ss:StyleID="s27"/>
+   </Row>
+   <Row ss:Height="16.5">
+    <Cell ss:StyleID="s26"><Data ss:Type="Number">4</Data></Cell>
+    <Cell ss:StyleID="s27"><Data ss:Type="String">ReplicaPackID [ReplicaPackID]</Data></Cell>
+    <Cell ss:StyleID="s27"><Data ss:Type="String">ID</Data></Cell>
+    <Cell ss:StyleID="s27"/>
+   </Row>
+   <Row ss:Height="16.5">
+    <Cell ss:StyleID="s26"><Data ss:Type="Number">5</Data></Cell>
+    <Cell ss:StyleID="s27"><Data ss:Type="String">PartNumber [PartNumber]</Data></Cell>
+    <Cell ss:StyleID="s27"><Data ss:Type="String">Integer</Data></Cell>
+    <Cell ss:StyleID="s27"/>
+   </Row>
+   <Row ss:Height="16.5">
+    <Cell ss:StyleID="s26"><Data ss:Type="Number">6</Data></Cell>
+    <Cell ss:StyleID="s27"><Data ss:Type="String">ReplicaRowID [Идентификатор строки реплики]</Data></Cell>
+    <Cell ss:StyleID="s27"><Data ss:Type="String">ID</Data></Cell>
+    <Cell ss:StyleID="s27"/>
+   </Row>
+   <Row ss:Height="16.5">
+    <Cell ss:StyleID="s26"><Data ss:Type="Number">7</Data></Cell>
+    <Cell ss:StyleID="s27"><Data ss:Type="String">PartCount [PartCount]</Data></Cell>
+    <Cell ss:StyleID="s27"><Data ss:Type="String">Integer</Data></Cell>
+    <Cell ss:StyleID="s27"/>
+   </Row>
+   <Row ss:Height="16.5">
+    <Cell ss:StyleID="s26"><Data ss:Type="Number">8</Data></Cell>
+    <Cell ss:StyleID="s27"><Data ss:Type="String">SourceFile [Файл данных]</Data></Cell>
+    <Cell ss:StyleID="s27"><Data ss:Type="String">String</Data></Cell>
+    <Cell ss:StyleID="s27"/>
+   </Row>
+   <Row ss:Height="16.5">
+    <Cell ss:StyleID="s26"><Data ss:Type="Number">9</Data></Cell>
+    <Cell ss:StyleID="s27"><Data ss:Type="String">FirstTry [Первая обработка]</Data></Cell>
+    <Cell ss:StyleID="s27"><Data ss:Type="String">DateTime</Data></Cell>
+    <Cell ss:StyleID="s27"/>
+   </Row>
+   <Row ss:Height="16.5">
+    <Cell ss:StyleID="s26"><Data ss:Type="Number">10</Data></Cell>
+    <Cell ss:StyleID="s27"><Data ss:Type="String">The_InstanceID [Объект]</Data></Cell>
+    <Cell ss:StyleID="s27"><Data ss:Type="String">ID</Data></Cell>
+    <Cell ss:StyleID="s27"/>
+   </Row>
+   <Row ss:Height="16.5">
+    <Cell ss:StyleID="s26"><Data ss:Type="Number">11</Data></Cell>
+    <Cell ss:StyleID="s27"><Data ss:Type="String">The_RowID [Идетнификатор строки]</Data></Cell>
+    <Cell ss:StyleID="s27"><Data ss:Type="String">ID</Data></Cell>
+    <Cell ss:StyleID="s27"/>
+   </Row>
+   <Row ss:Height="19.5">
+    <Cell ss:StyleID="s28"><Data ss:Type="String">накопительно:</Data></Cell>
+    <Cell ss:StyleID="s29"><Data ss:Type="Number">11</Data></Cell>
+   </Row>
+   <Row ss:Height="16.5">
+    <Cell ss:StyleID="s23"><Data ss:Type="String">&lt;&gt;</Data></Cell>
+   </Row>
+  </Table>
+  <WorksheetOptions xmlns="urn:schemas-microsoft-com:office:excel">
+   <Print>
+    <ValidPrinterInfo/>
+    <PaperSizeIndex>9</PaperSizeIndex>
+    <HorizontalResolution>600</HorizontalResolution>
+    <VerticalResolution>0</VerticalResolution>
+   </Print>
+   <Panes>
+    <Pane>
+     <Number>3</Number>
+     <RangeSelection>R1:R19</RangeSelection>
+    </Pane>
+   </Panes>
+   <ProtectObjects>False</ProtectObjects>
+   <ProtectScenarios>False</ProtectScenarios>
+  </WorksheetOptions>
+ </Worksheet>
+ <Worksheet ss:Name="Sheet2">
+  <Table ss:ExpandedColumnCount="4" ss:ExpandedRowCount="19" x:FullColumns="1"
+   x:FullRows="1">
+   <Column ss:AutoFitWidth="0" ss:Width="168"/>
+   <Column ss:AutoFitWidth="0" ss:Width="290.25"/>
+   <Column ss:AutoFitWidth="0" ss:Width="121.5"/>
+   <Row ss:Height="27">
+    <Cell ss:StyleID="s21"><ss:Data ss:Type="String"
+      xmlns="http://www.w3.org/TR/REC-html40"><B>Описание раздела: <U>REPD_LOCKED</U></B></ss:Data></Cell>
+   </Row>
+   <Row ss:Height="18.75">
+    <Cell ss:StyleID="s22"><ss:Data ss:Type="String"
+      xmlns="http://www.w3.org/TR/REC-html40"><B>Заголовок: <U>Очередь заблокированных объектов</U></B></ss:Data></Cell>
+   </Row>
+   <Row ss:Height="15.75">
+    <Cell ss:StyleID="s23"/>
+   </Row>
+   <Row ss:Height="15.75">
+    <Cell ss:StyleID="s23"><Data ss:Type="String">&lt;&gt;</Data></Cell>
+   </Row>
+   <Row ss:Height="19.5">
+    <Cell ss:StyleID="s22"><Data ss:Type="String">Поля (всего полей: 11)</Data></Cell>
+   </Row>
+   <Row ss:Height="32.25">
+    <Cell ss:StyleID="s24"/>
+    <Cell ss:StyleID="s25"><Data ss:Type="String">Название</Data></Cell>
+    <Cell ss:StyleID="s25"><Data ss:Type="String">Тип</Data></Cell>
+    <Cell ss:StyleID="s25"><Data ss:Type="String">Описание</Data></Cell>
+   </Row>
+   <Row ss:Height="16.5">
+    <Cell ss:StyleID="s26"><Data ss:Type="Number">1</Data></Cell>
+    <Cell ss:StyleID="s27"><Data ss:Type="String">ObjectType [Тип объекта]</Data></Cell>
+    <Cell ss:StyleID="s27"><Data ss:Type="String">String</Data></Cell>
+    <Cell ss:StyleID="s27"/>
+   </Row>
+   <Row ss:Height="16.5">
+    <Cell ss:StyleID="s26"><Data ss:Type="Number">2</Data></Cell>
+    <Cell ss:StyleID="s27"><Data ss:Type="String">LastTry [Последняя разработка]</Data></Cell>
+    <Cell ss:StyleID="s27"><Data ss:Type="String">DateTime</Data></Cell>
+    <Cell ss:StyleID="s27"/>
+   </Row>
+   <Row ss:Height="16.5">
+    <Cell ss:StyleID="s26"><Data ss:Type="Number">3</Data></Cell>
+    <Cell ss:StyleID="s27"><Data ss:Type="String">StructType [Тип строки]</Data></Cell>
+    <Cell ss:StyleID="s27"><Data ss:Type="String">String</Data></Cell>
+    <Cell ss:StyleID="s27"/>
+   </Row>
+   <Row ss:Height="16.5">
+    <Cell ss:StyleID="s26"><Data ss:Type="Number">4</Data></Cell>
+    <Cell ss:StyleID="s27"><Data ss:Type="String">ReplicaPackID [ReplicaPackID]</Data></Cell>
+    <Cell ss:StyleID="s27"><Data ss:Type="String">ID</Data></Cell>
+    <Cell ss:StyleID="s27"/>
+   </Row>
+   <Row ss:Height="16.5">
+    <Cell ss:StyleID="s26"><Data ss:Type="Number">5</Data></Cell>
+    <Cell ss:StyleID="s27"><Data ss:Type="String">PartNumber [PartNumber]</Data></Cell>
+    <Cell ss:StyleID="s27"><Data ss:Type="String">Integer</Data></Cell>
+    <Cell ss:StyleID="s27"/>
+   </Row>
+   <Row ss:Height="16.5">
+    <Cell ss:StyleID="s26"><Data ss:Type="Number">6</Data></Cell>
+    <Cell ss:StyleID="s27"><Data ss:Type="String">ReplicaRowID [Идентификатор строки реплики]</Data></Cell>
+    <Cell ss:StyleID="s27"><Data ss:Type="String">ID</Data></Cell>
+    <Cell ss:StyleID="s27"/>
+   </Row>
+   <Row ss:Height="16.5">
+    <Cell ss:StyleID="s26"><Data ss:Type="Number">7</Data></Cell>
+    <Cell ss:StyleID="s27"><Data ss:Type="String">PartCount [PartCount]</Data></Cell>
+    <Cell ss:StyleID="s27"><Data ss:Type="String">Integer</Data></Cell>
+    <Cell ss:StyleID="s27"/>
+   </Row>
+   <Row ss:Height="16.5">
+    <Cell ss:StyleID="s26"><Data ss:Type="Number">8</Data></Cell>
+    <Cell ss:StyleID="s27"><Data ss:Type="String">SourceFile [Файл данных]</Data></Cell>
+    <Cell ss:StyleID="s27"><Data ss:Type="String">String</Data></Cell>
+    <Cell ss:StyleID="s27"/>
+   </Row>
+   <Row ss:Height="16.5">
+    <Cell ss:StyleID="s26"><Data ss:Type="Number">9</Data></Cell>
+    <Cell ss:StyleID="s27"><Data ss:Type="String">FirstTry [Первая обработка]</Data></Cell>
+    <Cell ss:StyleID="s27"><Data ss:Type="String">DateTime</Data></Cell>
+    <Cell ss:StyleID="s27"/>
+   </Row>
+   <Row ss:Height="16.5">
+    <Cell ss:StyleID="s26"><Data ss:Type="Number">10</Data></Cell>
+    <Cell ss:StyleID="s27"><Data ss:Type="String">The_InstanceID [Объект]</Data></Cell>
+    <Cell ss:StyleID="s27"><Data ss:Type="String">ID</Data></Cell>
+    <Cell ss:StyleID="s27"/>
+   </Row>
+   <Row ss:Height="16.5">
+    <Cell ss:StyleID="s26"><Data ss:Type="Number">11</Data></Cell>
+    <Cell ss:StyleID="s27"><Data ss:Type="String">The_RowID [Идетнификатор строки]</Data></Cell>
+    <Cell ss:StyleID="s27"><Data ss:Type="String">ID</Data></Cell>
+    <Cell ss:StyleID="s27"/>
+   </Row>
+   <Row ss:Height="19.5">
+    <Cell ss:StyleID="s28"><Data ss:Type="String">накопительно:</Data></Cell>
+    <Cell ss:StyleID="s29"><Data ss:Type="Number">11</Data></Cell>
+   </Row>
+   <Row ss:Height="16.5">
+    <Cell ss:StyleID="s23"><Data ss:Type="String">&lt;&gt;</Data></Cell>
+   </Row>
+  </Table>
+  <WorksheetOptions xmlns="urn:schemas-microsoft-com:office:excel">
+   <Selected/>
+   <Panes>
+    <Pane>
+     <Number>3</Number>
+     <ActiveRow>20</ActiveRow>
+     <ActiveCol>2</ActiveCol>
+    </Pane>
+   </Panes>
+   <ProtectObjects>False</ProtectObjects>
+   <ProtectScenarios>False</ProtectScenarios>
+  </WorksheetOptions>
+ </Worksheet>
+ <Worksheet ss:Name="Sheet3">
+  <Names>
+   <NamedRange ss:Name="_FilterDatabase" ss:RefersTo="=Sheet3!R2C4:R3C4"
+    ss:Hidden="1"/>
+  </Names>
+  <Table ss:ExpandedColumnCount="4" ss:ExpandedRowCount="3" x:FullColumns="1"
+   x:FullRows="1">
+   <Column ss:Index="4" ss:AutoFitWidth="0" ss:Width="54.75"/>
+   <Row ss:Index="2">
+    <Cell ss:Index="4" ss:StyleID="s30"><NamedCell ss:Name="_FilterDatabase"/></Cell>
+   </Row>
+   <Row>
+    <Cell ss:Index="4" ss:StyleID="s31"><NamedCell ss:Name="_FilterDatabase"/></Cell>
+   </Row>
+  </Table>
+  <WorksheetOptions xmlns="urn:schemas-microsoft-com:office:excel">
+   <Panes>
+    <Pane>
+     <Number>3</Number>
+     <ActiveRow>13</ActiveRow>
+     <ActiveCol>6</ActiveCol>
+    </Pane>
+   </Panes>
+   <ProtectObjects>False</ProtectObjects>
+   <ProtectScenarios>False</ProtectScenarios>
+  </WorksheetOptions>
+ </Worksheet>
+ <x2:MapInfo x2:HideInactiveListBorder="false">
+  <x2:Schema x2:ID="Schema1" x2:Namespace=""><xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"><xsd:element nillable="true" name="Report"><xsd:complexType><xsd:sequence minOccurs="0" maxOccurs="unbounded"><xsd:element minOccurs="0" maxOccurs="unbounded" nillable="true" type="xsd:string" name="body" form="unqualified"></xsd:element><xsd:element minOccurs="0" nillable="true" name="Repeat" form="unqualified"><xsd:complexType><xsd:sequence minOccurs="0" maxOccurs="unbounded"><xsd:element minOccurs="0" maxOccurs="unbounded" nillable="true" type="xsd:string" name="body" form="unqualified"></xsd:element><xsd:element minOccurs="0" nillable="true" name="Section" form="unqualified"><xsd:complexType><xsd:sequence minOccurs="0" maxOccurs="unbounded"><xsd:element minOccurs="0" maxOccurs="unbounded" nillable="true" type="xsd:string" name="body" form="unqualified"></xsd:element><xsd:element minOccurs="0" nillable="true" name="Repeat" form="unqualified"><xsd:complexType><xsd:sequence minOccurs="0"><xsd:element minOccurs="0" nillable="true" type="xsd:string" name="body" form="unqualified"></xsd:element></xsd:sequence><xsd:attribute name="cmd" form="unqualified" type="xsd:string"></xsd:attribute><xsd:attribute name="AppendTable" form="unqualified" type="xsd:string"></xsd:attribute><xsd:attribute name="AppendToHeader" form="unqualified" type="xsd:string"></xsd:attribute></xsd:complexType></xsd:element><xsd:element minOccurs="0" nillable="true" name="Section" form="unqualified"><xsd:complexType><xsd:sequence minOccurs="0"><xsd:element minOccurs="0" nillable="true" type="xsd:string" name="body" form="unqualified"></xsd:element></xsd:sequence><xsd:attribute name="cmd" form="unqualified" type="xsd:string"></xsd:attribute><xsd:attribute name="AppendTable" form="unqualified" type="xsd:string"></xsd:attribute><xsd:attribute name="AppendToHeader" form="unqualified" type="xsd:string"></xsd:attribute></xsd:complexType></xsd:element></xsd:sequence><xsd:attribute name="cmd" form="unqualified" type="xsd:string"></xsd:attribute></xsd:complexType></xsd:element></xsd:sequence><xsd:attribute name="cmd" form="unqualified" type="xsd:string"></xsd:attribute><xsd:attribute name="AppendTable" form="unqualified" type="xsd:string"></xsd:attribute></xsd:complexType></xsd:element></xsd:sequence></xsd:complexType></xsd:element></xsd:schema></x2:Schema>
+  <x2:Map x2:ID="Report_Map" x2:SchemaID="Schema1" x2:RootElement="Report">
+  </x2:Map>
+ </x2:MapInfo>
+ <x2:Binding x2:ID="Binding1" x2:LoadMode="normal">
+  <x2:MapID>Report_Map</x2:MapID>
+<udc:DataSource MajorVersion="1" MinorVersion="0" xmlns:udc="http://schemas.microsoft.com/data/udc">
+  <udc:Type Type="XMLFile" MajorVersion="1" MinorVersion="0"/>
+  <udc:Name>Binding1</udc:Name>
+  <udc:ConnectionInfo Purpose="Query">
+    <udcxf:File xmlns:udcxf="http://schemas.microsoft.com/data/udc/xmlfile">C:\Projects\MTZSystem\MTZ\MTZDocReportHelper\test.rtf.xml</udcxf:File>
+  </udc:ConnectionInfo>
+</udc:DataSource>
+ </x2:Binding>
+</Workbook>

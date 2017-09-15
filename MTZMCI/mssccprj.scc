@@ -1,0 +1,9 @@
+SCC = This is a Source Code Control file
+
+[MCITest.vbp]
+SCC_Aux_Path = "\\Pavel\VSS2\"
+SCC_Project_Name = "$/MTZ/MTZMCI", LLLBAAAA
+
+[MTZMCI.vbp]
+SCC_Aux_Path = "\\Pavel\VSS2\"
+SCC_Project_Name = "$/MTZ/MTZMCI", LLLBAAAA

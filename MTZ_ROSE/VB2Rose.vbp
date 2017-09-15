@@ -1,0 +1,52 @@
+Type=Exe
+Reference=*\G{00020430-0000-0000-C000-000000000046}#2.0#0#..\..\..\WINDOWS\system32\stdole2.tlb#OLE Automation
+Reference=*\G{00020905-0000-0000-C000-000000000046}#8.1#0#..\..\..\Program Files\Microsoft Office\OFFICE11\MSWORD.OLB#Microsoft Word 9.0 Object Library
+Reference=*\G{860CC660-1C2B-11D0-B1B1-444553540000}#4.2#0#..\..\..\PROGRA~1\Rational\Rose\RationalRose.tlb#RationalRose
+Reference=*\G{58DF4A4A-346E-4A52-82D1-1DC4A6CB4A60}#5.4#0#..\MTZManager\MTZManager.dll#MTZManager
+Reference=*\G{45D6DB85-69D5-45C6-AD58-BB2DA56CCC79}#6.8#0#..\MTZSession\MTZSession.dll#MTZSession
+Reference=*\G{27532C15-381F-49B2-83D7-087D2BB897B8}#5.4#0#..\MTZUtil\MTZUtil.dll#MTZUtil
+Reference=*\G{2A75196C-D9EB-4129-B803-931327F72D5C}#2.8#0#..\..\..\Program Files\Common Files\System\ado\msado15.dll#Microsoft ActiveX Data Objects 2.8 Library
+Reference=*\G{F5078F18-C551-11D3-89B9-0000F81FE221}#3.0#0#..\..\..\WINDOWS\system32\msxml3.dll#Microsoft XML, v3.0
+Reference=*\G{BD8EE116-DA79-4012-AD82-81E033407978}#e.2#0#..\MTZAdministrator\ядро\VB Model\MTZMetaModel\MTZMetaModel.dll#—пец.: ћетамодель системы
+Object={F9043C88-F6F2-101A-A3C9-08002B2F49FB}#1.2#0; comdlg32.ocx
+Form=Form1.frm
+Form=Form2.frm
+Module=Module1; Module1.bas
+Form=Dialog.frm
+Form=frmLogin.frm
+Class=InfoItem; InfoItem.cls
+Class=InfoItems; InfoItems.cls
+Module=globals; globals.bas
+Module=Linker; Linker.bas
+Startup="Form1"
+ExeName32="RoseDoc.exe"
+Command32=""
+Name="Rose200Documentator"
+HelpContextID="0"
+CompatibleMode="0"
+MajorVer=1
+MinorVer=0
+RevisionVer=0
+AutoIncrementVer=0
+ServerSupportFiles=0
+VersionCompanyName="master.bami"
+CompilationType=0
+OptimizationType=0
+FavorPentiumPro(tm)=0
+CodeViewDebugInfo=0
+NoAliasing=0
+BoundsCheck=0
+OverflowCheck=0
+FlPointCheck=0
+FDIVCheck=0
+UnroundedFP=0
+StartMode=0
+Unattended=0
+Retained=0
+ThreadPerObject=0
+MaxNumberOfThreads=1
+
+[MS Transaction Server]
+AutoRefresh=1
+
+

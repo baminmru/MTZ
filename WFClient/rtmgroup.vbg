@@ -1,0 +1,5 @@
+VBGROUP 5.0
+Project=..\WFDefEditor\WFFR\WFFRGUI.vbp
+StartupProject=WFClient.vbp
+Project=..\MTZManager\MTZManager.vbp
+Project=..\WFDefEditor\WFRtm\WFRtmGUI.vbp

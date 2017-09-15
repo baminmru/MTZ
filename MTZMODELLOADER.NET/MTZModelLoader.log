@@ -1,0 +1,129 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<UpgradeLog>
+    <Settings>
+        <Setting
+            Name = "LogFile"
+            Value = "MTZModelLoader.log"
+        />
+        <Setting
+            Name = "GenerateInterfacesForClasses"
+            Value = "FALSE"
+        />
+        <Setting
+            Name = "ProjectName"
+            Value = "MTZModelLoader"
+        />
+        <Setting
+            Name = "OutputName"
+            Value = "MTZModelLoader.vbproj"
+        />
+        <Setting
+            Name = "OutputDir"
+            Value = "C:\BAMI\MTZ\MTZModelLoader\MTZModelLoader.NET"
+        />
+        <Setting
+            Name = "ProjectPath"
+            Value = "C:\BAMI\MTZ\MTZModelLoader\MTZModelLoader.vbp"
+        />
+        <Setting
+            Name = "MigrateProjectTo"
+            Value = "0"
+        />
+    </Settings>
+    <File
+        OldPath = "C:\BAMI\MTZ\MTZModelLoader\Form1.frm"
+        NewPath = "C:\BAMI\MTZ\MTZModelLoader\MTZModelLoader.NET\Form1.vb"
+        FileType = "Form"
+        Upgraded = "True"
+    >
+        <Section Name = "LoadObjects" >
+            <Issue
+                Type = "Runtime"
+                Number = "1041"
+                PME = "Dir"
+            >Dir has a new behavior.</Issue>
+            <Issue
+                Type = "Runtime"
+                Number = "1037"
+            >Couldn't resolve default property of object xdom.lastChild.firstChild.Attributes.getNamedItem().nodeValue.</Issue>
+            <Issue
+                Type = "Runtime"
+                Number = "1037"
+            >Couldn't resolve default property of object drs.LockResource.</Issue>
+            <Issue
+                Type = "Runtime"
+                Number = "1037"
+            >Couldn't resolve default property of object drs.AutoLoadPart.</Issue>
+            <Issue
+                Type = "Runtime"
+                Number = "1037"
+            >Couldn't resolve default property of object drs.WorkOffline.</Issue>
+            <Issue
+                Type = "Runtime"
+                Number = "1037"
+            >Couldn't resolve default property of object drs.XMLLoad.</Issue>
+            <Issue
+                Type = "Runtime"
+                Number = "1037"
+            >Couldn't resolve default property of object drs.BatchUpdate.</Issue>
+            <Issue
+                Type = "Runtime"
+                Number = "1037"
+            >Couldn't resolve default property of object drs.UnlockResource.</Issue>
+        </Section>
+        <Section Name = "Command17_Click" >
+            <Issue
+                Type = "Runtime"
+                Number = "1037"
+            >Couldn't resolve default property of object drs.LockResource.</Issue>
+            <Issue
+                Type = "Runtime"
+                Number = "1037"
+            >Couldn't resolve default property of object drs.AutoLoadPart.</Issue>
+            <Issue
+                Type = "Runtime"
+                Number = "1037"
+            >Couldn't resolve default property of object drs.WorkOffline.</Issue>
+            <Issue
+                Type = "Runtime"
+                Number = "1037"
+            >Couldn't resolve default property of object drs.XMLLoad.</Issue>
+            <Issue
+                Type = "Runtime"
+                Number = "1037"
+            >Couldn't resolve default property of object drs.BatchUpdate.</Issue>
+        </Section>
+        <Section Name = "Form_Unload" >
+            <Issue
+                Type = "Runtime"
+                Number = "2065"
+                ObjectName = "Form1"
+                ObjectType = "Form"
+                PME = "Unload"
+            >Form event Form1.Unload has a new behavior.</Issue>
+        </Section>
+    </File>
+    <File
+        OldPath = "C:\BAMI\MTZ\MTZModelLoader\frmLogin.frm"
+        NewPath = "C:\BAMI\MTZ\MTZModelLoader\MTZModelLoader.NET\frmLogin.vb"
+        FileType = "Form"
+        Upgraded = "True"
+    >
+        <Section Name = "Form_Activate" >
+            <Issue
+                Type = "Runtime"
+                Number = "2065"
+                ObjectName = "frmLogin"
+                ObjectType = "Form"
+                PME = "Activate"
+            >Form event frmLogin.Activate has a new behavior.</Issue>
+        </Section>
+        <Section Name = "Form_Load" >
+            <Issue
+                Type = "Runtime"
+                Number = "1037"
+            >Couldn't resolve default property of object xdom.lastChild.childNodes.Item().Attributes.getNamedItem().nodeValue.</Issue>
+        </Section>
+    </File>
+</UpgradeLog>
+

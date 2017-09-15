@@ -1,0 +1,11 @@
+HKCR
+{
+	NoRemove AppID
+	{
+		{CA11B2C8-F438-4497-94C7-C3D6A7FE93D6} = s 'WFServerService'
+		'WFServerService.EXE'
+		{
+			val AppID = s {CA11B2C8-F438-4497-94C7-C3D6A7FE93D6}
+		}
+	}
+}

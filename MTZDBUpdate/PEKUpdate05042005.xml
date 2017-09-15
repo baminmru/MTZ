@@ -1,0 +1,5 @@
+﻿<?xml version="1.0"?>
+<root><ModuleHolder ModuleName="--Update" File=""><BlockHolder BlockName="--ZAYAVKI в AKTE" BlockCode=" 
+update PEKZ_DEF set IncludeInAct = 0
+go
+"></BlockHolder></ModuleHolder></root>

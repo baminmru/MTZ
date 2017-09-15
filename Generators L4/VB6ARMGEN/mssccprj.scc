@@ -1,0 +1,9 @@
+SCC = This is a Source Code Control file
+
+[MTZ_ModelGen2_V2.vbp]
+SCC_Aux_Path = "\\Denisksrv\VSS\"
+SCC_Project_Name = "$/MTZ/MTZ/GENERATORS L2/ObjGen_V2", ZFCAAAAA
+
+[MTZ_VB6ARMGEN.vbp]
+SCC_Aux_Path = "\\Pavel\VSS2\"
+SCC_Project_Name = "$/MTZ/Generators L4/VB6ARMGEN", WYBAAAAA

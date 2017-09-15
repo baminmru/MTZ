@@ -1,0 +1,9 @@
+SCC = This is a Source Code Control file
+
+[MTZ_GUIGen2_V2.vbp]
+SCC_Aux_Path = "D:\vss"
+SCC_Project_Name = "$/Муромец/MTZ/Generators L2/GUIGen_V2", CQCAAAAA
+
+[MTZ_OCXGen2_V2.vbp]
+SCC_Aux_Path = "\\192.168.3.11\vss2\"
+SCC_Project_Name = "$/MTZ/Generators L3/OCXGEN_V2", SPEDAAAA

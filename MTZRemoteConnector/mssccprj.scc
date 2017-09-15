@@ -1,0 +1,9 @@
+SCC = This is a Source Code Control file
+
+[MTZRemoteConnector.vbp]
+SCC_Aux_Path = "\\Rbhsrv\VSS2\"
+SCC_Project_Name = "$/MTZ/MTZREMOTECONNECTOR", WTGCAAAA
+
+[Test.vbp]
+SCC_Aux_Path = "\\Rbhsrv\VSS2\"
+SCC_Project_Name = "$/MTZ/MTZREMOTECONNECTOR", WTGCAAAA

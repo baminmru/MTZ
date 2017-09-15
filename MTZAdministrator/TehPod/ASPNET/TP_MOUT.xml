@@ -1,0 +1,1418 @@
+<?xml version="1.0"?>
+<root><AttributeHolder Name="Name" Value="TP_MOUT"/><AttributeHolder Name="ID" Value="{058BB730-E4FB-4819-9F1C-E5DA889F8A2F}"/><AttributeHolder Name="asmName" Value="TP_MOUT"/><ModuleHolder ModuleName="ucTp_MOUT_LINE.ASCX" File="ucTp_MOUT_LINE.ASCX"><BlockHolder BlockName="code" BlockCode="&lt;%@ Control Language=&quot;c#&quot; AutoEventWireup=&quot;false&quot; CodeFile=&quot;ucTp_MOUT_LINE.ascx.cs&quot; Inherits=&quot;TP_MOUT.ASPNET.ucTp_MOUT_LINE&quot; %&gt;
+&lt;TABLE id=&quot;Table1&quot; cellSpacing=&quot;0&quot; cellPadding=&quot;1&quot; width=&quot;100%&quot; border=&quot;0&quot;&gt;
+  &lt;TR&gt;
+  &lt;TD colspan=3 align=center&gt;
+        &lt;asp:Label id=&quot;Tp_MOUT_LINELabelInfo&quot; runat=&quot;server&quot;&gt;&lt;/asp:Label&gt;
+  &lt;/TD&gt;
+  &lt;/TR&gt;
+  &lt;TR&gt;
+      &lt;TD width=20%&gt;
+        &lt;asp:Label id=&quot;lblMtype&quot; runat=&quot;server&quot; Width=&quot;100%&quot; ForeColor=&quot;#000000&quot;&gt;Тип модема:&lt;/asp:Label&gt;
+      &lt;/TD&gt;
+      &lt;TD width=40%&gt;
+&lt;asp:DropDownList id=&quot;cmbMtype&quot; runat=&quot;server&quot; Width=&quot;100%&quot;&gt;&lt;/asp:DropDownList&gt;
+      &lt;/TD&gt;
+      &lt;TD width=40%&gt;
+          &lt;asp:RequiredFieldValidator id=&quot;rfvMtype&quot; runat=&quot;server&quot; ErrorMessage=&quot;Fill this field&quot; ControlToValidate=&quot;cmbMtype&quot;&gt;&lt;/asp:RequiredFieldValidator&gt;
+      &lt;/TD&gt;
+    &lt;/TR&gt;
+  &lt;TR&gt;
+      &lt;TD width=20%&gt;
+        &lt;asp:Label id=&quot;lblQuantity&quot; runat=&quot;server&quot; Width=&quot;100%&quot; ForeColor=&quot;#000000&quot;&gt;Количество модемов:&lt;/asp:Label&gt;
+      &lt;/TD&gt;
+      &lt;TD width=40%&gt;
+          &lt;asp:TextBox id=&quot;txtQuantity&quot; runat=&quot;server&quot; Width=&quot;100%&quot; MaxLength=&quot;0&quot; Text=&quot;&quot;&gt;&lt;/asp:TextBox&gt;
+      &lt;/TD&gt;
+      &lt;TD width=40%&gt;
+          &lt;asp:RequiredFieldValidator id=&quot;rfvQuantity&quot; runat=&quot;server&quot; ErrorMessage=&quot;Fill this field&quot; ControlToValidate=&quot;txtQuantity&quot;&gt;&lt;/asp:RequiredFieldValidator&gt;
+      &lt;/TD&gt;
+    &lt;/TR&gt;
+  &lt;TR&gt;
+      &lt;TD width=20%&gt;
+        &lt;asp:Label id=&quot;lblIsBroken&quot; runat=&quot;server&quot; Width=&quot;100%&quot; ForeColor=&quot;#000000&quot;&gt;Неисправные:&lt;/asp:Label&gt;
+      &lt;/TD&gt;
+      &lt;TD width=40%&gt;
+&lt;asp:DropDownList id=&quot;cmbIsBroken&quot; runat=&quot;server&quot; Width=&quot;100%&quot;&gt;&lt;/asp:DropDownList&gt;
+      &lt;/TD&gt;
+      &lt;TD width=40%&gt;
+          &lt;asp:RequiredFieldValidator id=&quot;rfvIsBroken&quot; runat=&quot;server&quot; ErrorMessage=&quot;Fill this field&quot; ControlToValidate=&quot;cmbIsBroken&quot;&gt;&lt;/asp:RequiredFieldValidator&gt;
+      &lt;/TD&gt;
+    &lt;/TR&gt;
+  &lt;TR&gt;
+      &lt;TD width=20%&gt;
+        &lt;asp:Label id=&quot;lblPriceNDS&quot; runat=&quot;server&quot; Width=&quot;100%&quot; ForeColor=&quot;#000000&quot;&gt;Цена  с НДС:&lt;/asp:Label&gt;
+      &lt;/TD&gt;
+      &lt;TD width=40%&gt;
+          &lt;asp:TextBox id=&quot;txtPriceNDS&quot; runat=&quot;server&quot; Width=&quot;100%&quot; MaxLength=&quot;0&quot; Text=&quot;&quot;&gt;&lt;/asp:TextBox&gt;
+      &lt;/TD&gt;
+      &lt;TD width=40%&gt;
+      &lt;/TD&gt;
+    &lt;/TR&gt;
+  &lt;TR&gt;
+      &lt;TD&gt;
+      &lt;/TD&gt;
+      &lt;TD align=&quot;right&quot;&gt;
+        &lt;asp:Button id=&quot;btnSave&quot; runat=&quot;server&quot; Text=&quot;Save&quot; Width=&quot;88px&quot;&gt;&lt;/asp:Button&gt;
+        &lt;asp:Button id=&quot;btnCancel&quot; runat=&quot;server&quot; Text=&quot;Cancel&quot; Width=&quot;88px&quot; CausesValidation=&quot;false&quot;&gt;&lt;/asp:Button&gt;&amp;nbsp;
+      &lt;/TD&gt;
+      &lt;TD&gt;&lt;/TD&gt;
+   &lt;/TR&gt;
+&lt;/TABLE&gt;
+&lt;script language=&quot;javascript&quot; type=&quot;text/javascript&quot;&gt;
+
+function Tp_MOUT_LINELoad()
+
+{
+
+    &lt;%=GetOnLoadScript()%&gt;
+
+}
+
+function ElementShow(elName)
+
+{
+
+ var el;
+
+ el = document.getElementById(elName);
+
+ if (el != null)
+
+ {
+
+   el.style.display = '';
+
+ }
+
+}
+
+function ElementHide(elName)
+
+{
+
+ var el;
+
+ el = document.getElementById(elName);
+
+ if (el != null)
+
+ {
+
+   el.style.display = 'none';
+
+ }
+
+}
+
+&lt;/script&gt;
+
+
+"><FormData Name=""/></BlockHolder></ModuleHolder><ModuleHolder ModuleName="ucTp_MOUT_LINE.ASCX.cs" File="ucTp_MOUT_LINE.ASCX.cs"><BlockHolder BlockName="code" BlockCode="
+
+namespace TP_MOUT.ASPNET
+{
+  using System;
+  using System.Data;
+  using System.IO;
+  using System.Collections;
+  using System.Drawing;
+  using System.Web;
+  using System.Web.UI.WebControls;
+  using System.Web.UI.HtmlControls;
+  using System.Globalization;
+  using Mokasin.ASPNET;
+  using TP_MOUT;
+
+  /// &lt;summary&gt;
+  ///    ucTp_MOUT_LINE - форма редактирования раздела Строки акта передачи
+  /// &lt;/summary&gt;
+  public partial class ucTp_MOUT_LINE  : ucParent 
+  {
+    protected ArrayList ControlsToHide = new ArrayList();
+    public override event System.EventHandler OnFieldInit;
+    public override event System.EventHandler OnBeforeSave;
+    public override event System.EventHandler OnAfterSave;
+    public override event System.EventHandler OnCancel;
+    public override event InfoEventHandler OnInfo;
+
+    public override string CancelButtonID
+    {
+      get
+      {
+        return btnCancel.ClientID;
+      }
+    }
+
+    public override string SaveButtonID
+    {
+      get
+      {
+        return btnSave.ClientID;
+      }
+    }
+
+    public TP_MOUT.Tp_MOUT_LINE RowItem
+    {
+      get
+      {
+        return (TP_MOUT.Tp_MOUT_LINE)base.MKSNRowItem;
+      }
+    }
+
+    private bool ReadOnly
+    {
+      get
+      {
+        return !AllowEdit;
+      }
+    }
+
+    private void Page_Unload(object sender, System.EventArgs e)
+    {
+      return;
+    }
+
+    private void Page_Load(object sender, System.EventArgs e)
+    {
+      base.Page_Load(sender,e); 
+      if (RowItem != null)
+      {
+          DataTable dtMtype = MKSNManager.Session.GetData(&quot; select TP_SPR_MTID , dbo.TP_SPR_MT_BRIEF_F(TP_SPR_MTID ) BRIEF from TP_SPR_MT order by BRIEF &quot;);
+          if (dtMtype!=null) { 
+            cmbMtype.DataSource = dtMtype;
+            cmbMtype.DataTextField = &quot;BRIEF&quot;;
+            cmbMtype.DataValueField = &quot;TP_SPR_MTID&quot;;
+          }
+          cmbMtype.DataBind();
+          if (RowItem.Mtype!= null)
+          {
+            cmbMtype.SelectedValue = RowItem.Mtype.ID.ToString();
+          }
+          cmbMtype.ToolTip = &quot;Тип модема&quot;;
+          if (ReadOnly || (DataComponent.DenyEdit.IndexOf(&quot;Mtype&quot;) &gt; -1))
+          {
+            ControlsToHide.Add(&quot;btnMtype&quot;);
+            cmbMtype.Enabled = false;
+            rfvMtype.Enabled = false;
+          }
+          if (DataComponent.DenyVisible.IndexOf(&quot;Mtype&quot;) &gt; -1) 
+          {
+            lblMtype.Visible = false;
+            cmbMtype.Visible = false;
+            rfvMtype.Enabled = false;
+          }
+          if (OnFieldInit != null)
+          {
+            OnFieldInit(cmbMtype, new EventArgs());
+          }
+   if (!(DataComponent.DenyVisible.IndexOf(&quot;Quantity&quot;) &gt; -1)) {
+          txtQuantity.Text = GetValueFromRowItem(RowItem.Quantity);
+   }
+          txtQuantity.ToolTip = &quot;Количество модемов&quot;;
+          if (ReadOnly || (DataComponent.DenyEdit.IndexOf(&quot;Quantity&quot;) &gt; -1))
+          {
+            ControlsToHide.Add(&quot;btnQuantity&quot;);
+            txtQuantity.Enabled = false;
+            rfvQuantity.Enabled = false;
+          }
+          if (DataComponent.DenyVisible.IndexOf(&quot;Quantity&quot;) &gt; -1) 
+          {
+            lblQuantity.Visible = false;
+            txtQuantity.Visible = false;
+            rfvQuantity.Enabled = false;
+          }
+          if (OnFieldInit != null)
+          {
+            OnFieldInit(txtQuantity, new EventArgs());
+          }
+          cmbIsBroken.Items.Clear();
+          cmbIsBroken.Items.Insert(0, new System.Web.UI.WebControls.ListItem(&quot;Да&quot;, &quot;-1&quot;));
+          cmbIsBroken.Items.Insert(0, new System.Web.UI.WebControls.ListItem(&quot;Нет&quot;, &quot;0&quot;));
+          try {
+          cmbIsBroken.SelectedValue = ((int)RowItem.IsBroken).ToString();
+          }catch{}
+          cmbIsBroken.ToolTip = &quot;Неисправные&quot;;
+          if (ReadOnly || (DataComponent.DenyEdit.IndexOf(&quot;IsBroken&quot;) &gt; -1))
+          {
+            ControlsToHide.Add(&quot;btnIsBroken&quot;);
+            cmbIsBroken.Enabled = false;
+            rfvIsBroken.Enabled = false;
+          }
+          if (DataComponent.DenyVisible.IndexOf(&quot;IsBroken&quot;) &gt; -1) 
+          {
+            lblIsBroken.Visible = false;
+            cmbIsBroken.Visible = false;
+            rfvIsBroken.Enabled = false;
+          }
+          if (OnFieldInit != null)
+          {
+            OnFieldInit(cmbIsBroken, new EventArgs());
+          }
+   if (!(DataComponent.DenyVisible.IndexOf(&quot;PriceNDS&quot;) &gt; -1)) {
+          txtPriceNDS.Text = GetValueFromRowItem(RowItem.PriceNDS);
+   }
+          txtPriceNDS.ToolTip = &quot;Цена  с НДС&quot;;
+          if (ReadOnly || (DataComponent.DenyEdit.IndexOf(&quot;PriceNDS&quot;) &gt; -1))
+          {
+            ControlsToHide.Add(&quot;btnPriceNDS&quot;);
+            txtPriceNDS.Enabled = false;
+          }
+          if (DataComponent.DenyVisible.IndexOf(&quot;PriceNDS&quot;) &gt; -1) 
+          {
+            lblPriceNDS.Visible = false;
+            txtPriceNDS.Visible = false;
+          }
+          if (OnFieldInit != null)
+          {
+            OnFieldInit(txtPriceNDS, new EventArgs());
+          }
+      }
+      if (ReadOnly) btnSave.Enabled = false;
+    }
+
+    #region Web Form Designer generated code
+    override protected void OnInit(EventArgs e)
+    {
+      base.OnInit(e);
+      InitializeComponent();
+    }
+
+    private void InitializeComponent()
+    {
+      this.btnSave.Click += new System.EventHandler(this.btnSave_Click);
+      this.btnCancel.Click += new System.EventHandler(this.btnCancel_Click);
+      this.Load += new System.EventHandler(this.Page_Load);
+      this.Unload += new System.EventHandler(this.Page_Unload);
+
+    }
+    #endregion
+
+     private string GetValueFromRowItem(object RowItemValue)
+     {
+       string Result = string.Empty;
+       if (RowItemValue != null)
+       {
+         Result = RowItemValue.ToString();
+       }
+
+       return Result;
+     }
+
+    private void btnCancel_Click(object sender, System.EventArgs e)
+    {
+        if (OnCancel != null)
+        {
+          OnCancel(this, new EventArgs());
+        }
+        else
+        {
+           //Response.Redirect(BackUrl);
+        }
+          try
+        {
+                    object obj;
+                    obj = this;
+                    while ( !(obj is  VACOOLA.ParentPage) &amp;&amp; obj!=null){
+                        obj = (obj as System.Web.UI.Control).Parent;
+                    }
+                    (obj as VACOOLA.ParentPage).GoBack();
+                }
+                catch { }
+    }
+
+    private void btnSave_Click(object sender, System.EventArgs e)
+    {
+         if (RowItem == null)
+         {
+           if (OnInfo != null)
+           {
+              OnInfo(this, new InfoEventArgs(&quot;Error on create row.&quot;, System.Drawing.Color.Red));
+           }
+           else
+           {
+              Tp_MOUT_LINELabelInfo.Text = &quot;Error on create row. &quot;;
+              Tp_MOUT_LINELabelInfo.ForeColor = System.Drawing.Color.Red;
+           }
+           return;
+         }
+        if (OnBeforeSave != null)
+        {
+          OnBeforeSave(this, new EventArgs());
+        }
+      if (cmbMtype.SelectedValue.ToString() != string.Empty)
+      {
+        RowItem.Mtype = RowItem.Application.FindRowObject(&quot;TP_SPR_MT&quot;, new Guid(cmbMtype.SelectedValue.ToString()));
+      }
+      else
+      {
+        try {
+        RowItem.Mtype = null;
+        }catch {}
+      }
+       try
+       {
+          RowItem.Quantity = Convert.ToInt32( txtQuantity.Text);
+       }
+       catch
+       {
+         Tp_MOUT_LINELabelInfo.Text = &quot;Enter numeric value to field Количество модемов (example 100)&quot;;
+         return;
+       }
+        try {
+        RowItem.IsBroken = (TP_MOUT.enumBoolean)Convert.ToInt32(cmbIsBroken.SelectedValue);
+        }catch{}
+       try
+       {
+          RowItem.PriceNDS = Convert.ToDouble( txtPriceNDS.Text);
+       }
+       catch
+       {
+         Tp_MOUT_LINELabelInfo.Text = &quot;Enter numeric value to field Цена  с НДС (example 10)&quot;;
+         return;
+       }
+      try
+      {
+        RowItem.Save();
+        if (OnInfo != null)
+        {
+          OnInfo(this, new InfoEventArgs(&quot;Row saved&quot;, System.Drawing.Color.Green));
+        }
+        else
+        {
+          Tp_MOUT_LINELabelInfo.ForeColor = System.Drawing.Color.Green;
+          Tp_MOUT_LINELabelInfo.Text = &quot;Row saved&quot;;
+        }
+        if (OnAfterSave != null)
+        {
+          OnAfterSave(this, new EventArgs());
+        }
+          try
+        {
+                    object obj;
+                    obj = this;
+                    while ( !(obj is  VACOOLA.ParentPage) &amp;&amp; obj!=null){
+                        obj = (obj as System.Web.UI.Control).Parent;
+                    }
+                    (obj as VACOOLA.ParentPage).GoBack();
+                }
+                catch { }
+      }
+      catch(Exception Ex)
+      {
+        Tp_MOUT_LINELabelInfo.Text = &quot;Save error. &quot; + Ex.Message;
+        Tp_MOUT_LINELabelInfo.ForeColor = System.Drawing.Color.Red;
+      }
+    }
+    private DataView ConfigureView(DataTable dt, string DataTextFormatString)
+    {
+      DataView Result = null;
+      DataTable NewDT = new DataTable(dt.TableName);
+      NewDT.Columns.Add(&quot;text&quot;);
+      NewDT.Columns.Add(&quot;id&quot;);
+      foreach(DataRow dr  in dt.Rows)
+      {
+        DataRow newDr = NewDT.NewRow();
+        newDr[&quot;id&quot;] = dr[&quot;ID&quot;].ToString();
+        string Text =  DataTextFormatString;
+        foreach(DataColumn col in dt.Columns )
+        {
+           Text = Text.Replace(col.ColumnName, dr[col].ToString());
+        }
+        newDr[&quot;text&quot;] = Text;
+        NewDT.Rows.Add(newDr);
+      }
+      Result = NewDT.DefaultView;
+      Result.Sort = &quot;text&quot;;
+      return Result;
+    }
+
+    protected string GetOnLoadScript()
+    {
+      string result = string.Empty;
+      if (ControlsToHide != null)
+      {
+        foreach(string str in ControlsToHide)
+        {
+          result += &quot;ElementHide('&quot; + str + &quot;');&quot;;
+        }
+      }
+      return result;
+    }
+  }
+}
+
+"><FormData Name=""/></BlockHolder></ModuleHolder><ModuleHolder ModuleName="ucTabTp_MOUT_LINE.ASCX" File="ucTabTp_MOUT_LINE.ASCX"><BlockHolder BlockName="code" BlockCode="&lt;%@ Control Language=&quot;c#&quot; AutoEventWireup=&quot;false&quot; CodeFile=&quot;ucTabTp_MOUT_LINE.ascx.cs&quot; Inherits=&quot;TP_MOUT.ASPNET.ucTabTp_MOUT_LINE&quot; %&gt;
+&lt;%@ Register Assembly=&quot;Infragistics2.WebUI.UltraWebGrid.v6.2, Version=6.2.20062.34, Culture=neutral, PublicKeyToken=7dd5c3163f2cd0cb&quot;
+Namespace=&quot;Infragistics.WebUI.UltraWebGrid&quot; TagPrefix=&quot;igtbl&quot; %&gt;
+&lt;asp:HyperLink id=&quot;HyperLinkAddNew&quot; runat=&quot;server&quot;&gt;&lt;/asp:HyperLink&gt;&lt;br&gt;
+ &lt;igtbl:ultrawebgrid id=&quot;DataGrid_Tp_MOUT_LINE&quot; runat=&quot;server&quot; Width=&quot;100%&quot; Height=&quot;350px&quot;&gt;&lt;Bands&gt;
+&lt;igtbl:UltraGridBand&gt;
+&lt;AddNewRow View=&quot;NotSet&quot; Visible=&quot;NotSet&quot;&gt;&lt;/AddNewRow&gt;
+&lt;FilterOptions EmptyString=&quot;&quot; AllString=&quot;&quot; NonEmptyString=&quot;&quot; AllowRowFiltering=&quot;OnClient&quot;&gt;
+&lt;FilterDropDownStyle BorderWidth=&quot;1px&quot; BorderColor=&quot;Silver&quot; BorderStyle=&quot;Solid&quot; Font-Size=&quot;11px&quot; Font-Names=&quot;Verdana,Arial,Helvetica,sans-serif&quot; BackColor=&quot;White&quot; Width=&quot;200px&quot; CustomRules=&quot;overflow:auto;&quot;&gt;
+&lt;Padding Left=&quot;2px&quot;&gt;&lt;/Padding&gt;
+&lt;/FilterDropDownStyle&gt;
+&lt;FilterHighlightRowStyle ForeColor=&quot;White&quot; BackColor=&quot;#151C55&quot;&gt;&lt;/FilterHighlightRowStyle&gt;
+&lt;/FilterOptions&gt;
+&lt;/igtbl:UltraGridBand&gt;
+&lt;/Bands&gt;
+&lt;DisplayLayout ViewType=&quot;OutlookGroupBy&quot; Version=&quot;4.00&quot; AllowSortingDefault=&quot;OnClient&quot; AllowColSizingDefault=&quot;Free&quot; HeaderClickActionDefault=&quot;SortSingle&quot; Name=&quot;ctl00xDataGrid_Tp_MOUT_LINE&quot; BorderCollapseDefault=&quot;Separate&quot; RowSelectorsDefault=&quot;No&quot; RowHeightDefault=&quot;20px&quot; AllowColumnMovingDefault=&quot;OnServer&quot; SelectTypeRowDefault=&quot;Single&quot;&gt;
+&lt;GroupByBox&gt;
+&lt;Style BorderColor=&quot;Window&quot; BackColor=&quot;ActiveBorder&quot;&gt;&lt;/Style&gt;
+&lt;/GroupByBox&gt;
+&lt;GroupByRowStyleDefault BorderColor=&quot;Window&quot; BackColor=&quot;Control&quot;&gt;&lt;/GroupByRowStyleDefault&gt;
+&lt;FooterStyleDefault BorderWidth=&quot;1px&quot; BorderStyle=&quot;Solid&quot; BackColor=&quot;LightGray&quot;&gt;
+&lt;BorderDetails ColorTop=&quot;White&quot; WidthLeft=&quot;1px&quot; WidthTop=&quot;1px&quot; ColorLeft=&quot;White&quot;&gt;&lt;/BorderDetails&gt;
+&lt;/FooterStyleDefault&gt;
+
+&lt;RowStyleDefault BorderWidth=&quot;1px&quot; BorderColor=&quot;Silver&quot; BorderStyle=&quot;Solid&quot; BackColor=&quot;Window&quot;&gt;
+&lt;BorderDetails ColorTop=&quot;Window&quot; ColorLeft=&quot;Window&quot;&gt;&lt;/BorderDetails&gt;
+
+&lt;Padding Left=&quot;3px&quot;&gt;&lt;/Padding&gt;
+&lt;/RowStyleDefault&gt;
+
+&lt;FilterOptionsDefault EmptyString=&quot;(Empty)&quot; AllString=&quot;(All)&quot; NonEmptyString=&quot;(NonEmpty)&quot;&gt;
+&lt;FilterDropDownStyle BorderWidth=&quot;1px&quot; BorderColor=&quot;Silver&quot; BorderStyle=&quot;Solid&quot; Font-Size=&quot;11px&quot; Font-Names=&quot;Verdana,Arial,Helvetica,sans-serif&quot; BackColor=&quot;White&quot; Width=&quot;200px&quot; CustomRules=&quot;overflow:auto;&quot;&gt;
+&lt;Padding Left=&quot;2px&quot;&gt;&lt;/Padding&gt;
+&lt;/FilterDropDownStyle&gt;
+
+&lt;FilterHighlightRowStyle ForeColor=&quot;White&quot; BackColor=&quot;#151C55&quot;&gt;&lt;/FilterHighlightRowStyle&gt;
+&lt;/FilterOptionsDefault&gt;
+
+&lt;HeaderStyleDefault HorizontalAlign=&quot;Left&quot; BorderStyle=&quot;Solid&quot; BackColor=&quot;LightGray&quot;&gt;
+&lt;BorderDetails ColorTop=&quot;White&quot; WidthLeft=&quot;1px&quot; WidthTop=&quot;1px&quot; ColorLeft=&quot;White&quot;&gt;&lt;/BorderDetails&gt;
+&lt;/HeaderStyleDefault&gt;
+
+&lt;EditCellStyleDefault BorderWidth=&quot;0px&quot; BorderStyle=&quot;None&quot;&gt;&lt;/EditCellStyleDefault&gt;
+
+&lt;FrameStyle BorderWidth=&quot;1px&quot; BorderColor=&quot;InactiveCaption&quot; BorderStyle=&quot;Solid&quot; Font-Size=&quot;8.25pt&quot; Font-Names=&quot;Microsoft Sans Serif&quot; BackColor=&quot;Window&quot; Width=&quot;100%&quot;&gt;&lt;/FrameStyle&gt;
+
+&lt;Pager&gt;
+&lt;Style BorderWidth=&quot;1px&quot; BorderStyle=&quot;Solid&quot; BackColor=&quot;LightGray&quot;&gt;
+&lt;BorderDetails ColorTop=&quot;White&quot; WidthLeft=&quot;1px&quot; WidthTop=&quot;1px&quot; ColorLeft=&quot;White&quot;&gt;&lt;/BorderDetails&gt;
+&lt;/Style&gt;
+&lt;/Pager&gt;
+
+&lt;AddNewBox&gt;
+&lt;Style BorderWidth=&quot;1px&quot; BorderColor=&quot;InactiveCaption&quot; BorderStyle=&quot;Solid&quot; BackColor=&quot;Window&quot;&gt;
+&lt;BorderDetails ColorTop=&quot;White&quot; WidthLeft=&quot;1px&quot; WidthTop=&quot;1px&quot; ColorLeft=&quot;White&quot;&gt;&lt;/BorderDetails&gt;
+&lt;/Style&gt;
+&lt;/AddNewBox&gt;
+&lt;/DisplayLayout&gt;
+&lt;/igtbl:ultrawebgrid&gt;
+&lt;%=ClientScript()%&gt;
+&lt;script language=&quot;javascript&quot; type=&quot;text/javascript&quot;&gt;
+
+function Tp_MOUT_LINELoad()
+
+{
+
+}
+
+function ElementShow(elName)
+
+{
+
+ var el;
+
+ el = document.getElementById(elName);
+
+ if (el != null)
+
+ {
+
+   el.style.display = '';
+
+ }
+
+}
+
+function ElementHide(elName)
+
+{
+
+ var el;
+
+ el = document.getElementById(elName);
+
+ if (el != null)
+
+ {
+
+   el.style.display = 'none';
+
+ }
+
+}
+
+&lt;/script&gt;
+
+
+"><FormData Name=""/></BlockHolder></ModuleHolder><ModuleHolder ModuleName="ucTabTp_MOUT_LINE.ASCX.cs" File="ucTabTp_MOUT_LINE.ASCX.cs"><BlockHolder BlockName="code" BlockCode="
+  namespace TP_MOUT.ASPNET
+{
+  #region MTZ ASP NET Generator code
+  using System;
+  using System.Data;
+  using System.Collections;
+  using System.Drawing;
+  using System.Web;
+  using System.Web.UI.WebControls;
+  using System.Web.UI.HtmlControls;
+  using Mokasin.ASPNET;
+  using TP_MOUT;
+  public partial class ucTabTp_MOUT_LINE  : ucParent
+  {
+    // Добавленное руками
+    string EditColumnName = &quot;EditColumn&quot;;
+    string DeleteParameterName = &quot;DeleteParameterName&quot;;
+    string DeleteColumnName = &quot;DeleteColumn&quot;;
+    string EditParameterName = &quot;EditParameterName&quot;;
+    private int EditColumnIndex = -1;
+    private int DeleteColumnIndex = -1;
+    private int SelectColumnIndex = -1;
+
+    public  TP_MOUT.Tp_MOUT_LINE_col DataSource
+    { 
+      get
+      {
+        return (TP_MOUT.Tp_MOUT_LINE_col)base.MKSNDataSource;
+      }
+    }
+
+    private void Page_Load(object sender, System.EventArgs e)
+    {
+      base.Page_Load(sender,e); 
+      if (!IsPostBack) PageNum = Parameter(&quot;PageNum&quot;);
+      string EVENTTARGET = string.Empty;
+      string EVENTARGUMENT = string.Empty;
+      if (Request.Form[&quot;__EVENTTARGET&quot;] != null)   EVENTTARGET = Request.Form[&quot;__EVENTTARGET&quot;].ToString();
+      if (Request.Form[&quot;__EVENTARGUMENT&quot;] != null)   EVENTARGUMENT = Request.Form[&quot;__EVENTARGUMENT&quot;].ToString();
+    // БЛОК УДАЛЕНИЯ ЗАПИСИ begin
+      if (EVENTTARGET  == DeleteParameterName + &quot;Tp_MOUT_LINE&quot;)
+      {
+        string id = EVENTARGUMENT;
+        if (id != string.Empty)
+        {
+         // УДАЛЯЕМ ОБЪЕКТ
+         DataSource.Delete(id);
+         DataSource.Refresh();
+        }
+      }
+      // БЛОК УДАЛЕНИЯ ЗАПИСИ end
+      // БЛОК РЕДАКТИРОВАНИЯ ЗАПИСИ begin
+      if (EVENTTARGET == EditParameterName)
+      {
+        string id = string.Empty;
+        bool bEdit = false;
+          try
+          {
+            bEdit = EVENTARGUMENT.Substring(0,1) == &quot;1&quot;;
+            id = EVENTARGUMENT.ToString().Substring(1);
+          }
+          catch{}
+      if (id != string.Empty)
+      {
+        string EditURL = Request.ApplicationPath + &quot;/&quot; + EditPage.URL(Server);
+        AddParameter(ref EditURL, DataComponent.SelectIDParameterName, id);
+        AddParameter(ref EditURL, &quot;ObjectID&quot;, this.ObjectID);
+        if (!bEdit)
+          AddParameter(ref EditURL, &quot;mode&quot;, &quot;readonly&quot;);
+        Response.Redirect(EditURL);
+      }
+     }
+     // БЛОК РЕДАКТИРОВАНИЯ ЗАПИСИ end
+     LoadData();
+   }
+
+    private void LoadData()
+    {
+      if (DataSource != null)
+      {
+              DataSource.Refresh();
+              DataTable = DataSource.GetDataTable();
+      }
+      if (DataTable  != null)
+      {
+        DataView = DataComponent.PrepareDataSourceIG(DataTable, EditPage, AllowEdit, Mode.ToLower().IndexOf(&quot;readonly&quot;) &lt; -1, ref EditColumnName, ref DeleteColumnName,  Server);
+      }
+
+      DataGrid_Tp_MOUT_LINE.Columns.Clear();
+      DataGrid_Tp_MOUT_LINE.DataSource = DataView;
+      this.DataBind();
+     // change column headers here
+      DataGrid_Tp_MOUT_LINE.Columns.FromKey(&quot;ID&quot;).ServerOnly = true;
+      DataGrid_Tp_MOUT_LINE.Columns.FromKey(&quot;Brief&quot;).ServerOnly = true;
+
+      if (DataGrid_Tp_MOUT_LINE.Columns.FromKey(EditColumnName) != null)
+      {
+          DataGrid_Tp_MOUT_LINE.Columns.FromKey(EditColumnName).AllowGroupBy = Infragistics.WebUI.UltraWebGrid.AllowGroupBy.No;
+          DataGrid_Tp_MOUT_LINE.Columns.FromKey(EditColumnName).AllowRowFiltering = false;
+          DataGrid_Tp_MOUT_LINE.Columns.FromKey(EditColumnName).Header.Caption = &quot;Edit&quot;;
+      }
+      if (DataGrid_Tp_MOUT_LINE.Columns.FromKey(DeleteColumnName) != null)
+      {
+          DataGrid_Tp_MOUT_LINE.Columns.FromKey(DeleteColumnName).AllowGroupBy = Infragistics.WebUI.UltraWebGrid.AllowGroupBy.No;
+          DataGrid_Tp_MOUT_LINE.Columns.FromKey(DeleteColumnName).AllowRowFiltering = false;
+          DataGrid_Tp_MOUT_LINE.Columns.FromKey(DeleteColumnName).Header.Caption = &quot;Delete&quot;;
+      }
+
+      DataGrid_Tp_MOUT_LINE.Columns.FromKey(&quot;Mtype&quot;).Header.Caption = &quot;Тип модема&quot;;
+      DataGrid_Tp_MOUT_LINE.Columns.FromKey(&quot;Mtype_ID&quot;).ServerOnly = true;
+      DataGrid_Tp_MOUT_LINE.Columns.FromKey(&quot;Quantity&quot;).Header.Caption = &quot;Количество модемов&quot;;
+      DataGrid_Tp_MOUT_LINE.Columns.FromKey(&quot;IsBroken&quot;).Header.Caption = &quot;Неисправные&quot;;
+      DataGrid_Tp_MOUT_LINE.Columns.FromKey(&quot;IsBroken_VAL&quot;).ServerOnly = true;
+      DataGrid_Tp_MOUT_LINE.Columns.FromKey(&quot;PriceNDS&quot;).Header.Caption = &quot;Цена  с НДС&quot;;
+      if (AllowAddNew &amp;&amp; AllowEdit)
+      {
+         if (EditPage != null)
+         {
+           string EditURL = Request.ApplicationPath + &quot;/&quot; + EditPage.URL(Server);
+           AddParameter(ref EditURL, &quot;mode&quot;, &quot;addnew&quot;);
+           AddParameter(ref EditURL, &quot;ObjectID&quot;, ObjectID);
+           HyperLinkAddNew.Text = &quot;New row&quot;;
+           HyperLinkAddNew.NavigateUrl = EditURL;
+           HyperLinkAddNew.ImageUrl = &quot;../../images/new.gif&quot;;
+         }
+      }
+    }
+    protected string ClientScript()
+    {
+      string Result = string.Empty;
+      Result += &quot;&lt;script language=\&quot;Javascript\&quot;&gt;\n&quot;;
+      Result +=  &quot;function ConfirmDelete(id)\n&quot;;
+      Result += &quot;{\n&quot;;
+      Result += &quot;if (confirm('Delete row?') != 0)\n&quot;;
+      Result += &quot;{\n&quot;;
+      Result += &quot;__doPostBack('DeleteParameterNameTp_MOUT_LINE',id);\n&quot;;
+      Result += &quot;}\n}\n&quot;;
+      Result += &quot;&lt;/script&gt;\n&quot;;
+      Result += &quot;&lt;script language=\&quot;Javascript\&quot;&gt;\n&quot;;
+      Result +=  &quot;function LinkToEdit(id)\n&quot;;
+      Result += &quot;{\n&quot;;
+      Result += &quot; __doPostBack('&quot; + EditParameterName + &quot;','1'+id);\n&quot;;
+      Result += &quot;}\n&quot;;
+      Result += &quot;&lt;/script&gt;\n&quot;;
+      Result += &quot;&lt;script language=\&quot;Javascript\&quot;&gt;\n&quot;;
+      Result +=  &quot;function LinkToView(id)\n&quot;;
+      Result += &quot;{\n&quot;;
+      Result += &quot; __doPostBack('&quot; + EditParameterName + &quot;','0'+id);\n&quot;;
+      Result += &quot;}\n&quot;;
+      Result += &quot;&lt;/script&gt;\n&quot;;
+      return Result;
+    }
+    #region Web Form Designer generated code
+    override protected void OnInit(EventArgs e)
+    {
+      base.OnInit(e);
+      InitializeComponent();
+    }
+
+    private void InitializeComponent()
+    {
+      this.Load += new System.EventHandler(this.Page_Load);
+
+    }
+    #endregion
+
+  }
+  #endregion
+}
+
+"><FormData Name=""/></BlockHolder></ModuleHolder><ModuleHolder ModuleName="ucTP_MOUT_DEF.ASCX" File="ucTP_MOUT_DEF.ASCX"><BlockHolder BlockName="code" BlockCode="&lt;%@ Control Language=&quot;c#&quot; AutoEventWireup=&quot;false&quot; CodeFile=&quot;ucTP_MOUT_DEF.ascx.cs&quot; Inherits=&quot;TP_MOUT.ASPNET.ucTP_MOUT_DEF&quot; %&gt;
+&lt;TABLE id=&quot;Table1&quot; cellSpacing=&quot;0&quot; cellPadding=&quot;1&quot; width=&quot;100%&quot; border=&quot;0&quot;&gt;
+  &lt;TR&gt;
+  &lt;TD colspan=3 align=center&gt;
+        &lt;asp:Label id=&quot;TP_MOUT_DEFLabelInfo&quot; runat=&quot;server&quot;&gt;&lt;/asp:Label&gt;
+  &lt;/TD&gt;
+  &lt;/TR&gt;
+  &lt;TR&gt;
+      &lt;TD width=20%&gt;
+        &lt;asp:Label id=&quot;lblTheDAte&quot; runat=&quot;server&quot; Width=&quot;100%&quot; ForeColor=&quot;#000000&quot;&gt;Дата акта:&lt;/asp:Label&gt;
+      &lt;/TD&gt;
+      &lt;TD width=40%&gt;
+&lt;input id=&quot;changedDateTheDAte&quot; type=&quot;hidden&quot; value=0 name=&quot;changedDateTheDAte&quot; runat=&quot;server&quot;&gt;
+&lt;asp:textbox id=&quot;DateTheDAte&quot; runat=&quot;server&quot; Width=&quot;70px&quot;&gt;&lt;/asp:textbox&gt;
+&lt;A id='btnTheDAte'  href=&quot;javascript:ShowCalendar('DateEdBtnTheDAte','&lt;%=this.DateTheDAte.ClientID%&gt;','&lt;%=this.changedDateTheDAte.ClientID.ToString()%&gt;')&quot; &gt;
+&lt;img alt=&quot;Select Date&quot; id=DateEdBtnTheDAte height=14  src=&quot;&lt;%=Request.ApplicationPath%&gt;/Include/Calendar/calendar.gif&quot;  width=23 border=0&gt;&lt;/A&gt;
+      &lt;/TD&gt;
+      &lt;TD width=40%&gt;
+      &lt;/TD&gt;
+    &lt;/TR&gt;
+  &lt;TR&gt;
+      &lt;TD width=20%&gt;
+        &lt;asp:Label id=&quot;lblActNum&quot; runat=&quot;server&quot; Width=&quot;100%&quot; ForeColor=&quot;#000000&quot;&gt;Номер акта:&lt;/asp:Label&gt;
+      &lt;/TD&gt;
+      &lt;TD width=40%&gt;
+          &lt;asp:TextBox id=&quot;txtActNum&quot; runat=&quot;server&quot; Width=&quot;100%&quot; MaxLength=&quot;80&quot; Text=&quot;&quot;&gt;&lt;/asp:TextBox&gt;
+      &lt;/TD&gt;
+      &lt;TD width=40%&gt;
+      &lt;/TD&gt;
+    &lt;/TR&gt;
+  &lt;TR&gt;
+      &lt;TD width=20%&gt;
+        &lt;asp:Label id=&quot;lblRetToSZT&quot; runat=&quot;server&quot; Width=&quot;100%&quot; ForeColor=&quot;#000000&quot;&gt;Возврат в СЗТ:&lt;/asp:Label&gt;
+      &lt;/TD&gt;
+      &lt;TD width=40%&gt;
+&lt;asp:DropDownList id=&quot;cmbRetToSZT&quot; runat=&quot;server&quot; Width=&quot;100%&quot;&gt;&lt;/asp:DropDownList&gt;
+      &lt;/TD&gt;
+      &lt;TD width=40%&gt;
+          &lt;asp:RequiredFieldValidator id=&quot;rfvRetToSZT&quot; runat=&quot;server&quot; ErrorMessage=&quot;Fill this field&quot; ControlToValidate=&quot;cmbRetToSZT&quot;&gt;&lt;/asp:RequiredFieldValidator&gt;
+      &lt;/TD&gt;
+    &lt;/TR&gt;
+  &lt;TR&gt;
+      &lt;TD width=20%&gt;
+        &lt;asp:Label id=&quot;lblNDS&quot; runat=&quot;server&quot; Width=&quot;100%&quot; ForeColor=&quot;#000000&quot;&gt;Ставка НДС:&lt;/asp:Label&gt;
+      &lt;/TD&gt;
+      &lt;TD width=40%&gt;
+          &lt;asp:TextBox id=&quot;txtNDS&quot; runat=&quot;server&quot; Width=&quot;100%&quot; MaxLength=&quot;0&quot; Text=&quot;&quot;&gt;&lt;/asp:TextBox&gt;
+      &lt;/TD&gt;
+      &lt;TD width=40%&gt;
+          &lt;asp:RequiredFieldValidator id=&quot;rfvNDS&quot; runat=&quot;server&quot; ErrorMessage=&quot;Fill this field&quot; ControlToValidate=&quot;txtNDS&quot;&gt;&lt;/asp:RequiredFieldValidator&gt;
+      &lt;/TD&gt;
+    &lt;/TR&gt;
+  &lt;TR&gt;
+      &lt;TD&gt;
+      &lt;/TD&gt;
+      &lt;TD align=&quot;right&quot;&gt;
+        &lt;asp:Button id=&quot;btnSave&quot; runat=&quot;server&quot; Text=&quot;Save&quot; Width=&quot;88px&quot;&gt;&lt;/asp:Button&gt;
+        &lt;asp:Button id=&quot;btnCancel&quot; runat=&quot;server&quot; Text=&quot;Cancel&quot; Width=&quot;88px&quot; CausesValidation=&quot;false&quot;&gt;&lt;/asp:Button&gt;&amp;nbsp;
+      &lt;/TD&gt;
+      &lt;TD&gt;&lt;/TD&gt;
+   &lt;/TR&gt;
+&lt;/TABLE&gt;
+&lt;script language=&quot;javascript&quot; type=&quot;text/javascript&quot;&gt;
+
+function TP_MOUT_DEFLoad()
+
+{
+
+    &lt;%=GetOnLoadScript()%&gt;
+
+}
+
+function ElementShow(elName)
+
+{
+
+ var el;
+
+ el = document.getElementById(elName);
+
+ if (el != null)
+
+ {
+
+   el.style.display = '';
+
+ }
+
+}
+
+function ElementHide(elName)
+
+{
+
+ var el;
+
+ el = document.getElementById(elName);
+
+ if (el != null)
+
+ {
+
+   el.style.display = 'none';
+
+ }
+
+}
+
+&lt;/script&gt;
+
+
+"><FormData Name=""/></BlockHolder></ModuleHolder><ModuleHolder ModuleName="ucTP_MOUT_DEF.ASCX.cs" File="ucTP_MOUT_DEF.ASCX.cs"><BlockHolder BlockName="code" BlockCode="
+
+namespace TP_MOUT.ASPNET
+{
+  using System;
+  using System.Data;
+  using System.IO;
+  using System.Collections;
+  using System.Drawing;
+  using System.Web;
+  using System.Web.UI.WebControls;
+  using System.Web.UI.HtmlControls;
+  using System.Globalization;
+  using Mokasin.ASPNET;
+  using TP_MOUT;
+
+  /// &lt;summary&gt;
+  ///    ucTP_MOUT_DEF - форма редактирования раздела Акт передачи модема
+  /// &lt;/summary&gt;
+  public partial class ucTP_MOUT_DEF  : ucParent 
+  {
+    protected ArrayList ControlsToHide = new ArrayList();
+    public override event System.EventHandler OnFieldInit;
+    public override event System.EventHandler OnBeforeSave;
+    public override event System.EventHandler OnAfterSave;
+    public override event System.EventHandler OnCancel;
+    public override event InfoEventHandler OnInfo;
+
+    public override string CancelButtonID
+    {
+      get
+      {
+        return btnCancel.ClientID;
+      }
+    }
+
+    public override string SaveButtonID
+    {
+      get
+      {
+        return btnSave.ClientID;
+      }
+    }
+
+    public TP_MOUT.TP_MOUT_DEF RowItem
+    {
+      get
+      {
+        return (TP_MOUT.TP_MOUT_DEF)base.MKSNRowItem;
+      }
+    }
+
+    private bool ReadOnly
+    {
+      get
+      {
+        return !AllowEdit;
+      }
+    }
+
+    private void Page_Unload(object sender, System.EventArgs e)
+    {
+      return;
+    }
+
+    private void Page_Load(object sender, System.EventArgs e)
+    {
+      base.Page_Load(sender,e); 
+      if (RowItem != null)
+      {
+          if(RowItem.TheDAte != Convert.ToDateTime(&quot;30.12.1899&quot;) &amp;&amp; RowItem.TheDAte != Convert.ToDateTime(&quot;01.01.0001&quot;))
+            DateTheDAte.Text=RowItem.TheDAte.ToShortDateString();
+          DateTheDAte.ToolTip = &quot;Дата акта&quot;;
+          if (ReadOnly || (DataComponent.DenyEdit.IndexOf(&quot;TheDAte&quot;) &gt; -1))
+          {
+            ControlsToHide.Add(&quot;btnTheDAte&quot;);
+            DateTheDAte.Enabled = false;
+          }
+          if (DataComponent.DenyVisible.IndexOf(&quot;TheDAte&quot;) &gt; -1) 
+          {
+            lblTheDAte.Visible = false;
+            DateTheDAte.Visible = false;
+          }
+          if (OnFieldInit != null)
+          {
+            OnFieldInit(DateTheDAte, new EventArgs());
+          }
+   if (!(DataComponent.DenyVisible.IndexOf(&quot;ActNum&quot;) &gt; -1)) {
+          txtActNum.Text = GetValueFromRowItem(RowItem.ActNum);
+   }
+          txtActNum.ToolTip = &quot;Номер акта&quot;;
+          if (ReadOnly || (DataComponent.DenyEdit.IndexOf(&quot;ActNum&quot;) &gt; -1))
+          {
+            ControlsToHide.Add(&quot;btnActNum&quot;);
+            txtActNum.Enabled = false;
+          }
+          if (DataComponent.DenyVisible.IndexOf(&quot;ActNum&quot;) &gt; -1) 
+          {
+            lblActNum.Visible = false;
+            txtActNum.Visible = false;
+          }
+          if (OnFieldInit != null)
+          {
+            OnFieldInit(txtActNum, new EventArgs());
+          }
+          cmbRetToSZT.Items.Clear();
+          cmbRetToSZT.Items.Insert(0, new System.Web.UI.WebControls.ListItem(&quot;Да&quot;, &quot;-1&quot;));
+          cmbRetToSZT.Items.Insert(0, new System.Web.UI.WebControls.ListItem(&quot;Нет&quot;, &quot;0&quot;));
+          try {
+          cmbRetToSZT.SelectedValue = ((int)RowItem.RetToSZT).ToString();
+          }catch{}
+          cmbRetToSZT.ToolTip = &quot;Возврат в СЗТ&quot;;
+          if (ReadOnly || (DataComponent.DenyEdit.IndexOf(&quot;RetToSZT&quot;) &gt; -1))
+          {
+            ControlsToHide.Add(&quot;btnRetToSZT&quot;);
+            cmbRetToSZT.Enabled = false;
+            rfvRetToSZT.Enabled = false;
+          }
+          if (DataComponent.DenyVisible.IndexOf(&quot;RetToSZT&quot;) &gt; -1) 
+          {
+            lblRetToSZT.Visible = false;
+            cmbRetToSZT.Visible = false;
+            rfvRetToSZT.Enabled = false;
+          }
+          if (OnFieldInit != null)
+          {
+            OnFieldInit(cmbRetToSZT, new EventArgs());
+          }
+   if (!(DataComponent.DenyVisible.IndexOf(&quot;NDS&quot;) &gt; -1)) {
+          txtNDS.Text = GetValueFromRowItem(RowItem.NDS);
+   }
+          txtNDS.ToolTip = &quot;Ставка НДС&quot;;
+          if (ReadOnly || (DataComponent.DenyEdit.IndexOf(&quot;NDS&quot;) &gt; -1))
+          {
+            ControlsToHide.Add(&quot;btnNDS&quot;);
+            txtNDS.Enabled = false;
+            rfvNDS.Enabled = false;
+          }
+          if (DataComponent.DenyVisible.IndexOf(&quot;NDS&quot;) &gt; -1) 
+          {
+            lblNDS.Visible = false;
+            txtNDS.Visible = false;
+            rfvNDS.Enabled = false;
+          }
+          if (OnFieldInit != null)
+          {
+            OnFieldInit(txtNDS, new EventArgs());
+          }
+      }
+      if (ReadOnly) btnSave.Enabled = false;
+    }
+
+    #region Web Form Designer generated code
+    override protected void OnInit(EventArgs e)
+    {
+      base.OnInit(e);
+      InitializeComponent();
+    }
+
+    private void InitializeComponent()
+    {
+      this.btnSave.Click += new System.EventHandler(this.btnSave_Click);
+      this.btnCancel.Click += new System.EventHandler(this.btnCancel_Click);
+      this.Load += new System.EventHandler(this.Page_Load);
+      this.Unload += new System.EventHandler(this.Page_Unload);
+
+    }
+    #endregion
+
+     private string GetValueFromRowItem(object RowItemValue)
+     {
+       string Result = string.Empty;
+       if (RowItemValue != null)
+       {
+         Result = RowItemValue.ToString();
+       }
+
+       return Result;
+     }
+
+    private void btnCancel_Click(object sender, System.EventArgs e)
+    {
+        if (OnCancel != null)
+        {
+          OnCancel(this, new EventArgs());
+        }
+        else
+        {
+           //Response.Redirect(BackUrl);
+        }
+    }
+
+    private void btnSave_Click(object sender, System.EventArgs e)
+    {
+         if (RowItem == null)
+         {
+           if (OnInfo != null)
+           {
+              OnInfo(this, new InfoEventArgs(&quot;Error on create row.&quot;, System.Drawing.Color.Red));
+           }
+           else
+           {
+              TP_MOUT_DEFLabelInfo.Text = &quot;Error on create row. &quot;;
+              TP_MOUT_DEFLabelInfo.ForeColor = System.Drawing.Color.Red;
+           }
+           return;
+         }
+        if (OnBeforeSave != null)
+        {
+          OnBeforeSave(this, new EventArgs());
+        }
+       try
+       {
+         if (DateTheDAte.Text != string.Empty)
+         {
+              RowItem.TheDAte = Convert.ToDateTime(DateTheDAte.Text);
+         }
+         else 
+         {
+              RowItem.TheDAte = DateTime.MinValue;
+         }
+       }
+       catch
+       {
+         if (OnInfo != null)
+           {
+              OnInfo(this, new InfoEventArgs(&quot;Введите правильную дату в поле Дата акта (например 14.11.1973)&quot;, System.Drawing.Color.Red));
+           }
+           else
+           {
+              TP_MOUT_DEFLabelInfo.Text = &quot;Введите правильную дату в поле Дата акта (например 14.11.1973)&quot;;
+           }
+       }
+   RowItem.ActNum = txtActNum.Text;
+        try {
+        RowItem.RetToSZT = (TP_MOUT.enumBoolean)Convert.ToInt32(cmbRetToSZT.SelectedValue);
+        }catch{}
+       try
+       {
+          RowItem.NDS = Convert.ToDouble( txtNDS.Text);
+       }
+       catch
+       {
+         TP_MOUT_DEFLabelInfo.Text = &quot;Enter numeric value to field Ставка НДС (example 10)&quot;;
+         return;
+       }
+      try
+      {
+        RowItem.Save();
+        if (OnInfo != null)
+        {
+          OnInfo(this, new InfoEventArgs(&quot;Row saved&quot;, System.Drawing.Color.Green));
+        }
+        else
+        {
+          TP_MOUT_DEFLabelInfo.ForeColor = System.Drawing.Color.Green;
+          TP_MOUT_DEFLabelInfo.Text = &quot;Row saved&quot;;
+        }
+        if (OnAfterSave != null)
+        {
+          OnAfterSave(this, new EventArgs());
+        }
+      }
+      catch(Exception Ex)
+      {
+        TP_MOUT_DEFLabelInfo.Text = &quot;Save error. &quot; + Ex.Message;
+        TP_MOUT_DEFLabelInfo.ForeColor = System.Drawing.Color.Red;
+      }
+    }
+    private DataView ConfigureView(DataTable dt, string DataTextFormatString)
+    {
+      DataView Result = null;
+      DataTable NewDT = new DataTable(dt.TableName);
+      NewDT.Columns.Add(&quot;text&quot;);
+      NewDT.Columns.Add(&quot;id&quot;);
+      foreach(DataRow dr  in dt.Rows)
+      {
+        DataRow newDr = NewDT.NewRow();
+        newDr[&quot;id&quot;] = dr[&quot;ID&quot;].ToString();
+        string Text =  DataTextFormatString;
+        foreach(DataColumn col in dt.Columns )
+        {
+           Text = Text.Replace(col.ColumnName, dr[col].ToString());
+        }
+        newDr[&quot;text&quot;] = Text;
+        NewDT.Rows.Add(newDr);
+      }
+      Result = NewDT.DefaultView;
+      Result.Sort = &quot;text&quot;;
+      return Result;
+    }
+
+    protected string GetOnLoadScript()
+    {
+      string result = string.Empty;
+      if (ControlsToHide != null)
+      {
+        foreach(string str in ControlsToHide)
+        {
+          result += &quot;ElementHide('&quot; + str + &quot;');&quot;;
+        }
+      }
+      return result;
+    }
+  }
+}
+
+"><FormData Name=""/></BlockHolder></ModuleHolder><ModuleHolder ModuleName="ucTabTP_MOUT_DEF.ASCX" File="ucTabTP_MOUT_DEF.ASCX"><BlockHolder BlockName="code" BlockCode="&lt;%@ Control Language=&quot;c#&quot; AutoEventWireup=&quot;false&quot; CodeFile=&quot;ucTabTP_MOUT_DEF.ascx.cs&quot; Inherits=&quot;TP_MOUT.ASPNET.ucTabTP_MOUT_DEF&quot; %&gt;
+&lt;%@ Register Assembly=&quot;Infragistics2.WebUI.UltraWebGrid.v6.2, Version=6.2.20062.34, Culture=neutral, PublicKeyToken=7dd5c3163f2cd0cb&quot;
+Namespace=&quot;Infragistics.WebUI.UltraWebGrid&quot; TagPrefix=&quot;igtbl&quot; %&gt;
+&lt;asp:HyperLink id=&quot;HyperLinkAddNew&quot; runat=&quot;server&quot;&gt;&lt;/asp:HyperLink&gt;&lt;br&gt;
+ &lt;igtbl:ultrawebgrid id=&quot;DataGrid_TP_MOUT_DEF&quot; runat=&quot;server&quot; Width=&quot;100%&quot; Height=&quot;350px&quot;&gt;&lt;Bands&gt;
+&lt;igtbl:UltraGridBand&gt;
+&lt;AddNewRow View=&quot;NotSet&quot; Visible=&quot;NotSet&quot;&gt;&lt;/AddNewRow&gt;
+&lt;FilterOptions EmptyString=&quot;&quot; AllString=&quot;&quot; NonEmptyString=&quot;&quot; AllowRowFiltering=&quot;OnClient&quot;&gt;
+&lt;FilterDropDownStyle BorderWidth=&quot;1px&quot; BorderColor=&quot;Silver&quot; BorderStyle=&quot;Solid&quot; Font-Size=&quot;11px&quot; Font-Names=&quot;Verdana,Arial,Helvetica,sans-serif&quot; BackColor=&quot;White&quot; Width=&quot;200px&quot; CustomRules=&quot;overflow:auto;&quot;&gt;
+&lt;Padding Left=&quot;2px&quot;&gt;&lt;/Padding&gt;
+&lt;/FilterDropDownStyle&gt;
+&lt;FilterHighlightRowStyle ForeColor=&quot;White&quot; BackColor=&quot;#151C55&quot;&gt;&lt;/FilterHighlightRowStyle&gt;
+&lt;/FilterOptions&gt;
+&lt;/igtbl:UltraGridBand&gt;
+&lt;/Bands&gt;
+&lt;DisplayLayout ViewType=&quot;OutlookGroupBy&quot; Version=&quot;4.00&quot; AllowSortingDefault=&quot;OnClient&quot; AllowColSizingDefault=&quot;Free&quot; HeaderClickActionDefault=&quot;SortSingle&quot; Name=&quot;ctl00xDataGrid_TP_MOUT_DEF&quot; BorderCollapseDefault=&quot;Separate&quot; RowSelectorsDefault=&quot;No&quot; RowHeightDefault=&quot;20px&quot; AllowColumnMovingDefault=&quot;OnServer&quot; SelectTypeRowDefault=&quot;Single&quot;&gt;
+&lt;GroupByBox&gt;
+&lt;Style BorderColor=&quot;Window&quot; BackColor=&quot;ActiveBorder&quot;&gt;&lt;/Style&gt;
+&lt;/GroupByBox&gt;
+&lt;GroupByRowStyleDefault BorderColor=&quot;Window&quot; BackColor=&quot;Control&quot;&gt;&lt;/GroupByRowStyleDefault&gt;
+&lt;FooterStyleDefault BorderWidth=&quot;1px&quot; BorderStyle=&quot;Solid&quot; BackColor=&quot;LightGray&quot;&gt;
+&lt;BorderDetails ColorTop=&quot;White&quot; WidthLeft=&quot;1px&quot; WidthTop=&quot;1px&quot; ColorLeft=&quot;White&quot;&gt;&lt;/BorderDetails&gt;
+&lt;/FooterStyleDefault&gt;
+
+&lt;RowStyleDefault BorderWidth=&quot;1px&quot; BorderColor=&quot;Silver&quot; BorderStyle=&quot;Solid&quot; BackColor=&quot;Window&quot;&gt;
+&lt;BorderDetails ColorTop=&quot;Window&quot; ColorLeft=&quot;Window&quot;&gt;&lt;/BorderDetails&gt;
+
+&lt;Padding Left=&quot;3px&quot;&gt;&lt;/Padding&gt;
+&lt;/RowStyleDefault&gt;
+
+&lt;FilterOptionsDefault EmptyString=&quot;(Empty)&quot; AllString=&quot;(All)&quot; NonEmptyString=&quot;(NonEmpty)&quot;&gt;
+&lt;FilterDropDownStyle BorderWidth=&quot;1px&quot; BorderColor=&quot;Silver&quot; BorderStyle=&quot;Solid&quot; Font-Size=&quot;11px&quot; Font-Names=&quot;Verdana,Arial,Helvetica,sans-serif&quot; BackColor=&quot;White&quot; Width=&quot;200px&quot; CustomRules=&quot;overflow:auto;&quot;&gt;
+&lt;Padding Left=&quot;2px&quot;&gt;&lt;/Padding&gt;
+&lt;/FilterDropDownStyle&gt;
+
+&lt;FilterHighlightRowStyle ForeColor=&quot;White&quot; BackColor=&quot;#151C55&quot;&gt;&lt;/FilterHighlightRowStyle&gt;
+&lt;/FilterOptionsDefault&gt;
+
+&lt;HeaderStyleDefault HorizontalAlign=&quot;Left&quot; BorderStyle=&quot;Solid&quot; BackColor=&quot;LightGray&quot;&gt;
+&lt;BorderDetails ColorTop=&quot;White&quot; WidthLeft=&quot;1px&quot; WidthTop=&quot;1px&quot; ColorLeft=&quot;White&quot;&gt;&lt;/BorderDetails&gt;
+&lt;/HeaderStyleDefault&gt;
+
+&lt;EditCellStyleDefault BorderWidth=&quot;0px&quot; BorderStyle=&quot;None&quot;&gt;&lt;/EditCellStyleDefault&gt;
+
+&lt;FrameStyle BorderWidth=&quot;1px&quot; BorderColor=&quot;InactiveCaption&quot; BorderStyle=&quot;Solid&quot; Font-Size=&quot;8.25pt&quot; Font-Names=&quot;Microsoft Sans Serif&quot; BackColor=&quot;Window&quot; Width=&quot;100%&quot;&gt;&lt;/FrameStyle&gt;
+
+&lt;Pager&gt;
+&lt;Style BorderWidth=&quot;1px&quot; BorderStyle=&quot;Solid&quot; BackColor=&quot;LightGray&quot;&gt;
+&lt;BorderDetails ColorTop=&quot;White&quot; WidthLeft=&quot;1px&quot; WidthTop=&quot;1px&quot; ColorLeft=&quot;White&quot;&gt;&lt;/BorderDetails&gt;
+&lt;/Style&gt;
+&lt;/Pager&gt;
+
+&lt;AddNewBox&gt;
+&lt;Style BorderWidth=&quot;1px&quot; BorderColor=&quot;InactiveCaption&quot; BorderStyle=&quot;Solid&quot; BackColor=&quot;Window&quot;&gt;
+&lt;BorderDetails ColorTop=&quot;White&quot; WidthLeft=&quot;1px&quot; WidthTop=&quot;1px&quot; ColorLeft=&quot;White&quot;&gt;&lt;/BorderDetails&gt;
+&lt;/Style&gt;
+&lt;/AddNewBox&gt;
+&lt;/DisplayLayout&gt;
+&lt;/igtbl:ultrawebgrid&gt;
+&lt;%=ClientScript()%&gt;
+&lt;script language=&quot;javascript&quot; type=&quot;text/javascript&quot;&gt;
+
+function TP_MOUT_DEFLoad()
+
+{
+
+}
+
+function ElementShow(elName)
+
+{
+
+ var el;
+
+ el = document.getElementById(elName);
+
+ if (el != null)
+
+ {
+
+   el.style.display = '';
+
+ }
+
+}
+
+function ElementHide(elName)
+
+{
+
+ var el;
+
+ el = document.getElementById(elName);
+
+ if (el != null)
+
+ {
+
+   el.style.display = 'none';
+
+ }
+
+}
+
+&lt;/script&gt;
+
+
+"><FormData Name=""/></BlockHolder></ModuleHolder><ModuleHolder ModuleName="ucTabTP_MOUT_DEF.ASCX.cs" File="ucTabTP_MOUT_DEF.ASCX.cs"><BlockHolder BlockName="code" BlockCode="
+  namespace TP_MOUT.ASPNET
+{
+  #region MTZ ASP NET Generator code
+  using System;
+  using System.Data;
+  using System.Collections;
+  using System.Drawing;
+  using System.Web;
+  using System.Web.UI.WebControls;
+  using System.Web.UI.HtmlControls;
+  using Mokasin.ASPNET;
+  using TP_MOUT;
+  public partial class ucTabTP_MOUT_DEF  : ucParent
+  {
+    // Добавленное руками
+    string EditColumnName = &quot;EditColumn&quot;;
+    string DeleteParameterName = &quot;DeleteParameterName&quot;;
+    string DeleteColumnName = &quot;DeleteColumn&quot;;
+    string EditParameterName = &quot;EditParameterName&quot;;
+    private int EditColumnIndex = -1;
+    private int DeleteColumnIndex = -1;
+    private int SelectColumnIndex = -1;
+
+    public  TP_MOUT.TP_MOUT_DEF_col DataSource
+    { 
+      get
+      {
+        return (TP_MOUT.TP_MOUT_DEF_col)base.MKSNDataSource;
+      }
+    }
+
+    private void Page_Load(object sender, System.EventArgs e)
+    {
+      base.Page_Load(sender,e); 
+      if (!IsPostBack) PageNum = Parameter(&quot;PageNum&quot;);
+      string EVENTTARGET = string.Empty;
+      string EVENTARGUMENT = string.Empty;
+      if (Request.Form[&quot;__EVENTTARGET&quot;] != null)   EVENTTARGET = Request.Form[&quot;__EVENTTARGET&quot;].ToString();
+      if (Request.Form[&quot;__EVENTARGUMENT&quot;] != null)   EVENTARGUMENT = Request.Form[&quot;__EVENTARGUMENT&quot;].ToString();
+    // БЛОК УДАЛЕНИЯ ЗАПИСИ begin
+      if (EVENTTARGET  == DeleteParameterName + &quot;TP_MOUT_DEF&quot;)
+      {
+        string id = EVENTARGUMENT;
+        if (id != string.Empty)
+        {
+         // УДАЛЯЕМ ОБЪЕКТ
+         DataSource.Delete(id);
+         DataSource.Refresh();
+        }
+      }
+      // БЛОК УДАЛЕНИЯ ЗАПИСИ end
+      // БЛОК РЕДАКТИРОВАНИЯ ЗАПИСИ begin
+      if (EVENTTARGET == EditParameterName)
+      {
+        string id = string.Empty;
+        bool bEdit = false;
+          try
+          {
+            bEdit = EVENTARGUMENT.Substring(0,1) == &quot;1&quot;;
+            id = EVENTARGUMENT.ToString().Substring(1);
+          }
+          catch{}
+      if (id != string.Empty)
+      {
+        string EditURL = Request.ApplicationPath + &quot;/&quot; + EditPage.URL(Server);
+        AddParameter(ref EditURL, DataComponent.SelectIDParameterName, id);
+        AddParameter(ref EditURL, &quot;ObjectID&quot;, this.ObjectID);
+        if (!bEdit)
+          AddParameter(ref EditURL, &quot;mode&quot;, &quot;readonly&quot;);
+        Response.Redirect(EditURL);
+      }
+     }
+     // БЛОК РЕДАКТИРОВАНИЯ ЗАПИСИ end
+     LoadData();
+   }
+
+    private void LoadData()
+    {
+      if (DataSource != null)
+      {
+              DataSource.Refresh();
+              DataTable = DataSource.GetDataTable();
+      }
+      if (DataTable  != null)
+      {
+        DataView = DataComponent.PrepareDataSourceIG(DataTable, EditPage, AllowEdit, Mode.ToLower().IndexOf(&quot;readonly&quot;) &lt; -1, ref EditColumnName, ref DeleteColumnName,  Server);
+      }
+
+      DataGrid_TP_MOUT_DEF.Columns.Clear();
+      DataGrid_TP_MOUT_DEF.DataSource = DataView;
+      this.DataBind();
+     // change column headers here
+      DataGrid_TP_MOUT_DEF.Columns.FromKey(&quot;ID&quot;).ServerOnly = true;
+      DataGrid_TP_MOUT_DEF.Columns.FromKey(&quot;Brief&quot;).ServerOnly = true;
+
+      if (DataGrid_TP_MOUT_DEF.Columns.FromKey(EditColumnName) != null)
+      {
+          DataGrid_TP_MOUT_DEF.Columns.FromKey(EditColumnName).AllowGroupBy = Infragistics.WebUI.UltraWebGrid.AllowGroupBy.No;
+          DataGrid_TP_MOUT_DEF.Columns.FromKey(EditColumnName).AllowRowFiltering = false;
+          DataGrid_TP_MOUT_DEF.Columns.FromKey(EditColumnName).Header.Caption = &quot;Edit&quot;;
+      }
+      if (DataGrid_TP_MOUT_DEF.Columns.FromKey(DeleteColumnName) != null)
+      {
+          DataGrid_TP_MOUT_DEF.Columns.FromKey(DeleteColumnName).AllowGroupBy = Infragistics.WebUI.UltraWebGrid.AllowGroupBy.No;
+          DataGrid_TP_MOUT_DEF.Columns.FromKey(DeleteColumnName).AllowRowFiltering = false;
+          DataGrid_TP_MOUT_DEF.Columns.FromKey(DeleteColumnName).Header.Caption = &quot;Delete&quot;;
+      }
+
+      DataGrid_TP_MOUT_DEF.Columns.FromKey(&quot;TheDAte&quot;).Header.Caption = &quot;Дата акта&quot;;
+      DataGrid_TP_MOUT_DEF.Columns.FromKey(&quot;ActNum&quot;).Header.Caption = &quot;Номер акта&quot;;
+      DataGrid_TP_MOUT_DEF.Columns.FromKey(&quot;RetToSZT&quot;).Header.Caption = &quot;Возврат в СЗТ&quot;;
+      DataGrid_TP_MOUT_DEF.Columns.FromKey(&quot;RetToSZT_VAL&quot;).ServerOnly = true;
+      DataGrid_TP_MOUT_DEF.Columns.FromKey(&quot;NDS&quot;).Header.Caption = &quot;Ставка НДС&quot;;
+      if (AllowAddNew &amp;&amp; AllowEdit)
+      {
+         if (EditPage != null)
+         {
+           string EditURL = Request.ApplicationPath + &quot;/&quot; + EditPage.URL(Server);
+           AddParameter(ref EditURL, &quot;mode&quot;, &quot;addnew&quot;);
+           AddParameter(ref EditURL, &quot;ObjectID&quot;, ObjectID);
+           HyperLinkAddNew.Text = &quot;New row&quot;;
+           HyperLinkAddNew.NavigateUrl = EditURL;
+           HyperLinkAddNew.ImageUrl = &quot;../../images/new.gif&quot;;
+         }
+      }
+    }
+    protected string ClientScript()
+    {
+      string Result = string.Empty;
+      Result += &quot;&lt;script language=\&quot;Javascript\&quot;&gt;\n&quot;;
+      Result +=  &quot;function ConfirmDelete(id)\n&quot;;
+      Result += &quot;{\n&quot;;
+      Result += &quot;if (confirm('Delete row?') != 0)\n&quot;;
+      Result += &quot;{\n&quot;;
+      Result += &quot;__doPostBack('DeleteParameterNameTP_MOUT_DEF',id);\n&quot;;
+      Result += &quot;}\n}\n&quot;;
+      Result += &quot;&lt;/script&gt;\n&quot;;
+      Result += &quot;&lt;script language=\&quot;Javascript\&quot;&gt;\n&quot;;
+      Result +=  &quot;function LinkToEdit(id)\n&quot;;
+      Result += &quot;{\n&quot;;
+      Result += &quot; __doPostBack('&quot; + EditParameterName + &quot;','1'+id);\n&quot;;
+      Result += &quot;}\n&quot;;
+      Result += &quot;&lt;/script&gt;\n&quot;;
+      Result += &quot;&lt;script language=\&quot;Javascript\&quot;&gt;\n&quot;;
+      Result +=  &quot;function LinkToView(id)\n&quot;;
+      Result += &quot;{\n&quot;;
+      Result += &quot; __doPostBack('&quot; + EditParameterName + &quot;','0'+id);\n&quot;;
+      Result += &quot;}\n&quot;;
+      Result += &quot;&lt;/script&gt;\n&quot;;
+      return Result;
+    }
+    #region Web Form Designer generated code
+    override protected void OnInit(EventArgs e)
+    {
+      base.OnInit(e);
+      InitializeComponent();
+    }
+
+    private void InitializeComponent()
+    {
+      this.Load += new System.EventHandler(this.Page_Load);
+
+    }
+    #endregion
+
+  }
+  #endregion
+}
+
+"><FormData Name=""/></BlockHolder></ModuleHolder></root>

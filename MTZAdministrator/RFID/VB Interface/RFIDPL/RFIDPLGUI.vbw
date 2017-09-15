@@ -1,0 +1,13 @@
+GUI = 44, 58, 861, 339, 
+RFIDPL_HISTORY = 0, 0, 0, 0, C, 88, 116, 905, 397, C
+RFIDPL_OP = 0, 0, 0, 0, C, 44, 58, 861, 339, C
+RFIDPL_DEF = 0, 0, 0, 0, C, 0, 0, 817, 281, C
+frmRFIDPL_HISTORY_ = 0, 0, 0, 0, C, 66, 87, 883, 368, C
+frmRFIDPL_OP_ = 0, 0, 0, 0, C, 0, 0, 817, 281, C
+frmRFIDPL_DEF_ = 0, 0, 0, 0, C, 44, 58, 861, 339, C
+vpnRFIDPL_DEF_ = 0, 0, 0, 0, C, 88, 116, 905, 397, C
+vpnRFIDPL_OP_ = 0, 0, 0, 0, C, 44, 58, 861, 339, C
+vpnRFIDPL_HISTORY_ = 0, 0, 0, 0, C, 0, 0, 817, 281, C
+ctl_main = 0, 0, 0, 0, C, 66, 87, 883, 368, C
+frm_main = 0, 0, 0, 0, C, 22, 29, 839, 310, C
+Util = 66, 87, 883, 368, 

@@ -1,0 +1,17 @@
+GUI = 22, 29, 721, 431, 
+osReg_info = 0, 0, 0, 0, C, 66, 87, 765, 489, C
+osReg_infomain = 0, 0, 0, 0, C, 132, 174, 831, 576, C
+osReg_inforead = 0, 0, 0, 0, C, 44, 58, 743, 460, C
+frmosReg_info_ = 0, 0, 0, 0, C, 110, 145, 809, 547, C
+frmosReg_info_main = 0, 0, 0, 0, C, 0, 0, 699, 402, C
+vpnosReg_info_main = 0, 0, 0, 0, C, 44, 58, 743, 460, C
+ctlmain_main = 0, 0, 0, 0, C, 110, 145, 809, 547, C
+frmmain_main = 0, 0, 0, 0, C, 22, 29, 721, 431, C
+frmosReg_info_read = 0, 0, 0, 0, C, 66, 87, 765, 489, C
+vpnosReg_info_read = 0, 0, 0, 0, C, 110, 145, 809, 547, C
+ctlread_main = 0, 0, 0, 0, C, 22, 29, 721, 431, C
+frmread_main = 0, 0, 0, 0, C, 88, 116, 787, 518, C
+vpnosReg_info_ = 0, 0, 0, 0, C, 132, 174, 831, 576, C
+ctl_main = 0, 0, 0, 0, C, 44, 58, 743, 460, C
+frm_main = 0, 0, 0, 0, C, 110, 145, 809, 547, C
+Util = 0, 0, 699, 402, 

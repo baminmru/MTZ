@@ -1,0 +1,3 @@
+VBGROUP 5.0
+StartupProject=..\WFExecutor\WFExecutor.vbp
+Project=WFF_RTMBASE.vbp

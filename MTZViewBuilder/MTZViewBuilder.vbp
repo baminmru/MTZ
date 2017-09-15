@@ -1,0 +1,59 @@
+Type=Exe
+Reference=*\G{00020430-0000-0000-C000-000000000046}#2.0#0#..\..\..\WINDOWS\System32\stdole2.tlb#OLE Automation
+Reference=*\G{BD8EE116-DA79-4012-AD82-81E033407978}#1.0#0#..\MtzAdministrator\VB Model\MTZMetaModel\MTZMetaModel.dll#MTZMetaModel
+Reference=*\G{58DF4A4A-346E-4A52-82D1-1DC4A6CB4A60}#5.4#0#..\MTZManager\MTZManager.dll#MTZManager
+Reference=*\G{45D6DB85-69D5-45C6-AD58-BB2DA56CCC79}#6.4#0#..\MTZSession\MTZSession.dll#MTZSession
+Reference=*\G{27532C15-381F-49B2-83D7-087D2BB897B8}#5.4#0#..\MTZUtil\MTZUtil.dll#MTZUtil
+Reference=*\G{EF53050B-882E-4776-B643-EDA472E8E3F2}#2.7#0#..\..\..\Program Files\Common Files\system\ado\msado15.dll#Microsoft ActiveX Data Objects 2.7 Library
+Reference=*\G{F5078F18-C551-11D3-89B9-0000F81FE221}#3.0#0#..\..\..\WINDOWS\System32\msxml3.dll#Microsoft XML, v3.0
+Object={831FDD16-0C5C-11D2-A9FC-0000F8754DA1}#2.0#0; mscomctl.ocx
+Object={86CF1D34-0C5F-11D2-A9FC-0000F8754DA1}#2.0#0; mscomct2.ocx
+Object={38911DA0-E448-11D0-84A3-00DD01104159}#1.1#0; COMCT332.OCX
+Object={F9043C88-F6F2-101A-A3C9-08002B2F49FB}#1.2#0; comdlg32.ocx
+Object={5E9E78A0-531B-11CF-91F6-C2863C385E30}#1.0#0; MSFLXGRD.OCX
+Form=frmStep2.frm
+Form=frmLogin.frm
+Module=Module1; Module1.bas
+Form=frmStep1.frm
+Form=frmStep3.frm
+Form=frmAgg.frm
+Class=ViewItems; ViewItems.cls
+IconForm="frmAgg"
+Startup="Sub Main"
+HelpFile=""
+Title="ViewBuilder"
+ExeName32="MTZViewBuilder.exe"
+Command32=""
+Name="MTZViewBuilder"
+HelpContextID="0"
+CompatibleMode="0"
+MajorVer=1
+MinorVer=0
+RevisionVer=131
+AutoIncrementVer=1
+ServerSupportFiles=0
+VersionCompanyName="master.bami"
+CompilationType=0
+OptimizationType=0
+FavorPentiumPro(tm)=0
+CodeViewDebugInfo=0
+NoAliasing=0
+BoundsCheck=0
+OverflowCheck=0
+FlPointCheck=0
+FDIVCheck=0
+UnroundedFP=0
+StartMode=0
+Unattended=0
+Retained=0
+ThreadPerObject=0
+MaxNumberOfThreads=1
+
+[MS Transaction Server]
+AutoRefresh=0
+
+
+
+
+
+

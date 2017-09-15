@@ -1,0 +1,7 @@
+﻿<?xml version="1.0"?>
+<root><ModuleHolder ModuleName="--Update" File=""><BlockHolder BlockName="--DELETE ZONE" BlockCode=" 
+
+delete num_values from num_values, num_zones where zonemask='peknal05' and num_zonesid=num_values.parentstructrowid
+
+go
+"></BlockHolder></ModuleHolder></root>

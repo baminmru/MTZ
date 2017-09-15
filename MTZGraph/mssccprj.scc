@@ -1,0 +1,17 @@
+SCC = This is a Source Code Control file
+
+[DDGraph.vbp]
+SCC_Aux_Path = "\\Server450\vss5\"
+SCC_Project_Name = "$/Software Development/Projects/DDWorks&Docs_V1.0/DDGRAPH", MUXEAAAA
+
+[Project1.vbp]
+SCC_Aux_Path = "\\Server450\vss5\"
+SCC_Project_Name = "$/Software Development/Projects/DDWorks&Docs_V1.0/DDGRAPH", MUXEAAAA
+
+[MTZGraph.vbp]
+SCC_Aux_Path = "\\Pavel\VSS2\"
+SCC_Project_Name = "$/MTZ/MTZGraph", YEXAAAAA
+
+[prjTestvbp.vbp]
+SCC_Aux_Path = "\\Pavel\VSS2\"
+SCC_Project_Name = "$/MTZ/MTZGraph", YEXAAAAA

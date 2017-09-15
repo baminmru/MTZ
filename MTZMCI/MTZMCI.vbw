@@ -1,0 +1,9 @@
+basCommandString = 0, 0, 0, 0, C
+basMCIBase = 66, 66, 652, 360, 
+basRegistryDeclares = 110, 110, 696, 404, C
+basSimple = 44, 44, 630, 338, 
+CDPlayer = 0, 0, 0, 0, C
+Ã“_600_9006 = 0, 0, 0, 0, C
+WavePlayer = 66, 66, 597, 362, 
+Mixer = 22, 22, 553, 316, 
+Mixerdef = 88, 88, 674, 382, 

@@ -1,0 +1,293 @@
+<?xml version="1.0"?>
+<root><ModuleHolder ModuleName="--Update 16.06.2006" File=""><BlockHolder BlockName="-- Update Script" BlockCode="if exists (select * from sysobjects where id = object_id(N'VRCCommonInfo_SAVE') and OBJECTPROPERTY(id, N'IsProcedure') = 1)
+drop procedure VRCCommonInfo_SAVE
+GO
+create proc VRCCommonInfo_SAVE /*Общая информация*/ (
+ @CURSESSION uniqueidentifier,
+@InstanceID uniqueidentifier =null,
+ @VRCCommonInfoid uniqueidentifier
+,@Org
+ UNIQUEIDENTIFIER/* Наша организация *//* Наша организация */
+,@IsPhizical
+ INTEGER/* Физическое лицо *//* Физическое лицо */
+,@code
+ VARCHAR (30) = null /* Код клиента *//* Код клиента */
+,@Name
+ VARCHAR (255)/* Название *//* Название */
+,@fullname
+ TEXT = null /* Полное наименование *//* Полное наименование */
+,@Address
+ VARCHAR (255) = null /* Почтовый адрес *//* Почтовый адрес */
+,@fax
+ VARCHAR (20) = null /* Факс *//* Факс */
+,@Phone
+ VARCHAR (25) = null /* Телефон *//* Телефон */
+,@the_Comment
+ TEXT = null /* Примечание *//* Примечание */
+,@TRFTYPE
+ UNIQUEIDENTIFIER = null /* Тип тарифа *//* Тип тарифа */
+,@INN
+ VARCHAR (12) = null /* ИНН *//* ИНН */
+,@KPP
+ VARCHAR (9) = null /* КПП *//* КПП */
+,@Curator
+ UNIQUEIDENTIFIER = null /* Ответственный *//* Ответственный */
+,@Interest
+ UNIQUEIDENTIFIER = null /* Заинтересованность *//* Заинтересованность */
+,@Transporter
+ INTEGER = null /* Поставщик тр. услуг *//* Поставщик тр. услуг */
+,@PassportInfo
+ TEXT = null /* Паспортные данные *//* Паспортные данные */
+,@Code1C
+ VARCHAR (40) = null /* Код1С *//* Код1С */
+) as  begin  
+set nocount on
+DECLARE @SysLogid uniqueidentifier
+ declare @UniqueRowCount integer
+ declare @tmpStr varchar(255)
+ declare @tmpID uniqueidentifier
+ declare @access int
+ declare @SysInstID uniqueidentifier
+ declare @SessUserID uniqueidentifier
+ declare @SessUserLogin varchar(40)
+ select @SessUserID=UsersID from the_session where the_sessionid=@cursession
+ select @SessUserLogin =login from users where usersid=@SessUserID
+ select @SysInstID =Instanceid from instance where objtype='MTZSYSTEM'
+ -- checking session  --
+if not exists( select 1 from the_session where the_sessionid=@cursession and closed=0 )
+  begin
+    raiserror('Сессия уже завершена.',16,1)
+    if @@trancount&gt;0 rollback tran
+    return
+  end
+ -- Insert / Update body -- 
+if exists(select 1 from VRCCommonInfo where VRCCommonInfoID=@VRCCommonInfoID)
+ begin
+ --  UPDATE  --
+ --  verify access  --
+ select  @tmpID =SecurityStyleID from VRCCommonInfo where VRCCommonInfoid=@VRCCommonInfoID
+ exec CheckVerbRight @cursession=@cursession,@Resource=@tmpID,@verb='EDITROW',@access=@access out 
+ if @access=0 
+  begin
+    exec CheckVerbRight @cursession=@cursession,@Resource=@tmpID,@verb='EDITROW:VRCCommonInfo',@access=@access out 
+    if @access=0 
+    begin
+      raiserror('Нет прав на модификацию. Раздел=VRCCommonInfo',16,1)
+      if @@trancount&gt;0 rollback tran
+      return
+    end
+  end
+ --  verify lock  --
+ exec VRCCommonInfo_ISLOCKED @cursession=@cursession,@ROWID=@VRCCommonInfoid,@IsLocked=@access out 
+ if @access&gt;2 
+  begin
+    raiserror('Строка заблокирована другим пльзователем. Раздел=VRCCommonInfo',16,1)
+    if @@trancount&gt;0 rollback tran
+    return
+  end
+ begin tran  
+ -- update row  --
+set @SysLogid=newid()
+EXEC SysLog_SAVE @TheSession=@cursession,@CURSESSION=@cursession, @InstanceID=@sysinstid, @SysLogid=@SysLogid, @LogStructID = 'VRCCommonInfo',
+ @VERB='EDITROW',  @the_Resource=@VRCCommonInfoid, @LogInstanceID=@instanceID
+ update  VRCCommonInfo set ChangeStamp=GetDate()
+,
+  Org=@Org
+,
+  IsPhizical=@IsPhizical
+,
+  code=@code
+,
+  Name=@Name
+,
+  fullname=@fullname
+,
+  Address=@Address
+,
+  fax=@fax
+,
+  Phone=@Phone
+,
+  the_Comment=@the_Comment
+,
+  TRFTYPE=@TRFTYPE
+,
+  INN=@INN
+,
+  KPP=@KPP
+,
+  Curator=@Curator
+,
+  Interest=@Interest
+,
+  Transporter=@Transporter
+,
+  PassportInfo=@PassportInfo
+,
+  Code1C=@Code1C
+  where  VRCCommonInfoID = @VRCCommonInfoID 
+ -- checking unique constraints  --
+If @SessUserLogin&lt;&gt;'replicator' 
+begin
+select @UniqueRowCount=Count(*) from VRCCommonInfo where 1=1  
+ and Name=@Name
+if @UniqueRowCount&gt;=2
+begin
+ raiserror('Название должно быть уникальным Раздел=Общая информация',16,1)
+ if @@trancount&gt;0 rollback tran
+ return
+end
+select @UniqueRowCount=Count(*) from VRCCommonInfo where 1=1  
+ and INN=@INN
+ and KPP=@KPP
+if @UniqueRowCount&gt;=2
+begin
+ raiserror('Сочетание ИНН + КПП должно быть уникальным Раздел=Общая информация',16,1)
+ if @@trancount&gt;0 rollback tran
+ return
+end
+end
+
+  end
+ else
+ --  INSERT  --
+  begin
+ --  verify access  --
+ select @tmpid = SecurityStyleID from instance where instanceid=@instanceid
+ exec CheckVerbRight @cursession=@cursession,@Resource=@tmpID,@verb='CREATEROW',@access=@access out
+ if @access=0 
+  begin
+    exec CheckVerbRight @cursession=@cursession,@Resource=@tmpID,@verb='CREATEROW:VRCCommonInfo',@access=@access out 
+    if @access=0 
+    begin
+      raiserror('Нет прав на создание строк. Раздел=VRCCommonInfo',16,1)
+      if @@trancount&gt;0 rollback tran
+      return
+    end
+ end
+ exec instance_ISLOCKED @cursession=@cursession,@ROWID=@InstanceID,@IsLocked=@access out 
+ if @access&gt;2 
+  begin
+    raiserror('Строка заблокирована другим пльзователем. Раздел=VRCCommonInfo',16,1)
+    if @@trancount&gt;0 rollback tran
+    return
+  end
+if exists (select 1 from VRCCommonInfo where 
+InstanceID=@InstanceID)
+ begin
+    raiserror('Невозможно создать вторую строку в однострочной сессии. Раздел: &lt;VRCCommonInfo&gt;',16,1)
+    if @@trancount&gt;0 rollback tran
+    return
+ End
+ begin tran  
+set @SysLogid=newid()
+EXEC SysLog_SAVE @TheSession=@cursession,@CURSESSION=@cursession, @InstanceID=@sysinstid, @SysLogid=@SysLogid, @LogStructID = 'VRCCommonInfo',
+ @VERB='CREATEROW',  @the_Resource=@VRCCommonInfoid, @LogInstanceID=@instanceID
+ insert into   VRCCommonInfo
+ (  VRCCommonInfoID 
+,InstanceID
+,Org
+
+,IsPhizical
+
+,code
+
+,Name
+
+,fullname
+
+,Address
+
+,fax
+
+,Phone
+
+,the_Comment
+
+,TRFTYPE
+
+,INN
+
+,KPP
+
+,Curator
+
+,Interest
+
+,Transporter
+
+,PassportInfo
+
+,Code1C
+
+ ) values ( @VRCCommonInfoID 
+,@InstanceID
+,@Org
+
+,@IsPhizical
+
+,@code
+
+,@Name
+
+,@fullname
+
+,@Address
+
+,@fax
+
+,@Phone
+
+,@the_Comment
+
+,@TRFTYPE
+
+,@INN
+
+,@KPP
+
+,@Curator
+
+,@Interest
+
+,@Transporter
+
+,@PassportInfo
+
+,@Code1C
+
+ ) 
+ exec VRCCommonInfo_SINIT @CURSESSION,@VRCCommonInfoid,@tmpid
+ -- checking unique constraints  --
+If @SessUserLogin&lt;&gt;'replicator' 
+begin
+select @UniqueRowCount=Count(*) from VRCCommonInfo where 1=1  
+ and Name=@Name
+if @UniqueRowCount&gt;=2
+begin
+ raiserror('Название должно быть уникальным Раздел=Общая информация',16,1)
+ if @@trancount&gt;0 rollback tran
+ return
+end
+select @UniqueRowCount=Count(*) from VRCCommonInfo where 1=1  
+ and INN=@INN
+ and KPP=@KPP
+if @UniqueRowCount&gt;=2
+begin
+ raiserror('Сочетание ИНН + КПП должно быть уникальным Раздел=Общая информация',16,1)
+ if @@trancount&gt;0 rollback tran
+ return
+end
+end
+
+ end
+ -- close transaction --
+ if @@error &lt;&gt;0  if @@trancount&gt;0 rollback tran  
+ if @@trancount&gt;0 commit tran  
+ end 
+
+
+GO
+
+
+"><FormData Name=""/></BlockHolder></ModuleHolder></root>

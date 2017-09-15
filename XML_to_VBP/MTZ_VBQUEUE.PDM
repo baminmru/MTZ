@@ -1,0 +1,68 @@
+[Root]
+Most Recent Package=XML_to_VBP
+
+
+[Package|XML_to_VBP|Root]
+SubWizProgID=PDWizard.DepPkgSubWiz
+BuildFolder=D:\BAMI\MTZ\XML_to_VBP
+
+[Package|XML_to_VBP|Configure DAO ISAMs]
+Applicable=No
+
+[Package|XML_to_VBP|Configure DAO ODBC]
+JetWorkspace=
+ODBCDirect=
+
+[Package|XML_to_VBP|Files Found]
+
+[Package|XML_to_VBP|Files Released]
+
+[Package|XML_to_VBP|Missing Dependency Information]
+D:\BAMI\MTZ\MTZGenerator\MTZGenerator.dll=
+
+[Package|XML_to_VBP|Out-of-Date Dependency Information]
+
+[Package|XML_to_VBP|Files Added]
+
+[Package|XML_to_VBP|Files Removed]
+
+[Package|XML_to_VBP|Files In Project]
+D:\BAMI\MTZ\XML_to_VBP\MTZ_VBQUEUE.dll=Yes
+E:\WINDOWS\system32\msvbvm60.dll=Yes
+D:\Program Files\Microsoft Visual Studio\VB98\Wizards\PDWizard\Redist\OLEAUT32.DLL=Yes
+D:\Program Files\Microsoft Visual Studio\VB98\Wizards\PDWizard\Redist\OLEPRO32.DLL=Yes
+D:\Program Files\Microsoft Visual Studio\VB98\Wizards\PDWizard\Redist\ASYCFILT.DLL=Yes
+D:\Program Files\Microsoft Visual Studio\VB98\Wizards\PDWizard\Redist\STDOLE2.TLB=Yes
+D:\Program Files\Microsoft Visual Studio\VB98\Wizards\PDWizard\Redist\COMCAT.DLL=Yes
+D:\BAMI\MTZ\MTZGenerator\MTZGenerator.dll=Yes
+
+[Package|XML_to_VBP|Configure Registry Files]
+Applicable=
+
+[Package|XML_to_VBP|Configure Remote Servers]
+Applicable=
+
+[Package|XML_to_VBP|Install Locations]
+D:\BAMI\MTZ\XML_to_VBP\MTZ_VBQUEUE.dll=$(AppPath)
+E:\WINDOWS\system32\msvbvm60.dll=$(WinSysPathSysFile)
+D:\Program Files\Microsoft Visual Studio\VB98\Wizards\PDWizard\Redist\OLEAUT32.DLL=$(WinSysPathSysFile)
+D:\Program Files\Microsoft Visual Studio\VB98\Wizards\PDWizard\Redist\OLEPRO32.DLL=$(WinSysPathSysFile)
+D:\Program Files\Microsoft Visual Studio\VB98\Wizards\PDWizard\Redist\ASYCFILT.DLL=$(WinSysPathSysFile)
+D:\Program Files\Microsoft Visual Studio\VB98\Wizards\PDWizard\Redist\STDOLE2.TLB=$(WinSysPathSysFile)
+D:\Program Files\Microsoft Visual Studio\VB98\Wizards\PDWizard\Redist\COMCAT.DLL=$(WinSysPathSysFile)
+D:\BAMI\MTZ\MTZGenerator\MTZGenerator.dll=$(AppPath)
+
+[Package|XML_to_VBP|Configure Shared Files]
+Applicable=
+
+[Package|XML_to_VBP|DepFile]
+DepCabFile=MTZ_VBQUEUE.CAB
+DepCabRun=MTZ_VBQUEUE.INF
+
+[Package|XML_to_VBP|Package]
+PackageFolder=D:\BAMI\MTZ\XML_to_VBP
+ProjectFolder=D:\BAMI\MTZ\XML_to_VBP
+ServerSideCab=
+File1=D:\BAMI\MTZ\XML_to_VBP\MTZ_VBQUEUE.DEP
+Handler1=PDWizard.FolderDplySubWiz
+Handler2=PDWizard.WebPostDplySubWiz

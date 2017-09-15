@@ -1,0 +1,17 @@
+GUI = 88, 116, 809, 527, 
+PEKO_DEF = 0, 0, 0, 0, C, 132, 174, 853, 585, C
+PEKO_DEFread = 0, 0, 0, 0, C, 44, 58, 765, 469, C
+PEKO_DEFmain = 0, 0, 0, 0, C, 110, 145, 831, 556, C
+frmPEKO_DEF_ = 0, 0, 0, 0, C, 22, 29, 743, 440, C
+frmPEKO_DEF_read = 0, 0, 0, 0, C, 66, 87, 787, 498, C
+vpnPEKO_DEF_read = 0, 0, 0, 0, C, 110, 145, 831, 556, C
+ctlread_main = 0, 0, 0, 0, C, 22, 29, 743, 440, C
+frmread_main = 0, 0, 0, 0, C, 88, 116, 809, 527, C
+frmPEKO_DEF_main = 0, 0, 0, 0, C, 132, 174, 853, 585, C
+vpnPEKO_DEF_main = 0, 0, 0, 0, C, 22, 29, 743, 440, C
+ctlmain_main = 0, 0, 0, 0, C, 88, 116, 809, 527, C
+frmmain_main = 0, 0, 0, 0, C, 0, 0, 721, 411, C
+vpnPEKO_DEF_ = 0, 0, 0, 0, C, 44, 58, 765, 469, C
+ctl_main = 0, 0, 0, 0, C, 110, 145, 831, 556, C
+frm_main = 0, 0, 0, 0, C, 22, 29, 743, 440, C
+Util = 66, 87, 787, 498, 

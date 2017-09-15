@@ -1,0 +1,4 @@
+VBGROUP 5.0
+Project=..\MTZManager\MTZManager.vbp
+StartupProject=..\..\Projects\PEK2\PEKCENTER\PEKCENTER.vbp
+Project=MTZSession.vbp

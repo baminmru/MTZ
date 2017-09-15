@@ -1,0 +1,13 @@
+GUI = 44, 58, 563, 460, 
+WEBSDIC_QTYPE = 0, 0, 0, 0, C, 88, 116, 607, 518, C
+WEBSDIC_DEF = 0, 0, 0, 0, C, 0, 0, 519, 402, C
+WEBSDIC_PAGETYPE = 0, 0, 0, 0, C, 66, 87, 585, 489, C
+frmWEBSDIC_QTYPE_ = 0, 0, 0, 0, C, 132, 174, 651, 576, C
+frmWEBSDIC_DEF_ = 0, 0, 0, 0, C, 22, 29, 541, 431, C
+frmWEBSDIC_PAGETYPE_ = 0, 0, 0, 0, C, 66, 87, 585, 489, C
+vpnWEBSDIC_DEF_ = 0, 0, 0, 0, C, 110, 145, 629, 547, C
+vpnWEBSDIC_PAGETYPE_ = 0, 0, 0, 0, C, 22, 29, 541, 431, C
+vpnWEBSDIC_QTYPE_ = 0, 0, 0, 0, C, 88, 116, 607, 518, C
+ctl_main = 0, 0, 0, 0, C, 0, 0, 519, 402, C
+frm_main = 0, 0, 0, 0, C, 66, 87, 585, 489, C
+Util = 110, 145, 629, 547, 

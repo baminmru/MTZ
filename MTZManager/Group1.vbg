@@ -1,0 +1,3 @@
+VBGROUP 5.0
+StartupProject=..\..\Projects\ITT2007\ARM_mixed\ITT2007.vbp
+Project=MTZManager.vbp

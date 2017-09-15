@@ -1,0 +1,12 @@
+VBGROUP 5.0
+StartupProject=WFClient.vbp
+Project=..\WFServer\WFserver.vbp
+Project=..\WFF\WFF_MAILSTONE\WFF_MAILSTONE.vbp
+Project=..\WFF\WFF_NEWEVENT\WFF_NEWEVENT.vbp
+Project=..\MTZManager\MTZManager.vbp
+Project=..\MTZSession\MTZSession.vbp
+Project=..\WFF\WFF_DOCEVENT\WFF_DOCEVENT.vbp
+Project=..\WFF\WFF_EVENT\WFF_EVENT.vbp
+Project=..\WFF\WFF_PULSE\WFF_PULSE.vbp
+Project=..\WFF\WFF_DOCSC\WFF_DOCSC.vbp
+Project=..\MTZAdministrator\VB Model\STDInfoStore\STDInfoStore.vbp

@@ -1,0 +1,13 @@
+GUI = 0, 0, 597, 402, 
+wpDog_def = 0, 0, 0, 0, C, 44, 58, 641, 460, C
+wpdog_mainSrv = 0, 0, 0, 0, C, 110, 145, 707, 547, C
+wpDog_srvPrice = 0, 0, 0, 0, C, 22, 29, 619, 431, C
+frmwpDog_def_ = 0, 0, 0, 0, C, 88, 116, 685, 518, C
+frmwpdog_mainSrv_ = 0, 0, 0, 0, C, 132, 174, 729, 576, C
+frmwpDog_srvPrice_ = 0, 0, 0, 0, C, 22, 29, 619, 431, C
+vpnwpDog_def_ = 0, 0, 0, 0, C, 66, 87, 663, 489, C
+vpnwpdog_mainSrv_ = 0, 0, 0, 0, C, 132, 174, 729, 576, C
+vpnwpDog_srvPrice_ = 0, 0, 0, 0, C, 44, 58, 641, 460, C
+ctl_main = 0, 0, 0, 0, C, 110, 145, 707, 547, C
+frm_main = 0, 0, 0, 0, C, 22, 29, 619, 431, C
+Util = 66, 87, 663, 489, 

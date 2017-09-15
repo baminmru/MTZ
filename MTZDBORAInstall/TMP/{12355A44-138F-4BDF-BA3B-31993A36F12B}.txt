@@ -1,0 +1,1218 @@
+
+ create or replace package body ININV as
+
+procedure ININV_DELETE(acursession CHAR, aInstanceID CHAR) as  
+aObjType  varchar2(255);
+begin
+select  objtype into aObjType from instance where instanceid=ainstanceid;
+if  aObjType ='ININV'
+then
+cursor child_ININVOICE_DEF is select ININVOICE_DEF.ININVOICE_DEFid ID from ININVOICE_DEF where  ININVOICE_DEF.InstanceID = ainstanceid;
+row_ININVOICE_DEF  child_ININVOICE_DEF%ROWTYPE;
+begin
+--open child_ININVOICE_DEF;
+for row_ININVOICE_DEF in child_ININVOICE_DEF loop
+ ININVOICE_DEF_DELETE (acursession,row_ININVOICE_DEF.id,aInstanceID);
+end loop;
+close child_ININVOICE_DEF;
+end;
+cursor child_ININVOICE_LINE is select ININVOICE_LINE.ININVOICE_LINEid ID from ININVOICE_LINE where  ININVOICE_LINE.InstanceID = ainstanceid;
+row_ININVOICE_LINE  child_ININVOICE_LINE%ROWTYPE;
+begin
+--open child_ININVOICE_LINE;
+for row_ININVOICE_LINE in child_ININVOICE_LINE loop
+ ININVOICE_LINE_DELETE (acursession,row_ININVOICE_LINE.id,aInstanceID);
+end loop;
+close child_ININVOICE_LINE;
+end;
+return;
+<<del_error>>
+return;
+end if;
+end;
+procedure ININV_HCL(acursession CHAR, aROWID CHAR, aIsLocked out integer) as  
+aObjType  varchar2(255);
+atmpStr  varchar2(255);
+ aUserID CHAR(38);
+ aLockUserID CHAR(38);
+ aLockSessionID CHAR(38);
+ begin
+select  objtype into aObjtype from instance where instanceid=aRowid;
+if aobjtype = 'ININV'
+ then
+ select usersid into auserID from  the_session where the_sessionid=acursession;
+cursor lch_ININVOICE_DEF is select ININVOICE_DEF.ININVOICE_DEFid ID from ININVOICE_DEF where  ININVOICE_DEF.InstanceID = arowid;
+ROW_ININVOICE_DEF  lch_ININVOICE_DEF%ROWTYPE;
+begin
+--open lch_ININVOICE_DEF;
+for row_ININVOICE_DEF in lch_ININVOICE_DEF loop
+ select LockUserID,LockSessionID into aLockUserID,aLockSessionID from ININVOICE_DEF where ININVOICE_DEFid=row_ININVOICE_DEF.id;
+ if not aLockUserID is null  
+ then   
+   if  aLockUserID <> auserID  
+   then   
+     aisLocked := 4; /* CheckOut by another user */
+     close lch_ININVOICE_DEF;
+     return;
+   end if;  
+ end if;  
+ if not aLockSessionID is null  
+ then   
+   if  aLockSessionID <> aCURSESSION  
+   then   
+     aisLocked:= 3; /* Lockes by another user */
+     close lch_ININVOICE_DEF;
+     return;
+   end if; 
+ end if; 
+ ININVOICE_DEF_HCL (acursession,ROW_ININVOICE_DEF.id,aisLocked);
+ if aisLocked >2 then
+   close lch_ININVOICE_DEF;
+   return;
+ end if;
+ end loop;
+close lch_ININVOICE_DEF;
+end;
+cursor lch_ININVOICE_LINE is select ININVOICE_LINE.ININVOICE_LINEid ID from ININVOICE_LINE where  ININVOICE_LINE.InstanceID = arowid;
+ROW_ININVOICE_LINE  lch_ININVOICE_LINE%ROWTYPE;
+begin
+--open lch_ININVOICE_LINE;
+for row_ININVOICE_LINE in lch_ININVOICE_LINE loop
+ select LockUserID,LockSessionID into aLockUserID,aLockSessionID from ININVOICE_LINE where ININVOICE_LINEid=row_ININVOICE_LINE.id;
+ if not aLockUserID is null  
+ then   
+   if  aLockUserID <> auserID  
+   then   
+     aisLocked := 4; /* CheckOut by another user */
+     close lch_ININVOICE_LINE;
+     return;
+   end if;  
+ end if;  
+ if not aLockSessionID is null  
+ then   
+   if  aLockSessionID <> aCURSESSION  
+   then   
+     aisLocked:= 3; /* Lockes by another user */
+     close lch_ININVOICE_LINE;
+     return;
+   end if; 
+ end if; 
+ ININVOICE_LINE_HCL (acursession,ROW_ININVOICE_LINE.id,aisLocked);
+ if aisLocked >2 then
+   close lch_ININVOICE_LINE;
+   return;
+ end if;
+ end loop;
+close lch_ININVOICE_LINE;
+end;
+ end if;
+aIsLocked:=0;
+end;
+procedure ININV_propagate(acursession CHAR, aROWID CHAR) as  
+aObjType  varchar2(255);
+atmpStr  varchar2(255);
+achildlistid CHAR(38);
+assid CHAR(38);
+begin
+select  objtype into aObjType from instance where instanceid=aRowid;
+if aobjtype = 'ININV'
+ then
+ select securitystyleid into aSSID from instance where instanceid=aRowID;
+cursor pch_ININVOICE_DEF is select ININVOICE_DEF.ININVOICE_DEFid id from ININVOICE_DEF where  ININVOICE_DEF.InstanceID = arowid;
+row_ININVOICE_DEF  pch_ININVOICE_DEF%ROWTYPE;
+begin
+--open pch_ININVOICE_DEF;
+for row_ININVOICE_DEF in  pch_ININVOICE_DEF loop
+ ININVOICE_DEF_SINIT( acursession,row_ININVOICE_DEF.id,assid);
+ ININVOICE_DEF_propagate( acursession,row_ININVOICE_DEF.id);
+end loop;
+close pch_ININVOICE_DEF;
+end;
+cursor pch_ININVOICE_LINE is select ININVOICE_LINE.ININVOICE_LINEid id from ININVOICE_LINE where  ININVOICE_LINE.InstanceID = arowid;
+row_ININVOICE_LINE  pch_ININVOICE_LINE%ROWTYPE;
+begin
+--open pch_ININVOICE_LINE;
+for row_ININVOICE_LINE in  pch_ININVOICE_LINE loop
+ ININVOICE_LINE_SINIT( acursession,row_ININVOICE_LINE.id,assid);
+ ININVOICE_LINE_propagate( acursession,row_ININVOICE_LINE.id);
+end loop;
+close pch_ININVOICE_LINE;
+end;
+ end if; 
+end;
+
+
+
+procedure ININVOICE_DEF_BRIEF  (
+ aCURSESSION CHAR,
+ aININVOICE_DEFid CHAR,
+ aBRIEF out varchar2
+) as 
+ aaccess integer;
+ atmpStr varchar2(255);
+ atmpID CHAR(38);
+ existsCnt integer;
+begin
+ -- checking the_session  --
+ select count(*) into existsCnt from the_session where the_sessionid=acursession and closed=0 ;
+if existsCnt=0
+  then
+    raise_application_error(-20000,'Сессия уже завершена.');
+    return;
+  end if;
+if aININVOICE_DEFid is null then aBRIEF:=''; return; end if;
+ -- Brief body -- 
+select count(*)into existsCnt from ININVOICE_DEF where ININVOICE_DEFID=aININVOICE_DEFID;
+if existsCnt >0
+ then
+ --  verify access  --
+ select  SecurityStyleID into atmpid from ININVOICE_DEF where ININVOICE_DEFid=aININVOICE_DEFID;
+ CheckVerbRight (acursession=>acursession,aThe_Resource=>atmpID,averb=>'BRIEF',aaccess=>aaccess); 
+ if aaccess=0 
+  then
+    raise_application_error(-20000,'No access for BRIEF Structure=ININVOICE_DEF');
+    return;
+  end if;
+  aBRIEF:=func.ININVOICE_DEF_BRIEF_F(aININVOICE_DEFid);
+else
+  aBRIEF:= 'неверный идентификатор';
+end if;
+ aBRIEF:=substr(aBRIEF,1,255);
+end; 
+
+
+procedure ININVOICE_DEF_DELETE /*Документальная часть*/ (
+ aCURSESSION CHAR,
+ aININVOICE_DEFid CHAR,
+ ainstanceid char
+) as 
+ aSysLogID CHAR(38);
+ aaccess integer;
+ aSysInstID CHAR(38);
+ atmpID CHAR(38);
+ existsCnt integer;
+ aChildListid CHAR(38);
+  begin  
+ select  Instanceid into aSysInstID from instance where objtype='MTZSYSTEM';
+ select count(*) into existsCnt from the_session where the_sessionid=acursession and closed=0 ;
+if existsCnt=0 then
+    raise_application_error(-20000,'Сессия уже завершена.');
+    return;
+end if;
+ -- Delete body -- 
+select count(*) into existsCnt from ININVOICE_DEF where ININVOICE_DEFID=aININVOICE_DEFID;
+if existsCnt >0 then
+ --  verify access  --
+ select   SecurityStyleID into atmpID from ININVOICE_DEF where ININVOICE_DEFid=aININVOICE_DEFID;
+ CheckVerbRight (acursession=>acursession,aThe_Resource=>atmpID,averb=>'DELETEROW',aaccess=>aaccess ) ;
+ if aaccess=0 then 
+    CheckVerbRight (acursession=>acursession,aThe_Resource=>atmpID,averb=>'DELETEROW:ININVOICE_DEF',aaccess=>aaccess); 
+    if aaccess=0 then
+      raise_application_error(-20000,'Нет прав на удаление. Раздел=ININVOICE_DEF');
+      return;
+    end if;
+  end if;
+ --  verify lock  --
+ ININVOICE_DEF_ISLOCKED( acursession=>acursession,aROWID=>aININVOICE_DEFid,aIsLocked=>aaccess); 
+ if aaccess>2 
+  then
+    raise_application_error(-20000,'Строка заблокирована другим пользователем. Раздел=ININVOICE_DEF');
+    return;
+  end if;
+  --begin tran--  
+ -- erase child items --
+select  MTZ.newid() into aSysLogid from SYS.DUAL;
+ MTZSystem.SysLog_SAVE (aCURSESSION=>acursession ,aTheSession=>acursession, aInstanceID=>aSysInstID, aSysLogid=>aSysLogid, aLogStructID => 'ININVOICE_DEF',
+ aVERB=>'DELETEROW',  aThe_Resource=>aININVOICE_DEFid, aLogInstanceID=>aInstanceID);
+cursor chld_ININVOICE_DEF is select  instanceid ID from instance where OwnerPartName ='ININVOICE_DEF' and OwnerRowID=aININVOICE_DEFid;
+row_ININVOICE_DEF  chld_ININVOICE_DEF%ROWTYPE;
+begin
+--open chld_ININVOICE_DEF;
+for row_ININVOICE_DEF in chld_ININVOICE_DEF loop
+ Kernel.INSTANCE_OWNER (acursession,row_ININVOICE_DEF.id,null,null);
+ Kernel.INSTANCE_DELETE (acursession,row_ININVOICE_DEF.id);
+end loop;
+close chld_ININVOICE_DEF;
+end ;
+  delete from  ININVOICE_DEF 
+  where  ININVOICE_DEFID = aININVOICE_DEFID; 
+ end if;
+ -- close transaction --
+ <<del_error>>
+ existsCnt:=0;
+end;
+
+
+/*Документальная часть*/
+procedure ININVOICE_DEF_SAVE /*Документальная часть*/ (
+ aCURSESSION CHAR,
+ aININVOICE_DEFid CHAR,
+aInstanceID CHAR 
+,aORG CHAR/* Наша организация *//* Наша организация */
+,acode
+ VARCHAR2/* Наш № счета *//* Наш № счета */
+,aInDate
+ DATE/* Дата прихода *//* Дата прихода */
+,aSupplier CHAR/* Поставщик *//* Поставщик */
+,aInvoiceDate
+ DATE/* Дата выписки *//* Дата выписки */
+,aInvoiceNumber
+ VARCHAR2/* Номер счета поставщика *//* Номер счета поставщика */
+,aPaySumm
+ NUMBER/* Сумма платежа *//* Сумма платежа */
+,aPayCurrency CHAR/* Валюта платежа *//* Валюта платежа */
+,aTransport
+ NUMBER/* Транспортные расходы *//* Транспортные расходы */
+,aAdditionalOutcomes
+ NUMBER/* Прочие расходы *//* Прочие расходы */
+,aOutcomesComment VARCHAR2/* Расшифровка прочих расходов *//* Расшифровка прочих расходов */
+,aSkidkaSumm
+ NUMBER/* Сумма скидки *//* Сумма скидки */
+,aSkidkaPercent
+ NUMBER/* Процент скидки *//* Процент скидки */
+,aTotalWeight
+ NUMBER/* Общий вес *//* Общий вес */
+,aTotalVol
+ NUMBER/* Объем *//* Объем */
+) as 
+aSysLogid CHAR(38);
+ aUniqueRowCount integer;
+ atmpStr varchar2(255);
+ atmpID CHAR(38);
+ aaccess int;
+ aSysInstID CHAR(38);
+ existsCnt integer;
+ begin  
+ select Instanceid into aSysInstID from instance where objtype='MTZSYSTEM';
+ -- checking the_session  --
+ select count(*) into existsCnt from the_session where the_sessionid=acursession and closed=0 ;
+if existsCnt =0 
+  then
+    raise_application_error(-20000,'Сессия уже завершена.');
+    return;
+  end if;
+ -- Insert / Update body -- 
+select count(*) into existsCnt from ININVOICE_DEF where ININVOICE_DEFID=aININVOICE_DEFID;
+if existsCnt >0
+ then
+ --  UPDATE  --
+ --  verify access  --
+ select SecurityStyleID into atmpID from ININVOICE_DEF where ININVOICE_DEFid=aININVOICE_DEFID;
+ CheckVerbRight( acursession=>acursession,aThe_Resource=>atmpID,averb=>'EDITROW',aaccess=>aaccess); 
+ if aaccess=0 
+  then
+    CheckVerbRight (acursession=>acursession,aThe_Resource=>atmpID,averb=>'EDITROW:ININVOICE_DEF',aaccess=>aaccess ); 
+    if aaccess=0 
+    then
+      raise_application_error(-20000,'Нет прав на модификацию. Раздел=ININVOICE_DEF');
+      return;
+    end if;
+  end if;
+ --  verify lock  --
+ ININVOICE_DEF_ISLOCKED( acursession=>acursession,aROWID=>aININVOICE_DEFid,aIsLocked=>aaccess); 
+ if aaccess>2 
+  then
+    raise_application_error(-20000,'Строка заблокирована другим пльзователем. Раздел=ININVOICE_DEF');
+    return;
+  end if;
+ -- update row  --
+select mtz.newid() into asyslogid from sys.dual;
+ MTZSystem.SysLog_SAVE( aTheSession=>acursession,aCURSESSION=>acursession, aInstanceID=>asysinstid, aSysLogid=>aSysLogid, aLogStructID => 'ININVOICE_DEF',
+ aVERB=>'EDITROW',  aThe_Resource=>aININVOICE_DEFid,aLogInstanceID=>aInstanceID);
+ update  ININVOICE_DEF set ChangeStamp=sysdate
+,
+  ORG=aORG
+,
+  code=acode
+,
+  InDate=aInDate
+,
+  Supplier=aSupplier
+,
+  InvoiceDate=aInvoiceDate
+,
+  InvoiceNumber=aInvoiceNumber
+,
+  PaySumm=aPaySumm
+,
+  PayCurrency=aPayCurrency
+,
+  Transport=aTransport
+,
+  AdditionalOutcomes=aAdditionalOutcomes
+,
+  OutcomesComment=aOutcomesComment
+,
+  SkidkaSumm=aSkidkaSumm
+,
+  SkidkaPercent=aSkidkaPercent
+,
+  TotalWeight=aTotalWeight
+,
+  TotalVol=aTotalVol
+  where  ININVOICE_DEFID = aININVOICE_DEFID; 
+ -- checking unique constraints  --
+
+
+ else
+ --  INSERT  --
+ --  verify access  --
+ select  SecurityStyleID into atmpID from instance where instanceid=ainstanceid;
+ CheckVerbRight (acursession=>acursession,aThe_Resource=>atmpID,averb=>'CREATEROW',aaccess=>aaccess );
+ if aaccess=0 
+  then
+    CheckVerbRight (acursession=>acursession,aThe_Resource=>atmpID,averb=>'CREATEROW:ININVOICE_DEF',aaccess=>aaccess); 
+    if aaccess=0 
+    then
+      raise_application_error(-20000,'Нет прав на создание строк. Раздел=ININVOICE_DEF');
+      return;
+    end if;
+ end if;
+ MTZ.Kernel.instance_ISLOCKED( acursession=>acursession,aROWID=>aInstanceID,aIsLocked=>aaccess); 
+ if aaccess>2 
+  then
+    raise_application_error(-20000,'Строка заблокирована другим пльзователем. Раздел=ININVOICE_DEF');
+    return;
+  end if;
+select Count(*) into existsCnt from ININVOICE_DEF where 
+InstanceID=aInstanceID;
+if existsCnt >0 
+ then
+    raise_application_error(-20000,'Невозможно создать вторую строку в однострочной сессии. Раздел: <ININVOICE_DEF>');
+    return;
+ End if;
+select MTZ.newid() into aSysLogID from sys.dual;
+ MTZSystem.SysLog_SAVE( aTheSession=>acursession,aCURSESSION=>acursession, aInstanceID=>asysinstid, aSysLogid=>aSysLogid, aLogStructID => 'ININVOICE_DEF',
+ aVERB=>'CREATEROW',  aThe_Resource=>aININVOICE_DEFid,aLogInstanceID=>aInstanceID);
+ insert into   ININVOICE_DEF
+ (  ININVOICE_DEFID 
+,InstanceID
+,ORG
+
+,code
+
+,InDate
+
+,Supplier
+
+,InvoiceDate
+
+,InvoiceNumber
+
+,PaySumm
+
+,PayCurrency
+
+,Transport
+
+,AdditionalOutcomes
+
+,OutcomesComment
+
+,SkidkaSumm
+
+,SkidkaPercent
+
+,TotalWeight
+
+,TotalVol
+
+ ) values ( aININVOICE_DEFID 
+,aInstanceID
+,aORG
+
+,acode
+
+,aInDate
+
+,aSupplier
+
+,aInvoiceDate
+
+,aInvoiceNumber
+
+,aPaySumm
+
+,aPayCurrency
+
+,aTransport
+
+,aAdditionalOutcomes
+
+,aOutcomesComment
+
+,aSkidkaSumm
+
+,aSkidkaPercent
+
+,aTotalWeight
+
+,aTotalVol
+
+ ); 
+ ININVOICE_DEF_SINIT( aCURSESSION,aININVOICE_DEFid,atmpid);
+ -- checking unique constraints  --
+
+
+ end if;
+ -- close transaction --
+ end; 
+
+
+procedure ININVOICE_DEF_PARENT /*Документальная часть*/ (
+ aCURSESSION CHAR,
+ aRowID CHAR ,
+ aParentID out CHAR ,
+ aParentTable out varchar2
+) as 
+existsCnt integer;
+ begin  
+ -- checking the_session  --
+select count(*)into existsCnt from the_session where the_sessionid=acursession and closed=0 ;
+if existsCnt=0
+  then
+    raise_application_error(-20000,'Сессия уже завершена.');
+    return;
+  end if;
+  aParentTable := 'INSTANCE';
+  select  INSTANCEID into aParentID from ININVOICE_DEF where  ININVOICE_DEFid=aRowID;
+ end; 
+
+
+procedure ININVOICE_DEF_ISLOCKED /*Документальная часть*/ (
+ aCURSESSION CHAR,
+ aRowID CHAR ,
+ aIsLocked out integer
+) as 
+ aParentID CHAR(38);
+ aUserID CHAR(38);
+ aLockUserID CHAR(38);
+ aLockSessionID CHAR(38);
+ aParentTable varchar2(255); 
+ existsCnt integer; 
+  astr varchar2(4000);
+begin
+ aisLocked := 0;
+ -- checking the_session  --
+select count(*) into existsCnt from the_session where the_sessionid=acursession and closed=0;
+if existsCnt=0
+  then
+    raise_application_error(-20000,'Сессия уже завершена.');
+    return;
+  end if;
+ select usersid into auserID from the_session where the_sessionid=acursession;
+ select  LockUserID,LockSessionID into aLockUserID, aLockSessionID from ININVOICE_DEF where ININVOICE_DEFid=aRowID;
+ /* verify this row */
+ if not aLockUserID is null  
+ then   
+   if  aLockUserID <> auserID  
+   then   
+     aisLocked := 4; /* CheckOut by another user */
+     return;
+   else 
+     aisLocked := 2; /* CheckOut by caller */
+     return;
+   end  if; 
+ end if;  
+ if not aLockSessionID is null  
+ then   
+   if  aLockSessionID <> aCURSESSION  
+   then   
+     aisLocked := 3; /* Lockes by another user */
+     return;
+   else 
+     aisLocked := 1; /* Locked by caller */
+     return;
+   end if;  
+ end if;  
+ aisLocked := 0; 
+  ININVOICE_DEF_parent (aCURSESSION,aROWID,aParentID,aParentTable);
+  if aparenttable='INSTANCE' then
+      astr := 'begin Kernel.' || aPARENTTABLE || '_islocked (:1,:2,:3); end;';
+    Else
+      astr := 'begin ' || aPARENTTABLE || '_islocked (:1,:2,:3); end;';
+    end if;
+  execute immediate  astr using aCURSESSION,aParentID ,out aISLocked;
+ end; 
+
+
+procedure ININVOICE_DEF_LOCK /*Документальная часть*/ (
+ aCURSESSION CHAR,
+ aRowID CHAR ,
+ aLockMode integer 
+) as 
+ aParentID CHAR(38);
+ aUserID CHAR(38);
+ atmpID CHAR(38);
+ aaccess integer;
+ aIsLocked integer;
+ aParentTable varchar2(255); 
+ existsCnt integer; 
+ begin  
+ select count(*) into existsCnt from the_session where the_sessionid=acursession and closed=0;
+ -- checking the_session  --
+if existsCnt=0
+  then
+    raise_application_error(-20000,'Сессия уже завершена.');
+    return;
+  end if;
+ select usersid into auserid from  the_session where the_sessionid=acursession;
+ ININVOICE_DEF_ISLOCKED (aCURSESSION,aROWID,aISLocked );
+ if aIsLocked >=3  
+  then
+    raise_application_error(-20000,'Строка заблокирована другим пользователем');
+    return;
+  end if;
+ if aIsLocked =0  
+ then
+  ININVOICE_DEF_HCL (acursession,aRowID,aisLocked);
+  if aIsLocked >=3  
+  then
+     raise_application_error(-20000,'У данной строки имеются дочерние строки, которые заблокированы другим пользователем');
+     return;
+   end if;
+ end if;
+ select  SecurityStyleID into atmpID from ININVOICE_DEF where ININVOICE_DEFid=aROWID;
+ CheckVerbRight (acursession=>acursession,aThe_Resource=>atmpID,averb=>'LOCKROW',aaccess=>aaccess); 
+ if aaccess=0 
+ then
+    raise_application_error(-20000,'Нет прав на блокировку строк. Раздел=ININVOICE_DEF');
+    return;
+  end if;
+   if  aLockMode =2  
+   then   
+    update ININVOICE_DEF set LockUserID =auserID ,LockSessionID =null where ININVOICE_DEFid=aRowID;
+     return;
+   end if;
+   if  aLockMode =1  
+   then   
+    update ININVOICE_DEF set LockUserID =null,LockSessionID =aCURSESSION  where ININVOICE_DEFid=aRowID;
+     return;
+   end if;
+ end ;
+
+
+procedure ININVOICE_DEF_HCL /*Документальная часть*/ (
+ aCURSESSION CHAR,
+ aRowID CHAR ,
+ aIsLocked out integer
+) as 
+achildlistid CHAR(38);
+ aUserID CHAR(38);
+ aLockUserID CHAR(38);
+ aLockSessionID CHAR(38);
+ begin  
+ select usersid into auserID from the_session where the_sessionid=acursession;
+aIsLocked :=0;
+end;
+
+
+procedure ININVOICE_DEF_UNLOCK /*Документальная часть*/ (
+ aCURSESSION CHAR,
+ aRowID CHAR 
+) as 
+ aParentID CHAR(38);
+ aUserID CHAR(38);
+ aIsLocked integer;
+ aParentTable varchar2(255); 
+ existsCnt integer;
+ begin  
+ -- checking the_session  --
+select count(*) into existsCnt from the_session where the_sessionid=acursession and closed=0 ;
+if  existsCnt=0
+  then
+    raise_application_error(-20000,'Сессия уже завершена.');
+    return;
+  end if;
+ select usersid into auserID from the_session where the_sessionid=acursession;
+ ININVOICE_DEF_ISLOCKED( aCURSESSION,aROWID,aISLocked);
+ if aIsLocked >=3  
+  then
+    raise_application_error(-20000,'Строка заблоирована другим пользователем');
+    return;
+  end if;
+   if  aIsLocked =2  
+   then   
+    update ININVOICE_DEF set LockUserID =null  where ININVOICE_DEFid=aRowID;
+     return;
+   end if;
+   if  aIsLocked =1  
+   then   
+    update ININVOICE_DEF set LockSessionID =null  where ININVOICE_DEFid=aRowID;
+     return;
+   end if;
+ end; 
+
+
+procedure ININVOICE_DEF_SINIT /*Документальная часть*/ (
+ aCURSESSION CHAR,
+ aRowID CHAR ,
+ aSecurityStyleID CHAR
+) as 
+ aParentID CHAR(38);
+ aParentTable varchar2(255); 
+ aStr varchar2(4000);
+ aStyleID CHAR(38);
+ atmpID CHAR(38);
+ aaccess integer; 
+begin
+ select  SecurityStyleID into atmpID from ININVOICE_DEF where ININVOICE_DEFid=aROWID;
+  CheckVerbRight (acursession=>acursession,aThe_Resource=>atmpID,averb=>'SECURE',aaccess=>aaccess); 
+ if aaccess=0 
+  then
+    raise_application_error(-20000,'Нет прав на управление защитой. Раздел =ININVOICE_DEF');
+    return;
+  end if;
+if aSecurityStyleID is null then
+ ININVOICE_DEF_parent( aCURSESSION,aROWID,aParentID ,aParentTable);
+  astr:= 'select SecurityStyleID  from ' || aParentTable || ' where ' ||aParentTable || 'id=:1' ;
+  execute immediate astr into aStyleID using aParentid;
+ update ININVOICE_DEF set securitystyleid =aStyleID where ININVOICE_DEFid = aRowID;
+else 
+ update ININVOICE_DEF set securitystyleid =aSecurityStyleID where ININVOICE_DEFid = aRowID;
+end if; 
+end ; 
+
+
+procedure ININVOICE_DEF_propagate /*Документальная часть*/ (
+ aCURSESSION CHAR,
+ aRowID CHAR
+) as 
+achildlistid CHAR(38);
+aSSID CHAR(38);
+begin
+select securityStyleid into aSSID from ININVOICE_DEF where ININVOICE_DEFid=aRowid;
+end;
+
+
+
+procedure ININVOICE_LINE_BRIEF  (
+ aCURSESSION CHAR,
+ aININVOICE_LINEid CHAR,
+ aBRIEF out varchar2
+) as 
+ aaccess integer;
+ atmpStr varchar2(255);
+ atmpID CHAR(38);
+ existsCnt integer;
+begin
+ -- checking the_session  --
+ select count(*) into existsCnt from the_session where the_sessionid=acursession and closed=0 ;
+if existsCnt=0
+  then
+    raise_application_error(-20000,'Сессия уже завершена.');
+    return;
+  end if;
+if aININVOICE_LINEid is null then aBRIEF:=''; return; end if;
+ -- Brief body -- 
+select count(*)into existsCnt from ININVOICE_LINE where ININVOICE_LINEID=aININVOICE_LINEID;
+if existsCnt >0
+ then
+ --  verify access  --
+ select  SecurityStyleID into atmpid from ININVOICE_LINE where ININVOICE_LINEid=aININVOICE_LINEID;
+ CheckVerbRight (acursession=>acursession,aThe_Resource=>atmpID,averb=>'BRIEF',aaccess=>aaccess); 
+ if aaccess=0 
+  then
+    raise_application_error(-20000,'No access for BRIEF Structure=ININVOICE_LINE');
+    return;
+  end if;
+  aBRIEF:=func.ININVOICE_LINE_BRIEF_F(aININVOICE_LINEid);
+else
+  aBRIEF:= 'неверный идентификатор';
+end if;
+ aBRIEF:=substr(aBRIEF,1,255);
+end; 
+
+
+procedure ININVOICE_LINE_DELETE /*Товарная часть*/ (
+ aCURSESSION CHAR,
+ aININVOICE_LINEid CHAR,
+ ainstanceid char
+) as 
+ aSysLogID CHAR(38);
+ aaccess integer;
+ aSysInstID CHAR(38);
+ atmpID CHAR(38);
+ existsCnt integer;
+ aChildListid CHAR(38);
+  begin  
+ select  Instanceid into aSysInstID from instance where objtype='MTZSYSTEM';
+ select count(*) into existsCnt from the_session where the_sessionid=acursession and closed=0 ;
+if existsCnt=0 then
+    raise_application_error(-20000,'Сессия уже завершена.');
+    return;
+end if;
+ -- Delete body -- 
+select count(*) into existsCnt from ININVOICE_LINE where ININVOICE_LINEID=aININVOICE_LINEID;
+if existsCnt >0 then
+ --  verify access  --
+ select   SecurityStyleID into atmpID from ININVOICE_LINE where ININVOICE_LINEid=aININVOICE_LINEID;
+ CheckVerbRight (acursession=>acursession,aThe_Resource=>atmpID,averb=>'DELETEROW',aaccess=>aaccess ) ;
+ if aaccess=0 then 
+    CheckVerbRight (acursession=>acursession,aThe_Resource=>atmpID,averb=>'DELETEROW:ININVOICE_LINE',aaccess=>aaccess); 
+    if aaccess=0 then
+      raise_application_error(-20000,'Нет прав на удаление. Раздел=ININVOICE_LINE');
+      return;
+    end if;
+  end if;
+ --  verify lock  --
+ ININVOICE_LINE_ISLOCKED( acursession=>acursession,aROWID=>aININVOICE_LINEid,aIsLocked=>aaccess); 
+ if aaccess>2 
+  then
+    raise_application_error(-20000,'Строка заблокирована другим пользователем. Раздел=ININVOICE_LINE');
+    return;
+  end if;
+  --begin tran--  
+ -- erase child items --
+select  MTZ.newid() into aSysLogid from SYS.DUAL;
+ MTZSystem.SysLog_SAVE (aCURSESSION=>acursession ,aTheSession=>acursession, aInstanceID=>aSysInstID, aSysLogid=>aSysLogid, aLogStructID => 'ININVOICE_LINE',
+ aVERB=>'DELETEROW',  aThe_Resource=>aININVOICE_LINEid, aLogInstanceID=>aInstanceID);
+cursor chld_ININVOICE_LINE is select  instanceid ID from instance where OwnerPartName ='ININVOICE_LINE' and OwnerRowID=aININVOICE_LINEid;
+row_ININVOICE_LINE  chld_ININVOICE_LINE%ROWTYPE;
+begin
+--open chld_ININVOICE_LINE;
+for row_ININVOICE_LINE in chld_ININVOICE_LINE loop
+ Kernel.INSTANCE_OWNER (acursession,row_ININVOICE_LINE.id,null,null);
+ Kernel.INSTANCE_DELETE (acursession,row_ININVOICE_LINE.id);
+end loop;
+close chld_ININVOICE_LINE;
+end ;
+  delete from  ININVOICE_LINE 
+  where  ININVOICE_LINEID = aININVOICE_LINEID; 
+ end if;
+ -- close transaction --
+ <<del_error>>
+ existsCnt:=0;
+end;
+
+
+/*Товарная часть*/
+procedure ININVOICE_LINE_SAVE /*Товарная часть*/ (
+ aCURSESSION CHAR,
+ aININVOICE_LINEid CHAR,
+aInstanceID CHAR 
+,asequence
+ NUMBER/* № п/п *//* № п/п */
+,aSupplierID
+ VARCHAR2/* Идентификатор у поставщика *//* Идентификатор у поставщика */
+,aSupplierCode
+ VARCHAR2/* Код у поставщика *//* Код у поставщика */
+,aSupplierDef
+ VARCHAR2/* Название материала *//* Название материала */
+,aMaterial CHAR/* Сырье *//* Сырье */
+,aPackageQuantity
+ NUMBER/* Количество упаковок *//* Количество упаковок */
+,aPackage CHAR/* Тип упаковки *//* Тип упаковки */
+,aEDIZM CHAR/* Единица измерения *//* Единица измерения */
+,aTotalQuatity
+ NUMBER/* Общее количество *//* Общее количество */
+,aSumm
+ NUMBER/* Сумма *//* Сумма */
+,aNDS
+ NUMBER/* НДС *//* НДС */
+,aNSP
+ NUMBER/* Налог с продаж *//* Налог с продаж */
+,aItemPrice
+ NUMBER/* Цена за единицу *//* Цена за единицу */
+,aBaseQuantity
+ NUMBER/* Количество единиц изм. в единице товара *//* Количество единиц изм. в единице товара */
+) as 
+aSysLogid CHAR(38);
+ aUniqueRowCount integer;
+ atmpStr varchar2(255);
+ atmpID CHAR(38);
+ aaccess int;
+ aSysInstID CHAR(38);
+ existsCnt integer;
+ begin  
+ select Instanceid into aSysInstID from instance where objtype='MTZSYSTEM';
+ -- checking the_session  --
+ select count(*) into existsCnt from the_session where the_sessionid=acursession and closed=0 ;
+if existsCnt =0 
+  then
+    raise_application_error(-20000,'Сессия уже завершена.');
+    return;
+  end if;
+ -- Insert / Update body -- 
+select count(*) into existsCnt from ININVOICE_LINE where ININVOICE_LINEID=aININVOICE_LINEID;
+if existsCnt >0
+ then
+ --  UPDATE  --
+ --  verify access  --
+ select SecurityStyleID into atmpID from ININVOICE_LINE where ININVOICE_LINEid=aININVOICE_LINEID;
+ CheckVerbRight( acursession=>acursession,aThe_Resource=>atmpID,averb=>'EDITROW',aaccess=>aaccess); 
+ if aaccess=0 
+  then
+    CheckVerbRight (acursession=>acursession,aThe_Resource=>atmpID,averb=>'EDITROW:ININVOICE_LINE',aaccess=>aaccess ); 
+    if aaccess=0 
+    then
+      raise_application_error(-20000,'Нет прав на модификацию. Раздел=ININVOICE_LINE');
+      return;
+    end if;
+  end if;
+ --  verify lock  --
+ ININVOICE_LINE_ISLOCKED( acursession=>acursession,aROWID=>aININVOICE_LINEid,aIsLocked=>aaccess); 
+ if aaccess>2 
+  then
+    raise_application_error(-20000,'Строка заблокирована другим пльзователем. Раздел=ININVOICE_LINE');
+    return;
+  end if;
+ -- update row  --
+select mtz.newid() into asyslogid from sys.dual;
+ MTZSystem.SysLog_SAVE( aTheSession=>acursession,aCURSESSION=>acursession, aInstanceID=>asysinstid, aSysLogid=>aSysLogid, aLogStructID => 'ININVOICE_LINE',
+ aVERB=>'EDITROW',  aThe_Resource=>aININVOICE_LINEid,aLogInstanceID=>aInstanceID);
+ update  ININVOICE_LINE set ChangeStamp=sysdate
+,
+  sequence=asequence
+,
+  SupplierID=aSupplierID
+,
+  SupplierCode=aSupplierCode
+,
+  SupplierDef=aSupplierDef
+,
+  Material=aMaterial
+,
+  PackageQuantity=aPackageQuantity
+,
+  Package=aPackage
+,
+  EDIZM=aEDIZM
+,
+  TotalQuatity=aTotalQuatity
+,
+  Summ=aSumm
+,
+  NDS=aNDS
+,
+  NSP=aNSP
+,
+  ItemPrice=aItemPrice
+,
+  BaseQuantity=aBaseQuantity
+  where  ININVOICE_LINEID = aININVOICE_LINEID; 
+ -- checking unique constraints  --
+
+
+ else
+ --  INSERT  --
+ --  verify access  --
+ select  SecurityStyleID into atmpID from instance where instanceid=ainstanceid;
+ CheckVerbRight (acursession=>acursession,aThe_Resource=>atmpID,averb=>'CREATEROW',aaccess=>aaccess );
+ if aaccess=0 
+  then
+    CheckVerbRight (acursession=>acursession,aThe_Resource=>atmpID,averb=>'CREATEROW:ININVOICE_LINE',aaccess=>aaccess); 
+    if aaccess=0 
+    then
+      raise_application_error(-20000,'Нет прав на создание строк. Раздел=ININVOICE_LINE');
+      return;
+    end if;
+ end if;
+ MTZ.Kernel.instance_ISLOCKED( acursession=>acursession,aROWID=>aInstanceID,aIsLocked=>aaccess); 
+ if aaccess>2 
+  then
+    raise_application_error(-20000,'Строка заблокирована другим пльзователем. Раздел=ININVOICE_LINE');
+    return;
+  end if;
+select MTZ.newid() into aSysLogID from sys.dual;
+ MTZSystem.SysLog_SAVE( aTheSession=>acursession,aCURSESSION=>acursession, aInstanceID=>asysinstid, aSysLogid=>aSysLogid, aLogStructID => 'ININVOICE_LINE',
+ aVERB=>'CREATEROW',  aThe_Resource=>aININVOICE_LINEid,aLogInstanceID=>aInstanceID);
+ insert into   ININVOICE_LINE
+ (  ININVOICE_LINEID 
+,InstanceID
+,sequence
+
+,SupplierID
+
+,SupplierCode
+
+,SupplierDef
+
+,Material
+
+,PackageQuantity
+
+,Package
+
+,EDIZM
+
+,TotalQuatity
+
+,Summ
+
+,NDS
+
+,NSP
+
+,ItemPrice
+
+,BaseQuantity
+
+ ) values ( aININVOICE_LINEID 
+,aInstanceID
+,asequence
+
+,aSupplierID
+
+,aSupplierCode
+
+,aSupplierDef
+
+,aMaterial
+
+,aPackageQuantity
+
+,aPackage
+
+,aEDIZM
+
+,aTotalQuatity
+
+,aSumm
+
+,aNDS
+
+,aNSP
+
+,aItemPrice
+
+,aBaseQuantity
+
+ ); 
+ ININVOICE_LINE_SINIT( aCURSESSION,aININVOICE_LINEid,atmpid);
+ -- checking unique constraints  --
+
+
+ end if;
+ -- close transaction --
+ end; 
+
+
+procedure ININVOICE_LINE_PARENT /*Товарная часть*/ (
+ aCURSESSION CHAR,
+ aRowID CHAR ,
+ aParentID out CHAR ,
+ aParentTable out varchar2
+) as 
+existsCnt integer;
+ begin  
+ -- checking the_session  --
+select count(*)into existsCnt from the_session where the_sessionid=acursession and closed=0 ;
+if existsCnt=0
+  then
+    raise_application_error(-20000,'Сессия уже завершена.');
+    return;
+  end if;
+  aParentTable := 'INSTANCE';
+  select  INSTANCEID into aParentID from ININVOICE_LINE where  ININVOICE_LINEid=aRowID;
+ end; 
+
+
+procedure ININVOICE_LINE_ISLOCKED /*Товарная часть*/ (
+ aCURSESSION CHAR,
+ aRowID CHAR ,
+ aIsLocked out integer
+) as 
+ aParentID CHAR(38);
+ aUserID CHAR(38);
+ aLockUserID CHAR(38);
+ aLockSessionID CHAR(38);
+ aParentTable varchar2(255); 
+ existsCnt integer; 
+  astr varchar2(4000);
+begin
+ aisLocked := 0;
+ -- checking the_session  --
+select count(*) into existsCnt from the_session where the_sessionid=acursession and closed=0;
+if existsCnt=0
+  then
+    raise_application_error(-20000,'Сессия уже завершена.');
+    return;
+  end if;
+ select usersid into auserID from the_session where the_sessionid=acursession;
+ select  LockUserID,LockSessionID into aLockUserID, aLockSessionID from ININVOICE_LINE where ININVOICE_LINEid=aRowID;
+ /* verify this row */
+ if not aLockUserID is null  
+ then   
+   if  aLockUserID <> auserID  
+   then   
+     aisLocked := 4; /* CheckOut by another user */
+     return;
+   else 
+     aisLocked := 2; /* CheckOut by caller */
+     return;
+   end  if; 
+ end if;  
+ if not aLockSessionID is null  
+ then   
+   if  aLockSessionID <> aCURSESSION  
+   then   
+     aisLocked := 3; /* Lockes by another user */
+     return;
+   else 
+     aisLocked := 1; /* Locked by caller */
+     return;
+   end if;  
+ end if;  
+ aisLocked := 0; 
+  ININVOICE_LINE_parent (aCURSESSION,aROWID,aParentID,aParentTable);
+  if aparenttable='INSTANCE' then
+      astr := 'begin Kernel.' || aPARENTTABLE || '_islocked (:1,:2,:3); end;';
+    Else
+      astr := 'begin ' || aPARENTTABLE || '_islocked (:1,:2,:3); end;';
+    end if;
+  execute immediate  astr using aCURSESSION,aParentID ,out aISLocked;
+ end; 
+
+
+procedure ININVOICE_LINE_LOCK /*Товарная часть*/ (
+ aCURSESSION CHAR,
+ aRowID CHAR ,
+ aLockMode integer 
+) as 
+ aParentID CHAR(38);
+ aUserID CHAR(38);
+ atmpID CHAR(38);
+ aaccess integer;
+ aIsLocked integer;
+ aParentTable varchar2(255); 
+ existsCnt integer; 
+ begin  
+ select count(*) into existsCnt from the_session where the_sessionid=acursession and closed=0;
+ -- checking the_session  --
+if existsCnt=0
+  then
+    raise_application_error(-20000,'Сессия уже завершена.');
+    return;
+  end if;
+ select usersid into auserid from  the_session where the_sessionid=acursession;
+ ININVOICE_LINE_ISLOCKED (aCURSESSION,aROWID,aISLocked );
+ if aIsLocked >=3  
+  then
+    raise_application_error(-20000,'Строка заблокирована другим пользователем');
+    return;
+  end if;
+ if aIsLocked =0  
+ then
+  ININVOICE_LINE_HCL (acursession,aRowID,aisLocked);
+  if aIsLocked >=3  
+  then
+     raise_application_error(-20000,'У данной строки имеются дочерние строки, которые заблокированы другим пользователем');
+     return;
+   end if;
+ end if;
+ select  SecurityStyleID into atmpID from ININVOICE_LINE where ININVOICE_LINEid=aROWID;
+ CheckVerbRight (acursession=>acursession,aThe_Resource=>atmpID,averb=>'LOCKROW',aaccess=>aaccess); 
+ if aaccess=0 
+ then
+    raise_application_error(-20000,'Нет прав на блокировку строк. Раздел=ININVOICE_LINE');
+    return;
+  end if;
+   if  aLockMode =2  
+   then   
+    update ININVOICE_LINE set LockUserID =auserID ,LockSessionID =null where ININVOICE_LINEid=aRowID;
+     return;
+   end if;
+   if  aLockMode =1  
+   then   
+    update ININVOICE_LINE set LockUserID =null,LockSessionID =aCURSESSION  where ININVOICE_LINEid=aRowID;
+     return;
+   end if;
+ end ;
+
+
+procedure ININVOICE_LINE_HCL /*Товарная часть*/ (
+ aCURSESSION CHAR,
+ aRowID CHAR ,
+ aIsLocked out integer
+) as 
+achildlistid CHAR(38);
+ aUserID CHAR(38);
+ aLockUserID CHAR(38);
+ aLockSessionID CHAR(38);
+ begin  
+ select usersid into auserID from the_session where the_sessionid=acursession;
+aIsLocked :=0;
+end;
+
+
+procedure ININVOICE_LINE_UNLOCK /*Товарная часть*/ (
+ aCURSESSION CHAR,
+ aRowID CHAR 
+) as 
+ aParentID CHAR(38);
+ aUserID CHAR(38);
+ aIsLocked integer;
+ aParentTable varchar2(255); 
+ existsCnt integer;
+ begin  
+ -- checking the_session  --
+select count(*) into existsCnt from the_session where the_sessionid=acursession and closed=0 ;
+if  existsCnt=0
+  then
+    raise_application_error(-20000,'Сессия уже завершена.');
+    return;
+  end if;
+ select usersid into auserID from the_session where the_sessionid=acursession;
+ ININVOICE_LINE_ISLOCKED( aCURSESSION,aROWID,aISLocked);
+ if aIsLocked >=3  
+  then
+    raise_application_error(-20000,'Строка заблоирована другим пользователем');
+    return;
+  end if;
+   if  aIsLocked =2  
+   then   
+    update ININVOICE_LINE set LockUserID =null  where ININVOICE_LINEid=aRowID;
+     return;
+   end if;
+   if  aIsLocked =1  
+   then   
+    update ININVOICE_LINE set LockSessionID =null  where ININVOICE_LINEid=aRowID;
+     return;
+   end if;
+ end; 
+
+
+procedure ININVOICE_LINE_SINIT /*Товарная часть*/ (
+ aCURSESSION CHAR,
+ aRowID CHAR ,
+ aSecurityStyleID CHAR
+) as 
+ aParentID CHAR(38);
+ aParentTable varchar2(255); 
+ aStr varchar2(4000);
+ aStyleID CHAR(38);
+ atmpID CHAR(38);
+ aaccess integer; 
+begin
+ select  SecurityStyleID into atmpID from ININVOICE_LINE where ININVOICE_LINEid=aROWID;
+  CheckVerbRight (acursession=>acursession,aThe_Resource=>atmpID,averb=>'SECURE',aaccess=>aaccess); 
+ if aaccess=0 
+  then
+    raise_application_error(-20000,'Нет прав на управление защитой. Раздел =ININVOICE_LINE');
+    return;
+  end if;
+if aSecurityStyleID is null then
+ ININVOICE_LINE_parent( aCURSESSION,aROWID,aParentID ,aParentTable);
+  astr:= 'select SecurityStyleID  from ' || aParentTable || ' where ' ||aParentTable || 'id=:1' ;
+  execute immediate astr into aStyleID using aParentid;
+ update ININVOICE_LINE set securitystyleid =aStyleID where ININVOICE_LINEid = aRowID;
+else 
+ update ININVOICE_LINE set securitystyleid =aSecurityStyleID where ININVOICE_LINEid = aRowID;
+end if; 
+end ; 
+
+
+procedure ININVOICE_LINE_propagate /*Товарная часть*/ (
+ aCURSESSION CHAR,
+ aRowID CHAR
+) as 
+achildlistid CHAR(38);
+aSSID CHAR(38);
+begin
+select securityStyleid into aSSID from ININVOICE_LINE where ININVOICE_LINEid=aRowid;
+end;
+
+
+end ININV;
+

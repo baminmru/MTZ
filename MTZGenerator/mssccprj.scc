@@ -1,0 +1,13 @@
+SCC = This is a Source Code Control file
+
+[MTZGenerator.vbp]
+SCC_Aux_Path = "\\Pavel\VSS2\"
+SCC_Project_Name = "$/MTZ/MTZGenerator", IDXAAAAA
+
+[MTZSystemGUI.vbp]
+SCC_Aux_Path = "\\Pavel\VSS2\"
+SCC_Project_Name = "$/MTZ/MTZGenerator", IDXAAAAA
+
+[test.vbp]
+SCC_Aux_Path = "\\Pavel\VSS2\"
+SCC_Project_Name = "$/MTZ/MTZGenerator", IDXAAAAA

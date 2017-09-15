@@ -1,0 +1,291 @@
+<?xml version="1.0"?>
+<root><ModuleHolder ModuleName="--Update 13.12.2006" File=""><BlockHolder BlockName="-- Update Script" BlockCode="/*Пользователи*/
+if exists (select * from sysobjects where id = object_id(N'Users_SAVE') and OBJECTPROPERTY(id, N'IsProcedure') = 1)
+drop procedure Users_SAVE
+GO
+create proc Users_SAVE /*Пользователи*/ (
+ @CURSESSION uniqueidentifier,
+@InstanceID uniqueidentifier =null,
+ @Usersid uniqueidentifier
+,@Family
+ VARCHAR (255) = null /* Фамилия *//* Фамилия */
+,@Name
+ VARCHAR (64) = null /* Имя *//* Имя */
+,@SurName
+ VARCHAR (255) = null /* Отчество *//* Отчество */
+,@Login
+ VARCHAR (64)/* Имя для входа *//* Имя для входа */
+,@Password varchar(80) = null /* Пароль *//* Пароль */
+,@DomaiName
+ VARCHAR (255) = null /* Доменное имя *//* Доменное имя */
+,@EMail varchar(255) = null /* e-mail *//* e-mail */
+,@Phone
+ VARCHAR (20) = null /* Телефон *//* Телефон */
+,@LocalPhone
+ VARCHAR (20) = null /* Местный телефон *//* Местный телефон */
+,@MobilePhone
+ VARCHAR (20) = null /* Мобильный телефон *//* Мобильный телефон */
+,@Photo
+ IMAGE = null /* Фото *//* Фото */
+,@BirthDay
+ DATETIME = null /* Дата рождения *//* Дата рождения */
+,@Activity
+ UNIQUEIDENTIFIER = null /* Журнал активности *//* Журнал активности */
+,@CertificateID
+ VARCHAR (255) = null /* CertificateID *//* CertificateID */
+,@CertData
+ TEXT = null /* CertData *//* CertData */
+,@ClientDef
+ UNIQUEIDENTIFIER = null /* Ассоциация с клиентом *//* Ассоциация с клиентом */
+,@PersonaData
+ UNIQUEIDENTIFIER = null /* PersonaData *//* PersonaData */
+) as  begin  
+set nocount on
+DECLARE @SysLogid uniqueidentifier
+ declare @UniqueRowCount integer
+ declare @tmpStr varchar(255)
+ declare @tmpID uniqueidentifier
+ declare @access int
+ declare @SysInstID uniqueidentifier
+ declare @SessUserID uniqueidentifier
+ declare @SessUserLogin varchar(40)
+ select @SessUserID=UsersID from the_session where the_sessionid=@cursession
+ select @SessUserLogin =login from users where usersid=@SessUserID
+ select @SysInstID =Instanceid from instance where objtype='MTZSYSTEM'
+ -- checking session  --
+if not exists( select 1 from the_session where the_sessionid=@cursession and closed=0 )
+  begin
+    raiserror('Сессия уже завершена.',16,1)
+    if @@trancount&gt;0 rollback tran
+    return
+  end
+ -- Insert / Update body -- 
+if exists(select 1 from Users where UsersID=@UsersID)
+ begin
+ --  UPDATE  --
+ --  verify access  --
+ select  @tmpID =SecurityStyleID from Users where Usersid=@UsersID
+ exec CheckVerbRight @cursession=@cursession,@Resource=@tmpID,@verb='EDITROW',@access=@access out 
+ if @access=0 
+  begin
+    exec CheckVerbRight @cursession=@cursession,@Resource=@tmpID,@verb='EDITROW:Users',@access=@access out 
+    if @access=0 
+    begin
+      raiserror('Нет прав на модификацию. Раздел=Users',16,1)
+      if @@trancount&gt;0 rollback tran
+      return
+    end
+  end
+ --  verify lock  --
+ exec Users_ISLOCKED @cursession=@cursession,@ROWID=@Usersid,@IsLocked=@access out 
+ if @access&gt;2 
+  begin
+    raiserror('Строка заблокирована другим пльзователем. Раздел=Users',16,1)
+    if @@trancount&gt;0 rollback tran
+    return
+  end
+ begin tran  
+ -- update row  --
+set @SysLogid=newid()
+EXEC SysLog_SAVE @TheSession=@cursession,@CURSESSION=@cursession, @InstanceID=@sysinstid, @SysLogid=@SysLogid, @LogStructID = 'Users',
+ @VERB='EDITROW',  @the_Resource=@Usersid, @LogInstanceID=@instanceID
+ update  Users set ChangeStamp=GetDate()
+,
+  Family=@Family
+,
+  Name=@Name
+,
+  SurName=@SurName
+,
+  Login=@Login
+,
+  Password=@Password
+,
+  DomaiName=@DomaiName
+,
+  EMail=@EMail
+,
+  Phone=@Phone
+,
+  LocalPhone=@LocalPhone
+,
+  MobilePhone=@MobilePhone
+,
+  Photo=@Photo
+,
+  BirthDay=@BirthDay
+,
+  Activity=@Activity
+,
+  CertificateID=@CertificateID
+,
+  CertData=@CertData
+,
+  ClientDef=@ClientDef
+,
+  PersonaData=@PersonaData
+  where  UsersID = @UsersID 
+ -- checking unique constraints  --
+If @SessUserLogin&lt;&gt;'replicator' 
+begin
+ select @UniqueRowCount=Count(*) from Users where InstanceID=@InstanceID 
+ and Login=@Login
+if @UniqueRowCount&gt;=2
+begin
+ raiserror('Имя для входа должно быть уникальным Раздел=Пользователи',16,1)
+ if @@trancount&gt;0 rollback tran
+ return
+end
+select @UniqueRowCount=Count(*) from Users where 1=1  
+ and SurName=@SurName
+ and Family=@Family
+ and Name=@Name
+if @UniqueRowCount&gt;=2
+begin
+ raiserror('ФИО пользователя должно быть уникальным Раздел=Пользователи',16,1)
+ if @@trancount&gt;0 rollback tran
+ return
+end
+end
+
+  end
+ else
+ --  INSERT  --
+  begin
+ --  verify access  --
+ select @tmpid = SecurityStyleID from instance where instanceid=@instanceid
+ exec CheckVerbRight @cursession=@cursession,@Resource=@tmpID,@verb='CREATEROW',@access=@access out
+ if @access=0 
+  begin
+    exec CheckVerbRight @cursession=@cursession,@Resource=@tmpID,@verb='CREATEROW:Users',@access=@access out 
+    if @access=0 
+    begin
+      raiserror('Нет прав на создание строк. Раздел=Users',16,1)
+      if @@trancount&gt;0 rollback tran
+      return
+    end
+ end
+ exec instance_ISLOCKED @cursession=@cursession,@ROWID=@InstanceID,@IsLocked=@access out 
+ if @access&gt;2 
+  begin
+    raiserror('Строка заблокирована другим пльзователем. Раздел=Users',16,1)
+    if @@trancount&gt;0 rollback tran
+    return
+  end
+ begin tran  
+set @SysLogid=newid()
+EXEC SysLog_SAVE @TheSession=@cursession,@CURSESSION=@cursession, @InstanceID=@sysinstid, @SysLogid=@SysLogid, @LogStructID = 'Users',
+ @VERB='CREATEROW',  @the_Resource=@Usersid, @LogInstanceID=@instanceID
+ insert into   Users
+ (  UsersID 
+,InstanceID
+,Family
+
+,Name
+
+,SurName
+
+,Login
+
+,Password
+
+,DomaiName
+
+,EMail
+
+,Phone
+
+,LocalPhone
+
+,MobilePhone
+
+,Photo
+
+,BirthDay
+
+,Activity
+
+,CertificateID
+
+,CertData
+
+,ClientDef
+
+,PersonaData
+
+ ) values ( @UsersID 
+,@InstanceID
+,@Family
+
+,@Name
+
+,@SurName
+
+,@Login
+
+,@Password
+
+,@DomaiName
+
+,@EMail
+
+,@Phone
+
+,@LocalPhone
+
+,@MobilePhone
+
+,@Photo
+
+,@BirthDay
+
+,@Activity
+
+,@CertificateID
+
+,@CertData
+
+,@ClientDef
+
+,@PersonaData
+
+ ) 
+ exec Users_SINIT @CURSESSION,@Usersid,@tmpid
+ -- checking unique constraints  --
+If @SessUserLogin&lt;&gt;'replicator' 
+begin
+ select @UniqueRowCount=Count(*) from Users where InstanceID=@InstanceID 
+ and Login=@Login
+if @UniqueRowCount&gt;=2
+begin
+ raiserror('Имя для входа должно быть уникальным Раздел=Пользователи',16,1)
+ if @@trancount&gt;0 rollback tran
+ return
+end
+select @UniqueRowCount=Count(*) from Users where 1=1  
+ and SurName=@SurName
+ and Family=@Family
+ and Name=@Name
+if @UniqueRowCount&gt;=2
+begin
+ raiserror('ФИО пользователя должно быть уникальным Раздел=Пользователи',16,1)
+ if @@trancount&gt;0 rollback tran
+ return
+end
+end
+
+ end
+ -- close transaction --
+ if @@error &lt;&gt;0  if @@trancount&gt;0 rollback tran  
+ if @@trancount&gt;0 commit tran  
+ end 
+go
+revoke all on [dbo].[Users_SAVE] to [public]
+go
+grant execute on [dbo].[Users_SAVE] to [public]
+go
+
+
+GO
+
+"><FormData Name=""/></BlockHolder></ModuleHolder></root>

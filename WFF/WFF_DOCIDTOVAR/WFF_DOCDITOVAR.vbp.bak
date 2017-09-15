@@ -1,0 +1,45 @@
+Type=OleDll
+Reference=*\G{00020430-0000-0000-C000-000000000046}#2.0#0#..\..\..\..\WINDOWS\system32\stdole2.tlb#OLE Automation
+Reference=*\G{58DF4A4A-346E-4A52-82D1-1DC4A6CB4A60}#5.a#0#..\..\MTZManager\MTZManager.dll#MTZManager
+Reference=*\G{45D6DB85-69D5-45C6-AD58-BB2DA56CCC79}#6.b#0#..\..\MTZSession\MTZSession.dll#MTZSession
+Reference=*\G{27532C15-381F-49B2-83D7-087D2BB897B8}#5.7#0#..\..\MTZUtil\MTZUtil.dll#MTZUtil
+Reference=*\G{EE444025-06E8-47C9-827E-2D6E02FD414F}#2.0#0#..\..\WFF_RTMBASE\WFF_RTMBASE.dll#
+Reference=*\G{BB9AE6B9-149C-4051-8997-887706CA6A7F}#5.0#0#..\..\MtzAdministrator\VB Model\WFFD\WFFD.dll#WFFD
+Reference=*\G{66F13D75-5C70-4B6A-8D6C-E5E100603B38}#3.1#0#..\..\MtzAdministrator\VB Model\WFDef\WFDef.dll#WFDef
+Reference=*\G{1D11E811-EE61-44A6-8B3C-2238EEA71208}#2.1#0#..\..\MtzAdministrator\VB Model\WFDic\WFDic.dll#WFDic
+Reference=*\G{7EC8C2ED-3782-47EC-B9F0-E84334B2A7C3}#3.1#0#..\..\MtzAdministrator\VB Model\WFFR\WFFR.dll#WFFR
+Reference=*\G{93B4ADE2-7C02-4D23-9C8C-15C6DCEF9E39}#4.1#0#..\..\MtzAdministrator\VB Model\WFRtm\WFRtm.dll#WFRtm
+Class=WFF; WFF.cls
+Startup="(None)"
+HelpFile=""
+ExeName32="WFF_DOCIDTOVAR.dll"
+Command32=""
+Name="WFF_DOCIDTOVAR"
+HelpContextID="0"
+CompatibleMode="1"
+CompatibleEXE32="WFF_DOCIDTOVAR.dll"
+MajorVer=1
+MinorVer=0
+RevisionVer=0
+AutoIncrementVer=0
+ServerSupportFiles=0
+VersionCompanyName="bamihome"
+CompilationType=0
+OptimizationType=0
+FavorPentiumPro(tm)=0
+CodeViewDebugInfo=0
+NoAliasing=0
+BoundsCheck=0
+OverflowCheck=0
+FlPointCheck=0
+FDIVCheck=0
+UnroundedFP=0
+StartMode=1
+Unattended=0
+Retained=0
+ThreadPerObject=0
+MaxNumberOfThreads=1
+ThreadingModel=1
+
+
+

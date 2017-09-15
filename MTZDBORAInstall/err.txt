@@ -1,0 +1,185 @@
+--body:--Views (line 794) 
+
+------------------------
+[972]ORA-00972: слишком длинный идентификатор
+
+
+[create or replace view V_viewMTZMetaModel_OBJECTMODE as 
+select   OBJECTMODEID,OBJECTTYPEID
+, 
+ OBJECTTYPE.AllowSearch  
+OBJECTTYPE_AllowSearch_VAL, 
+ decode(OBJECTTYPE.AllowSearch 
+, -1 ,'Да'
+, 0 ,'Нет'
+, '???') 
+OBJECTTYPE_AllowSearch 
+, 
+ OBJECTTYPE.ReplicaType  
+OBJECTTYPE_ReplicaType_VAL, 
+ decode(OBJECTTYPE.ReplicaType 
+, 0 ,'Весь документ'
+, 2 ,'Локальный'
+, 1 ,'Построчно'
+, '???') 
+OBJECTTYPE_ReplicaType 
+, 
+ OBJECTTYPE.Package  
+OBJECTTYPE_Package_ID, 
+ MTZ.Func.MTZAPP_BRIEF_F(OBJECTTYPE.Package) 
+OBJECTTYPE_Package 
+, 
+ OBJECTMODE.DefaultMode  
+OBJECTMODE_DefaultMode_VAL, 
+ decode(OBJECTMODE.DefaultMode 
+, -1 ,'Да'
+, 0 ,'Нет'
+, '???') 
+OBJECTMODE_DefaultMode 
+, 
+ OBJECTTYPE.IsSingleInstance  
+OBJECTTYPE_IsSingleInstance_VAL, 
+ decode(OBJECTTYPE.IsSingleInstance 
+, -1 ,'Да'
+, 0 ,'Нет'
+, '???') 
+OBJECTTYPE_IsSingleInstance 
+, 
+ OBJECTTYPE.OnRun  
+OBJECTTYPE_OnRun_ID, 
+ MTZ.Func.TYPEMENU_BRIEF_F(OBJECTTYPE.OnRun) 
+OBJECTTYPE_OnRun 
+, 
+ OBJECTTYPE.ChooseView  
+OBJECTTYPE_ChooseView_ID, 
+ MTZ.Func.PARTVIEW_BRIEF_F(OBJECTTYPE.ChooseView) 
+OBJECTTYPE_ChooseView 
+, 
+ OBJECTTYPE.OnDelete  
+OBJECTTYPE_OnDelete_ID, 
+ MTZ.Func.TYPEMENU_BRIEF_F(OBJECTTYPE.OnDelete) 
+OBJECTTYPE_OnDelete 
+, 
+OBJECTMODE.Name 
+OBJECTMODE_Name 
+, 
+ OBJECTTYPE.OnCreate  
+OBJECTTYPE_OnCreate_ID, 
+ MTZ.Func.TYPEMENU_BRIEF_F(OBJECTTYPE.OnCreate) 
+OBJECTTYPE_OnCreate 
+, 
+ OBJECTTYPE.AllowRefToObject  
+OBJECTTYPE_AllowRefToObject_VAL, 
+ decode(OBJECTTYPE.AllowRefToObject 
+, -1 ,'Да'
+, 0 ,'Нет'
+, '???') 
+OBJECTTYPE_AllowRefToObject 
+, 
+OBJECTTYPE.Name 
+OBJECTTYPE_Name 
+, 
+OBJECTTYPE.the_Comment 
+OBJECTTYPE_the_Comment 
+, OBJECTTYPE.InstanceID InstanceID 
+, OBJECTMODE.OBJECTMODEID ID 
+, 'OBJECTMODE' VIEWBASE 
+, XXXMYSTATUSXXX.Name StatusName 
+, XXXMYSTATUSXXX.objstatusid INTSANCEStatusID
+  from OBJECTMODE
+ join OBJECTTYPE on OBJECTTYPE.OBJECTTYPEID=OBJECTMODE.ParentStructRowID 
+ join INSTANCE on OBJECTTYPE.INSTANCEID=INSTANCE.INSTANCEID
+ left join objstatus XXXMYSTATUSXXX on instance.status=XXXMYSTATUSXXX.objstatusid 
+]
+--body:--Views (line 2845) 
+
+------------------------
+[972]ORA-00972: слишком длинный идентификатор
+
+
+[create or replace view V_viewdir__dir_departments as 
+select   dir_departmentsID,dir_orgID
+, 
+ dir_departments.rootfolder  
+dir_departments_rootfolder_ID, 
+ MTZ.Func.Folder_BRIEF_F(dir_departments.rootfolder) 
+dir_departments_rootfolder 
+, 
+dir_departments.OrdZone 
+dir_departments_OrdZone 
+, 
+ dir_departments.outfolder  
+dir_departments_outfolder_ID, 
+ MTZ.Func.Folder_BRIEF_F(dir_departments.outfolder) 
+dir_departments_outfolder 
+, 
+dir_departments.outpostfix 
+dir_departments_outpostfix 
+, 
+dir_org.Info 
+dir_org_Info 
+, 
+dir_departments.incprefix 
+dir_departments_incprefix 
+, 
+dir_departments.IncZone 
+dir_departments_IncZone 
+, 
+dir_departments.EMail 
+dir_departments_EMail 
+, 
+ dir_departments.orderfolder  
+dir_departments_orderfolder_ID, 
+ MTZ.Func.Folder_BRIEF_F(dir_departments.orderfolder) 
+dir_departments_orderfolder 
+, 
+ dir_departments.incfolder  
+dir_departments_incfolder_ID, 
+ MTZ.Func.Folder_BRIEF_F(dir_departments.incfolder) 
+dir_departments_incfolder 
+, 
+dir_departments.OutZone 
+dir_departments_OutZone 
+, 
+ dir_departments.outnumerator  
+dir_departments_outnumerator_ID, 
+ MTZ.Func.INSTANCE_BRIEF_F(dir_departments.outnumerator) 
+dir_departments_outnumerator 
+, 
+dir_departments.depname 
+dir_departments_depname 
+, 
+dir_departments.outprefix 
+dir_departments_outprefix 
+, 
+ dir_departments.depgroup  
+dir_departments_depgroup_ID, 
+ MTZ.Func.Groups_BRIEF_F(dir_departments.depgroup) 
+dir_departments_depgroup 
+, 
+dir_departments.incpostfix 
+dir_departments_incpostfix 
+, 
+dir_departments.ordprefix 
+dir_departments_ordprefix 
+, 
+dir_departments.ordpostfix 
+dir_departments_ordpostfix 
+, 
+ dir_departments.incnumerator  
+dir_departments_incnumerator_ID, 
+ MTZ.Func.INSTANCE_BRIEF_F(dir_departments.incnumerator) 
+dir_departments_incnumerator 
+, 
+dir_org.name 
+dir_org_name 
+, dir_org.InstanceID InstanceID 
+, dir_departments.dir_departmentsID ID 
+, 'dir_departments' VIEWBASE 
+, XXXMYSTATUSXXX.Name StatusName 
+, XXXMYSTATUSXXX.objstatusid INTSANCEStatusID
+  from dir_departments
+ join dir_org on dir_org.dir_orgID=dir_departments.ParentStructRowID 
+ join INSTANCE on dir_org.INSTANCEID=INSTANCE.INSTANCEID
+ left join objstatus XXXMYSTATUSXXX on instance.status=XXXMYSTATUSXXX.objstatusid 
+]

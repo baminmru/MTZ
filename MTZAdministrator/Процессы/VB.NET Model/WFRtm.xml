@@ -1,0 +1,1826 @@
+<?xml version="1.0"?>
+<root><AttributeHolder Name="Name" Value="WFRtm"/><AttributeHolder Name="ID" Value="{4D3A914C-7A71-4CF2-9BEA-0F829E06F7F7}"/><AttributeHolder Name="asmName" Value="WFRtm"/><ModuleHolder ModuleName="WFRtm" File="WFRtm.vbproj"><BlockHolder BlockName="code" BlockCode="&lt;VisualStudioProject&gt;
+    &lt;VisualBasic
+        ProjectType = &quot;Local&quot;
+        ProductVersion = &quot;7.10.3077&quot;
+        SchemaVersion = &quot;2.0&quot;
+        ProjectGuid = &quot;{F0C1ED37-1F9F-4622-92F1-96FE7FD81B18}&quot;
+    &gt;
+        &lt;Build&gt;
+            &lt;Settings
+        ApplicationIcon = &quot;&quot;
+        AssemblyKeyContainerName = &quot;&quot;
+        AssemblyName = &quot;WFRtm&quot;
+        AssemblyOriginatorKeyFile = &quot;&quot;
+        AssemblyOriginatorKeyMode = &quot;None&quot;
+        DefaultClientScript = &quot;JScript&quot;
+        DefaultHTMLPageLayout = &quot;Grid&quot;
+        DefaultTargetSchema = &quot;IE50&quot;
+        DelaySign = &quot;false&quot;
+        OutputType = &quot;Library&quot;
+        RootNamespace = &quot;WFRtm&quot;
+        OptionCompare = &quot;Binary&quot;
+        OptionExplicit = &quot;On&quot;
+        OptionStrict = &quot;Off&quot;
+        StartupObject = &quot;&quot;
+      &gt;
+                &lt;Config
+                    Name = &quot;Debug&quot;
+                    BaseAddress = &quot;285212672&quot;
+                    ConfigurationOverrideFile = &quot;&quot;
+                    DefineConstants = &quot;&quot;
+                    DefineDebug = &quot;true&quot;
+                    DefineTrace = &quot;true&quot;
+                    DebugSymbols = &quot;true&quot;
+                    IncrementalBuild = &quot;true&quot;
+                    Optimize = &quot;false&quot;
+                    OutputPath = &quot;bin\&quot;
+                    RegisterForComInterop = &quot;false&quot;
+                    RemoveIntegerChecks = &quot;false&quot;
+                    TreatWarningsAsErrors = &quot;false&quot;
+                    WarningLevel = &quot;1&quot;
+                /&gt;
+                &lt;Config
+                    Name = &quot;Release&quot;
+                    BaseAddress = &quot;285212672&quot;
+                    ConfigurationOverrideFile = &quot;&quot;
+                    DefineConstants = &quot;&quot;
+                    DefineDebug = &quot;false&quot;
+                    DefineTrace = &quot;true&quot;
+                    DebugSymbols = &quot;false&quot;
+                    IncrementalBuild = &quot;false&quot;
+                    Optimize = &quot;true&quot;
+                    OutputPath = &quot;bin\&quot;
+                    RegisterForComInterop = &quot;false&quot;
+                    RemoveIntegerChecks = &quot;false&quot;
+                    TreatWarningsAsErrors = &quot;false&quot;
+                    WarningLevel = &quot;1&quot;
+                /&gt;
+            &lt;/Settings&gt;
+            &lt;References&gt;
+                &lt;Reference
+                    Name = &quot;System&quot;
+                    AssemblyName = &quot;System&quot;
+                /&gt;
+                &lt;Reference
+                    Name = &quot;System.Data&quot;
+                    AssemblyName = &quot;System.Data&quot;
+                /&gt;
+                &lt;Reference
+                    Name = &quot;System.XML&quot;
+                    AssemblyName = &quot;System.Xml&quot;
+                /&gt;
+                &lt;Reference
+                Name = &quot;MKSNManager&quot;
+                AssemblyName = &quot;MKSNManager&quot;
+                HintPath = &quot;C:\BAMI\MTZ.NET\MKSNMANAGER\bin\MKSNManager.dll&quot;
+                /&gt;
+            &lt;/References&gt;
+      &lt;Imports&gt;
+        &lt;Import Namespace = &quot;System&quot; /&gt;
+        &lt;Import Namespace = &quot;System.Data&quot; /&gt;
+        &lt;Import Namespace = &quot;System.Collections&quot; /&gt;
+        &lt;Import Namespace = &quot;System.Xml&quot; /&gt;
+      &lt;/Imports&gt;
+        &lt;/Build&gt;
+        &lt;Files&gt;
+            &lt;Include&gt;
+                &lt;File
+                    RelPath = &quot;AssemblyInfo.vb&quot;
+                    SubType = &quot;Code&quot;
+                    BuildAction = &quot;Compile&quot;
+                /&gt;
+                &lt;File
+                    RelPath = &quot;Application.vb&quot;
+                    SubType = &quot;Code&quot;
+                    BuildAction = &quot;Compile&quot;
+                /&gt;
+
+                &lt;File
+                    RelPath = &quot;WFRtm_Param.vb&quot;
+                    SubType = &quot;Code&quot;
+                    BuildAction = &quot;Compile&quot;
+                /&gt;
+                &lt;File
+                    RelPath = &quot;WFRtm_Param_col.vb&quot;
+                    SubType = &quot;Code&quot;
+                    BuildAction = &quot;Compile&quot;
+                /&gt;
+
+                &lt;File
+                    RelPath = &quot;WFRTM_SUBPROCESS.vb&quot;
+                    SubType = &quot;Code&quot;
+                    BuildAction = &quot;Compile&quot;
+                /&gt;
+                &lt;File
+                    RelPath = &quot;WFRTM_SUBPROCESS_col.vb&quot;
+                    SubType = &quot;Code&quot;
+                    BuildAction = &quot;Compile&quot;
+                /&gt;
+
+                &lt;File
+                    RelPath = &quot;WFRtm_main.vb&quot;
+                    SubType = &quot;Code&quot;
+                    BuildAction = &quot;Compile&quot;
+                /&gt;
+                &lt;File
+                    RelPath = &quot;WFRtm_main_col.vb&quot;
+                    SubType = &quot;Code&quot;
+                    BuildAction = &quot;Compile&quot;
+                /&gt;
+
+                &lt;File
+                    RelPath = &quot;WFRtm_Doc.vb&quot;
+                    SubType = &quot;Code&quot;
+                    BuildAction = &quot;Compile&quot;
+                /&gt;
+                &lt;File
+                    RelPath = &quot;WFRtm_Doc_col.vb&quot;
+                    SubType = &quot;Code&quot;
+                    BuildAction = &quot;Compile&quot;
+                /&gt;
+
+                &lt;File
+                    RelPath = &quot;WFRtm_func.vb&quot;
+                    SubType = &quot;Code&quot;
+                    BuildAction = &quot;Compile&quot;
+                /&gt;
+                &lt;File
+                    RelPath = &quot;WFRtm_func_col.vb&quot;
+                    SubType = &quot;Code&quot;
+                    BuildAction = &quot;Compile&quot;
+                /&gt;
+
+                &lt;File
+                    RelPath = &quot;WFRtm_Pcomm.vb&quot;
+                    SubType = &quot;Code&quot;
+                    BuildAction = &quot;Compile&quot;
+                /&gt;
+                &lt;File
+                    RelPath = &quot;WFRtm_Pcomm_col.vb&quot;
+                    SubType = &quot;Code&quot;
+                    BuildAction = &quot;Compile&quot;
+                /&gt;
+
+            &lt;/Include&gt;
+        &lt;/Files&gt;
+    &lt;/VisualBasic&gt;
+&lt;/VisualStudioProject&gt;
+"><FormData Name=""/></BlockHolder></ModuleHolder><ModuleHolder ModuleName="AssemblyInfo" File="AssemblyInfo.vb"><BlockHolder BlockName="code" BlockCode="
+Imports System
+Imports System.Reflection
+Imports System.Runtime.InteropServices
+&lt;Assembly: AssemblyTitle(&quot;&quot;)&gt;
+&lt;Assembly: AssemblyDescription(&quot;&quot;)&gt;
+&lt;Assembly: AssemblyCompany(&quot;&quot;)&gt;
+&lt;Assembly: AssemblyProduct(&quot;&quot;)&gt;
+&lt;Assembly: AssemblyCopyright(&quot;&quot;)&gt;
+&lt;Assembly: AssemblyTrademark(&quot;&quot;)&gt;
+&lt;Assembly: CLSCompliant(True)&gt;
+&lt;Assembly: Guid(&quot;024B7874-459F-4CB6-8D8B-E715B5DDDF69&quot;)&gt;
+&lt;Assembly: AssemblyVersion(&quot;1.0.*&quot;)&gt;
+"><FormData Name=""/></BlockHolder></ModuleHolder><ModuleHolder ModuleName="Application" File="Application.vb"><BlockHolder BlockName="code" BlockCode="
+Option Explicit On
+
+Imports System.xml
+Imports MKSNManager
+
+Namespace WFRtm
+
+
+public enum enumHACCPStep'Тип шага в ХАССП процессе
+  HACCPStep_Operaciy=3'Операция
+  HACCPStep_Zaversenie_processa=1'Завершение процесса
+  HACCPStep_Kontrol_nay_tocka=4'Контрольная точка
+  HACCPStep_Korrektiruusee_deystvie=5'Корректирующее действие
+  HACCPStep_Ostanov_processa=2'Останов процесса
+  HACCPStep_Process=6'Процесс
+  HACCPStep_Nacalo_processa=0'Начало процесса
+end enum 
+public enum enumHaccpIdent'Идентификация
+  HaccpIdent_Kacestvo_poverhnosti=6'Качество поверхности
+  HaccpIdent_Zapah=2'Запах
+  HaccpIdent_Forma=3'Форма
+  HaccpIdent_Cvet=1'Цвет
+  HaccpIdent_Vkus=4'Вкус
+  HaccpIdent_Procee=100'Прочее
+  HaccpIdent_Zvuk=5'Звук
+  HaccpIdent_Vnesniy_vid=0'Внешний вид
+end enum 
+public enum enumWFStepClass'Тип шага процесса
+  WFStepClass_SimpleFunction=0'SimpleFunction
+  WFStepClass_StartFunction=1'StartFunction
+  WFStepClass_StopFunction=2'StopFunction
+  WFStepClass_PeriodicFunction=3'PeriodicFunction
+end enum 
+public enum enumMonths'Месяцы
+  Months_Noybr_=11'Ноябрь
+  Months_Fevral_=2'Февраль
+  Months_Dekabr_=12'Декабрь
+  Months_Mart=3'Март
+  Months_Ynvar_=1'Январь
+  Months_Sentybr_=9'Сентябрь
+  Months_Iun_=6'Июнь
+  Months_Oktybr_=10'Октябрь
+  Months_May=5'Май
+  Months_Avgust=8'Август
+  Months_Iul_=7'Июль
+  Months_Aprel_=4'Апрель
+end enum 
+public enum enumTypeStyle'Вариант трактовки типа поля
+  TypeStyle_Interval=3'Интервал
+  TypeStyle_Skalyrniy_tip=0'Скалярный тип
+  TypeStyle_Ssilka=4'Ссылка
+  TypeStyle_Perecislenie=2'Перечисление
+  TypeStyle_Viragenie=1'Выражение
+end enum 
+public enum enumAggregationType'Вариант агрегации по полю
+  AggregationType_MAX=5'MAX
+  AggregationType_AVG=1'AVG
+  AggregationType_SUM=3'SUM
+  AggregationType_COUNT=2'COUNT
+  AggregationType_MIN=4'MIN
+  AggregationType_CUSTOM=6'CUSTOM
+  AggregationType_none=0'none
+end enum 
+public enum enumVHAlignment'Выравнивание
+  VHAlignment_Center_Center=4'Center Center
+  VHAlignment_Center_Top=3'Center Top
+  VHAlignment_Right_Top=6'Right Top
+  VHAlignment_Right_Bottom=8'Right Bottom
+  VHAlignment_Left_Bottom=2'Left Bottom
+  VHAlignment_Right_Center=7'Right Center
+  VHAlignment_Center_Bottom=5'Center Bottom
+  VHAlignment_Left_Center=1'Left Center
+  VHAlignment_Left_Top=0'Left Top
+end enum 
+public enum enumWFProcessState'Состояния процесса
+  WFProcessState_Active=2'Active
+  WFProcessState_Pause=3'Pause
+  WFProcessState_Processed=5'Processed
+  WFProcessState_Done=4'Done
+  WFProcessState_Prepare=1'Prepare
+  WFProcessState_Initial=0'Initial
+end enum 
+public enum enumNumerationRule'Правило нумерации
+  NumerationRule_Edinay_zona=0'Единая зона
+  NumerationRule_Po_godu=1'По году
+  NumerationRule_Po_dnu=4'По дню
+  NumerationRule_Po_kvartalu=2'По кварталу
+  NumerationRule_Po_mesycu=3'По месяцу
+  NumerationRule_Proizvol_nie_zoni=10'Произвольные зоны
+end enum 
+public enum enumMenuActionType'Вариант действия при выборе пункта меню
+  MenuActionType_Otkrit__otcet=5'Открыть отчет
+  MenuActionType_Nicego_ne_delat_=0'Ничего не делать
+  MenuActionType_Vipolnit__metod=2'Выполнить метод
+  MenuActionType_Otkrit__dokument=1'Открыть документ
+  MenuActionType_Zapustit__ARM=4'Запустить АРМ
+  MenuActionType_Otkrit__gurnal=3'Открыть журнал
+end enum 
+public enum enumColumnSortType'Вариант сортиовки данных колонки
+  ColumnSortType_As_String=0'As String
+  ColumnSortType_As_Numeric=1'As Numeric
+  ColumnSortType_As_Date=2'As Date
+end enum 
+public enum enumAdditionType'Тип надбавки
+  AdditionType_Ob_em=1'Объем
+  AdditionType_Plotnost_=2'Плотность
+  AdditionType_Procee=3'Прочее
+  AdditionType_Ves=0'Вес
+end enum 
+public enum enumStructType'Тип раздела
+  StructType_Derevo=2'Дерево
+  StructType_Kollekciy=1'Коллекция
+  StructType_Stroka_atributov=0'Строка атрибутов
+end enum 
+public enum enumTargetType'Вариант уровня приложения, куда может генерироваться код
+  TargetType_SUBD=0'СУБД
+  TargetType_ARM=4'АРМ
+  TargetType_Dokumentaciy=3'Документация
+  TargetType_MODEL_=1'МОДЕЛЬ
+  TargetType_Prilogenie=2'Приложение
+end enum 
+public enum enumPartAddBehaivor'Поведение при добавлении строки раздела
+  PartAddBehaivor_AddForm=0'AddForm
+  PartAddBehaivor_RunAction=2'RunAction
+  PartAddBehaivor_RefreshOnly=1'RefreshOnly
+end enum 
+public enum enumFolderType'Тип папки
+  FolderType_Ishodysie=2'Исходящие
+  FolderType_Zaversennie=10'Завершенные
+  FolderType_Kalendar_=5'Календарь
+  FolderType_cls__=0' 
+  FolderType_Vhodysie=1'Входящие
+  FolderType_Otlogennie=9'Отложенные
+  FolderType_Gurnal=4'Журнал
+  FolderType_V_rabote=8'В работе
+  FolderType_Cernoviki=7'Черновики
+  FolderType_Otpravlennie=6'Отправленные
+  FolderType_Udalennie=3'Удаленные
+end enum 
+public enum enumWFShortcutType'Варианты ярлыков, которые может размещать процесс
+  WFShortcutType_Function=1'Function
+  WFShortcutType_Process=2'Process
+  WFShortcutType_Document=0'Document
+end enum 
+public enum enumReferenceType'ReferenceType
+  ReferenceType_Na_stroku_razdela=2'На строку раздела
+  ReferenceType_Skalyrnoe_pole_OPN_ne_ssilkaCLS=0'Скалярное поле ( не ссылка)
+  ReferenceType_Na_ob_ekt_=1'На объект 
+end enum 
+public enum enumSex'Мужской / Женский
+  Sex_Mugskoy=1'Мужской
+  Sex_Ne_susestvenno=0'Не существенно
+  Sex_Genskiy=-1'Женский
+end enum 
+public enum enumMesureFormat'Формат индикатора
+  MesureFormat_Data=1'Дата
+  MesureFormat_Tekst=5'Текст
+  MesureFormat_Ob_ekt=4'Объект
+  MesureFormat_Spravocnik=2'Справочник
+  MesureFormat_Cislo=0'Число
+end enum 
+public enum enumWFFuncParam'Вариант расшифровки параметра функции
+  WFFuncParam_Dokument=5'Документ
+  WFFuncParam_Znacenie=0'Значение
+  WFFuncParam_Dokument_processa=4'Документ процесса
+  WFFuncParam_Viragenie=2'Выражение
+  WFFuncParam_Rol_=8'Роль
+  WFFuncParam_Papka=3'Папка
+  WFFuncParam_Pole=7'Поле
+  WFFuncParam_Znacenie_iz_parametra=1'Значение из параметра
+  WFFuncParam_Razdel=6'Раздел
+  WFFuncParam_Tip_dokumenta=9'Тип документа
+end enum 
+public enum enumYesNo'Да / Нет (0 или 1)
+  YesNo_Da=1'Да
+  YesNo_Net=0'Нет
+end enum 
+public enum enumGeneratorStyle'GeneratorStyle
+  GeneratorStyle_Odin_tip=0'Один тип
+  GeneratorStyle_Vse_tipi_srazu=1'Все типы сразу
+end enum 
+public enum enumReportType'Вариант отчета
+  ReportType_Dvumernay_matrica=1'Двумерная матрица
+  ReportType_Tablica=0'Таблица
+  ReportType_Eksport_po_WORD_sablonu=3'Экспорт по WORD шаблону
+  ReportType_Tol_ko_rascet=2'Только расчет
+  ReportType_Eksport_po_Excel_sablonu=4'Экспорт по Excel шаблону
+end enum 
+public enum enumHACCPPStep'Тип шага в ХАССП процессе
+  HACCPPStep_Sir_e=5'Сырье
+  HACCPPStep_Transportirovka=7'Транспортировка
+  HACCPPStep_Operaciy=3'Операция
+  HACCPPStep_Zaversenie_processa=1'Завершение процесса
+  HACCPPStep_Nacalo_processa=0'Начало процесса
+  HACCPPStep_Ostanov_processa=2'Останов процесса
+  HACCPPStep_Vhod_iz=9'Вход из
+  HACCPPStep_Vihod_v=8'Выход в
+  HACCPPStep_Hranenie=6'Хранение
+  HACCPPStep_Resenie=4'Решение
+end enum 
+public enum enumDayInWeek'День недели
+  DayInWeek_Ponedel_nik=1'Понедельник
+  DayInWeek_Sreda=3'Среда
+  DayInWeek_Vtornik=2'Вторник
+  DayInWeek_Pytnica=5'Пятница
+  DayInWeek_Subbota=6'Суббота
+  DayInWeek_Cetverg=4'Четверг
+  DayInWeek_Voskresen_e=7'Воскресенье
+end enum 
+public enum enumPlatType'Тип плательщика
+  PlatType_Otpravitel_=0'Отправитель
+  PlatType_Polucatel_=1'Получатель
+  PlatType_Drugoy=2'Другой
+end enum 
+public enum enumPartType'PartType
+  PartType_Kollekciy=1'Коллекция
+  PartType_Rassirenie=3'Расширение
+  PartType_Stroka=0'Строка
+  PartType_Derevo=2'Дерево
+end enum 
+public enum enumEmployment'Занятость
+  Employment_Polnay=0'Полная
+  Employment_Casticnay=1'Частичная
+  Employment_Ne_vagno=-1'Не важно
+end enum 
+public enum enumKONTR_TYPE'Тип контрагента
+  KONTR_TYPE_Procee=5'Прочее
+  KONTR_TYPE_Perevozcik=4'Перевозчик
+  KONTR_TYPE_Partner=2'Партнер
+  KONTR_TYPE_Pokupatel_=0'Покупатель
+  KONTR_TYPE_Ucreditel_=3'Учредитель
+  KONTR_TYPE_Postavsik=1'Поставщик
+end enum 
+public enum enumConditionType'Варианты условий
+  ConditionType_LSGT=2'&lt;&gt;
+  ConditionType_GT=3'&gt;
+  ConditionType_EQ=1'=
+  ConditionType_GTEQ=4'&gt;=
+  ConditionType_LSEQ=7'&lt;=
+  ConditionType_like=8'like
+  ConditionType_LS=6'&lt;
+  ConditionType_none=0'none
+end enum 
+public enum enumVRTaskType'Тип задачи
+  VRTaskType_V_opredelenniy_moment=0'В определенный момент
+  VRTaskType_Fonovay=2'Фоновая
+  VRTaskType_K_opredelennomu_vremeni=1'К определенному времени
+end enum 
+public enum enumOnJournalRowClick'действие при открытии строки журнала
+  OnJournalRowClick_Otkrit__dokument=2'Открыть документ
+  OnJournalRowClick_Otkrit__stroku=1'Открыть строку
+  OnJournalRowClick_Nicego_ne_delat_=0'Ничего не делать
+end enum 
+public enum enumEducation'Образование
+  Education_Srednee_special_noe=2'Среднее специальное
+  Education_Srednee=1'Среднее
+  Education_Ne_vagno=-1'Не важно
+  Education_Vissee=4'Высшее
+  Education_Nepolnoe_srednee=0'Неполное среднее
+  Education_Nepolnoe_vissee=3'Неполное высшее
+  Education_Neskol_ko_vissih=5'Несколько высших
+end enum 
+public enum enumDCType'Остатки/Дебит/Кредит
+  DCType_Ostatki=-1'Остатки
+  DCType_Debit=0'Дебит
+  DCType_Kredit=1'Кредит
+end enum 
+public enum enumDevelopmentBase'Платформа разработки
+  DevelopmentBase_JAVA=2'JAVA
+  DevelopmentBase_OTHER=3'OTHER
+  DevelopmentBase_DOTNET=1'DOTNET
+  DevelopmentBase_VB6=0'VB6
+end enum 
+public enum enumBoolean'Да / Нет
+  Boolean_Da=-1'Да
+  Boolean_Net=0'Нет
+end enum 
+public enum enumTriState'Да / Нет / Не определено
+  TriState_Net=0'Нет
+  TriState_Ne_susestvenno=-1'Не существенно
+  TriState_Da=1'Да
+end enum 
+public enum enumCurrencyType'Валюта платежа
+  CurrencyType_Rubl_=0'Рубль
+  CurrencyType_Evro=2'Евро
+  CurrencyType_Dollar=1'Доллар
+end enum 
+public enum enumWFFuncState'Состояние функции в бизнес процессе
+  WFFuncState_Processed=8'Processed
+  WFFuncState_InWork=3'InWork
+  WFFuncState_Pause=4'Pause
+  WFFuncState_Ready=5'Ready
+  WFFuncState_InControl=6'InControl
+  WFFuncState_Prepare=1'Prepare
+  WFFuncState_Active=2'Active
+  WFFuncState_Done=7'Done
+  WFFuncState_Initial=0'Initial
+end enum 
+public enum enumEmployment_'осталось для совместимости
+  Employment__Polnay=0'Полная
+  Employment__Casticnay=1'Частичная
+  Employment__Ne_vagno=-1'Не важно
+end enum 
+public enum enumKONTR_STATUS'Состояние партнера
+  KONTR_STATUS_Blokirovan=2'Блокирован
+  KONTR_STATUS_Aktiveniy=0'Активеный
+  KONTR_STATUS_Pssivniy=1'Пссивный
+  KONTR_STATUS_Operacii_zapreseni=3'Операции запрещены
+end enum 
+public enum enumExtentionType'Тип расширения
+  ExtentionType_OnFormExt=1'OnFormExt
+  ExtentionType_CodeGenerator=7'CodeGenerator
+  ExtentionType_JrnlAddExt=3'JrnlAddExt
+  ExtentionType_VerifyRowExt=6'VerifyRowExt
+  ExtentionType_StatusExt=0'StatusExt
+  ExtentionType_ARMGenerator=8'ARMGenerator
+  ExtentionType_DefaultExt=5'DefaultExt
+  ExtentionType_CustomExt=2'CustomExt
+  ExtentionType_JrnlRunExt=4'JrnlRunExt
+end enum 
+public enum enumReplicationType'Вариант репликации докуента
+  ReplicationType_Ves__dokument=0'Весь документ
+  ReplicationType_Lokal_niy=2'Локальный
+  ReplicationType_Postrocno=1'Построчно
+end enum 
+public enum enumInfoStoreType'Тип каталога
+  InfoStoreType_Gruppovoy=2'Групповой
+  InfoStoreType_Personal_niy=1'Персональный
+  InfoStoreType_cls__Obsiy=0' Общий
+end enum 
+
+    Public Class Application
+        Inherits MKSNManager.Document.Doc_Base
+
+
+        Protected Overrides Function MyTypeName() As String
+            MyTypeName = &quot;WFRtm&quot;
+        End Function
+
+  Private m_WFRtm_Param As WFRtm_Param_col
+        Public ReadOnly Property WFRtm_Param() As WFRtm_Param_col
+            Get
+                If m_WFRtm_Param Is Nothing Then
+                    m_WFRtm_Param = New WFRtm_Param_col
+                    m_WFRtm_Param.Application = Me
+                    m_WFRtm_Param.Parent = Me
+                    m_WFRtm_Param.Refresh()
+                End If
+                WFRtm_Param = m_WFRtm_Param
+            End Get
+        End Property
+  Private m_WFRTM_SUBPROCESS As WFRTM_SUBPROCESS_col
+        Public ReadOnly Property WFRTM_SUBPROCESS() As WFRTM_SUBPROCESS_col
+            Get
+                If m_WFRTM_SUBPROCESS Is Nothing Then
+                    m_WFRTM_SUBPROCESS = New WFRTM_SUBPROCESS_col
+                    m_WFRTM_SUBPROCESS.Application = Me
+                    m_WFRTM_SUBPROCESS.Parent = Me
+                    m_WFRTM_SUBPROCESS.Refresh()
+                End If
+                WFRTM_SUBPROCESS = m_WFRTM_SUBPROCESS
+            End Get
+        End Property
+  Private m_WFRtm_main As WFRtm_main_col
+        Public ReadOnly Property WFRtm_main() As WFRtm_main_col
+            Get
+                If m_WFRtm_main Is Nothing Then
+                    m_WFRtm_main = New WFRtm_main_col
+                    m_WFRtm_main.Application = Me
+                    m_WFRtm_main.Parent = Me
+                    m_WFRtm_main.Refresh()
+                End If
+                WFRtm_main = m_WFRtm_main
+            End Get
+        End Property
+  Private m_WFRtm_Doc As WFRtm_Doc_col
+        Public ReadOnly Property WFRtm_Doc() As WFRtm_Doc_col
+            Get
+                If m_WFRtm_Doc Is Nothing Then
+                    m_WFRtm_Doc = New WFRtm_Doc_col
+                    m_WFRtm_Doc.Application = Me
+                    m_WFRtm_Doc.Parent = Me
+                    m_WFRtm_Doc.Refresh()
+                End If
+                WFRtm_Doc = m_WFRtm_Doc
+            End Get
+        End Property
+  Private m_WFRtm_func As WFRtm_func_col
+        Public ReadOnly Property WFRtm_func() As WFRtm_func_col
+            Get
+                If m_WFRtm_func Is Nothing Then
+                    m_WFRtm_func = New WFRtm_func_col
+                    m_WFRtm_func.Application = Me
+                    m_WFRtm_func.Parent = Me
+                    m_WFRtm_func.Refresh()
+                End If
+                WFRtm_func = m_WFRtm_func
+            End Get
+        End Property
+  Private m_WFRtm_Pcomm As WFRtm_Pcomm_col
+        Public ReadOnly Property WFRtm_Pcomm() As WFRtm_Pcomm_col
+            Get
+                If m_WFRtm_Pcomm Is Nothing Then
+                    m_WFRtm_Pcomm = New WFRtm_Pcomm_col
+                    m_WFRtm_Pcomm.Application = Me
+                    m_WFRtm_Pcomm.Parent = Me
+                    m_WFRtm_Pcomm.Refresh()
+                End If
+                WFRtm_Pcomm = m_WFRtm_Pcomm
+            End Get
+        End Property
+
+        Public Overrides Sub Dispose()
+            WFRtm_Param.Dispose()
+            WFRTM_SUBPROCESS.Dispose()
+            WFRtm_main.Dispose()
+            WFRtm_Doc.Dispose()
+            WFRtm_func.Dispose()
+            WFRtm_Pcomm.Dispose()
+        End Sub
+
+        Protected Overrides Function FindInCollections(ByVal Table As String, ByVal InstID As String) As MKSNManager.Document.DocRow_Base
+        FindInCollections = Nothing
+            dim mFindInCollections As MKSNManager.Document.DocRow_Base
+            mFindInCollections = WFRtm_Param.FindObject(Table, InstID)
+            if not mFindInCollections is nothing then return mFindInCollections
+            mFindInCollections = WFRTM_SUBPROCESS.FindObject(Table, InstID)
+            if not mFindInCollections is nothing then return mFindInCollections
+            mFindInCollections = WFRtm_main.FindObject(Table, InstID)
+            if not mFindInCollections is nothing then return mFindInCollections
+            mFindInCollections = WFRtm_Doc.FindObject(Table, InstID)
+            if not mFindInCollections is nothing then return mFindInCollections
+            mFindInCollections = WFRtm_func.FindObject(Table, InstID)
+            if not mFindInCollections is nothing then return mFindInCollections
+            mFindInCollections = WFRtm_Pcomm.FindObject(Table, InstID)
+            if not mFindInCollections is nothing then return mFindInCollections
+        End Function
+
+        Protected Overrides Sub XMLLoadCollections(ByVal node As System.Xml.XmlNode, Optional ByVal LoadMode As Integer = 0)
+            Dim e_list As XmlNodeList
+            On Error Resume Next
+            e_list = node.SelectNodes(&quot;WFRtm_Param_COL&quot;)
+            WFRtm_Param.XMLLoad(e_list, LoadMode)
+            e_list = node.SelectNodes(&quot;WFRTM_SUBPROCESS_COL&quot;)
+            WFRTM_SUBPROCESS.XMLLoad(e_list, LoadMode)
+            e_list = node.SelectNodes(&quot;WFRtm_main_COL&quot;)
+            WFRtm_main.XMLLoad(e_list, LoadMode)
+            e_list = node.SelectNodes(&quot;WFRtm_Doc_COL&quot;)
+            WFRtm_Doc.XMLLoad(e_list, LoadMode)
+            e_list = node.SelectNodes(&quot;WFRtm_func_COL&quot;)
+            WFRtm_func.XMLLoad(e_list, LoadMode)
+            e_list = node.SelectNodes(&quot;WFRtm_Pcomm_COL&quot;)
+            WFRtm_Pcomm.XMLLoad(e_list, LoadMode)
+        End Sub
+
+        Public Overrides Sub XMLSaveCollections(ByVal node As System.Xml.XmlElement, ByVal Xdom As System.Xml.XmlDocument)
+            WFRtm_Param.XMLSave(node, Xdom)
+            WFRTM_SUBPROCESS.XMLSave(node, Xdom)
+            WFRtm_main.XMLSave(node, Xdom)
+            WFRtm_Doc.XMLSave(node, Xdom)
+            WFRtm_func.XMLSave(node, Xdom)
+            WFRtm_Pcomm.XMLSave(node, Xdom)
+        End Sub
+Public Overrides Sub BatchUpdate()
+  If Not Application.WorkOffline Then
+    WFRtm_Param.BatchUpdate
+    WFRTM_SUBPROCESS.BatchUpdate
+    WFRtm_main.BatchUpdate
+    WFRtm_Doc.BatchUpdate
+    WFRtm_func.BatchUpdate
+    WFRtm_Pcomm.BatchUpdate
+  End If
+End Sub
+    End Class
+End Namespace
+
+"><FormData Name=""/></BlockHolder></ModuleHolder><ModuleHolder ModuleName="WFRtm_Param" File="WFRtm_Param.vb"><BlockHolder BlockName="code" BlockCode="
+Option Explicit On
+
+Imports System
+Imports System.IO
+Imports MKSNManager
+Imports System.xml
+Imports System.Data
+Imports System.Convert
+Imports System.DateTime
+
+Namespace WFRtm
+    Public Class WFRtm_Param
+        Inherits MKSNManager.Document.DocRow_Base
+
+            private m_the_Value  as String
+            private m_BasedOn  as System.Guid
+
+        Public Overrides Sub CleanFields()
+            ' m_the_Value=   
+            ' m_BasedOn=   
+        End Sub
+        Public Overrides Sub FillDataTable(ByRef DestDataTable As System.Data.DataTable)
+            Dim dr As  DataRow
+            dr = destdatatable.NewRow
+            on error resume next
+            dr(&quot;ID&quot;) =ID
+            dr(&quot;Brief&quot;) =Brief
+             dr(&quot;the_Value&quot;) =the_Value
+             if BasedOn is nothing then
+               dr(&quot;BasedOn&quot;) =system.dbnull.value
+               dr(&quot;BasedOn_ID&quot;) =System.Guid.Empty
+             else
+               dr(&quot;BasedOn&quot;) =BasedOn.BRIEF
+               dr(&quot;BasedOn_ID&quot;) =BasedOn.ID
+             end if 
+            DestDataTable.Rows.Add (dr)
+        End Sub
+
+        Public Overrides Function FindInside(ByVal Table As String, ByVal RowID As String) As MKSNManager.Document.DocRow_Base
+            dim mFindInside As MKSNManager.Document.DocRow_Base = Nothing
+            Return Nothing
+        End Function
+
+        Public Overrides Sub Pack(ByVal nv As MKSNManager.MKSN.NamedValues)
+          nv.Add(&quot;the_Value&quot;, the_Value, dbtype.string)
+          if m_BasedOn.Equals(System.Guid.Empty) then
+            nv.Add(&quot;BasedOn&quot;, system.dbnull.value, dbtype.guid)
+          else
+            nv.Add(&quot;BasedOn&quot;, m_BasedOn, dbtype.guid)
+          end if 
+            nv.Add(PartName() &amp; &quot;id&quot;, ID, DbType.Guid)
+        End Sub
+
+
+        Public Overrides Sub Unpack(ByVal reader As System.Data.DataRow)
+            on error resume next  
+            If IsDBNull(reader.item(&quot;SecurityStyleID&quot;)) Then
+                SecureStyleID = System.guid.Empty
+            Else
+                SecureStyleID = reader.item(&quot;SecurityStyleID&quot;)
+            End If
+
+            RowRetrived = True
+            RetriveTime = Now
+          m_the_Value=reader.item(&quot;the_Value&quot;)
+          if isdbnull(reader.item(&quot;BasedOn&quot;)) then
+            m_BasedOn = System.GUID.Empty
+          else
+            m_BasedOn=reader.item(&quot;BasedOn&quot;)
+          end if 
+        End Sub
+        Public Property the_Value() As String
+            Get
+                LoadFromDatabase()
+                the_Value = m_the_Value
+                AccessTime = Now
+            End Get
+            Set(ByVal Value As String )
+                LoadFromDatabase()
+                m_the_Value = Value
+                ChangeTime = Now
+            End Set
+        End Property
+        Public Property BasedOn() As MKSNManager.Document.docrow_base
+            Get
+                LoadFromDatabase()
+                BasedOn = me.application.Findrowobject(&quot;WFDef_param&quot;,m_BasedOn)
+                AccessTime = Now
+            End Get
+            Set(ByVal Value As MKSNManager.Document.docrow_base )
+                LoadFromDatabase()
+                if not Value is nothing then
+                    m_BasedOn = Value.id
+                else
+                   m_BasedOn=System.Guid.Empty
+                end if
+                ChangeTime = Now
+            End Set
+        End Property
+        Protected Overrides sub XMLUnpack(ByVal node As System.Xml.XmlNode, Optional ByVal LoadMode As Integer = 0)
+          Dim e_list As XmlNodeList
+          on error resume next  
+            the_Value = node.Attributes.GetNamedItem(&quot;the_Value&quot;).Value
+            m_BasedOn = new system.guid(node.Attributes.GetNamedItem(&quot;BasedOn&quot;).Value)
+             Changed = true
+        End sub
+        Public Overrides Sub Dispose()
+        End Sub
+        Protected Overrides sub XLMPack(ByVal node As System.Xml.XmlElement, ByVal Xdom As System.Xml.XmlDocument)
+           on error resume next  
+          node.SetAttribute(&quot;the_Value&quot;, the_Value)  
+          node.SetAttribute(&quot;BasedOn&quot;, m_BasedOn.tostring)  
+        End sub
+Public Overrides Sub BatchUpdate()
+If Not Application.WorkOffline Then
+  If Deleted Then
+    Delete
+    Exit Sub
+  End If
+  If Changed Then Save
+End If
+End Sub
+    End Class
+End Namespace
+
+"><FormData Name=""/></BlockHolder></ModuleHolder><ModuleHolder ModuleName="WFRtm_Param_col" File="WFRtm_Param_col.vb"><BlockHolder BlockName="code" BlockCode="
+Option Explicit On
+
+Imports MKSNManager
+Imports System
+Imports System.xml
+Imports System.Data
+
+Namespace WFRtm
+    Public Class WFRtm_Param_col
+        Inherits MKSNManager.Document.DocCollection_Base
+
+        Public Overrides Function ChildPartName() As String
+            ChildPartName = &quot;WFRtm_Param&quot;
+        End Function
+
+        Protected Overrides Function CreateDataTable() As System.Data.DataTable
+            Dim dt As DataTable
+            dt = New DataTable
+            dt.Columns.Add(&quot;ID&quot;, GetType(System.guid))
+            dt.Columns.Add(&quot;Brief&quot;, Gettype(System.string))
+            dt.Columns.Add(&quot;the_Value&quot;, Gettype(System.string))
+            dt.Columns.Add(&quot;BasedOn_ID&quot; , GetType(System.guid))
+            dt.Columns.Add(&quot;BasedOn&quot;, Gettype(System.string))
+            return dt
+        End Function
+
+        Protected Overrides Function NewItem() As MKSNManager.Document.DocRow_Base
+            NewItem = New WFRtm_Param
+        End Function
+        Public Function GetItem( vIndex as object ) As WFRtm.WFRtm_Param
+            on error resume next
+            GetItem = Convert.ChangeType(mybase.Item(vIndex), GetType(WFRtm.WFRtm_Param))
+        End Function
+        Public Shadows Function Item( vIndex as object ) As WFRtm.WFRtm_Param
+            on error resume next
+            return GetItem(vIndex)
+        End Function
+    End Class
+End Namespace
+
+"><FormData Name=""/></BlockHolder></ModuleHolder><ModuleHolder ModuleName="WFRTM_SUBPROCESS" File="WFRTM_SUBPROCESS.vb"><BlockHolder BlockName="code" BlockCode="
+Option Explicit On
+
+Imports System
+Imports System.IO
+Imports MKSNManager
+Imports System.xml
+Imports System.Data
+Imports System.Convert
+Imports System.DateTime
+
+Namespace WFRtm
+    Public Class WFRTM_SUBPROCESS
+        Inherits MKSNManager.Document.DocRow_Base
+
+            private m_Process  as System.Guid
+            private m_Name  as String
+
+        Public Overrides Sub CleanFields()
+            ' m_Process=   
+            ' m_Name=   
+        End Sub
+        Public Overrides Sub FillDataTable(ByRef DestDataTable As System.Data.DataTable)
+            Dim dr As  DataRow
+            dr = destdatatable.NewRow
+            on error resume next
+            dr(&quot;ID&quot;) =ID
+            dr(&quot;Brief&quot;) =Brief
+             if Process is nothing then
+               dr(&quot;Process&quot;) =system.dbnull.value
+               dr(&quot;Process_ID&quot;) =System.Guid.Empty
+             else
+               dr(&quot;Process&quot;) =Process.BRIEF
+               dr(&quot;Process_ID&quot;) =Process.ID
+             end if 
+             dr(&quot;Name&quot;) =Name
+            DestDataTable.Rows.Add (dr)
+        End Sub
+
+        Public Overrides Function FindInside(ByVal Table As String, ByVal RowID As String) As MKSNManager.Document.DocRow_Base
+            dim mFindInside As MKSNManager.Document.DocRow_Base = Nothing
+            Return Nothing
+        End Function
+
+        Public Overrides Sub Pack(ByVal nv As MKSNManager.MKSN.NamedValues)
+          if m_Process.Equals(System.Guid.Empty) then
+            nv.Add(&quot;Process&quot;, system.dbnull.value, dbtype.guid)
+          else
+            nv.Add(&quot;Process&quot;, m_Process, dbtype.guid)
+          end if 
+          nv.Add(&quot;Name&quot;, Name, dbtype.string)
+            nv.Add(PartName() &amp; &quot;id&quot;, ID, DbType.Guid)
+        End Sub
+
+
+        Public Overrides Sub Unpack(ByVal reader As System.Data.DataRow)
+            on error resume next  
+            If IsDBNull(reader.item(&quot;SecurityStyleID&quot;)) Then
+                SecureStyleID = System.guid.Empty
+            Else
+                SecureStyleID = reader.item(&quot;SecurityStyleID&quot;)
+            End If
+
+            RowRetrived = True
+            RetriveTime = Now
+          if isdbnull(reader.item(&quot;Process&quot;)) then
+            m_Process = System.GUID.Empty
+          else
+            m_Process=reader.item(&quot;Process&quot;)
+          end if 
+          m_Name=reader.item(&quot;Name&quot;)
+        End Sub
+        Public Property Process() As MKSNManager.Document.doc_base
+            Get
+                LoadFromDatabase()
+                Process = me.application.manager.GetInstanceObject(m_Process)
+                AccessTime = Now
+            End Get
+            Set(ByVal Value As MKSNManager.Document.doc_base )
+                LoadFromDatabase()
+                if not  Value is nothing then
+                  m_Process = Value.id
+                else
+                  m_Process =System.Guid.Empty 
+                end if
+                ChangeTime = Now
+            End Set
+        End Property
+        Public Property Name() As String
+            Get
+                LoadFromDatabase()
+                Name = m_Name
+                AccessTime = Now
+            End Get
+            Set(ByVal Value As String )
+                LoadFromDatabase()
+                m_Name = Value
+                ChangeTime = Now
+            End Set
+        End Property
+        Protected Overrides sub XMLUnpack(ByVal node As System.Xml.XmlNode, Optional ByVal LoadMode As Integer = 0)
+          Dim e_list As XmlNodeList
+          on error resume next  
+            m_Process = new system.guid(node.Attributes.GetNamedItem(&quot;Process&quot;).Value)
+            Name = node.Attributes.GetNamedItem(&quot;Name&quot;).Value
+             Changed = true
+        End sub
+        Public Overrides Sub Dispose()
+        End Sub
+        Protected Overrides sub XLMPack(ByVal node As System.Xml.XmlElement, ByVal Xdom As System.Xml.XmlDocument)
+           on error resume next  
+          node.SetAttribute(&quot;Process&quot;, m_Process.tostring)  
+          node.SetAttribute(&quot;Name&quot;, Name)  
+        End sub
+Public Overrides Sub BatchUpdate()
+If Not Application.WorkOffline Then
+  If Deleted Then
+    Delete
+    Exit Sub
+  End If
+  If Changed Then Save
+End If
+End Sub
+    End Class
+End Namespace
+
+"><FormData Name=""/></BlockHolder></ModuleHolder><ModuleHolder ModuleName="WFRTM_SUBPROCESS_col" File="WFRTM_SUBPROCESS_col.vb"><BlockHolder BlockName="code" BlockCode="
+Option Explicit On
+
+Imports MKSNManager
+Imports System
+Imports System.xml
+Imports System.Data
+
+Namespace WFRtm
+    Public Class WFRTM_SUBPROCESS_col
+        Inherits MKSNManager.Document.DocCollection_Base
+
+        Public Overrides Function ChildPartName() As String
+            ChildPartName = &quot;WFRTM_SUBPROCESS&quot;
+        End Function
+
+        Protected Overrides Function CreateDataTable() As System.Data.DataTable
+            Dim dt As DataTable
+            dt = New DataTable
+            dt.Columns.Add(&quot;ID&quot;, GetType(System.guid))
+            dt.Columns.Add(&quot;Brief&quot;, Gettype(System.string))
+            dt.Columns.Add(&quot;Process_ID&quot; , GetType(System.guid))
+            dt.Columns.Add(&quot;Process&quot;, Gettype(System.string))
+            dt.Columns.Add(&quot;Name&quot;, Gettype(System.string))
+            return dt
+        End Function
+
+        Protected Overrides Function NewItem() As MKSNManager.Document.DocRow_Base
+            NewItem = New WFRTM_SUBPROCESS
+        End Function
+        Public Function GetItem( vIndex as object ) As WFRtm.WFRTM_SUBPROCESS
+            on error resume next
+            GetItem = Convert.ChangeType(mybase.Item(vIndex), GetType(WFRtm.WFRTM_SUBPROCESS))
+        End Function
+        Public Shadows Function Item( vIndex as object ) As WFRtm.WFRTM_SUBPROCESS
+            on error resume next
+            return GetItem(vIndex)
+        End Function
+    End Class
+End Namespace
+
+"><FormData Name=""/></BlockHolder></ModuleHolder><ModuleHolder ModuleName="WFRtm_main" File="WFRtm_main.vb"><BlockHolder BlockName="code" BlockCode="
+Option Explicit On
+
+Imports System
+Imports System.IO
+Imports MKSNManager
+Imports System.xml
+Imports System.Data
+Imports System.Convert
+Imports System.DateTime
+
+Namespace WFRtm
+    Public Class WFRtm_main
+        Inherits MKSNManager.Document.DocRow_Base
+
+            private m_Moderator  as System.Guid
+            private m_BasedOn  as System.Guid
+            private m_ProcessState  as enumWFProcessState
+            private m_the_Description  as STRING
+            private m_Attachment  as Object
+
+        Public Overrides Sub CleanFields()
+            ' m_Moderator=   
+            ' m_BasedOn=   
+            ' m_ProcessState=   
+            ' m_the_Description=   
+            ' m_Attachment=   
+        End Sub
+        Public Overrides Sub FillDataTable(ByRef DestDataTable As System.Data.DataTable)
+            Dim dr As  DataRow
+            dr = destdatatable.NewRow
+            on error resume next
+            dr(&quot;ID&quot;) =ID
+            dr(&quot;Brief&quot;) =Brief
+             if Moderator is nothing then
+               dr(&quot;Moderator&quot;) =system.dbnull.value
+               dr(&quot;Moderator_ID&quot;) =System.Guid.Empty
+             else
+               dr(&quot;Moderator&quot;) =Moderator.BRIEF
+               dr(&quot;Moderator_ID&quot;) =Moderator.ID
+             end if 
+             if BasedOn is nothing then
+               dr(&quot;BasedOn&quot;) =system.dbnull.value
+               dr(&quot;BasedOn_ID&quot;) =System.Guid.Empty
+             else
+               dr(&quot;BasedOn&quot;) =BasedOn.BRIEF
+               dr(&quot;BasedOn_ID&quot;) =BasedOn.ID
+             end if 
+             select case ProcessState
+            case enumWFProcessState.WFProcessState_Active
+              dr (&quot;ProcessState&quot;)  = &quot;Active&quot;
+              dr (&quot;ProcessState_VAL&quot;)  = 2
+            case enumWFProcessState.WFProcessState_Pause
+              dr (&quot;ProcessState&quot;)  = &quot;Pause&quot;
+              dr (&quot;ProcessState_VAL&quot;)  = 3
+            case enumWFProcessState.WFProcessState_Processed
+              dr (&quot;ProcessState&quot;)  = &quot;Processed&quot;
+              dr (&quot;ProcessState_VAL&quot;)  = 5
+            case enumWFProcessState.WFProcessState_Done
+              dr (&quot;ProcessState&quot;)  = &quot;Done&quot;
+              dr (&quot;ProcessState_VAL&quot;)  = 4
+            case enumWFProcessState.WFProcessState_Prepare
+              dr (&quot;ProcessState&quot;)  = &quot;Prepare&quot;
+              dr (&quot;ProcessState_VAL&quot;)  = 1
+            case enumWFProcessState.WFProcessState_Initial
+              dr (&quot;ProcessState&quot;)  = &quot;Initial&quot;
+              dr (&quot;ProcessState_VAL&quot;)  = 0
+              end select 'ProcessState
+             dr(&quot;the_Description&quot;) =the_Description
+             dr(&quot;Attachment&quot;) =Attachment
+            DestDataTable.Rows.Add (dr)
+        End Sub
+
+        Public Overrides Function FindInside(ByVal Table As String, ByVal RowID As String) As MKSNManager.Document.DocRow_Base
+            dim mFindInside As MKSNManager.Document.DocRow_Base = Nothing
+            Return Nothing
+        End Function
+
+        Public Overrides Sub Pack(ByVal nv As MKSNManager.MKSN.NamedValues)
+          if m_Moderator.Equals(System.Guid.Empty) then
+            nv.Add(&quot;Moderator&quot;, system.dbnull.value, dbtype.guid)
+          else
+            nv.Add(&quot;Moderator&quot;, m_Moderator, dbtype.guid)
+          end if 
+          if m_BasedOn.Equals(System.Guid.Empty) then
+            nv.Add(&quot;BasedOn&quot;, system.dbnull.value, dbtype.guid)
+          else
+            nv.Add(&quot;BasedOn&quot;, m_BasedOn, dbtype.guid)
+          end if 
+          nv.Add(&quot;ProcessState&quot;, ProcessState, dbtype.int16)
+          nv.Add(&quot;the_Description&quot;, the_Description, dbtype.string)
+          nv.Add(&quot;Attachment&quot;, Attachment, dbtype.Binary)
+            nv.Add(PartName() &amp; &quot;id&quot;, ID, DbType.Guid)
+        End Sub
+
+
+        Public Overrides Sub Unpack(ByVal reader As System.Data.DataRow)
+            on error resume next  
+            If IsDBNull(reader.item(&quot;SecurityStyleID&quot;)) Then
+                SecureStyleID = System.guid.Empty
+            Else
+                SecureStyleID = reader.item(&quot;SecurityStyleID&quot;)
+            End If
+
+            RowRetrived = True
+            RetriveTime = Now
+          if isdbnull(reader.item(&quot;Moderator&quot;)) then
+            m_Moderator = System.GUID.Empty
+          else
+            m_Moderator=reader.item(&quot;Moderator&quot;)
+          end if 
+          if isdbnull(reader.item(&quot;BasedOn&quot;)) then
+            m_BasedOn = System.GUID.Empty
+          else
+            m_BasedOn=reader.item(&quot;BasedOn&quot;)
+          end if 
+          m_ProcessState=reader.item(&quot;ProcessState&quot;)
+          m_the_Description=reader.item(&quot;the_Description&quot;)
+          m_Attachment=reader.item(&quot;Attachment&quot;)
+        End Sub
+        Public Property Moderator() As MKSNManager.Document.docrow_base
+            Get
+                LoadFromDatabase()
+                Moderator = me.application.Findrowobject(&quot;Users&quot;,m_Moderator)
+                AccessTime = Now
+            End Get
+            Set(ByVal Value As MKSNManager.Document.docrow_base )
+                LoadFromDatabase()
+                if not Value is nothing then
+                    m_Moderator = Value.id
+                else
+                   m_Moderator=System.Guid.Empty
+                end if
+                ChangeTime = Now
+            End Set
+        End Property
+        Public Property BasedOn() As MKSNManager.Document.doc_base
+            Get
+                LoadFromDatabase()
+                BasedOn = me.application.manager.GetInstanceObject(m_BasedOn)
+                AccessTime = Now
+            End Get
+            Set(ByVal Value As MKSNManager.Document.doc_base )
+                LoadFromDatabase()
+                if not  Value is nothing then
+                  m_BasedOn = Value.id
+                else
+                  m_BasedOn =System.Guid.Empty 
+                end if
+                ChangeTime = Now
+            End Set
+        End Property
+        Public Property ProcessState() As enumWFProcessState
+            Get
+                LoadFromDatabase()
+                ProcessState = m_ProcessState
+                AccessTime = Now
+            End Get
+            Set(ByVal Value As enumWFProcessState )
+                LoadFromDatabase()
+                m_ProcessState = Value
+                ChangeTime = Now
+            End Set
+        End Property
+        Public Property the_Description() As STRING
+            Get
+                LoadFromDatabase()
+                the_Description = m_the_Description
+                AccessTime = Now
+            End Get
+            Set(ByVal Value As STRING )
+                LoadFromDatabase()
+                m_the_Description = Value
+                ChangeTime = Now
+            End Set
+        End Property
+        Public Property Attachment() As Object
+            Get
+                LoadFromDatabase()
+                Attachment = m_Attachment
+                AccessTime = Now
+            End Get
+            Set(ByVal Value As Object )
+                LoadFromDatabase()
+                m_Attachment = Value
+                ChangeTime = Now
+            End Set
+        End Property
+        Protected Overrides sub XMLUnpack(ByVal node As System.Xml.XmlNode, Optional ByVal LoadMode As Integer = 0)
+          Dim e_list As XmlNodeList
+          on error resume next  
+            m_Moderator = new system.guid(node.Attributes.GetNamedItem(&quot;Moderator&quot;).Value)
+            m_BasedOn = new system.guid(node.Attributes.GetNamedItem(&quot;BasedOn&quot;).Value)
+            ProcessState = node.Attributes.GetNamedItem(&quot;ProcessState&quot;).Value
+            the_Description = node.Attributes.GetNamedItem(&quot;the_Description&quot;).Value
+            Attachment = node.Attributes.GetNamedItem(&quot;Attachment&quot;).Value
+             Changed = true
+        End sub
+        Public Overrides Sub Dispose()
+        End Sub
+        Protected Overrides sub XLMPack(ByVal node As System.Xml.XmlElement, ByVal Xdom As System.Xml.XmlDocument)
+           on error resume next  
+          node.SetAttribute(&quot;Moderator&quot;, m_Moderator.tostring)  
+          node.SetAttribute(&quot;BasedOn&quot;, m_BasedOn.tostring)  
+          node.SetAttribute(&quot;ProcessState&quot;, ProcessState)  
+          node.SetAttribute(&quot;the_Description&quot;, the_Description)  
+          node.SetAttribute(&quot;Attachment&quot;, Attachment)  
+        End sub
+Public Overrides Sub BatchUpdate()
+If Not Application.WorkOffline Then
+  If Deleted Then
+    Delete
+    Exit Sub
+  End If
+  If Changed Then Save
+End If
+End Sub
+    End Class
+End Namespace
+
+"><FormData Name=""/></BlockHolder></ModuleHolder><ModuleHolder ModuleName="WFRtm_main_col" File="WFRtm_main_col.vb"><BlockHolder BlockName="code" BlockCode="
+Option Explicit On
+
+Imports MKSNManager
+Imports System
+Imports System.xml
+Imports System.Data
+
+Namespace WFRtm
+    Public Class WFRtm_main_col
+        Inherits MKSNManager.Document.DocCollection_Base
+
+        Public Overrides Function ChildPartName() As String
+            ChildPartName = &quot;WFRtm_main&quot;
+        End Function
+
+        Protected Overrides Function CreateDataTable() As System.Data.DataTable
+            Dim dt As DataTable
+            dt = New DataTable
+            dt.Columns.Add(&quot;ID&quot;, GetType(System.guid))
+            dt.Columns.Add(&quot;Brief&quot;, Gettype(System.string))
+            dt.Columns.Add(&quot;Moderator_ID&quot; , GetType(System.guid))
+            dt.Columns.Add(&quot;Moderator&quot;, Gettype(System.string))
+            dt.Columns.Add(&quot;BasedOn_ID&quot; , GetType(System.guid))
+            dt.Columns.Add(&quot;BasedOn&quot;, Gettype(System.string))
+            dt.Columns.Add(&quot;ProcessState_VAL&quot; , Gettype(System.Int16))
+            dt.Columns.Add(&quot;ProcessState&quot;, Gettype(System.string))
+            dt.Columns.Add(&quot;the_Description&quot;, Gettype(System.string))
+            dt.Columns.Add(&quot;Attachment&quot;, GetType(System.object))
+            return dt
+        End Function
+
+        Protected Overrides Function NewItem() As MKSNManager.Document.DocRow_Base
+            NewItem = New WFRtm_main
+        End Function
+        Public Function GetItem( vIndex as object ) As WFRtm.WFRtm_main
+            on error resume next
+            GetItem = Convert.ChangeType(mybase.Item(vIndex), GetType(WFRtm.WFRtm_main))
+        End Function
+        Public Shadows Function Item( vIndex as object ) As WFRtm.WFRtm_main
+            on error resume next
+            return GetItem(vIndex)
+        End Function
+    End Class
+End Namespace
+
+"><FormData Name=""/></BlockHolder></ModuleHolder><ModuleHolder ModuleName="WFRtm_Doc" File="WFRtm_Doc.vb"><BlockHolder BlockName="code" BlockCode="
+Option Explicit On
+
+Imports System
+Imports System.IO
+Imports MKSNManager
+Imports System.xml
+Imports System.Data
+Imports System.Convert
+Imports System.DateTime
+
+Namespace WFRtm
+    Public Class WFRtm_Doc
+        Inherits MKSNManager.Document.DocRow_Base
+
+            private m_Document  as System.Guid
+            private m_BasedOn  as System.Guid
+
+        Public Overrides Sub CleanFields()
+            ' m_Document=   
+            ' m_BasedOn=   
+        End Sub
+        Public Overrides Sub FillDataTable(ByRef DestDataTable As System.Data.DataTable)
+            Dim dr As  DataRow
+            dr = destdatatable.NewRow
+            on error resume next
+            dr(&quot;ID&quot;) =ID
+            dr(&quot;Brief&quot;) =Brief
+             if Document is nothing then
+               dr(&quot;Document&quot;) =system.dbnull.value
+               dr(&quot;Document_ID&quot;) =System.Guid.Empty
+             else
+               dr(&quot;Document&quot;) =Document.BRIEF
+               dr(&quot;Document_ID&quot;) =Document.ID
+             end if 
+             if BasedOn is nothing then
+               dr(&quot;BasedOn&quot;) =system.dbnull.value
+               dr(&quot;BasedOn_ID&quot;) =System.Guid.Empty
+             else
+               dr(&quot;BasedOn&quot;) =BasedOn.BRIEF
+               dr(&quot;BasedOn_ID&quot;) =BasedOn.ID
+             end if 
+            DestDataTable.Rows.Add (dr)
+        End Sub
+
+        Public Overrides Function FindInside(ByVal Table As String, ByVal RowID As String) As MKSNManager.Document.DocRow_Base
+            dim mFindInside As MKSNManager.Document.DocRow_Base = Nothing
+            Return Nothing
+        End Function
+
+        Public Overrides Sub Pack(ByVal nv As MKSNManager.MKSN.NamedValues)
+          if m_Document.Equals(System.Guid.Empty) then
+            nv.Add(&quot;Document&quot;, system.dbnull.value, dbtype.guid)
+          else
+            nv.Add(&quot;Document&quot;, m_Document, dbtype.guid)
+          end if 
+          if m_BasedOn.Equals(System.Guid.Empty) then
+            nv.Add(&quot;BasedOn&quot;, system.dbnull.value, dbtype.guid)
+          else
+            nv.Add(&quot;BasedOn&quot;, m_BasedOn, dbtype.guid)
+          end if 
+            nv.Add(PartName() &amp; &quot;id&quot;, ID, DbType.Guid)
+        End Sub
+
+
+        Public Overrides Sub Unpack(ByVal reader As System.Data.DataRow)
+            on error resume next  
+            If IsDBNull(reader.item(&quot;SecurityStyleID&quot;)) Then
+                SecureStyleID = System.guid.Empty
+            Else
+                SecureStyleID = reader.item(&quot;SecurityStyleID&quot;)
+            End If
+
+            RowRetrived = True
+            RetriveTime = Now
+          if isdbnull(reader.item(&quot;Document&quot;)) then
+            m_Document = System.GUID.Empty
+          else
+            m_Document=reader.item(&quot;Document&quot;)
+          end if 
+          if isdbnull(reader.item(&quot;BasedOn&quot;)) then
+            m_BasedOn = System.GUID.Empty
+          else
+            m_BasedOn=reader.item(&quot;BasedOn&quot;)
+          end if 
+        End Sub
+        Public Property Document() As MKSNManager.Document.doc_base
+            Get
+                LoadFromDatabase()
+                Document = me.application.manager.GetInstanceObject(m_Document)
+                AccessTime = Now
+            End Get
+            Set(ByVal Value As MKSNManager.Document.doc_base )
+                LoadFromDatabase()
+                if not  Value is nothing then
+                  m_Document = Value.id
+                else
+                  m_Document =System.Guid.Empty 
+                end if
+                ChangeTime = Now
+            End Set
+        End Property
+        Public Property BasedOn() As MKSNManager.Document.docrow_base
+            Get
+                LoadFromDatabase()
+                BasedOn = me.application.Findrowobject(&quot;WFDef_Doc&quot;,m_BasedOn)
+                AccessTime = Now
+            End Get
+            Set(ByVal Value As MKSNManager.Document.docrow_base )
+                LoadFromDatabase()
+                if not Value is nothing then
+                    m_BasedOn = Value.id
+                else
+                   m_BasedOn=System.Guid.Empty
+                end if
+                ChangeTime = Now
+            End Set
+        End Property
+        Protected Overrides sub XMLUnpack(ByVal node As System.Xml.XmlNode, Optional ByVal LoadMode As Integer = 0)
+          Dim e_list As XmlNodeList
+          on error resume next  
+            m_Document = new system.guid(node.Attributes.GetNamedItem(&quot;Document&quot;).Value)
+            m_BasedOn = new system.guid(node.Attributes.GetNamedItem(&quot;BasedOn&quot;).Value)
+             Changed = true
+        End sub
+        Public Overrides Sub Dispose()
+        End Sub
+        Protected Overrides sub XLMPack(ByVal node As System.Xml.XmlElement, ByVal Xdom As System.Xml.XmlDocument)
+           on error resume next  
+          node.SetAttribute(&quot;Document&quot;, m_Document.tostring)  
+          node.SetAttribute(&quot;BasedOn&quot;, m_BasedOn.tostring)  
+        End sub
+Public Overrides Sub BatchUpdate()
+If Not Application.WorkOffline Then
+  If Deleted Then
+    Delete
+    Exit Sub
+  End If
+  If Changed Then Save
+End If
+End Sub
+    End Class
+End Namespace
+
+"><FormData Name=""/></BlockHolder></ModuleHolder><ModuleHolder ModuleName="WFRtm_Doc_col" File="WFRtm_Doc_col.vb"><BlockHolder BlockName="code" BlockCode="
+Option Explicit On
+
+Imports MKSNManager
+Imports System
+Imports System.xml
+Imports System.Data
+
+Namespace WFRtm
+    Public Class WFRtm_Doc_col
+        Inherits MKSNManager.Document.DocCollection_Base
+
+        Public Overrides Function ChildPartName() As String
+            ChildPartName = &quot;WFRtm_Doc&quot;
+        End Function
+
+        Protected Overrides Function CreateDataTable() As System.Data.DataTable
+            Dim dt As DataTable
+            dt = New DataTable
+            dt.Columns.Add(&quot;ID&quot;, GetType(System.guid))
+            dt.Columns.Add(&quot;Brief&quot;, Gettype(System.string))
+            dt.Columns.Add(&quot;Document_ID&quot; , GetType(System.guid))
+            dt.Columns.Add(&quot;Document&quot;, Gettype(System.string))
+            dt.Columns.Add(&quot;BasedOn_ID&quot; , GetType(System.guid))
+            dt.Columns.Add(&quot;BasedOn&quot;, Gettype(System.string))
+            return dt
+        End Function
+
+        Protected Overrides Function NewItem() As MKSNManager.Document.DocRow_Base
+            NewItem = New WFRtm_Doc
+        End Function
+        Public Function GetItem( vIndex as object ) As WFRtm.WFRtm_Doc
+            on error resume next
+            GetItem = Convert.ChangeType(mybase.Item(vIndex), GetType(WFRtm.WFRtm_Doc))
+        End Function
+        Public Shadows Function Item( vIndex as object ) As WFRtm.WFRtm_Doc
+            on error resume next
+            return GetItem(vIndex)
+        End Function
+    End Class
+End Namespace
+
+"><FormData Name=""/></BlockHolder></ModuleHolder><ModuleHolder ModuleName="WFRtm_func" File="WFRtm_func.vb"><BlockHolder BlockName="code" BlockCode="
+Option Explicit On
+
+Imports System
+Imports System.IO
+Imports MKSNManager
+Imports System.xml
+Imports System.Data
+Imports System.Convert
+Imports System.DateTime
+
+Namespace WFRtm
+    Public Class WFRtm_func
+        Inherits MKSNManager.Document.DocRow_Base
+
+            private m_Func  as System.Guid
+
+        Public Overrides Sub CleanFields()
+            ' m_Func=   
+        End Sub
+        Public Overrides Sub FillDataTable(ByRef DestDataTable As System.Data.DataTable)
+            Dim dr As  DataRow
+            dr = destdatatable.NewRow
+            on error resume next
+            dr(&quot;ID&quot;) =ID
+            dr(&quot;Brief&quot;) =Brief
+             if Func is nothing then
+               dr(&quot;Func&quot;) =system.dbnull.value
+               dr(&quot;Func_ID&quot;) =System.Guid.Empty
+             else
+               dr(&quot;Func&quot;) =Func.BRIEF
+               dr(&quot;Func_ID&quot;) =Func.ID
+             end if 
+            DestDataTable.Rows.Add (dr)
+        End Sub
+
+        Public Overrides Function FindInside(ByVal Table As String, ByVal RowID As String) As MKSNManager.Document.DocRow_Base
+            dim mFindInside As MKSNManager.Document.DocRow_Base = Nothing
+            Return Nothing
+        End Function
+
+        Public Overrides Sub Pack(ByVal nv As MKSNManager.MKSN.NamedValues)
+          if m_Func.Equals(System.Guid.Empty) then
+            nv.Add(&quot;Func&quot;, system.dbnull.value, dbtype.guid)
+          else
+            nv.Add(&quot;Func&quot;, m_Func, dbtype.guid)
+          end if 
+            nv.Add(PartName() &amp; &quot;id&quot;, ID, DbType.Guid)
+        End Sub
+
+
+        Public Overrides Sub Unpack(ByVal reader As System.Data.DataRow)
+            on error resume next  
+            If IsDBNull(reader.item(&quot;SecurityStyleID&quot;)) Then
+                SecureStyleID = System.guid.Empty
+            Else
+                SecureStyleID = reader.item(&quot;SecurityStyleID&quot;)
+            End If
+
+            RowRetrived = True
+            RetriveTime = Now
+          if isdbnull(reader.item(&quot;Func&quot;)) then
+            m_Func = System.GUID.Empty
+          else
+            m_Func=reader.item(&quot;Func&quot;)
+          end if 
+        End Sub
+        Public Property Func() As MKSNManager.Document.doc_base
+            Get
+                LoadFromDatabase()
+                Func = me.application.manager.GetInstanceObject(m_Func)
+                AccessTime = Now
+            End Get
+            Set(ByVal Value As MKSNManager.Document.doc_base )
+                LoadFromDatabase()
+                if not  Value is nothing then
+                  m_Func = Value.id
+                else
+                  m_Func =System.Guid.Empty 
+                end if
+                ChangeTime = Now
+            End Set
+        End Property
+        Protected Overrides sub XMLUnpack(ByVal node As System.Xml.XmlNode, Optional ByVal LoadMode As Integer = 0)
+          Dim e_list As XmlNodeList
+          on error resume next  
+            m_Func = new system.guid(node.Attributes.GetNamedItem(&quot;Func&quot;).Value)
+             Changed = true
+        End sub
+        Public Overrides Sub Dispose()
+        End Sub
+        Protected Overrides sub XLMPack(ByVal node As System.Xml.XmlElement, ByVal Xdom As System.Xml.XmlDocument)
+           on error resume next  
+          node.SetAttribute(&quot;Func&quot;, m_Func.tostring)  
+        End sub
+Public Overrides Sub BatchUpdate()
+If Not Application.WorkOffline Then
+  If Deleted Then
+    Delete
+    Exit Sub
+  End If
+  If Changed Then Save
+End If
+End Sub
+    End Class
+End Namespace
+
+"><FormData Name=""/></BlockHolder></ModuleHolder><ModuleHolder ModuleName="WFRtm_func_col" File="WFRtm_func_col.vb"><BlockHolder BlockName="code" BlockCode="
+Option Explicit On
+
+Imports MKSNManager
+Imports System
+Imports System.xml
+Imports System.Data
+
+Namespace WFRtm
+    Public Class WFRtm_func_col
+        Inherits MKSNManager.Document.DocCollection_Base
+
+        Public Overrides Function ChildPartName() As String
+            ChildPartName = &quot;WFRtm_func&quot;
+        End Function
+
+        Protected Overrides Function CreateDataTable() As System.Data.DataTable
+            Dim dt As DataTable
+            dt = New DataTable
+            dt.Columns.Add(&quot;ID&quot;, GetType(System.guid))
+            dt.Columns.Add(&quot;Brief&quot;, Gettype(System.string))
+            dt.Columns.Add(&quot;Func_ID&quot; , GetType(System.guid))
+            dt.Columns.Add(&quot;Func&quot;, Gettype(System.string))
+            return dt
+        End Function
+
+        Protected Overrides Function NewItem() As MKSNManager.Document.DocRow_Base
+            NewItem = New WFRtm_func
+        End Function
+        Public Function GetItem( vIndex as object ) As WFRtm.WFRtm_func
+            on error resume next
+            GetItem = Convert.ChangeType(mybase.Item(vIndex), GetType(WFRtm.WFRtm_func))
+        End Function
+        Public Shadows Function Item( vIndex as object ) As WFRtm.WFRtm_func
+            on error resume next
+            return GetItem(vIndex)
+        End Function
+    End Class
+End Namespace
+
+"><FormData Name=""/></BlockHolder></ModuleHolder><ModuleHolder ModuleName="WFRtm_Pcomm" File="WFRtm_Pcomm.vb"><BlockHolder BlockName="code" BlockCode="
+Option Explicit On
+
+Imports System
+Imports System.IO
+Imports MKSNManager
+Imports System.xml
+Imports System.Data
+Imports System.Convert
+Imports System.DateTime
+
+Namespace WFRtm
+    Public Class WFRtm_Pcomm
+        Inherits MKSNManager.Document.DocRow_Base
+
+            private m_Subject  as String
+            private m_Author  as System.Guid
+            private m_Attachment  as Object
+            private m_Message  as STRING
+        private m_WFRtm_Pcomm As WFRtm_Pcomm_col
+
+        Public Overrides Sub CleanFields()
+            ' m_Subject=   
+            ' m_Author=   
+            ' m_Attachment=   
+            ' m_Message=   
+        End Sub
+        Public Overrides Sub FillDataTable(ByRef DestDataTable As System.Data.DataTable)
+            Dim dr As  DataRow
+            dr = destdatatable.NewRow
+            on error resume next
+            dr(&quot;ID&quot;) =ID
+            dr(&quot;Brief&quot;) =Brief
+             dr(&quot;Subject&quot;) =Subject
+             if Author is nothing then
+               dr(&quot;Author&quot;) =system.dbnull.value
+               dr(&quot;Author_ID&quot;) =System.Guid.Empty
+             else
+               dr(&quot;Author&quot;) =Author.BRIEF
+               dr(&quot;Author_ID&quot;) =Author.ID
+             end if 
+             dr(&quot;Attachment&quot;) =Attachment
+             dr(&quot;Message&quot;) =Message
+            DestDataTable.Rows.Add (dr)
+        End Sub
+
+        Public Overrides Function FindInside(ByVal Table As String, ByVal RowID As String) As MKSNManager.Document.DocRow_Base
+            dim mFindInside As MKSNManager.Document.DocRow_Base = Nothing
+            mFindInside = WFRtm_Pcomm.FindObject(table,RowID)
+            if not mFindInside is nothing then return mFindInside
+            Return Nothing
+        End Function
+
+        Public Overrides Sub Pack(ByVal nv As MKSNManager.MKSN.NamedValues)
+        If Me.Parent.Parent.GetType.name = Me.GetType.name Then
+            nv.Add(&quot;ParentRowID&quot;, Me.Parent.Parent.ID, dbtype.guid)
+        Else
+             nv.Add(&quot;ParentRowID&quot;, system.dbnull.value, dbtype.guid)
+        End If
+          nv.Add(&quot;Subject&quot;, Subject, dbtype.string)
+          if m_Author.Equals(System.Guid.Empty) then
+            nv.Add(&quot;Author&quot;, system.dbnull.value, dbtype.guid)
+          else
+            nv.Add(&quot;Author&quot;, m_Author, dbtype.guid)
+          end if 
+          nv.Add(&quot;Attachment&quot;, Attachment, dbtype.Binary)
+          nv.Add(&quot;Message&quot;, Message, dbtype.string)
+            nv.Add(PartName() &amp; &quot;id&quot;, ID, DbType.Guid)
+        End Sub
+
+
+        Public Overrides Sub Unpack(ByVal reader As System.Data.DataRow)
+            on error resume next  
+            If IsDBNull(reader.item(&quot;SecurityStyleID&quot;)) Then
+                SecureStyleID = System.guid.Empty
+            Else
+                SecureStyleID = reader.item(&quot;SecurityStyleID&quot;)
+            End If
+
+            RowRetrived = True
+            RetriveTime = Now
+          m_Subject=reader.item(&quot;Subject&quot;)
+          if isdbnull(reader.item(&quot;Author&quot;)) then
+            m_Author = System.GUID.Empty
+          else
+            m_Author=reader.item(&quot;Author&quot;)
+          end if 
+          m_Attachment=reader.item(&quot;Attachment&quot;)
+          m_Message=reader.item(&quot;Message&quot;)
+        End Sub
+        Public Property Subject() As String
+            Get
+                LoadFromDatabase()
+                Subject = m_Subject
+                AccessTime = Now
+            End Get
+            Set(ByVal Value As String )
+                LoadFromDatabase()
+                m_Subject = Value
+                ChangeTime = Now
+            End Set
+        End Property
+        Public Property Author() As MKSNManager.Document.docrow_base
+            Get
+                LoadFromDatabase()
+                Author = me.application.Findrowobject(&quot;Users&quot;,m_Author)
+                AccessTime = Now
+            End Get
+            Set(ByVal Value As MKSNManager.Document.docrow_base )
+                LoadFromDatabase()
+                if not Value is nothing then
+                    m_Author = Value.id
+                else
+                   m_Author=System.Guid.Empty
+                end if
+                ChangeTime = Now
+            End Set
+        End Property
+        Public Property Attachment() As Object
+            Get
+                LoadFromDatabase()
+                Attachment = m_Attachment
+                AccessTime = Now
+            End Get
+            Set(ByVal Value As Object )
+                LoadFromDatabase()
+                m_Attachment = Value
+                ChangeTime = Now
+            End Set
+        End Property
+        Public Property Message() As STRING
+            Get
+                LoadFromDatabase()
+                Message = m_Message
+                AccessTime = Now
+            End Get
+            Set(ByVal Value As STRING )
+                LoadFromDatabase()
+                m_Message = Value
+                ChangeTime = Now
+            End Set
+        End Property
+        Public readonly Property WFRtm_Pcomm() As WFRtm_Pcomm_col
+            Get
+                if  m_WFRtm_Pcomm is nothing then
+                  m_WFRtm_Pcomm = new WFRtm_Pcomm_col
+                  m_WFRtm_Pcomm.Parent = me
+                  m_WFRtm_Pcomm.Application = me.Application
+                  m_WFRtm_Pcomm.Refresh
+                end if
+                WFRtm_Pcomm = m_WFRtm_Pcomm
+                AccessTime = Now
+            End Get
+        End Property
+        Protected Overrides sub XMLUnpack(ByVal node As System.Xml.XmlNode, Optional ByVal LoadMode As Integer = 0)
+          Dim e_list As XmlNodeList
+          on error resume next  
+            Subject = node.Attributes.GetNamedItem(&quot;Subject&quot;).Value
+            m_Author = new system.guid(node.Attributes.GetNamedItem(&quot;Author&quot;).Value)
+            Attachment = node.Attributes.GetNamedItem(&quot;Attachment&quot;).Value
+            Message = node.Attributes.GetNamedItem(&quot;Message&quot;).Value
+            e_list = node.SelectNodes(&quot;WFRtm_Pcomm_COL&quot;)
+            WFRtm_Pcomm.XMLLoad(e_list,LoadMode)
+             Changed = true
+        End sub
+        Public Overrides Sub Dispose()
+        End Sub
+        Protected Overrides sub XLMPack(ByVal node As System.Xml.XmlElement, ByVal Xdom As System.Xml.XmlDocument)
+           on error resume next  
+          node.SetAttribute(&quot;Subject&quot;, Subject)  
+          node.SetAttribute(&quot;Author&quot;, m_Author.tostring)  
+          node.SetAttribute(&quot;Attachment&quot;, Attachment)  
+          node.SetAttribute(&quot;Message&quot;, Message)  
+            WFRtm_Pcomm.XMLSave(node,xdom)
+        End sub
+Public Overrides Sub BatchUpdate()
+If Not Application.WorkOffline Then
+  If Deleted Then
+    Delete
+    Exit Sub
+  End If
+  If Changed Then Save
+            WFRtm_Pcomm.BatchUpdate
+End If
+End Sub
+    End Class
+End Namespace
+
+"><FormData Name=""/></BlockHolder></ModuleHolder><ModuleHolder ModuleName="WFRtm_Pcomm_col" File="WFRtm_Pcomm_col.vb"><BlockHolder BlockName="code" BlockCode="
+Option Explicit On
+
+Imports MKSNManager
+Imports System
+Imports System.xml
+Imports System.Data
+
+Namespace WFRtm
+    Public Class WFRtm_Pcomm_col
+        Inherits MKSNManager.Document.DocCollection_Base
+
+        Public Overrides Function ChildPartName() As String
+            ChildPartName = &quot;WFRtm_Pcomm&quot;
+        End Function
+
+        Public Overrides Function IsTree() As Boolean
+            IsTree=true
+        End Function
+        Protected Overrides Function CreateDataTable() As System.Data.DataTable
+            Dim dt As DataTable
+            dt = New DataTable
+            dt.Columns.Add(&quot;ID&quot;, GetType(System.guid))
+            dt.Columns.Add(&quot;Brief&quot;, Gettype(System.string))
+            dt.Columns.Add(&quot;Subject&quot;, Gettype(System.string))
+            dt.Columns.Add(&quot;Author_ID&quot; , GetType(System.guid))
+            dt.Columns.Add(&quot;Author&quot;, Gettype(System.string))
+            dt.Columns.Add(&quot;Attachment&quot;, GetType(System.object))
+            dt.Columns.Add(&quot;Message&quot;, Gettype(System.string))
+            return dt
+        End Function
+
+        Protected Overrides Function NewItem() As MKSNManager.Document.DocRow_Base
+            NewItem = New WFRtm_Pcomm
+        End Function
+        Public Function GetItem( vIndex as object ) As WFRtm.WFRtm_Pcomm
+            on error resume next
+            GetItem = Convert.ChangeType(mybase.Item(vIndex), GetType(WFRtm.WFRtm_Pcomm))
+        End Function
+        Public Shadows Function Item( vIndex as object ) As WFRtm.WFRtm_Pcomm
+            on error resume next
+            return GetItem(vIndex)
+        End Function
+    End Class
+End Namespace
+
+"><FormData Name=""/></BlockHolder></ModuleHolder></root>

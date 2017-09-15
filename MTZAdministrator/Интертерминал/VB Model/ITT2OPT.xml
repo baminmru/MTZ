@@ -1,0 +1,3652 @@
+<?xml version="1.0"?>
+<root><AttributeHolder Name="Type" Value="dll"/><AttributeHolder Name="References" Value="{2A75196C-D9EB-4129-B803-931327F72D5C};{45D6DB85-69D5-45C6-AD58-BB2DA56CCC79};{27532C15-381F-49B2-83D7-087D2BB897B8};{58DF4A4A-346E-4A52-82D1-1DC4A6CB4A60};{F5078F18-C551-11D3-89B9-0000F81FE221}"/><AttributeHolder Name="Name" Value="ITT2OPT"/><AttributeHolder Name="Description" Value="Оптимизация старая"/><ModuleHolder ModuleName="Application" File=""><AttributeHolder Name="Type" Value="class"/><AttributeHolder Name="Instancing" Value="multiuse"/><BlockHolder BlockName="'description" BlockCode="'корневой интерфейс документа (Оптимизация старая)
+private m_Logger as MTZUtil.Logger
+private m_MTZSession as MTZSession.Session
+private m_Manager as MTZManager.Main
+Private findCash As Collection
+private m_ID as string
+private m_SecureStyleID as string
+private m_StatusID as string
+private m_Name as string
+private const m_TypeName as string=&quot;ITT2OPT&quot;
+private m_WorkOffline as boolean
+private m_AutoLoadPart as boolean
+
+
+enum enumHACCPStep'Тип шага в ХАССП процессе
+  HACCPStep_Operaciy=3'Операция
+  HACCPStep_Zaversenie_processa=1'Завершение процесса
+  HACCPStep_Kontrol_nay_tocka=4'Контрольная точка
+  HACCPStep_Korrektiruusee_deystvie=5'Корректирующее действие
+  HACCPStep_Ostanov_processa=2'Останов процесса
+  HACCPStep_Process=6'Процесс
+  HACCPStep_Nacalo_processa=0'Начало процесса
+end enum 
+enum enumPCB_FileType'Тип файла
+  PCB_FileType_Proekt_PP=0'Проект ПП
+  PCB_FileType_HZ=1'ХЗ
+end enum 
+enum enumHaccpIdent'Идентификация
+  HaccpIdent_Kacestvo_poverhnosti=6'Качество поверхности
+  HaccpIdent_Zapah=2'Запах
+  HaccpIdent_Forma=3'Форма
+  HaccpIdent_Cvet=1'Цвет
+  HaccpIdent_Vkus=4'Вкус
+  HaccpIdent_Procee=100'Прочее
+  HaccpIdent_Zvuk=5'Звук
+  HaccpIdent_Vnesniy_vid=0'Внешний вид
+end enum 
+enum enumtypeFace'Физическое лицо \ Юрифическое лицо
+  typeFace_FizLico=0'ФизЛицо
+  typeFace_UrLico=1'ЮрЛицо
+end enum 
+enum enumWFStepClass'Тип шага процесса
+  WFStepClass_SimpleFunction=0'SimpleFunction
+  WFStepClass_StartFunction=1'StartFunction
+  WFStepClass_StopFunction=2'StopFunction
+  WFStepClass_PeriodicFunction=3'PeriodicFunction
+end enum 
+enum enumMonths'Месяцы
+  Months_Noybr_=11'Ноябрь
+  Months_Fevral_=2'Февраль
+  Months_Dekabr_=12'Декабрь
+  Months_Mart=3'Март
+  Months_Ynvar_=1'Январь
+  Months_Sentybr_=9'Сентябрь
+  Months_Iun_=6'Июнь
+  Months_Oktybr_=10'Октябрь
+  Months_May=5'Май
+  Months_Avgust=8'Август
+  Months_Iul_=7'Июль
+  Months_Aprel_=4'Апрель
+end enum 
+enum enumTypeStyle'Вариант трактовки типа поля
+  TypeStyle_Interval=3'Интервал
+  TypeStyle_Element_oformleniy=5'Элемент оформления
+  TypeStyle_Skalyrniy_tip=0'Скалярный тип
+  TypeStyle_Ssilka=4'Ссылка
+  TypeStyle_Perecislenie=2'Перечисление
+  TypeStyle_Viragenie=1'Выражение
+end enum 
+enum enumAggregationType'Вариант агрегации по полю
+  AggregationType_MAX=5'MAX
+  AggregationType_AVG=1'AVG
+  AggregationType_SUM=3'SUM
+  AggregationType_COUNT=2'COUNT
+  AggregationType_MIN=4'MIN
+  AggregationType_CUSTOM=6'CUSTOM
+  AggregationType_none=0'none
+end enum 
+enum enumVHAlignment'Выравнивание
+  VHAlignment_Center_Center=4'Center Center
+  VHAlignment_Center_Top=3'Center Top
+  VHAlignment_Right_Top=6'Right Top
+  VHAlignment_Right_Bottom=8'Right Bottom
+  VHAlignment_Left_Bottom=2'Left Bottom
+  VHAlignment_Right_Center=7'Right Center
+  VHAlignment_Center_Bottom=5'Center Bottom
+  VHAlignment_Left_Center=1'Left Center
+  VHAlignment_Left_Top=0'Left Top
+end enum 
+enum enumtypePackage'Тип отправления
+  typePackage_Vse=-1'Все
+  typePackage_Tovar=1'Товар
+  typePackage_Dokumenti=0'Документы
+end enum 
+enum enumPCB_HoleType'Тип отверстия
+  PCB_HoleType_Gluhoe=2'Глухое
+  PCB_HoleType_Metalizirovannoe=0'Метализированное
+  PCB_HoleType_Nemetallizirovannoe=1'Неметаллизированное
+end enum 
+enum enumWFProcessState'Состояния процесса
+  WFProcessState_Active=2'Active
+  WFProcessState_Pause=3'Pause
+  WFProcessState_Processed=5'Processed
+  WFProcessState_Done=4'Done
+  WFProcessState_Prepare=1'Prepare
+  WFProcessState_Initial=0'Initial
+end enum 
+enum enumNumerationRule'Правило нумерации
+  NumerationRule_Edinay_zona=0'Единая зона
+  NumerationRule_Po_godu=1'По году
+  NumerationRule_Po_dnu=4'По дню
+  NumerationRule_Po_kvartalu=2'По кварталу
+  NumerationRule_Po_mesycu=3'По месяцу
+  NumerationRule_Proizvol_nie_zoni=10'Произвольные зоны
+end enum 
+enum enumMenuActionType'Вариант действия при выборе пункта меню
+  MenuActionType_Otkrit__otcet=5'Открыть отчет
+  MenuActionType_Nicego_ne_delat_=0'Ничего не делать
+  MenuActionType_Vipolnit__metod=2'Выполнить метод
+  MenuActionType_Otkrit__dokument=1'Открыть документ
+  MenuActionType_Zapustit__ARM=4'Запустить АРМ
+  MenuActionType_Otkrit__gurnal=3'Открыть журнал
+end enum 
+enum enumColumnSortType'Вариант сортиовки данных колонки
+  ColumnSortType_As_String=0'As String
+  ColumnSortType_As_Numeric=1'As Numeric
+  ColumnSortType_As_Date=2'As Date
+end enum 
+enum enumAdditionType'Тип надбавки
+  AdditionType_Ob_em=1'Объем
+  AdditionType_Plotnost_=2'Плотность
+  AdditionType_Procee=3'Прочее
+  AdditionType_Ves=0'Вес
+end enum 
+enum enumTypeSempling'Тип выборки
+  TypeSempling_Klienti=-1'Клиенты
+  TypeSempling_Adresati_operatorov=0'Адресаты операторов
+  TypeSempling_Spisok_adresov_SPb=2'Список адресов СПб
+  TypeSempling_Spisok_adresatov=1'Список адресатов
+end enum 
+enum enumStructType'Тип раздела
+  StructType_Derevo=2'Дерево
+  StructType_Kollekciy=1'Коллекция
+  StructType_Stroka_atributov=0'Строка атрибутов
+end enum 
+enum enumTargetType'Вариант уровня приложения, куда может генерироваться код
+  TargetType_SUBD=0'СУБД
+  TargetType_ARM=4'АРМ
+  TargetType_Dokumentaciy=3'Документация
+  TargetType_MODEL_=1'МОДЕЛЬ
+  TargetType_Prilogenie=2'Приложение
+end enum 
+enum enumDeliveryOn'
+  DeliveryOn_Gorod=4'Город
+  DeliveryOn_Rossiy=0'Россия
+  DeliveryOn_Megdunarodnay=1'Международная
+  DeliveryOn_Strana2=2'Страна2
+  DeliveryOn_Sub_ekt=3'Субъект
+end enum 
+enum enumtypeOperatorSystem'
+  typeOperatorSystem_Menedger=2'Менеджер
+  typeOperatorSystem_Procee=0'Прочее
+  typeOperatorSystem_Operator=1'Оператор
+end enum 
+enum enumstateNomen'
+  stateNomen_Pereadresaciy=6'Переадресация
+  stateNomen_Oformlyetsy=0'Оформляется
+  stateNomen_Dostavleno=4'Доставлено
+  stateNomen_V_processe=3'В процессе
+  stateNomen_Vozvrat=5'Возврат
+  stateNomen_Prinyto=2'Принято
+end enum 
+enum enumPartAddBehaivor'Поведение при добавлении строки раздела
+  PartAddBehaivor_AddForm=0'AddForm
+  PartAddBehaivor_RunAction=2'RunAction
+  PartAddBehaivor_RefreshOnly=1'RefreshOnly
+end enum 
+enum enumFolderType'Тип папки
+  FolderType_Ishodysie=2'Исходящие
+  FolderType_Zaversennie=10'Завершенные
+  FolderType_cls__=0'cls__
+  FolderType_Kalendar_=5'Календарь
+  FolderType_Vhodysie=1'Входящие
+  FolderType_Otlogennie=9'Отложенные
+  FolderType_Gurnal=4'Журнал
+  FolderType_V_rabote=8'В работе
+  FolderType_Cernoviki=7'Черновики
+  FolderType_Otpravlennie=6'Отправленные
+  FolderType_Udalennie=3'Удаленные
+end enum 
+enum enummsgState'Состояние заявки
+  msgState_Sostoynie_zayvki=0'Состояние заявки
+  msgState_Soobseno_abonentu=1'Сообщено абоненту
+  msgState_Abonent_ne_otvetil=2'Абонент не ответил
+  msgState_Promegutocniy_otvet=3'Промежуточный ответ
+end enum 
+enum enumWFShortcutType'Варианты ярлыков, которые может размещать процесс
+  WFShortcutType_Function=1'Function
+  WFShortcutType_Process=2'Process
+  WFShortcutType_Document=0'Document
+end enum 
+enum enumReferenceType'ReferenceType
+  ReferenceType_Na_stroku_razdela=2'На строку раздела
+  ReferenceType_Na_istocnik_dannih=3'На источник данных
+  ReferenceType_Skalyrnoe_pole_OPN_ne_ssilkaCLS=0'Скалярное поле ( не ссылка)
+  ReferenceType_Na_ob_ekt_=1'На объект 
+end enum 
+enum enumSex'Мужской / Женский
+  Sex_Mugskoy=1'Мужской
+  Sex_Ne_susestvenno=0'Не существенно
+  Sex_Genskiy=-1'Женский
+end enum 
+enum enumMesureFormat'Формат индикатора
+  MesureFormat_Data=1'Дата
+  MesureFormat_Tekst=5'Текст
+  MesureFormat_Ob_ekt=4'Объект
+  MesureFormat_Spravocnik=2'Справочник
+  MesureFormat_Cislo=0'Число
+end enum 
+enum enumWFFuncParam'Вариант расшифровки параметра функции
+  WFFuncParam_Dokument=5'Документ
+  WFFuncParam_Znacenie=0'Значение
+  WFFuncParam_Dokument_processa=4'Документ процесса
+  WFFuncParam_Viragenie=2'Выражение
+  WFFuncParam_Rol_=8'Роль
+  WFFuncParam_Papka=3'Папка
+  WFFuncParam_Pole=7'Поле
+  WFFuncParam_Znacenie_iz_parametra=1'Значение из параметра
+  WFFuncParam_Razdel=6'Раздел
+  WFFuncParam_Tip_dokumenta=9'Тип документа
+end enum 
+enum enumYesNo'Да / Нет (0 или 1)
+  YesNo_Da=1'Да
+  YesNo_Net=0'Нет
+end enum 
+enum enumtypeOrder'
+  typeOrder_Dostavka_bez_uvedomleniy=2'Доставка без уведомления
+  typeOrder_Bezadresniy_zakaz=0'Безадресный заказ
+  typeOrder_Adresniy_zakaz=1'Адресный заказ
+end enum 
+enum enummsgResult'Результат
+  msgResult_Vipolneno=2'Выполнено
+  msgResult_V_rabote=1'В работе
+  msgResult_Rezul_tat=0'Результат
+end enum 
+enum enumGeneratorStyle'GeneratorStyle
+  GeneratorStyle_Odin_tip=0'Один тип
+  GeneratorStyle_Vse_tipi_srazu=1'Все типы сразу
+end enum 
+enum enumReportType'Вариант отчета
+  ReportType_Dvumernay_matrica=1'Двумерная матрица
+  ReportType_Tablica=0'Таблица
+  ReportType_Eksport_po_WORD_sablonu=3'Экспорт по WORD шаблону
+  ReportType_Tol_ko_rascet=2'Только расчет
+  ReportType_Eksport_po_Excel_sablonu=4'Экспорт по Excel шаблону
+end enum 
+enum enumHACCPPStep'Тип шага в ХАССП процессе
+  HACCPPStep_Sir_e=5'Сырье
+  HACCPPStep_Transportirovka=7'Транспортировка
+  HACCPPStep_Operaciy=3'Операция
+  HACCPPStep_Zaversenie_processa=1'Завершение процесса
+  HACCPPStep_Nacalo_processa=0'Начало процесса
+  HACCPPStep_Ostanov_processa=2'Останов процесса
+  HACCPPStep_Vhod_iz=9'Вход из
+  HACCPPStep_Vihod_v=8'Выход в
+  HACCPPStep_Hranenie=6'Хранение
+  HACCPPStep_Resenie=4'Решение
+end enum 
+enum enumtypeDocOrder'Тип документов для печати заказчику
+  typeDocOrder_Nalicniy_OPNPKO_PLS_kasDOTcekCLS=1'Наличный (ПКО + кас.чек)
+  typeDocOrder_Nalicniy_OPNtovarniy_cek_PLS_kasDOTcekCLS=0'Наличный (товарный чек + кас.чек)
+  typeDocOrder_Beznalicniy_rascet=3'Безналичный расчет
+end enum 
+enum enumPCB_LayerP'Представление поля
+  PCB_LayerP_Negativ=2'Негатив
+  PCB_LayerP_Ne_imeet_znaceniy=0'Не имеет значения
+  PCB_LayerP_Pozitiv=1'Позитив
+end enum 
+enum enumDayInWeek'День недели
+  DayInWeek_Ponedel_nik=1'Понедельник
+  DayInWeek_Sreda=3'Среда
+  DayInWeek_Vtornik=2'Вторник
+  DayInWeek_Pytnica=5'Пятница
+  DayInWeek_Subbota=6'Суббота
+  DayInWeek_Cetverg=4'Четверг
+  DayInWeek_Voskresen_e=7'Воскресенье
+end enum 
+enum enumPlatType'Тип плательщика
+  PlatType_Otpravitel_=0'Отправитель
+  PlatType_Polucatel_=1'Получатель
+  PlatType_Drugoy=2'Другой
+end enum 
+enum enumPartType'PartType
+  PartType_Rassirenie=3'Расширение
+  PartType_Kollekciy=1'Коллекция
+  PartType_Stroka=0'Строка
+  PartType_Derevo=2'Дерево
+  PartType_Rassirenie_s_dannimi=4'Расширение с данными
+end enum 
+enum enumEmployment'Занятость
+  Employment_Polnay=0'Полная
+  Employment_Casticnay=1'Частичная
+  Employment_Ne_vagno=-1'Не важно
+end enum 
+enum enumtypeClient'Тип заказчика
+  typeClient_Razoviy=0'Разовый
+end enum 
+enum enumtypeNomen'Тип номенкатуры
+  typeNomen_Listovki=2'Листовки
+  typeNomen_Tovar=1'Товар
+  typeNomen_GazetiCOMA_gurnaliCOMA_brosuri=4'Газеты, журналы, брошюры
+  typeNomen_Pis_mo=3'Письмо
+  typeNomen_Dokument=0'Документ
+end enum 
+enum enumKONTR_TYPE'Тип контрагента
+  KONTR_TYPE_Procee=5'Прочее
+  KONTR_TYPE_Perevozcik=4'Перевозчик
+  KONTR_TYPE_Partner=2'Партнер
+  KONTR_TYPE_Pokupatel_=0'Покупатель
+  KONTR_TYPE_Ucreditel_=3'Учредитель
+  KONTR_TYPE_Postavsik=1'Поставщик
+end enum 
+enum enumtypePersonPay'
+  typePersonPay_Otpravitel_=0'Отправитель
+  typePersonPay_Polucatel_=1'Получатель
+end enum 
+enum enumJournalLinkType'Для связи журналов друг с другом
+  JournalLinkType_Ssilka_na_stroku=2'Ссылка на строку
+  JournalLinkType_Ssilka_na_ob_ekt=1'Ссылка на объект
+  JournalLinkType_Svyzka_InstanceID_OPNv_peredlah_ob_ektaCLS=3'Связка InstanceID (в передлах объекта)
+  JournalLinkType_Svyzka_ParentStructRowID__OPNv_peredlah_ob_ektaCLS=4'Связка ParentStructRowID  (в передлах объекта)
+  JournalLinkType_Net=0'Нет
+end enum 
+enum enumConditionType'Варианты условий
+  ConditionType_LSGT=2'&lt;&gt;
+  ConditionType_GT=3'&gt;
+  ConditionType_EQ=1'=
+  ConditionType_GTEQ=4'&gt;=
+  ConditionType_LSEQ=7'&lt;=
+  ConditionType_like=8'like
+  ConditionType_LS=6'&lt;
+  ConditionType_none=0'none
+end enum 
+enum enumtypePay'Сдельная \ Ставка
+  typePay_Stavka=1'Ставка
+  typePay_Sdel_nay=0'Сдельная
+end enum 
+enum enumPCB_TaskType'Тип задачи
+  PCB_TaskType_Dostavka=4'Доставка
+  PCB_TaskType_Izgotovlenie_PP=1'Изготовление ПП
+  PCB_TaskType_Postavka_komplektuusih=2'Поставка комплектующих
+  PCB_TaskType_Montag_PP=0'Монтаж ПП
+  PCB_TaskType_Proektirovanie_PP=3'Проектирование ПП
+end enum 
+enum enumVRTaskType'Тип задачи
+  VRTaskType_V_opredelenniy_moment=0'В определенный момент
+  VRTaskType_Fonovay=2'Фоновая
+  VRTaskType_K_opredelennomu_vremeni=1'К определенному времени
+end enum 
+enum enumtypeReceiv'
+  typeReceiv_PTS=1'ПТС
+  typeReceiv_SVS=0'СВС
+end enum 
+enum enumPCB_CustomerType'Статус заказчика
+  PCB_CustomerType_Real_niy=1'Реальный
+  PCB_CustomerType_Potencial_niy=0'Потенциальный
+end enum 
+enum enumOnJournalRowClick'действие при открытии строки журнала
+  OnJournalRowClick_Otkrit__dokument=2'Открыть документ
+  OnJournalRowClick_Otkrit__stroku=1'Открыть строку
+  OnJournalRowClick_Nicego_ne_delat_=0'Ничего не делать
+end enum 
+enum enumtypeRowCheque'Тип строки чека
+  typeRowCheque_PO=1'ПО
+  typeRowCheque_Procee=0'Прочее
+  typeRowCheque_Prostoe_PO=4'Простое ПО
+  typeRowCheque_dopDOTusluga_PO=2'доп.услуга ПО
+  typeRowCheque_dopDOTusluga_zakaza=3'доп.услуга заказа
+  typeRowCheque_Tovar=5'Товар
+end enum 
+enum enumPCB_clear'Тип задачи
+  PCB_clear_Zadaca_1=1'Задача 1
+  PCB_clear_Zadaca_2=0'Задача 2
+end enum 
+enum enumtypeTariff'
+  typeTariff_Usluga=1'Услуга
+  typeTariff_Dostavka=0'Доставка
+end enum 
+enum enumEducation'Образование
+  Education_Srednee_special_noe=2'Среднее специальное
+  Education_Srednee=1'Среднее
+  Education_Ne_vagno=-1'Не важно
+  Education_Vissee=4'Высшее
+  Education_Nepolnoe_srednee=0'Неполное среднее
+  Education_Nepolnoe_vissee=3'Неполное высшее
+  Education_Neskol_ko_vissih=5'Несколько высших
+end enum 
+enum enumDCType'Остатки/Дебит/Кредит
+  DCType_Ostatki=-1'Остатки
+  DCType_Debit=0'Дебит
+  DCType_Kredit=1'Кредит
+end enum 
+enum enumDevelopmentBase'Платформа разработки
+  DevelopmentBase_JAVA=2'JAVA
+  DevelopmentBase_OTHER=3'OTHER
+  DevelopmentBase_DOTNET=1'DOTNET
+  DevelopmentBase_VB6=0'VB6
+end enum 
+enum enumBoolean'Да / Нет
+  Boolean_Da=-1'Да
+  Boolean_Net=0'Нет
+end enum 
+enum enumTriState'Да / Нет / Не определено
+  TriState_Net=0'Нет
+  TriState_Ne_susestvenno=-1'Не существенно
+  TriState_Da=1'Да
+end enum 
+enum enumtypeTRF'Тип тарифа СС
+  typeTRF_Tarif_podrydcika=0'Тариф подрядчика
+  typeTRF_Tarif_klienta=1'Тариф клиента
+  typeTRF_Obsiy_tarif=-1'Общий тариф
+end enum 
+enum enumCurrencyType'Валюта платежа
+  CurrencyType_Rubl_=0'Рубль
+  CurrencyType_Evro=2'Евро
+  CurrencyType_Dollar=1'Доллар
+end enum 
+enum enumWFFuncState'Состояние функции в бизнес процессе
+  WFFuncState_Processed=8'Processed
+  WFFuncState_InWork=3'InWork
+  WFFuncState_Pause=4'Pause
+  WFFuncState_Ready=5'Ready
+  WFFuncState_InControl=6'InControl
+  WFFuncState_Prepare=1'Prepare
+  WFFuncState_Active=2'Active
+  WFFuncState_Done=7'Done
+  WFFuncState_Initial=0'Initial
+end enum 
+enum enumtypeCourier'Договор \ ТрудКнижка
+  typeCourier_Trudovay_knigka=1'Трудовая книжка
+  typeCourier_Dogovor_podryda=0'Договор подряда
+end enum 
+enum enumEmployment_'осталось для совместимости
+  Employment__Polnay=0'Полная
+  Employment__Casticnay=1'Частичная
+  Employment__Ne_vagno=-1'Не важно
+end enum 
+enum enumKONTR_STATUS'Состояние партнера
+  KONTR_STATUS_Blokirovan=2'Блокирован
+  KONTR_STATUS_Aktiveniy=0'Активеный
+  KONTR_STATUS_Pssivniy=1'Пссивный
+  KONTR_STATUS_Operacii_zapreseni=3'Операции запрещены
+end enum 
+enum enumMailSenderType'Да / Нет
+  MailSenderType_Komu=0'Кому
+  MailSenderType_Skritay_kopiy=2'Скрытая копия
+  MailSenderType_Kopiy=1'Копия
+end enum 
+enum enumExtentionType'Тип расширения
+  ExtentionType_OnFormExt=1'OnFormExt
+  ExtentionType_CodeGenerator=7'CodeGenerator
+  ExtentionType_JrnlAddExt=3'JrnlAddExt
+  ExtentionType_VerifyRowExt=6'VerifyRowExt
+  ExtentionType_StatusExt=0'StatusExt
+  ExtentionType_ARMGenerator=8'ARMGenerator
+  ExtentionType_DefaultExt=5'DefaultExt
+  ExtentionType_CustomExt=2'CustomExt
+  ExtentionType_JrnlRunExt=4'JrnlRunExt
+end enum 
+enum enumReplicationType'Вариант репликации докуента
+  ReplicationType_Ves__dokument=0'Весь документ
+  ReplicationType_Lokal_niy=2'Локальный
+  ReplicationType_Postrocno=1'Построчно
+end enum 
+enum enumInfoStoreType'Тип каталога
+  InfoStoreType_Gruppovoy=2'Групповой
+  InfoStoreType_Personal_niy=1'Персональный
+  InfoStoreType_cls__Obsiy=0' Общий
+end enum 
+private m_ITT2OPT_DEF as ITT2OPT_DEF_col
+private m_IsLocked as  LockStyle
+
+"><AttributeHolder Name="Type" Value="description"/><FormData Name=""/></BlockHolder><BlockHolder BlockName="'codebody" BlockCode="
+
+
+'Название типа
+'Parameters:
+' параметров нет
+'Returns:
+'  значение типа string
+'See Also:
+'Example:
+' dim variable as string
+' variable = me. TypeName
+public property get TypeName() as string
+  TypeName = m_TypeName
+end property
+
+
+'Отладочный компонент
+'Parameters:
+' параметров нет
+'Returns:
+'  объект класса MTZUtil.Logger
+'  ,или Nothing
+'See Also:
+'Example:
+' dim variable as MTZUtil.Logger
+' Set variable = me. Logger
+public property get Logger() as MTZUtil.Logger
+  if m_Logger is nothing then
+    set m_Logger = new MTZUtil.Logger
+    m_Logger.CreateLog TypeName &amp; &quot;_&quot; &amp; ID ,TypeName
+  end if
+  set Logger = m_Logger
+end property
+
+
+'Получить Название документа
+'Parameters:
+' параметров нет
+'Returns:
+'  значение типа string
+'See Also:
+'Example:
+' dim variable as string
+' variable = me. Name
+public property get Name() as string
+  Name = m_Name
+end property
+
+
+'Задать название документа
+'Parameters:
+'[IN][OUT]  n , тип параметра: string  - ...
+'See Also:
+'Example:
+' dim value as Variant
+' value = ...значение...
+' me. Name = value
+public property Let Name(n as string)
+  m_Name = n
+end property
+
+
+'Получить корневой объект системы - менеджер документов
+'Parameters:
+' параметров нет
+'Returns:
+'  объект класса MTZManager.Main
+'  ,или Nothing
+'See Also:
+'Example:
+' dim variable as MTZManager.Main
+' Set variable = me. Manager
+public property get Manager() as MTZManager.Main
+  set Manager = m_Manager
+end property
+
+
+'Задать менеджер документов
+'Parameters:
+'[IN][OUT]  m , тип параметра: MTZManager.Main  - ...
+'See Also:
+'Example:
+' dim value as Variant
+' set value = new Variant
+' set me. Manager = value
+public property Set Manager(m as MTZManager.Main)
+  if not m_Manager is nothing then exit property
+  set m_Manager = m
+  Logger.Message &quot;Manager defined&quot;
+end property
+
+
+'Получить текущую сессию пользователя
+'Parameters:
+' параметров нет
+'Returns:
+'  объект класса MTZSession.Session
+'  ,или Nothing
+'See Also:
+'Example:
+' dim variable as MTZSession.Session
+' Set variable = me. MTZSession
+public property get MTZSession() as MTZSession.Session
+  set MTZSession = m_MTZSession
+end property
+
+
+'Задть текущую сессию пользователя
+'Parameters:
+'[IN][OUT]  m , тип параметра: MTZSession.Session  - ...
+'See Also:
+'Example:
+' dim value as Variant
+' set value = new Variant
+' set me. MTZSession = value
+public property Set MTZSession(m as MTZSession.Session)
+  if not m_MTZSession is nothing then exit property
+  set m_MTZSession = m
+  Logger.Message &quot;Session defined&quot;
+  m_AutoLoadPart=true
+end property
+
+
+'Признак - работа без соединения с базой
+'Parameters:
+' параметров нет
+'Returns:
+' Boolean, семантика результата:
+'   true  -
+'   false -
+'See Also:
+'Example:
+' dim variable as boolean
+' variable = me. WorkOffline
+public property Get WorkOffline() as boolean
+    WorkOffline = m_WorkOffline
+end property
+
+
+'Получить значение признака работы без соединения
+'Parameters:
+'[IN][OUT]  v , тип параметра: boolean  - ...
+'See Also:
+'Example:
+' dim value as Variant
+' value = ...значение...
+' me. WorkOffline = value
+public property Let WorkOffline(v as boolean)
+  if MTZSession is nothing then 
+    m_WorkOffline = false
+  else 
+    m_WorkOffline = v
+  end if 
+end property
+
+
+'Получить признак автоматической загрузки всеех полей
+'Parameters:
+' параметров нет
+'Returns:
+' Boolean, семантика результата:
+'   true  -
+'   false -
+'See Also:
+'Example:
+' dim variable as boolean
+' variable = me. AutoLoadPart
+public property Get AutoLoadPart() as boolean
+    AutoLoadPart = m_AutoLoadPart
+end property
+
+
+'Признак загрузки всех полей (не только идентификатора)
+'Parameters:
+'[IN][OUT]  v , тип параметра: boolean  - ...
+'See Also:
+'Example:
+' dim value as Variant
+' value = ...значение...
+' me. AutoLoadPart = value
+public property Let AutoLoadPart(v as boolean)
+    m_AutoLoadPart = v
+end property
+
+
+'Идентификатор документа
+'Parameters:
+' параметров нет
+'Returns:
+'  значение типа string
+'See Also:
+'Example:
+' dim variable as string
+' variable = me. ID
+public property Get ID() as string
+  ID = m_ID
+end property
+
+
+'Задать идентификатор документа
+'Parameters:
+'[IN][OUT]  v , тип параметра: string  - ...
+'See Also:
+'Example:
+' dim value as Variant
+' value = ...значение...
+' me. ID = value
+public property Let ID(v as string)
+  m_ID=v
+end property
+
+
+'Родительский объект в иерархии документа
+'Parameters:
+' параметров нет
+'Returns:
+'  объект любого класса Visual Basic
+'  ,или Nothing 
+'See Also:
+'Example:
+' dim variable as object
+' Set variable = me. Parent
+public property Get Parent() as object
+  set Parent = nothing
+end property
+
+
+'Корневой объект в иерархии документа
+'Parameters:
+' параметров нет
+'Returns:
+'  объект класса Application
+'  ,или Nothing
+'See Also:
+'Example:
+' dim variable as Application
+' Set variable = me. Application
+public property Get Application() as Application
+  set Application = me
+end property
+
+
+'Добавить в оптимизтор поиска строку раздела документа
+'Parameters:
+'[IN]   Key , тип параметра: string, 
+'[IN]   Item , тип параметра: Object  - ...
+'See Also:
+'Example:
+'  call me.AddToCash({параметры})
+public Sub AddToCash( byval Key as string, byval Item as Object)
+  on error resume next
+  findCash.Add Item,Key
+end sub
+
+
+'Исключить из оптимизатора сторку раздела документа
+'Parameters:
+'[IN]   Key , тип параметра: string  - ...
+'See Also:
+'Example:
+'  call me.RemoveFromCash({параметры})
+public Sub RemoveFromCash( byval Key as string)
+  on error resume next
+  findCash.Remove Key
+end sub
+
+'Задать идентификатор стиля защиты
+'Parameters:
+'[IN]   newID , тип параметра: string  - ...
+'See Also:
+'Example:
+' dim value as Variant
+' value = ...значение...
+' me. SecureStyleID = value
+public property let SecureStyleID(byval newID as string)
+  Secure newID
+  GetStatus
+end property
+
+'Получить идентификатор стиля защиты
+'Parameters:
+' параметров нет
+'Returns:
+'  значение типа string
+'See Also:
+'Example:
+' dim variable as string
+' variable = me. SecureStyleID
+public property Get SecureStyleID() as string
+  GetStatus
+  SecureStyleID = m_SecureStyleID
+end property
+
+'Задать идентификатор сосотяния документа
+'Parameters:
+'[IN]   newID , тип параметра: string  - ...
+'See Also:
+'Example:
+' dim value as Variant
+' value = ...значение...
+' me. StatusID = value
+public property let StatusID(byval newID as string)
+    SetStatus newID
+    GetStatus
+end property
+
+'Получить идентификатор состояния
+'Parameters:
+' параметров нет
+'Returns:
+'  значение типа string
+'See Also:
+'Example:
+' dim variable as string
+' variable = me. StatusID
+public property Get StatusID() as string
+  GetStatus
+  StatusID = m_StatusID
+end property
+
+'Получить название состояния
+'Parameters:
+' параметров нет
+'Returns:
+'  значение типа string
+'See Also:
+'Example:
+' dim variable as string
+' variable = me. StatusName
+public property Get StatusName() as string
+  GetStatus
+  StatusName=&quot;&quot;
+if statusid =&quot;{EA1BFF2B-89AB-4EAA-A39B-17380CE9D963}&quot; then StatusName = &quot;Оформляется&quot; : exit property
+if statusid =&quot;{451AF4A2-1E63-42B6-9494-A4F8301AEEBB}&quot; then StatusName = &quot;Выдать задания&quot; : exit property
+end property
+
+'Даные раздела Описание оптимизмации
+'Parameters:
+'[IN]   Refresh , тип параметра: boolean = true  - ...
+'Returns:
+'  объект класса ITT2OPT_DEF_col
+'  ,или Nothing
+'See Also:
+'Example:
+' dim variable as ITT2OPT_DEF_col
+' Set variable = me. ITT2OPT_DEF (...параметры...)
+public property Get ITT2OPT_DEF (optional byval Refresh as boolean = true) as ITT2OPT_DEF_col
+ if m_ITT2OPT_DEF is nothing then
+   set  m_ITT2OPT_DEF = new ITT2OPT_DEF_col
+   set m_ITT2OPT_DEF.Parent = me
+   set m_ITT2OPT_DEF.Application = me.Application
+   if Refresh then m_ITT2OPT_DEF.Refresh
+ end if
+ set  ITT2OPT_DEF = m_ITT2OPT_DEF
+end property
+
+'Деструктор
+'Parameters:
+' параметров нет
+'See Also:
+'Example:
+'  call me.CloseClass()
+Public sub CloseClass()
+ on error resume next
+ Set findCash = Nothing
+
+  if not m_ITT2OPT_DEF is nothing then 
+    m_ITT2OPT_DEF.CloseClass 
+    set m_ITT2OPT_DEF = nothing 
+  end if
+  if not m_manager is nothing then
+    set m_manager = nothing
+  end if
+  if not m_MTZSession is nothing then
+    set m_MTZSession = nothing
+  end if
+  if not m_Logger is nothing then
+    m_Logger.Message &quot;Application.CloseClass&quot; 
+    set m_Logger = nothing
+  end if
+end sub
+
+'Поиск  строки раздела по ключу и названию раздела во всех документах
+'Parameters:
+'[IN]   StrID , тип параметра: String, 
+'[IN]   RowID , тип параметра: String  - ...
+'Returns:
+'  объект любого класса Visual Basic
+'  ,или Nothing 
+'See Also:
+'Example:
+' dim variable as Object
+' Set variable = me.FindRowObject(...параметры...)
+Public Function FindRowObject(ByVal StrID As String, ByVal RowID As String) As Object
+  Dim obj As Object
+  Dim Rowobj As Object
+  Dim i As Long
+Dim m_FindObject As Object
+
+If StrID = &quot;&quot; Then Exit Function
+If RowID = &quot;&quot; Then Exit Function
+If findCash Is Nothing Then
+ Set findCash = New Collection
+End If
+On Error Resume Next
+Set m_FindObject = findCash.Item(StrID &amp; RowID)
+If Not m_FindObject Is Nothing Then
+  If m_FindObject.Application Is Nothing Then
+    Set m_FindObject = Nothing
+    findCash.Remove StrID &amp; RowID
+  Else
+   Set FindRowObject = m_FindObject
+   Exit Function
+  End If
+End If
+
+  Dim rpl As RowParentList
+  Set rpl = MTZSession.TheFinder.RowParents(StrID, RowID)
+  If rpl.Count &gt; 0 Then
+
+ If rpl.Item(1).RowID = ID Then
+    Set Rowobj = Me
+    For i = 2 To rpl.Count
+     Set Rowobj = Rowobj.FindObject(rpl.Item(i).PartName, rpl.Item(i).RowID)
+    Next
+
+' reference from another object
+ Else
+   Set obj = Manager.GetInstanceObject(rpl.Item(1).RowID)
+   If obj Is Nothing Then Exit Function
+   Set Rowobj = obj.FindRowObject(StrID, RowID)
+ End If
+
+  Else
+' use old search style
+ Set Rowobj = FindObject(StrID, RowID)
+ If Rowobj Is Nothing Then
+   Set obj = Manager.FindInstanceByRow(StrID, RowID)
+   If obj Is Nothing Then Exit Function
+   Set Rowobj = obj.FindObject(StrID, RowID)
+ End If
+  End If
+  If Rowobj Is Nothing Then Exit Function
+  Set FindRowObject = Rowobj
+  Set Rowobj = Nothing
+  Set obj = Nothing
+End Function
+
+
+'Поиск строки только в текщем документе
+'Parameters:
+'[IN]   StrID , тип параметра: string, 
+'[IN]   InstID , тип параметра: string  - ...
+'Returns:
+'  объект любого класса Visual Basic
+'  ,или Nothing 
+'See Also:
+'Example:
+' dim variable as object
+' Set variable = me.FindObject(...параметры...)
+public function FindObject(byval StrID as string, byval InstID as string) as object
+ dim m_FindObject as object
+ static inFindObject as boolean
+ if StrID = &quot;&quot; then exit function
+ if InstID = &quot;&quot; then exit function
+ if inFindObject then exit function
+ inFindObject = true
+  If findCash Is Nothing Then
+  Set findCash = New Collection
+ End If
+ On Error Resume Next
+ Set m_FindObject = findCash.item(StrID &amp; InstID)
+ if  not m_FindObject is nothing then
+   if  m_FindObject.application is nothing then
+     set m_FindObject = nothing
+     findCash.remove StrID &amp; InstID
+   end if
+ end if
+
+ if m_FindObject is nothing then
+   set m_FindObject =  ITT2OPT_DEF.FindObject(StrID,InstID)
+ end if
+ If findCash.item(StrID &amp; InstID) Is Nothing Then
+   findCash.Add m_FindObject, StrID &amp; InstID
+ End If
+ set FindObject = m_findobject
+ set m_FindObject = nothing
+ inFindObject = false
+end function
+
+
+'Оптимизировать объем занятой памяти
+'Parameters:
+' параметров нет
+'See Also:
+'Example:
+'  call me.Compact()
+public sub Compact()
+
+ITT2OPT_DEF.Compact
+end sub
+
+'Задать стиль защиты документа
+'Parameters:
+'[IN]   SecurityStyleID , тип параметра: string  - ...
+'See Also:
+'Example:
+'  call me.Secure({параметры})
+public sub Secure(byval SecurityStyleID as string)
+  if application.WorkOffline then exit sub
+  On Error goto bye
+  M_SecureStyleID =Application.MTZSession.Secure(&quot;INSTANCE&quot; ,ID,SecurityStyleID)
+  exit sub
+bye:
+  err.raise err.number,&quot;APPLICATION.Secure&quot;,err.description
+end sub
+
+'Распространить стиль защиты на все строки документа
+'Parameters:
+' параметров нет
+'See Also:
+'Example:
+'  call me.Propagate()
+public sub Propagate()
+  if application.WorkOffline then exit sub
+  On Error goto bye
+  Application.MTZSession.Propagate &quot;INSTANCE&quot;, ID
+  exit sub
+bye:
+  err.raise err.number,&quot;APPLICATION.Propagate&quot;,err.description
+end sub
+
+'Сохранить изменения (новое имя)
+'Parameters:
+' параметров нет
+'See Also:
+'Example:
+'  call me.Save()
+public sub Save()
+  if application.WorkOffline then exit sub
+  On Error goto bye
+  Application.MTZSession.NewInstance ID, TypeName, Name
+  exit sub
+bye:
+  err.raise err.number,&quot;APPLICATION.Save&quot;,err.description
+end sub
+
+'Задать состояние
+'Parameters:
+'[IN]   StatusID , тип параметра: string  - ...
+'See Also:
+'Example:
+'  call me.SetStatus({параметры})
+private sub SetStatus(byval StatusID as string)
+  if application.WorkOffline then exit sub
+  On Error goto bye
+  Application.MTZSession.SetStatus id,StatusID
+  exit sub
+bye:
+  err.raise err.number,&quot;APPLICATION.SetStatus&quot;,err.description
+end sub
+
+'Получтиь актуальное состояние
+'Parameters:
+' параметров нет
+'See Also:
+'Example:
+'  call me.GetStatus()
+private sub GetStatus() 
+if application.WorkOffline then exit sub
+Dim rs as adodb.recordset
+On Error goto bye
+set rs =application.MTZSession.GetRow( &quot;INSTANCE&quot;, ID)
+m_statusid=rs!status &amp; &quot;&quot; 
+m_SecureStyleID = rs!SecurityStyleID &amp; &quot;&quot; 
+exit sub
+bye:
+  err.raise err.number,&quot;APPLICATION.SetStatus&quot;,err.description
+end sub
+
+
+'Загрузить данные из XML
+'Parameters:
+'[IN][OUT]   node , тип параметра: IXMLDOMNode, 
+'[IN]   LoadMode , тип параметра: integer=0  - ...
+'See Also:
+'Example:
+'  call me.XMLLoad({параметры})
+public sub XMLLoad( node as IXMLDOMNode, optional byval LoadMode as integer=0)
+ on error resume next
+  Dim anode As IXMLDOMElement
+  Dim e_list As IXMLDOMNodeList
+ on error resume next
+  set anode = node.firstchild  
+  if m_typename &lt;&gt; anode.Attributes.getNamedItem(&quot;TYPENAME&quot;).nodeValue then exit sub
+  m_IsLocked=anode.Attributes.getNamedItem(&quot;IsLocked&quot;).nodeValue
+  if m_IsLocked &gt;2 then m_IsLocked =0
+  if LoadMode &lt;&gt;2 then 
+    m_ID=anode.Attributes.getNamedItem(&quot;ID&quot;).nodeValue
+    SetStatus anode.Attributes.getNamedItem(&quot;STATUSID&quot;).nodeValue
+    Secure anode.Attributes.getNamedItem(&quot;SECURITYSTYLEID&quot;).nodeValue
+    WorkOffline =anode.Attributes.getNamedItem(&quot;WorkOffline&quot;).nodevalue
+    if workoffline and m_IsLocked = LockSession then m_IsLocked = NoLock
+  end if 
+  m_Name=anode.Attributes.getNamedItem(&quot;NAME&quot;).nodeValue
+Set e_list = anode.selectNodes(&quot;ITT2OPT_DEF_COL&quot;)
+  ITT2OPT_DEF.XMLLoad e_list, LoadMode
+end sub
+
+
+
+'Сохранить данные в XML
+'Parameters:
+'[IN][OUT]  node , тип параметра: IXMLDOMElement, 
+'[IN][OUT]   xdom , тип параметра: DomDocument  - ...
+'See Also:
+'Example:
+'  call me.XMLSave({параметры})
+public sub XMLSave(node as IXMLDOMElement, xdom as DomDocument)
+  dim anode as IXMLDOMElement
+  set anode = xdom.CreateElement(&quot;APPLICATION&quot;)
+  anode.setAttribute &quot;ID&quot;, m_ID
+  anode.setAttribute &quot;TYPENAME&quot;, m_TypeName
+  anode.setAttribute &quot;NAME&quot;, m_Name
+  anode.setAttribute &quot;STATUSID&quot;, m_StatusID
+  anode.setAttribute &quot;SECURITYSTYLEID&quot;, m_SecureStyleID
+  anode.setAttribute &quot;IsLocked&quot;, m_IsLocked
+  anode.setAttribute &quot;WorkOffline&quot;, WorkOffline
+  node.appendChild anode
+  ITT2OPT_DEF.XMLSave anode,xdom
+end sub
+
+
+'Краткое название
+'Parameters:
+' параметров нет
+'Returns:
+'  значение типа string
+'See Also:
+'Example:
+' dim variable as string
+'  variable = me.Brief() 
+public function Brief() as string
+ Brief= Name 
+end function
+
+'Загрузка корня объекта в дерево
+'Parameters:
+'[IN][OUT]   tree , тип параметра: object, 
+'[IN]   pkey , тип параметра: string, 
+'[IN]   mode , тип параметра: string, 
+'[IN][OUT]   optional Mask , тип параметра: string =&quot;&quot;, 
+'[IN][OUT]   optional CollectionName , тип параметра: string=&quot;&quot;   - ...
+'See Also:
+'Example:
+'  call me.FillTree({параметры})
+public sub FillTree( tree as object, byval pkey as string, byval mode as string, optional Mask as string =&quot;&quot;, optional CollectionName as string=&quot;&quot; )
+ dim node as object,key as string
+If CollectionName = &quot;&quot; Then
+ key = createguid2() &amp; ID
+ if pkey =&quot;&quot; then
+   set node=tree.nodes.add(,0,key,Brief)
+ else
+   set node=tree.nodes.add(pkey,4,key,Brief)
+ end if
+ node.tag=&quot;object&quot;
+else
+ key=&quot;&quot; 
+end if
+  if mode = &quot;read&quot; then 
+If CollectionName = &quot;&quot;  or CollectionName=&quot;ITT2OPT_DEF&quot; Then
+  if Mask&lt;&gt;&quot;&quot; then
+    if application.MTZSession.IsDescendant(mask,&quot;ITT2OPT_DEF&quot;) then
+       if key=&quot;&quot; then
+         set node=tree.nodes.add(,0,createguid2() &amp; ID &amp;  &quot;ITT2OPT_DEF&quot;,&quot;Описание оптимизмации&quot;)
+       else
+         set node=tree.nodes.add(key,4,createguid2() &amp; ID &amp; &quot;ITT2OPT_DEF&quot;,&quot;Описание оптимизмации&quot;)
+       end if
+       node.tag=&quot;ITT2OPT_DEF&quot;
+       ' node for &lt;+&gt; item
+       tree.Nodes.Add(node.key, 4, CreateGUID2(), &quot;Expanding ...&quot;).Tag = &quot;ToDelete&quot;
+    end if
+  else
+    if key=&quot;&quot; then
+      set node=tree.nodes.add(,0,createguid2() &amp; ID &amp;  &quot;ITT2OPT_DEF&quot;,&quot;Описание оптимизмации&quot;)
+    else
+      set node=tree.nodes.add(key,4,createguid2() &amp; ID  &amp; &quot;ITT2OPT_DEF&quot;,&quot;Описание оптимизмации&quot;)
+    end if
+    node.tag=&quot;ITT2OPT_DEF&quot;
+    ' node for &lt;+&gt; item
+    tree.Nodes.Add(node.key, 4, CreateGUID2(), &quot;Expanding ...&quot;).Tag = &quot;ToDelete&quot;
+  end if
+end if
+  end if
+  if mode = &quot;main&quot; then 
+If CollectionName = &quot;&quot;  or CollectionName=&quot;ITT2OPT_DEF&quot; Then
+  if Mask&lt;&gt;&quot;&quot; then
+    if application.MTZSession.IsDescendant(mask,&quot;ITT2OPT_DEF&quot;) then
+       if key=&quot;&quot; then
+         set node=tree.nodes.add(,0,createguid2() &amp; ID &amp;  &quot;ITT2OPT_DEF&quot;,&quot;Описание оптимизмации&quot;)
+       else
+         set node=tree.nodes.add(key,4,createguid2() &amp; ID &amp; &quot;ITT2OPT_DEF&quot;,&quot;Описание оптимизмации&quot;)
+       end if
+       node.tag=&quot;ITT2OPT_DEF&quot;
+       ' node for &lt;+&gt; item
+       tree.Nodes.Add(node.key, 4, CreateGUID2(), &quot;Expanding ...&quot;).Tag = &quot;ToDelete&quot;
+    end if
+  else
+    if key=&quot;&quot; then
+      set node=tree.nodes.add(,0,createguid2() &amp; ID &amp;  &quot;ITT2OPT_DEF&quot;,&quot;Описание оптимизмации&quot;)
+    else
+      set node=tree.nodes.add(key,4,createguid2() &amp; ID  &amp; &quot;ITT2OPT_DEF&quot;,&quot;Описание оптимизмации&quot;)
+    end if
+    node.tag=&quot;ITT2OPT_DEF&quot;
+    ' node for &lt;+&gt; item
+    tree.Nodes.Add(node.key, 4, CreateGUID2(), &quot;Expanding ...&quot;).Tag = &quot;ToDelete&quot;
+  end if
+end if
+  end if
+  if mode = &quot;&quot; then 
+If CollectionName = &quot;&quot;  or CollectionName=&quot;ITT2OPT_DEF&quot; Then
+  if Mask&lt;&gt;&quot;&quot; then
+    if application.MTZSession.IsDescendant(mask,&quot;ITT2OPT_DEF&quot;) then
+    if key=&quot;&quot; then
+       set node=tree.nodes.add(,0,createguid2() &amp; ID &amp;  &quot;ITT2OPT_DEF&quot;,&quot;Описание оптимизмации&quot;)
+    else
+       set node=tree.nodes.add(key,4,createguid2() &amp; ID  &amp; &quot;ITT2OPT_DEF&quot;,&quot;Описание оптимизмации&quot;)
+    end if
+       node.tag=&quot;ITT2OPT_DEF&quot;
+       ' node for &lt;+&gt; item
+       tree.Nodes.Add(node.key, 4, CreateGUID2(), &quot;Expanding ...&quot;).Tag = &quot;ToDelete&quot;
+    end if
+  else
+    if key=&quot;&quot; then
+       set node=tree.nodes.add(,0,createguid2() &amp; ID &amp;  &quot;ITT2OPT_DEF&quot;,&quot;Описание оптимизмации&quot;)
+    else
+       set node=tree.nodes.add(key,4,createguid2() &amp; ID &amp;  &quot;ITT2OPT_DEF&quot;,&quot;Описание оптимизмации&quot;)
+    end if
+    node.tag=&quot;ITT2OPT_DEF&quot;
+    ' node for &lt;+&gt; item
+    tree.Nodes.Add(node.key, 4, CreateGUID2(), &quot;Expanding ...&quot;).Tag = &quot;ToDelete&quot;
+  end if
+end if
+  end if
+
+end sub
+
+
+'Раскрытие объекта при выборе узла в дереве
+'Parameters:
+'[IN][OUT]  tree , тип параметра: object, 
+'[IN]   key , тип параметра: string, 
+'[IN]   mode , тип параметра: string, 
+'[IN][OUT]   optional Mask , тип параметра: string =&quot;&quot;  - ...
+'See Also:
+'Example:
+'  call me.Expand({параметры})
+public sub Expand(tree as object,byval key as string, byval mode as string, optional Mask as string =&quot;&quot;)
+ dim id as string , struct as string, child as string
+ dim item as object, i as long, nid as string, tmpid as string
+ dim tidx as long, tid as string 'only for tree styled structure
+ id = mid(key,39,38)
+ on error resume next
+ struct = right(tree.nodes.item(key).parent.parent.key,len(tree.nodes.item(key).parent.parent.key)-76)
+ child = right(key,len(key)-76)
+ if trim(struct)=&quot;&quot;  then 
+   set item =manager.GetInstanceObject(id)
+   if  item is nothing then exit sub
+   If Not item Is Me Then
+     item.Expand tree, Key, mode,mask
+     Exit Sub
+   End If
+ else
+    set item =FindRowObject(struct,id)
+    if  item is nothing then exit sub
+    call item.Expand(tree,key,mode,mask)
+    exit sub
+ end if
+ tree.nodes.item(key).sorted=true
+if mode=&quot;read&quot; then
+ select case child
+ case &quot;ITT2OPT_DEF&quot; 
+    item.ITT2OPT_DEF.refresh
+    for i=1 to item.ITT2OPT_DEF.count
+    nid =createguid2() &amp;  item.ITT2OPT_DEF.item(i).id
+    tree.nodes.add( key,4,nid,  item.ITT2OPT_DEF.item(i).brief(true)).tag=&quot;Row&quot; 
+    next
+end select
+end if ' mode=&quot;read&quot;
+if mode=&quot;main&quot; then
+ select case child
+ case &quot;ITT2OPT_DEF&quot; 
+    item.ITT2OPT_DEF.refresh
+    for i=1 to item.ITT2OPT_DEF.count
+    nid =createguid2() &amp;  item.ITT2OPT_DEF.item(i).id
+    tree.nodes.add( key,4,nid,  item.ITT2OPT_DEF.item(i).brief(true)).tag=&quot;Row&quot; 
+    next
+end select
+end if ' mode=&quot;main&quot;
+if mode=&quot;&quot; then
+ select case child
+ case &quot;ITT2OPT_DEF&quot; 
+    item.ITT2OPT_DEF.refresh
+    for i=1 to item.ITT2OPT_DEF.count
+    nid =createguid2() &amp;  item.ITT2OPT_DEF.item(i).id  
+    tree.nodes.add( key,4,nid,  item.ITT2OPT_DEF.item(i).brief(true)).tag=&quot;Row&quot; 
+    next
+ end select
+end if ' mode=&quot;&quot;
+end sub
+
+'Получить дочерний раздел по имени
+'Parameters:
+'[IN][OUT]   Item , тип параметра: object, 
+'[IN]   CollectionName , тип параметра: string  - ...
+'Returns:
+'  объект любого класса Visual Basic
+'  ,или Nothing 
+'See Also:
+'Example:
+' dim variable as object
+' Set variable = me. ItemCollection(...параметры...)
+public property Get ItemCollection( Item as object, byval CollectionName as string) as object
+  set ItemCollection = CallByName(Item,CollectionName,vbGet)
+end property
+
+'может ли быть изменено
+'Parameters:
+' параметров нет
+'Returns:
+' Boolean, семантика результата:
+'   true  -
+'   false -
+'See Also:
+'Example:
+' dim variable as boolean
+' variable = me. CanChange
+public property Get CanChange() as boolean
+   if application.workoffline then
+     CanChange =  CanChangeoffLine 
+   else  
+     CanChange =  canchangeonline
+   end if
+end property
+
+'может ли быть изменено в режиме Offline
+'Parameters:
+' параметров нет
+'Returns:
+' Boolean, семантика результата:
+'   true  -
+'   false -
+'See Also:
+'Example:
+' dim variable as boolean
+' variable = me. CanChangeOffline
+public property Get CanChangeOffline() as boolean
+  dim test as boolean
+  if not parent is nothing then
+   test = parent.CanChangeOffline
+  end if
+  if not test  then 
+   test = (IsLocked = LockPermanent)
+  end if
+   CanChangeOffline = test
+end property
+
+'может ли быть изменено в режиме ONline
+'Parameters:
+' параметров нет
+'Returns:
+' Boolean, семантика результата:
+'   true  -
+'   false -
+'See Also:
+'Example:
+' dim variable as boolean
+' variable = me. CanChangeONLine
+public property Get CanChangeONLine() as boolean
+  dim test as boolean
+  if not parent is nothing then
+   test = parent.CanChangeONLine
+  end if
+  if  not test then 
+   test = (IsLocked &lt; ExternalLockSession)
+  end if
+   CanChangeOnline = test
+end property
+
+'Задать тип блокировки
+'Parameters:
+'[IN][OUT]  newIsLocked , тип параметра: LockStyle  - ...
+'See Also:
+'Example:
+' dim value as Variant
+' value = ...значение...
+' me. IsLocked = value
+friend property Let IsLocked(newIsLocked as LockStyle)
+  m_IsLocked = newIsLocked
+end property
+
+'Текущий тип блокировки
+'Parameters:
+' параметров нет
+'Returns:
+'  объект класса LockStyle
+'  ,или Nothing
+'See Also:
+'Example:
+' dim variable as LockStyle
+' Set variable = me. IsLocked
+public property Get IsLocked() as LockStyle
+  if m_IsLocked &lt;&gt; LockSession and m_IsLocked &lt;&gt; LockPermanent then CheckLock
+  IsLocked = m_IsLocked
+end property
+
+'Проверить блокировку
+'Parameters:
+' параметров нет
+'See Also:
+'Example:
+'  call me.CheckLock()
+private sub CheckLock()
+static LastCheckTime as date
+if application.WorkOffline then exit sub
+If Now - LastCheckTime &lt; CDbl(CDate(&quot;00:00:10&quot;)) Then Exit Sub
+On Error Resume Next
+m_IsLocked = Application.MTZSession.IsLocked(&quot;INSTANCE&quot;, ID)
+LastCheckTime = now
+end sub
+
+'Заблокировать
+'Parameters:
+'[IN]   Permanent , тип параметра: boolean=false   - ...
+'Returns:
+' Boolean, семантика результата:
+'   true  -
+'   false -
+'See Also:
+'Example:
+' dim variable as boolean
+' variable = me.LockResource(...параметры...) 
+public function LockResource(optional byval Permanent as boolean=false ) as boolean
+if application.WorkOffline then exit function
+  dim OK 
+ ok = Application.MTZSession.LockResource(&quot;INSTANCE&quot;, ID, Permanent)
+  if OK then  
+    if Permanent then m_IsLocked = LockPermanent else m_IsLocked = LockSession
+  else
+    m_IsLocked = NoLock
+  end if
+bye:
+end function
+
+'Снять блокировку ресурса
+'Parameters:
+' параметров нет
+'Returns:
+' Boolean, семантика результата:
+'   true  -
+'   false -
+'See Also:
+'Example:
+' dim variable as boolean
+'  variable = me.UnLockResource() 
+public function UnLockResource() as boolean
+if application.WorkOffline then exit function
+On Error GoTo bye
+Application.MTZSession.UnlockResource &quot;INSTANCE&quot;, ID
+m_IsLocked = NoLock
+bye:
+end function
+
+'Возможно блокирование
+'Parameters:
+' параметров нет
+'Returns:
+' Boolean, семантика результата:
+'   true  -
+'   false -
+'See Also:
+'Example:
+' dim variable as boolean
+'  variable = me.CanLock() 
+public function CanLock() as boolean
+if application.WorkOffline then exit function
+On Error Resume Next
+CanLock = Application.MTZSession.CanLock(&quot;INSTANCE&quot;, ID)
+end function
+
+'Массовое обновление строк
+'Parameters:
+' параметров нет
+'See Also:
+'Example:
+'  call me.BatchUpdate()
+public sub BatchUpdate()
+If not Application.WorkOffline Then
+    ITT2OPT_DEF.BatchUpdate
+End If
+End sub
+
+'Загрузка всех данных из базы
+'Parameters:
+' параметров нет
+'See Also:
+'Example:
+'  call me.LoadAll()
+public sub LoadAll()
+dim prevAutoLoad as boolean
+If not Application.WorkOffline Then
+prevAutoLoad= Application.autoloadpart
+Application.autoloadpart = true
+    ITT2OPT_DEF.LoadAll
+Application.autoloadpart = prevAutoLoad
+End If
+End sub
+
+"><AttributeHolder Name="Type" Value="code"/><FormData Name=""/></BlockHolder></ModuleHolder><ModuleHolder ModuleName="ITT2OPT_DEF" File=""><AttributeHolder Name="Type" Value="class"/><AttributeHolder Name="Instancing" Value="publicnotcreatable"/><BlockHolder BlockName="declaration" BlockCode="'строка раздела 
+private m_ID as string
+private m_SecureStyleID as string
+private m_RowRetrived as boolean
+private m_Changed as boolean
+private m_Deleted as boolean
+private m_RetriveTime as date
+private m_ChangeTime as date
+private m_AccessTime as date
+private m_Parent as Object
+private m_Application as Application
+private m_DocNum as long
+private m_OptType as object
+Dim m_OptType_ID as string
+Dim m_OptType_ID_BRIEF as string
+private m_OptParam as STRING
+private m_OPtDate as DATE
+private m_DateToOptimize as DATE
+private m_TheRule as object
+Dim m_TheRule_ID as string
+Dim m_TheRule_ID_BRIEF as string
+private m_Brief as string
+
+'Сообщение об изменении строки
+'Parameters:
+'[IN]   fieldName , тип параметра: string, 
+'[IN]   OldValue,, тип параметра: Variant 
+'[IN][OUT]   NewValue, тип параметра: Variant  - ...
+'Returns:
+'  объект любого класса Visual Basic
+'  ,или Nothing
+'  ,или значение любого скалярного типа 
+'See Also:
+'Example:
+Public Event Change( byval fieldName as string, byval OldValue, byref NewValue)
+private m_IsLocked as  LockStyle
+
+"><AttributeHolder Name="Type" Value="description"/><FormData Name=""/></BlockHolder><BlockHolder BlockName="codebody" BlockCode="
+
+'Признак удаления
+'Parameters:
+' параметров нет
+'Returns:
+' Boolean, семантика результата:
+'   true  -
+'   false -
+'See Also:
+'Example:
+' dim variable as boolean
+' variable = me. Deleted
+public property Get Deleted() as boolean
+  Deleted = m_Deleted
+end property
+
+'Признак изменения
+'Parameters:
+' параметров нет
+'Returns:
+' Boolean, семантика результата:
+'   true  -
+'   false -
+'See Also:
+'Example:
+' dim variable as boolean
+' variable = me. Changed
+public property Get Changed() as boolean
+  Changed = m_Changed
+end property
+
+'Установить признак изменения
+'Parameters:
+'[IN][OUT]  newChanged , тип параметра: boolean  - ...
+'See Also:
+'Example:
+' dim value as Variant
+' value = ...значение...
+' me. Changed = value
+friend property Let Changed(newChanged as boolean)
+  m_Changed = newChanged
+end property
+
+'Задать идентификатор строки
+'Parameters:
+'[IN]   newID , тип параметра: string  - ...
+'See Also:
+'Example:
+' dim value as Variant
+' value = ...значение...
+' me. ID = value
+friend property let ID(byval newID as string)
+  if m_ID = &quot;&quot; then
+    m_ID = newID
+  end if
+end property
+
+'Идентификатор строки
+'Parameters:
+' параметров нет
+'Returns:
+'  значение типа string
+'See Also:
+'Example:
+' dim variable as string
+' variable = me. ID
+public property Get ID() as string
+  if  m_ID=&quot;&quot; then m_ID= createguid2
+  ID = m_ID
+end property
+
+'Задать стиль защиты
+'Parameters:
+'[IN]   newID , тип параметра: string  - ...
+'See Also:
+'Example:
+' dim value as Variant
+' value = ...значение...
+' me. SecureStyleID = value
+friend property let SecureStyleID(byval newID as string)
+    m_SecureStyleID = newID
+end property
+
+'Стиль защиты
+'Parameters:
+' параметров нет
+'Returns:
+'  значение типа string
+'See Also:
+'Example:
+' dim variable as string
+' variable = me. SecureStyleID
+public property Get SecureStyleID() as string
+  SecureStyleID = m_SecureStyleID
+end property
+
+'Название таблицы раздела
+'Parameters:
+' параметров нет
+'Returns:
+'  значение типа string
+'See Also:
+'Example:
+' dim variable as string
+' variable = me. PartName
+public property Get PartName() as string
+  PartName = &quot;ITT2OPT_DEF&quot;
+end property
+
+'Задать родительский объект
+'Parameters:
+'[IN][OUT]  newParent , тип параметра: object  - ...
+'See Also:
+'Example:
+' dim value as Variant
+' set value = new Variant
+' set me. Parent = value
+friend property Set Parent(newParent as object)
+  set m_Parent = newParent
+end property
+
+'Получить родительский объект
+'Parameters:
+' параметров нет
+'Returns:
+'  объект любого класса Visual Basic
+'  ,или Nothing 
+'See Also:
+'Example:
+' dim variable as object
+' Set variable = me. Parent
+public property Get Parent() as object
+  set Parent = m_Parent
+end property
+
+'Задать корневой объект
+'Parameters:
+'[IN][OUT]  newApplication , тип параметра: Application  - ...
+'See Also:
+'Example:
+' dim value as Variant
+' set value = new Variant
+' set me. Application = value
+friend property Set Application(newApplication as Application)
+  set m_Application = newApplication
+  m_Application.Logger.Message  &quot;ITT2OPT_DEF.Init&quot;
+end property
+
+'Корневой объект
+'Parameters:
+' параметров нет
+'Returns:
+'  объект класса Application
+'  ,или Nothing
+'See Also:
+'Example:
+' dim variable as Application
+' Set variable = me. Application
+public property Get Application() as Application
+  set Application = m_Application
+end property
+
+'Разрушить иерархическую зависимость объектов
+'Parameters:
+' параметров нет
+'See Also:
+'Example:
+'  call me.CloseParents()
+private sub CloseParents()
+  set m_Application = nothing
+  set m_Parent = nothing
+end sub
+
+'Установить признак - считано из базы
+'Parameters:
+'[IN][OUT]  newRetrived , тип параметра: boolean  - ...
+'See Also:
+'Example:
+' dim value as Variant
+' value = ...значение...
+' me. RowRetrived = value
+friend property Let RowRetrived(newRetrived as boolean)
+  m_RowRetrived = newRetrived
+end property
+
+'получить признак - считано из базы
+'Parameters:
+' параметров нет
+'Returns:
+' Boolean, семантика результата:
+'   true  -
+'   false -
+'See Also:
+'Example:
+' dim variable as boolean
+' variable = me. RowRetrived
+public property Get RowRetrived() as boolean
+  RowRetrived = m_RowRetrived
+end property
+
+'Задать Дату и время считывания из базы
+'Parameters:
+'[IN][OUT]  newRetriveTime , тип параметра: date  - ...
+'See Also:
+'Example:
+' dim value as Variant
+' value = ...значение...
+' me. RetriveTime = value
+friend property Let RetriveTime(newRetriveTime as date)
+  m_RetriveTime = newRetriveTime
+end property
+
+'Дата и время считывания из базы
+'Parameters:
+' параметров нет
+'Returns:
+'  значение типа date
+'See Also:
+'Example:
+' dim variable as date
+' variable = me. RetriveTime
+public property Get RetriveTime() as date
+  RetriveTime = m_RetriveTime
+end property
+
+'Задать Дату и время изменения
+'Parameters:
+'[IN][OUT]  newChangeTime , тип параметра: date  - ...
+'See Also:
+'Example:
+' dim value as Variant
+' value = ...значение...
+' me. ChangeTime = value
+friend property Let ChangeTime(newChangeTime as date)
+  m_ChangeTime = newChangeTime
+end property
+
+'Получить Дату и время изменения
+'Parameters:
+' параметров нет
+'Returns:
+'  значение типа date
+'See Also:
+'Example:
+' dim variable as date
+' variable = me. ChangeTime
+public property Get ChangeTime() as date
+ ChangeTime = m_ChangeTime
+end property
+
+'Задать время обращения
+'Parameters:
+'[IN][OUT]  newAccessTime , тип параметра: date  - ...
+'See Also:
+'Example:
+' dim value as Variant
+' value = ...значение...
+' me. AccessTime = value
+friend property Let AccessTime(newAccessTime as date)
+  m_AccessTime = newAccessTime
+  if m_AccessTime &lt;= m_RetriveTime then m_AccessTime = m_RetriveTime +0.001
+end property
+
+'Получить время обращения
+'Parameters:
+' параметров нет
+'Returns:
+'  значение типа date
+'See Also:
+'Example:
+' dim variable as date
+' variable = me. AccessTime
+public property Get AccessTime() as date
+  AccessTime = m_AccessTime
+end property
+private function  GetFromXML(ByVal XML as string, ByVal TagName as string) as string
+  Dim res As String
+  On Error GoTo err
+  Dim XMLDoc As New DOMDocument
+  Call XMLDoc.loadXML(XML)
+  Dim Node As MSXML2.IXMLDOMNode
+  For Each Node In XMLDoc.childNodes.item(0).childNodes
+    If (UCase(Node.baseName) = &quot;BRIEF&quot;) Then
+      res = Node.Text
+      Exit For
+    End If
+  Next
+err:
+  GetFromXML = res
+End function 
+' let 
+'Номер документа
+
+'Номер документа
+'Parameters:
+'[IN]   newValue , тип параметра: long  - ...
+'Returns:
+'  объект любого класса Visual Basic
+'  ,или Nothing
+'  ,или значение любого скалярного типа 
+'See Also:
+'Example:
+Public property  let DocNum(byval newValue as long)
+ LoadFromDatabase
+if CanChange then
+ ChangeTime=Now 
+ Changed=true
+ OnChange &quot;DocNum&quot;,DocNum,newvalue
+
+   m_DocNum= newValue
+end if
+end property
+
+'Номер документа
+'Parameters:
+' параметров нет
+'Returns:
+'  значение типа long
+'See Also:
+'Example:
+' dim variable as long
+' variable = me. DocNum
+public property Get DocNum() as long
+ LoadFromDatabase
+ AccessTime=Now
+
+   DocNum = m_DocNum
+end property
+' let 
+'Тип оптимизации
+
+'Тип оптимизации
+'Parameters:
+'[IN]   newValue , тип параметра: object  - ...
+'Returns:
+'  объект любого класса Visual Basic
+'  ,или Nothing
+'  ,или значение любого скалярного типа 
+'See Also:
+'Example:
+Public property  set OptType(byval newValue as object)
+ LoadFromDatabase
+if CanChange then
+ ChangeTime=Now 
+ Changed=true
+ OnChange &quot;OptType&quot;,OptType,newvalue
+on error resume next
+m_OptType_ID=&quot;&quot;
+m_OptType_ID=newValue.id
+'  set   m_OptType= newValue
+end if
+end property
+
+'Тип оптимизации
+'Parameters:
+' параметров нет
+'Returns:
+'  объект любого класса Visual Basic
+'  ,или Nothing 
+'See Also:
+'Example:
+' dim variable as object
+' Set variable = me. OptType
+public property Get OptType() as object
+ LoadFromDatabase
+ AccessTime=Now
+dim tmp_OptType as object
+if  m_OptType_ID&lt;&gt;&quot;&quot; then 
+  set tmp_OptType=Application.FindRowObject(&quot;ITTD_OPTTYPE&quot;,m_OptType_ID)
+  if tmp_OptType is nothing then
+    m_OptType_ID_BRIEF = &quot;&quot; 
+  else
+    m_OptType_ID_BRIEF = tmp_OptType.Brief
+  end if
+  '''''' Speed optimization ONLY '''''''''
+  Application.AddToCash &quot;ITTD_OPTTYPE&quot; &amp; m_OptType_ID, tmp_OptType
+  set OptType=tmp_OptType
+  exit property
+end if
+  '  set OptType = m_OptType
+end property
+' let 
+'Параметры оптимизации
+
+'Параметры оптимизации
+'Parameters:
+'[IN]   newValue , тип параметра: STRING  - ...
+'Returns:
+'  объект любого класса Visual Basic
+'  ,или Nothing
+'  ,или значение любого скалярного типа 
+'See Also:
+'Example:
+Public property  let OptParam(byval newValue as STRING)
+ LoadFromDatabase
+if CanChange then
+ ChangeTime=Now 
+ Changed=true
+ OnChange &quot;OptParam&quot;,OptParam,newvalue
+
+   m_OptParam= newValue
+end if
+end property
+
+'Параметры оптимизации
+'Parameters:
+' параметров нет
+'Returns:
+'  значение типа STRING
+'See Also:
+'Example:
+' dim variable as STRING
+' variable = me. OptParam
+public property Get OptParam() as STRING
+ LoadFromDatabase
+ AccessTime=Now
+
+   OptParam = m_OptParam
+end property
+' let 
+'Дата создания заявки
+
+'Дата создания заявки
+'Parameters:
+'[IN]   newValue , тип параметра: DATE  - ...
+'Returns:
+'  объект любого класса Visual Basic
+'  ,или Nothing
+'  ,или значение любого скалярного типа 
+'See Also:
+'Example:
+Public property  let OPtDate(byval newValue as DATE)
+ LoadFromDatabase
+if CanChange then
+ ChangeTime=Now 
+ Changed=true
+ OnChange &quot;OPtDate&quot;,OPtDate,newvalue
+
+   m_OPtDate= newValue
+end if
+end property
+
+'Дата создания заявки
+'Parameters:
+' параметров нет
+'Returns:
+'  значение типа DATE
+'See Also:
+'Example:
+' dim variable as DATE
+' variable = me. OPtDate
+public property Get OPtDate() as DATE
+ LoadFromDatabase
+ AccessTime=Now
+
+   OPtDate = m_OPtDate
+end property
+' let 
+'Плановая дата оптимизации
+
+'Плановая дата оптимизации
+'Parameters:
+'[IN]   newValue , тип параметра: DATE  - ...
+'Returns:
+'  объект любого класса Visual Basic
+'  ,или Nothing
+'  ,или значение любого скалярного типа 
+'See Also:
+'Example:
+Public property  let DateToOptimize(byval newValue as DATE)
+ LoadFromDatabase
+if CanChange then
+ ChangeTime=Now 
+ Changed=true
+ OnChange &quot;DateToOptimize&quot;,DateToOptimize,newvalue
+
+   m_DateToOptimize= newValue
+end if
+end property
+
+'Плановая дата оптимизации
+'Parameters:
+' параметров нет
+'Returns:
+'  значение типа DATE
+'See Also:
+'Example:
+' dim variable as DATE
+' variable = me. DateToOptimize
+public property Get DateToOptimize() as DATE
+ LoadFromDatabase
+ AccessTime=Now
+
+   DateToOptimize = m_DateToOptimize
+end property
+' let 
+'Правило формирования партий
+
+'Правило формирования партий
+'Parameters:
+'[IN]   newValue , тип параметра: object  - ...
+'Returns:
+'  объект любого класса Visual Basic
+'  ,или Nothing
+'  ,или значение любого скалярного типа 
+'See Also:
+'Example:
+Public property  set TheRule(byval newValue as object)
+ LoadFromDatabase
+if CanChange then
+ ChangeTime=Now 
+ Changed=true
+ OnChange &quot;TheRule&quot;,TheRule,newvalue
+on error resume next
+m_TheRule_ID=&quot;&quot;
+m_TheRule_ID=newValue.id
+'  set   m_TheRule= newValue
+end if
+end property
+
+'Правило формирования партий
+'Parameters:
+' параметров нет
+'Returns:
+'  объект любого класса Visual Basic
+'  ,или Nothing 
+'See Also:
+'Example:
+' dim variable as object
+' Set variable = me. TheRule
+public property Get TheRule() as object
+ LoadFromDatabase
+ AccessTime=Now
+dim tmp_TheRule as object
+if  m_TheRule_ID&lt;&gt;&quot;&quot; then 
+  set tmp_TheRule=Application.FindRowObject(&quot;ITTD_RULE&quot;,m_TheRule_ID)
+  if tmp_TheRule is nothing then
+    m_TheRule_ID_BRIEF = &quot;&quot; 
+  else
+    m_TheRule_ID_BRIEF = tmp_TheRule.Brief
+  end if
+  '''''' Speed optimization ONLY '''''''''
+  Application.AddToCash &quot;ITTD_RULE&quot; &amp; m_TheRule_ID, tmp_TheRule
+  set TheRule=tmp_TheRule
+  exit property
+end if
+  '  set TheRule = m_TheRule
+end property
+
+'Упаковать поля в именованную коллекцию
+'Parameters:
+'[IN][OUT]   nv , тип параметра: NamedValues  - ...
+'See Also:
+'Example:
+'  call me.Pack({параметры})
+public sub Pack(byref nv as NamedValues)
+  dim nvi as NamedValue
+  set nv = Nothing
+  set nv = new NamedValues
+
+  set nvi=nv.Add( &quot;DocNum&quot;,m_DocNum)
+nvi.ValueType = adInteger 
+ ' Reference to ITTD_OPTTYPE
+    if m_OptType_ID=&quot;&quot;  then 
+       set nvi=nv.Add (&quot;OptType&quot;,&quot;&quot;)
+    else 
+       set nvi=nv.Add (&quot;OptType&quot;,m_OptType_ID)
+    end if 
+    nvi.ORACLE_GUID 
+  set nvi=nv.Add( &quot;OptParam&quot;,m_OptParam)
+  set nvi=nv.Add( &quot;OPtDate&quot;,m_OPtDate)
+nvi.ValueType = adDate 
+  set nvi=nv.Add( &quot;DateToOptimize&quot;,m_DateToOptimize)
+nvi.ValueType = adDate 
+ ' Reference to ITTD_RULE
+    if m_TheRule_ID=&quot;&quot;  then 
+       set nvi=nv.Add (&quot;TheRule&quot;,&quot;&quot;)
+    else 
+       set nvi=nv.Add (&quot;TheRule&quot;,m_TheRule_ID)
+    end if 
+    nvi.ORACLE_GUID 
+end sub
+
+'Краткое название строки
+'Parameters:
+'[IN]   UseServer , тип параметра: boolean = false  - ...
+'Returns:
+'  значение типа string
+'See Also:
+'Example:
+' dim variable as string
+' variable = me. Brief(...параметры...) 
+public function  Brief( optional byval UseServer as boolean = false) as string
+ dim s as string
+ if Application.WorkOffline then
+
+  m_BRIEF=&quot;&quot;
+ m_BRIEF= m_BRIEF &amp; DocNum &amp; &quot;; &quot;
+   if  OptType is nothing then 
+     m_BRIEF=m_BRIEF &amp; &quot;{&quot; &amp; m_OptType_ID_BRIEF &amp; &quot;}; &quot;
+   else
+     m_BRIEF=m_BRIEF &amp; &quot;{&quot; &amp; OptType.Brief  &amp; &quot;}; &quot;
+   end if
+ BRIEF= m_BRIEF
+ else
+  on error goto bye
+   if UseServer or m_Brief=&quot;&quot; then
+     application.MTZSession.GetBrief PartName, ID, s
+     if len(s) &gt; 255 then
+       Brief  =  left(s,255) &amp; &quot;...&quot;
+     else
+       Brief  =  s
+     end if
+       m_Brief  =  Brief
+   else
+     Brief = m_Brief
+   end if
+ end if
+exit function
+bye:
+    Brief = &quot;! доступ запрещен ! (&quot; &amp; err.description  &amp; &quot;)&quot; 
+end function
+
+'Распаковать значения полей из именованной коллекции
+'Parameters:
+'[IN][OUT]   nv , тип параметра: object  - ...
+'See Also:
+'Example:
+'  call me.UnPack({параметры})
+public sub UnPack(byref nv as object)
+ on error resume next
+if typename(nv) = &quot;NamedValues&quot; then
+
+m_DocNum=nv.item( &quot;DocNum&quot;).Value
+  m_OptType_ID=nv.item( &quot;OptType&quot;).Value
+m_OptParam=nv.item( &quot;OptParam&quot;).Value
+m_OPtDate=nv.item( &quot;OPtDate&quot;).Value
+m_DateToOptimize=nv.item( &quot;DateToOptimize&quot;).Value
+  m_TheRule_ID=nv.item( &quot;TheRule&quot;).Value
+else
+
+m_DocNum=nv.fields( &quot;DocNum&quot;).Value
+  m_OptType_ID=nv.fields( &quot;OptType&quot;).Value
+m_OptParam=nv.fields( &quot;OptParam&quot;).Value
+m_OPtDate=nv.fields( &quot;OPtDate&quot;).Value
+m_DateToOptimize=nv.fields( &quot;DateToOptimize&quot;).Value
+  m_TheRule_ID=nv.fields( &quot;TheRule&quot;).Value
+end if
+end sub
+
+'Очистить поля
+'Parameters:
+' параметров нет
+'See Also:
+'Example:
+'  call me.CleanFields()
+Public Sub CleanFields()
+   dim nv as namedvalues
+   dim o as ITT2OPT_DEF
+   set o = new ITT2OPT_DEF
+   set o.Application = me.Application
+   set o.parent = me.parent
+   o.pack nv
+   unpack nv
+   set o = nothing
+end sub
+
+'Сохранить изменение
+'Parameters:
+' параметров нет
+'Returns:
+' Boolean, семантика результата:
+'   true  -
+'   false -
+'See Also:
+'Example:
+' dim variable as boolean
+'  variable = me.Save() 
+Public Function Save() as boolean
+   LoadFromDatabase
+   if Application.WorkOffline then exit function
+   If Not CanChangeONLine Then Exit Function
+   dim nv as namedvalues
+   pack nv
+   on error goto bye
+     application.MTZSession.SaveRow2 PartName,  id,  me.Parent.Parent.id ,nv,application.id
+   Changed = false
+   Save = true
+exit function
+bye:
+  err.raise err.number,&quot;ITT2OPT_DEF.Save&quot;,err.description
+End Function
+
+'Удалить строку
+'Parameters:
+' параметров нет
+'Returns:
+' Boolean, семантика результата:
+'   true  -
+'   false -
+'See Also:
+'Example:
+' dim variable as boolean
+'  variable = me.Delete() 
+Public Function Delete() as boolean
+   Dim i As Long, ok as boolean
+if Application.WorkOffline then 
+  If Not CanChangeOffLine Then Exit Function
+   on error goto bye
+  m_Deleted = True
+  Delete = True
+else
+  If Not CanChangeONLine Then Exit Function
+   Delete=application.MTZSession.DeleteRow2( PartName, id, Application.ID) 
+   Changed = false
+   'Compact
+   Closeclass
+end if
+exit function
+bye:
+  err.raise err.number,&quot;ITT2OPT_DEF.Delete&quot;,err.description
+End Function
+
+'Задать стиль защиты
+'Parameters:
+'[IN]   SecurityStyleID , тип параметра: string  - ...
+'See Also:
+'Example:
+'  call me.Secure({параметры})
+public sub Secure(byval SecurityStyleID as string)
+if application.WorkOffline then exit sub
+On Error goto bye
+  M_SecureStyleID =Application.MTZSession.Secure(&quot;ITT2OPT_DEF&quot; ,ID,SecurityStyleID)
+exit sub
+bye:
+  err.raise err.number,&quot;ITT2OPT_DEF.Secure&quot;,err.description
+end sub
+
+'Распространить права на дочерние строки и разделы
+'Parameters:
+' параметров нет
+'See Also:
+'Example:
+'  call me.Propagate()
+public sub Propagate()
+if application.WorkOffline then exit sub
+  Application.MTZSession.Propagate &quot;ITT2OPT_DEF&quot;, ID
+exit sub
+bye:
+  err.raise err.number,&quot;ITT2OPT_DEF.Propagate&quot;,err.description
+end sub
+
+'Деструктор
+'Parameters:
+' параметров нет
+'See Also:
+'Example:
+'  call me.CloseClass()
+Friend sub CloseClass()
+ on error resume next
+
+ m_OptType_ID=&quot;&quot;
+ set m_OptType= nothing
+ m_TheRule_ID=&quot;&quot;
+ set m_TheRule= nothing
+ if not Application is nothing then Application.Logger.Message &quot;ITT2OPT_DEF.CloseClass&quot;
+ CloseParents
+end sub
+
+'Обновить
+'Parameters:
+' параметров нет
+'See Also:
+'Example:
+'  call me.Refresh()
+Public sub Refresh()
+    on error resume next
+    RowRetrived = false 
+    m_Brief =&quot;&quot;
+End sub
+
+'Загрузить из базы данных
+'Parameters:
+' параметров нет
+'See Also:
+'Example:
+'  call me.LoadFromDatabase ()
+Public sub LoadFromDatabase () 
+    on error resume next
+   If ID=&quot;&quot; then exit sub
+   If Application.WorkOffline then 
+     RowRetrived = true
+     RetriveTime = now
+     exit sub
+   end if
+   dim rs as adodb.recordset
+   If not RowRetrived then
+     CleanFields
+     set rs =application.MTZSession.GetRow( PartName, id)
+     Unpack rs
+     m_SecureStyleID = rs!SecurityStyleID
+     RowRetrived = true
+     RetriveTime = now
+   end if
+end sub
+
+'Найти строку раздела в дочерних объектах
+'Parameters:
+'[IN]   StrID , тип параметра: string, 
+'[IN]   InstID , тип параметра: string  - ...
+'Returns:
+'  объект любого класса Visual Basic
+'  ,или Nothing 
+'See Also:
+'Example:
+' dim variable as object
+' Set variable = me.FindObject(...параметры...)
+public function FindObject(byval StrID as string, byval InstID as string) as object
+ dim m_FindObject as object
+ static inFindObject as boolean
+ if StrID = &quot;&quot; then exit function
+ if InstID = &quot;&quot; then exit function
+ if inFindObject then exit function
+ inFindObject = true
+ if StrID = PartName then 
+   if InstID = ID then
+     set m_FindObject=me
+   end if
+ end if
+
+ set FindObject = m_findobject
+ set m_FindObject = nothing
+ inFindObject = false
+end function
+
+'Оптимизировать занятую объектом память
+'Parameters:
+' параметров нет
+'See Also:
+'Example:
+'  call me.Compact()
+public sub Compact()
+ if not Changed then
+   CleanFields
+   RowRetrived = false
+ end if
+
+end sub
+
+'Регистрация изменения значения строки
+'Parameters:
+'[IN]   fieldName , тип параметра: string, 
+'[IN]   OldValue,, тип параметра: Variant 
+'[IN][OUT]   NewValue, тип параметра: Variant  - ...
+'See Also:
+'Example:
+'  call me.OnChange({параметры})
+friend sub OnChange(byval fieldName as string, byval OldValue, byref NewValue)
+RaiseEvent Change(fieldname,OldValue,NewValue)
+end sub
+
+
+
+'Загрузить из формата XML
+'Parameters:
+'[IN][OUT]   node , тип параметра: IXMLDOMNode, 
+'[IN]   LoadMode , тип параметра: integer=0  - ...
+'See Also:
+'Example:
+'  call me.XMLLoad({параметры})
+public sub XMLLoad( node as IXMLDOMNode, optional byval LoadMode as integer=0)
+  on error resume next
+  Dim e_list As IXMLDOMNodeList
+  Dim e_ As IXMLDOMNode
+  if LoadMode &lt;&gt;2 then m_ID=node.Attributes.getNamedItem(&quot;ID&quot;).nodeValue
+  m_Deleted=node.Attributes.getNamedItem(&quot;Deleted&quot;).nodeValue
+  m_IsLocked=node.Attributes.getNamedItem(&quot;IsLocked&quot;).nodeValue
+  if m_IsLocked &gt;2 then m_IsLocked =0
+  m_RetriveTime=node.Attributes.getNamedItem(&quot;RetriveTime&quot;).nodeValue
+  m_ChangeTime=node.Attributes.getNamedItem(&quot;ChangeTime&quot;).nodeValue
+  m_AccessTime=node.Attributes.getNamedItem(&quot;AccessTime&quot;).nodeValue
+  if Application.workoffline and m_IsLocked = LockSession then m_IsLocked = NoLock
+  Secure node.Attributes.getNamedItem(&quot;SECURITYSTYLEID&quot;).nodeValue
+  DocNum=node.Attributes.getNamedItem(&quot;DOCNUM&quot;).nodeValue
+  set OptType=nothing
+  m_OptType_ID=node.Attributes.getNamedItem(&quot;OPTTYPE&quot;).nodeValue
+  m_OptType_ID_BRIEF=node.Attributes.getNamedItem(&quot;OPTTYPE_BRIEF&quot;).nodeValue
+  OptParam=Replace(node.Attributes.getNamedItem(&quot;OPTPARAM&quot;).nodeValue,vbLf,vbcrlf)
+  OPtDate=node.Attributes.getNamedItem(&quot;OPTDATE&quot;).nodeValue
+  DateToOptimize=node.Attributes.getNamedItem(&quot;DATETOOPTIMIZE&quot;).nodeValue
+  set TheRule=nothing
+  m_TheRule_ID=node.Attributes.getNamedItem(&quot;THERULE&quot;).nodeValue
+  m_TheRule_ID_BRIEF=node.Attributes.getNamedItem(&quot;THERULE_BRIEF&quot;).nodeValue
+  on error goto bye
+  'if m_ChangeTime &gt;= m_RetriveTime then m_Changed = true
+  m_Changed = true
+  m_RowRetrived = true
+  m_Brief = &quot;&quot;
+  on error resume next
+  exit sub
+bye:
+  debugoutput err.description
+end sub
+
+
+'Сохранить в формате XML
+'Parameters:
+'[IN][OUT]  node , тип параметра: IXMLDOMElement, 
+'[IN][OUT]   xdom , тип параметра: DomDocument  - ...
+'See Also:
+'Example:
+'  call me.XMLSave({параметры})
+public sub XMLSave(node as IXMLDOMElement, xdom as DomDocument)
+on error resume next
+  Dim e_ As IXMLDOMElement
+  LoadFromDatabase
+  node.setAttribute &quot;ID&quot;, m_ID
+  node.setAttribute &quot;Deleted&quot;, m_Deleted
+  node.setAttribute &quot;IsLocked&quot;, m_IsLocked
+  node.setAttribute &quot;RetriveTime&quot;, cdbl(m_RetriveTime)
+  node.setAttribute &quot;ChangeTime&quot;, cdbl(m_ChangeTime)
+  node.setAttribute &quot;SECURITYSTYLEID&quot;, m_SecureStyleID
+  node.setAttribute &quot;DOCNUM&quot;, DocNum
+  node.setAttribute &quot;OPTTYPE&quot;, m_OptType_ID
+  if not (OptType is nothing) then 
+    node.setAttribute &quot;OPTTYPE_BRIEF&quot;, OptType.BRIEF
+  else
+    node.setAttribute &quot;OPTTYPE_BRIEF&quot;, m_OptType_ID_BRIEF
+  end if
+  node.setAttribute &quot;OPTPARAM&quot;, OptParam
+  node.setAttribute &quot;OPTDATE&quot;, Cdbl(OPtDate)
+  node.setAttribute &quot;DATETOOPTIMIZE&quot;, Cdbl(DateToOptimize)
+  node.setAttribute &quot;THERULE&quot;, m_TheRule_ID
+  if not (TheRule is nothing) then 
+    node.setAttribute &quot;THERULE_BRIEF&quot;, TheRule.BRIEF
+  else
+    node.setAttribute &quot;THERULE_BRIEF&quot;, m_TheRule_ID_BRIEF
+  end if
+  node.setAttribute &quot;AccessTime&quot;, cdbl(m_AccessTime)
+end sub
+
+'может ли быть изменено
+'Parameters:
+' параметров нет
+'Returns:
+' Boolean, семантика результата:
+'   true  -
+'   false -
+'See Also:
+'Example:
+' dim variable as boolean
+' variable = me. CanChange
+public property Get CanChange() as boolean
+   if application.workoffline then
+     CanChange =  CanChangeoffLine 
+   else  
+     CanChange =  canchangeonline
+   end if
+end property
+
+'может ли быть изменено в режиме Offline
+'Parameters:
+' параметров нет
+'Returns:
+' Boolean, семантика результата:
+'   true  -
+'   false -
+'See Also:
+'Example:
+' dim variable as boolean
+' variable = me. CanChangeOffline
+public property Get CanChangeOffline() as boolean
+  dim test as boolean
+  if not parent is nothing then
+   test = parent.CanChangeOffline
+  end if
+  if not test  then 
+   test = (IsLocked = LockPermanent)
+  end if
+   CanChangeOffline = test
+end property
+
+'может ли быть изменено в режиме ONline
+'Parameters:
+' параметров нет
+'Returns:
+' Boolean, семантика результата:
+'   true  -
+'   false -
+'See Also:
+'Example:
+' dim variable as boolean
+' variable = me. CanChangeONLine
+public property Get CanChangeONLine() as boolean
+  dim test as boolean
+  if not parent is nothing then
+   test = parent.CanChangeONLine
+  end if
+  if  not test then 
+   test = (IsLocked &lt; ExternalLockSession)
+  end if
+   CanChangeOnline = test
+end property
+
+'Задать тип блокировки
+'Parameters:
+'[IN][OUT]  newIsLocked , тип параметра: LockStyle  - ...
+'See Also:
+'Example:
+' dim value as Variant
+' value = ...значение...
+' me. IsLocked = value
+friend property Let IsLocked(newIsLocked as LockStyle)
+  m_IsLocked = newIsLocked
+end property
+
+'Текущий тип блокировки
+'Parameters:
+' параметров нет
+'Returns:
+'  объект класса LockStyle
+'  ,или Nothing
+'See Also:
+'Example:
+' dim variable as LockStyle
+' Set variable = me. IsLocked
+public property Get IsLocked() as LockStyle
+  if m_IsLocked &lt;&gt; LockSession and m_IsLocked &lt;&gt; LockPermanent then CheckLock
+  IsLocked = m_IsLocked
+end property
+
+'Проверить блокировку
+'Parameters:
+' параметров нет
+'See Also:
+'Example:
+'  call me.CheckLock()
+private sub CheckLock()
+static LastCheckTime as date
+if application.WorkOffline then exit sub
+If Now - LastCheckTime &lt; CDbl(CDate(&quot;00:00:10&quot;)) Then Exit Sub
+On Error Resume Next
+m_IsLocked = Application.MTZSession.IsLocked(&quot;ITT2OPT_DEF&quot;, ID)
+LastCheckTime = now
+end sub
+
+'Заблокировать
+'Parameters:
+'[IN]   Permanent , тип параметра: boolean=false   - ...
+'Returns:
+' Boolean, семантика результата:
+'   true  -
+'   false -
+'See Also:
+'Example:
+' dim variable as boolean
+' variable = me.LockResource(...параметры...) 
+public function LockResource(optional byval Permanent as boolean=false ) as boolean
+if application.WorkOffline then exit function
+  dim OK 
+ok = Application.MTZSession.LockResource(&quot;ITT2OPT_DEF&quot;, ID, Permanent)
+  if OK then  
+    if Permanent then m_IsLocked = LockPermanent else m_IsLocked = LockSession
+  else
+    m_IsLocked = NoLock
+  end if
+bye:
+end function
+
+'Снять блокировку ресурса
+'Parameters:
+' параметров нет
+'Returns:
+' Boolean, семантика результата:
+'   true  -
+'   false -
+'See Also:
+'Example:
+' dim variable as boolean
+'  variable = me.UnLockResource() 
+public function UnLockResource() as boolean
+if application.WorkOffline then exit function
+On Error GoTo bye
+Application.MTZSession.UnlockResource &quot;ITT2OPT_DEF&quot;, ID
+m_IsLocked = NoLock
+bye:
+end function
+
+'Возможно блокирование
+'Parameters:
+' параметров нет
+'Returns:
+' Boolean, семантика результата:
+'   true  -
+'   false -
+'See Also:
+'Example:
+' dim variable as boolean
+'  variable = me.CanLock() 
+public function CanLock() as boolean
+if application.WorkOffline then exit function
+On Error Resume Next
+CanLock = Application.MTZSession.CanLock(&quot;ITT2OPT_DEF&quot;,ID)
+end function
+
+'Массовое обновление измененных строк
+'Parameters:
+' параметров нет
+'See Also:
+'Example:
+'  call me.BatchUpdate()
+PUBLIC sub BatchUpdate()
+If not Application.WorkOffline Then
+  If Deleted Then
+    Delete
+    Exit Sub
+  End If
+  If Changed Then Save
+End If
+End sub
+
+'Загрузить все данные документа из базы
+'Parameters:
+' параметров нет
+'See Also:
+'Example:
+'  call me.LoadAll()
+friend sub LoadAll()
+If not Application.WorkOffline Then
+  LoadFromDatabase
+End If
+End sub
+
+
+'Раскрытие раздела при выборе узла в глобальном дереве
+'Parameters:
+'[IN][OUT]  tree , тип параметра: object, 
+'[IN]   key , тип параметра: string, 
+'[IN]   mode , тип параметра: string, 
+'[IN][OUT]   optional Mask , тип параметра: string = &quot;&quot;  - ...
+'See Also:
+'Example:
+'  call me.Expand({параметры})
+public sub Expand(tree as object,byval key as string, byval mode as string, optional Mask as string = &quot;&quot;)
+ dim id as string , struct as string, child as string
+ dim item as object, i as long, nid as string, tmpid as string
+ dim tidx as long, tid as string 'only for tree styled structure
+ on error resume next
+ id = mid(key,39,38)
+ struct = right(tree.nodes.item(key).parent.parent.key,len(tree.nodes.item(key).parent.parent.key)-76)
+ child = right(key,len(key)-76)
+ if id&lt;&gt;m_id  then 
+   exit sub
+ else
+    set item =me
+ end if
+ tree.nodes.item(key).sorted=true
+if mode=&quot;read&quot; then
+ select case child
+end select
+end if ' mode=&quot;read&quot;
+if mode=&quot;main&quot; then
+ select case child
+end select
+end if ' mode=&quot;main&quot;
+if mode=&quot;&quot; then
+ select case child
+ end select
+end if ' mode=&quot;&quot; (Default)
+end sub
+
+"><AttributeHolder Name="Type" Value="code"/><FormData Name=""/></BlockHolder></ModuleHolder><ModuleHolder ModuleName="ITT2OPT_DEF_COL" File=""><AttributeHolder Name="Type" Value="class"/><AttributeHolder Name="Instancing" Value="publicnotcreatable"/><BlockHolder BlockName="declaration" BlockCode="'раздел 
+dim mcol as SortableCollection
+dim m_Parent as object
+dim m_Application as Application
+dim m_Filter as string
+private m_IsLocked as  LockStyle
+
+"><AttributeHolder Name="Type" Value="description"/><FormData Name=""/></BlockHolder><BlockHolder BlockName="codebody" BlockCode="
+
+
+'Название таблицы раздела
+'Parameters:
+' параметров нет
+'Returns:
+'  значение типа string
+'See Also:
+'Example:
+' dim variable as string
+' variable = me. ChildPartName
+Friend property Get ChildPartName() as string
+  ChildPartName = &quot;ITT2OPT_DEF&quot;
+end property
+
+
+'Задать родительский объект в иерархии документа
+'Parameters:
+'[IN][OUT]  newParent , тип параметра: object  - ...
+'See Also:
+'Example:
+' dim value as Variant
+' set value = new Variant
+' set me. Parent = value
+friend property Set Parent(newParent as object)
+  set m_Parent = newParent
+end property
+
+
+'Получить родительский объект в иерархии документа
+'Parameters:
+' параметров нет
+'Returns:
+'  объект любого класса Visual Basic
+'  ,или Nothing 
+'See Also:
+'Example:
+' dim variable as object
+' Set variable = me. Parent
+public property Get Parent() as object
+  set Parent = m_Parent
+end property
+
+
+'Задать корневой объект
+'Parameters:
+'[IN][OUT]  newApplication , тип параметра: object  - ...
+'See Also:
+'Example:
+' dim value as Variant
+' set value = new Variant
+' set me. Application = value
+friend property Set Application(newApplication as object)
+  set m_Application = newApplication
+  m_Application.Logger.Message  &quot;ITT2OPT_DEF.Init&quot;
+end property
+
+
+'Получить корневой объект
+'Parameters:
+' параметров нет
+'Returns:
+'  объект класса Application
+'  ,или Nothing
+'See Also:
+'Example:
+' dim variable as Application
+' Set variable = me. Application
+public property Get Application() as Application
+ if m_Parent is nothing then
+    set Application = me
+  else
+    set Application = m_Application
+  end if
+end property
+
+
+'Задать дополнительный фильтр коллекции
+'Parameters:
+'[IN]   newFilter , тип параметра: string  - ...
+'See Also:
+'Example:
+' dim value as Variant
+' value = ...значение...
+' me. Filter = value
+public property Let Filter(byval newFilter as string)
+  m_Filter = newFilter
+  Refresh
+end property
+
+
+'Получить значение фильтра
+'Parameters:
+' параметров нет
+'Returns:
+'  значение типа string
+'See Also:
+'Example:
+' dim variable as string
+' variable = me. Filter
+public property Get Filter() as string
+    Filter = m_Filter
+end property
+
+
+'Разрушить иерархическую связку с родительскими объектами
+'Parameters:
+' параметров нет
+'See Also:
+'Example:
+'  call me.CloseParents()
+private sub CloseParents()
+  set m_Application = nothing
+  set m_Parent = nothing
+end sub
+
+
+'Добавить строку в раздел (но не в базу данных)
+'Parameters:
+'[IN][OUT]   ID , тип параметра: string=&quot;&quot;  - ...
+'Returns:
+'  объект класса  ITT2OPT_DEF
+'  ,или Nothing
+'See Also:
+'Example:
+' dim variable as  ITT2OPT_DEF
+' Set variable = me.Add(...параметры...)
+Public function Add(optional ID as string=&quot;&quot;) as  ITT2OPT_DEF
+   if mcol.count&gt;0 then exit function
+ dim LID as  string
+ dim o as  ITT2OPT_DEF
+ if ID=&quot;&quot; then 
+   LID = createguid2() 
+ else 
+   LID = left(ID,38) 
+ endif  
+ on error resume next  
+ if mcol.count &gt; 0  then  
+   if mcol.item(Lid) is nothing  then  
+   goto addnew  
+   else
+     set Add = mcol.Item( LID)
+     exit function
+   end if
+ end if
+ addnew: 
+  set o = new  ITT2OPT_DEF
+  o.ID =LID
+  o.RowRetrived = False
+  Set o.Parent = Me
+  Set o.Application = Me.Application
+  me.application.AddToCash childPartName &amp; lid , o
+  set add = o
+  mcol.AddItem o,o.ID
+  set  o = nothing
+end function
+
+
+'Получить строку раздела
+'Parameters:
+'[IN]   ID , тип параметра: variant  - ...
+'Returns:
+'  объект класса ITT2OPT_DEF
+'  ,или Nothing
+'See Also:
+'Example:
+' dim variable as ITT2OPT_DEF
+' Set variable = me.Item(...параметры...)
+Public function Item(byval ID as variant) as ITT2OPT_DEF
+Attribute Item.VB_MemberFlags = &quot;200&quot;
+ on error resume next  
+ dim o as ITT2OPT_DEF
+ If Not mCol.Item(ID) Is Nothing Then
+   Set o = mCol.Item(ID)
+   set Item = o
+   set  o = nothing
+   exit function
+ end if
+end function
+
+
+'Найти строку по идентификатору в дочерней иерархии
+'Parameters:
+'[IN]   StrID , тип параметра: string, 
+'[IN]   InstID , тип параметра: string  - ...
+'Returns:
+'  объект любого класса Visual Basic
+'  ,или Nothing 
+'See Also:
+'Example:
+' dim variable as object
+' Set variable = me.FindObject(...параметры...)
+public function FindObject(byval StrID as string, byval InstID as string) as object
+ dim m_FindObject as object,  i as long
+ if StrID = &quot;&quot; then exit function
+ if InstID = &quot;&quot; then exit function
+ If Not application.MTZSession.IsDescendant(StrID, ChildPartName) Then Exit Function
+ if StrID = ChildPartName then 
+   set m_FindObject = Item(Instid)
+   if  not  m_FindObject is nothing then goto OK
+ end if
+ for i = 1 to Count
+   set m_FindObject = Item(i).FindObject(StrID,InstID)
+   if  not  m_FindObject is nothing then exit for
+ next
+ OK:
+ set FindObject = m_findobject
+ set m_FindObject = nothing
+end function
+
+
+'Оптимизировать использование памяти
+'Parameters:
+' параметров нет
+'See Also:
+'Example:
+'  call me.Compact()
+public sub Compact()
+ dim  i as long
+ for i = 1 to Count
+   Item(i).Compact
+ next
+end sub
+
+'Задать поле по которому будем сортировать
+'Parameters:
+'[IN]   Name , тип параметра: string  - ...
+'See Also:
+'Example:
+' dim value as Variant
+' value = ...значение...
+' me. Sort = value
+public property let Sort(byval Name as string)
+ mcol.Sort name 
+end property
+
+'Получить значения поля - основы сортировки
+'Parameters:
+' параметров нет
+'Returns:
+'  значение типа string
+'See Also:
+'Example:
+' dim variable as string
+' variable = me. Sort
+public property get Sort() as string
+ Sort = mcol.sortname 
+end property
+
+
+'Получить строку в кот. поле сортировки равно значению
+'Parameters:
+'[IN]   Value , тип параметра: variant  - ...
+'Returns:
+'  объект класса ITT2OPT_DEF
+'  ,или Nothing
+'See Also:
+'Example:
+' dim variable as ITT2OPT_DEF
+' Set variable = me.GetEQ(...параметры...)
+Public function GetEQ(byval Value as variant) as ITT2OPT_DEF
+   set GetEQ = mcol.getEQ(Value)
+end function
+
+
+'Получить строку в кот. поле сортировки меньше или равно значению
+'Parameters:
+'[IN]   Value , тип параметра: variant  - ...
+'Returns:
+'  объект класса ITT2OPT_DEF
+'  ,или Nothing
+'See Also:
+'Example:
+' dim variable as ITT2OPT_DEF
+' Set variable = me.GetLE(...параметры...)
+Public function GetLE(byval Value as variant) as ITT2OPT_DEF
+   set GetLE = mcol.getLE(Value)
+end function
+
+
+'Получить строку в кот. поле сортировки меньше значения
+'Parameters:
+'[IN]   Value , тип параметра: variant  - ...
+'Returns:
+'  объект класса ITT2OPT_DEF
+'  ,или Nothing
+'See Also:
+'Example:
+' dim variable as ITT2OPT_DEF
+' Set variable = me.GetLT(...параметры...)
+Public function GetLT(byval Value as variant) as ITT2OPT_DEF
+   set GetLT = mcol.getLT(Value)
+end function
+
+
+'Получить строку в кот. поле сортировки больше или равно значению
+'Parameters:
+'[IN]   Value , тип параметра: variant  - ...
+'Returns:
+'  объект класса ITT2OPT_DEF
+'  ,или Nothing
+'See Also:
+'Example:
+' dim variable as ITT2OPT_DEF
+' Set variable = me.GetGE(...параметры...)
+Public function GetGE(byval Value as variant) as ITT2OPT_DEF
+   set GetGE = mcol.getGE(Value)
+end function
+
+
+'Получить строку в кот. поле сортировки больше значения
+'Parameters:
+'[IN]   Value , тип параметра: variant  - ...
+'Returns:
+'  объект класса ITT2OPT_DEF
+'  ,или Nothing
+'See Also:
+'Example:
+' dim variable as ITT2OPT_DEF
+' Set variable = me.GetGT(...параметры...)
+Public function GetGT(byval Value as variant) as ITT2OPT_DEF
+   set GetGT = mcol.getGT(Value)
+end function
+
+
+'Получить номер строки в кот. поле сортировки равно значению
+'Parameters:
+'[IN]   Value , тип параметра: variant  - ...
+'Returns:
+'  объект класса  long
+'  ,или Nothing
+'See Also:
+'Example:
+' dim variable as  long
+' Set variable = me.GetEQPos(...параметры...)
+Public function GetEQPos(byval Value as variant) as  long
+   GetEQPos = mcol.getEQpos(Value)
+end function
+
+
+'Получить номер строки в кот. поле сортировки меньше или равно значению
+'Parameters:
+'[IN]   Value , тип параметра: variant  - ...
+'Returns:
+'  объект класса  long
+'  ,или Nothing
+'See Also:
+'Example:
+' dim variable as  long
+' Set variable = me.GetLEPos(...параметры...)
+Public function GetLEPos(byval Value as variant) as  long
+   GetLEPos = mcol.getLEpos(Value)
+end function
+
+
+'Получить номер строки в кот. поле сортировки меньше значения
+'Parameters:
+'[IN]   Value , тип параметра: variant  - ...
+'Returns:
+'  объект класса  long
+'  ,или Nothing
+'See Also:
+'Example:
+' dim variable as  long
+' Set variable = me.GetLTPos(...параметры...)
+Public function GetLTPos(byval Value as variant) as  long
+   GetLTPos = mcol.getLTpos(Value)
+end function
+
+
+'Получить номер строки в кот. поле сортировки больше или равно значению
+'Parameters:
+'[IN]   Value , тип параметра: variant  - ...
+'Returns:
+'  объект класса  long
+'  ,или Nothing
+'See Also:
+'Example:
+' dim variable as  long
+' Set variable = me.GetGEPos(...параметры...)
+Public function GetGEPos(byval Value as variant) as  long
+   GetGEPos = mcol.getGEpos(Value)
+end function
+
+
+'Получить номер строки в кот. поле сортировки больше значения
+'Parameters:
+'[IN]   Value , тип параметра: variant  - ...
+'Returns:
+'  объект класса  long
+'  ,или Nothing
+'See Also:
+'Example:
+' dim variable as  long
+' Set variable = me.GetGTPos(...параметры...)
+Public function GetGTPos(byval Value as variant) as  long
+   GetGTPos = mcol.getGTpos(Value)
+end function
+
+
+'Деструктор
+'Parameters:
+' параметров нет
+'See Also:
+'Example:
+'  call me.CloseClass()
+Friend sub CloseClass()
+ on error resume next  
+ dim i as long  
+ dim o as  ITT2OPT_DEF
+    For i = 1 To mcol.Count
+       Set o = mcol.Item(i)
+        o.CloseClass
+    Next
+ if not Application is nothing then Application.Logger.Message &quot;ITT2OPT_DEF.CloseClass&quot;
+ CloseParents
+ set mcol = nothing
+end sub
+
+
+'Инициализация коллекции
+'Parameters:
+' параметров нет
+'See Also:
+'Example:
+'  call me.Class_Initialize()
+Private Sub Class_Initialize()
+ set mcol = new SortableCollection
+End Sub
+
+
+'Количетсво строк в коллекции
+'Parameters:
+' параметров нет
+'Returns:
+'  значение типа Long
+'See Also:
+'Example:
+' dim variable as Long
+' variable = me. Count
+Public Property Get Count() As Long
+    count = mCol.count
+End Property
+
+
+'Удалить строку из коллекции
+'Parameters:
+'[IN]   vntIndexKey , тип параметра: Variant  - ...
+'See Also:
+'Example:
+'  call me.Remove({параметры})
+public Sub Remove(byval vntIndexKey As Variant)
+    on error resume next 
+    me.application.RemoveFromCash childPartName &amp; item(vntIndexKey).id 
+    mCol.Remove vntIndexKey
+End Sub
+
+
+'Сохранить изменения в строке
+'Parameters:
+'[IN]   vntIndexKey , тип параметра: Variant  - ...
+'Returns:
+' Boolean, семантика результата:
+'   true  -
+'   false -
+'See Also:
+'Example:
+' dim variable as boolean
+' variable = me.Update(...параметры...) 
+Public Function Update(byval vntIndexKey As Variant) as boolean
+ if not Item(vntIndexKey) is nothing then 
+   Update = Item(vntIndexKey).Save 
+ else
+   Update = false
+ end if
+End Function
+
+
+'Удалить строку
+'Parameters:
+'[IN]   vntIndexKey , тип параметра: Variant  - ...
+'Returns:
+' Boolean, семантика результата:
+'   true  -
+'   false -
+'See Also:
+'Example:
+' dim variable as boolean
+' variable = me.Delete(...параметры...) 
+Public Function Delete(byval vntIndexKey As Variant) as boolean
+on error goto bye
+Dim o As ITT2OPT_DEF
+Set o = item(vntIndexKey)
+If o Is Nothing Then Exit Function
+If o.Delete Then
+  Delete = True
+  mcol.Remove vntIndexKey
+End If
+Exit Function
+bye:
+Err.Raise Err.Number, &quot;Delete&quot;, Err.Description
+End Function
+
+
+'Обновить
+'Parameters:
+' параметров нет
+'See Also:
+'Example:
+'  call me.Refresh()
+Public Sub Refresh()
+    On Error Resume Next
+    Dim mcol2  As SortableCollection
+    Set mcol2 = mcol
+    Set mcol = Nothing
+    Set mcol = New SortableCollection
+    Dim rs As ADODB.recordset
+    if application.WorkOffline then exit sub
+    Dim o As ITT2OPT_DEF
+    dim tmpParent as object
+    dim tID as string
+    dim SSID as string
+    dim rtime as date
+    rtime =Now
+    rtime =application.MTZSession.GetServertime()
+    if application.AutoLoadPart then
+    set rs =application.MTZSession.GetRows( ChildPartName, Parent.id,,Filter)
+    else
+    set rs =application.MTZSession.GetIDs( ChildPartName, Parent.id,,Filter)
+    end if
+    If mcol2 Is Nothing Then Set mcol2 = New SortableCollection
+    dim idx as long
+    if not rs is nothing then ' wrong database structure
+    while not rs.eof
+      if application.AutoLoadPart then
+        tID = rs!ITT2OPT_DEFID
+      else
+        tid=rs!id
+      end if
+      on error resume next
+      SSid=rs!SecurityStyleID &amp; &quot;&quot; 
+      If mcol2.Item(tID) Is Nothing Then
+        Set o = Add(tID)
+        if application.AutoLoadPart then
+          o.unpack rs
+          o.RowRetrived = True
+          o.RetriveTime = rtime
+        end if
+      Else
+        Set o = mcol2.Item(tID)
+        If o.RowRetrived Then
+          If o.RetriveTime &lt; rs!ChangeStamp Then
+             if application.AutoLoadPart then
+               o.CleanFields
+               o.unpack rs
+               o.RetriveTime = rtime
+             else
+               o.RowRetrived = False
+             end if
+          End If
+        else
+          if application.AutoLoadPart then
+            o.CleanFields
+            o.unpack rs
+            o.RetriveTime = rtime
+          end if
+        End If
+        mcol.AddItem o, tID
+        mcol2.Remove tID
+      End If
+      o.SecureStyleID = SSID
+    rs.MoveNext
+    wend
+    end if ' rs is nothing
+    For idx = 1 To mcol2.Count
+       Set o = mcol2.Item(idx)
+       o.CloseClass
+    Next
+    Set mcol2 = Nothing
+End Sub
+
+'Сохранить данные в структуре XML
+'Parameters:
+'[IN][OUT]   ParentNode , тип параметра: IXMLDOMElement, 
+'[IN][OUT]   Xdom , тип параметра: DomDocument  - ...
+'See Also:
+'Example:
+'  call me.XMLSave({параметры})
+Public Sub XMLSave(byref ParentNode as IXMLDOMElement, Xdom as DomDocument) 
+  dim o as ITT2OPT_DEF
+  dim i as long
+  dim pnode as IXMLDOMElement
+  set pnode = xdom.CreateElement(&quot;ITT2OPT_DEF_COL&quot;)
+  pnode.setAttribute &quot;IsLocked&quot;, m_IsLocked
+  dim node as IXMLDOMElement
+  ParentNode.appendChild pnode
+  for i=1 to count
+    set o = item(i)
+    set node = xdom.CreateElement(&quot;ITT2OPT_DEF&quot;)
+    Pnode.appendChild node
+    o.XmlSave node, xdom
+  next
+End sub
+
+
+'Загрузить данные из XML
+'Parameters:
+'[IN][OUT]   NodeList , тип параметра: IXMLDOMnodeList, 
+'[IN]   LoadMode , тип параметра: integer=0  - ...
+'See Also:
+'Example:
+'  call me.XMLLoad({параметры})
+Public Sub XMLLoad(byref NodeList as IXMLDOMnodeList, optional byval LoadMode as integer=0)
+  on error resume next
+  dim o as ITT2OPT_DEF
+  dim node as IXMLDOMElement
+  dim pnode as IXMLDOMElement
+  NodeList.Reset
+  set pnode = NodeList.NextNode
+  m_IsLocked=pnode.Attributes.getNamedItem(&quot;IsLocked&quot;).nodeValue
+  Set NodeList = pnode.selectNodes(&quot;ITT2OPT_DEF&quot;)
+  dim bufcol as collection
+  if loadmode =1  then
+    set bufcol = new collection
+  end if
+  set node = NodeList.NextNode
+  While not node is nothing
+    ' append mode
+    if loadmode =0  then
+      if item(node.Attributes.getNamedItem(&quot;ID&quot;).nodeValue) is nothing  then
+        Add(node.Attributes.getNamedItem(&quot;ID&quot;).nodeValue).xmlload node, loadmode
+      else
+        Item(node.Attributes.getNamedItem(&quot;ID&quot;).nodeValue).xmlload node, loadmode
+      end if
+    end if
+    ' replace mode
+    if loadmode =1  then
+      if item(node.Attributes.getNamedItem(&quot;ID&quot;).nodeValue) is nothing  then
+        Add(node.Attributes.getNamedItem(&quot;ID&quot;).nodeValue).xmlload node, loadmode
+      else
+        Item(node.Attributes.getNamedItem(&quot;ID&quot;).nodeValue).xmlload node, loadmode
+      end if
+      bufcol.add Item(node.Attributes.getNamedItem(&quot;ID&quot;).nodeValue),node.Attributes.getNamedItem(&quot;ID&quot;).nodeValue
+    end if
+    ' copy with new ID mode
+    if loadmode =2  then
+        Add().xmlload node, loadmode
+    end if
+    set node = NodeList.NextNode
+  wend
+    ' remove extra items from collection
+  if loadmode =1  then
+    dim i as long
+    ' remove existing
+    removeAgain:
+    for i=1 to count
+      if bufcol.item(item(i).id) is nothing then
+        Delete item(i).id
+        goto removeAgain
+      end if
+    next
+    set bufcol = nothing
+  end if
+End sub
+
+'может ли быть изменено
+'Parameters:
+' параметров нет
+'Returns:
+' Boolean, семантика результата:
+'   true  -
+'   false -
+'See Also:
+'Example:
+' dim variable as boolean
+' variable = me. CanChange
+public property Get CanChange() as boolean
+   if application.workoffline then
+     CanChange =  CanChangeoffLine 
+   else  
+     CanChange =  canchangeonline
+   end if
+end property
+
+'может ли быть изменено в режиме Offline
+'Parameters:
+' параметров нет
+'Returns:
+' Boolean, семантика результата:
+'   true  -
+'   false -
+'See Also:
+'Example:
+' dim variable as boolean
+' variable = me. CanChangeOffline
+public property Get CanChangeOffline() as boolean
+  dim test as boolean
+  if not parent is nothing then
+   test = parent.CanChangeOffline
+  end if
+  if not test  then 
+   test = (IsLocked = LockPermanent)
+  end if
+   CanChangeOffline = test
+end property
+
+'может ли быть изменено в режиме ONline
+'Parameters:
+' параметров нет
+'Returns:
+' Boolean, семантика результата:
+'   true  -
+'   false -
+'See Also:
+'Example:
+' dim variable as boolean
+' variable = me. CanChangeONLine
+public property Get CanChangeONLine() as boolean
+  dim test as boolean
+  if not parent is nothing then
+   test = parent.CanChangeONLine
+  end if
+  if  not test then 
+   test = (IsLocked &lt; ExternalLockSession)
+  end if
+   CanChangeOnline = test
+end property
+
+'Задать тип блокировки
+'Parameters:
+'[IN][OUT]  newIsLocked , тип параметра: LockStyle  - ...
+'See Also:
+'Example:
+' dim value as Variant
+' value = ...значение...
+' me. IsLocked = value
+friend property Let IsLocked(newIsLocked as LockStyle)
+  m_IsLocked = newIsLocked
+end property
+
+'Текущий тип блокировки
+'Parameters:
+' параметров нет
+'Returns:
+'  объект класса LockStyle
+'  ,или Nothing
+'See Also:
+'Example:
+' dim variable as LockStyle
+' Set variable = me. IsLocked
+public property Get IsLocked() as LockStyle
+  if m_IsLocked &lt;&gt; LockSession and m_IsLocked &lt;&gt; LockPermanent then CheckLock
+  IsLocked = m_IsLocked
+end property
+
+'Проверить блокировку
+'Parameters:
+' параметров нет
+'See Also:
+'Example:
+'  call me.CheckLock()
+private sub CheckLock()
+static LastCheckTime as date
+if application.WorkOffline then exit sub
+If Now - LastCheckTime &lt; CDbl(CDate(&quot;00:00:10&quot;)) Then Exit Sub
+On Error Resume Next
+m_IsLocked = Application.MTZSession.IsLocked(&quot;INSTANCE&quot;, parent.ID)
+LastCheckTime = now
+end sub
+
+'Заблокировать
+'Parameters:
+'[IN]   Permanent , тип параметра: boolean=false   - ...
+'Returns:
+' Boolean, семантика результата:
+'   true  -
+'   false -
+'See Also:
+'Example:
+' dim variable as boolean
+' variable = me.LockResource(...параметры...) 
+public function LockResource(optional byval Permanent as boolean=false ) as boolean
+if application.WorkOffline then exit function
+  dim OK 
+ok = Application.MTZSession.LockResource(&quot;INSTANCE&quot;, parent.id, Permanent)
+  if OK then  
+    if Permanent then m_IsLocked = LockPermanent else m_IsLocked = LockSession
+  else
+    m_IsLocked = NoLock
+  end if
+bye:
+end function
+
+'Снять блокировку ресурса
+'Parameters:
+' параметров нет
+'Returns:
+' Boolean, семантика результата:
+'   true  -
+'   false -
+'See Also:
+'Example:
+' dim variable as boolean
+'  variable = me.UnLockResource() 
+public function UnLockResource() as boolean
+if application.WorkOffline then exit function
+On Error GoTo bye
+Application.MTZSession.UnlockResource &quot;INSTANCE&quot;, parent.id
+m_IsLocked = NoLock
+bye:
+end function
+
+'Возможно блокирование
+'Parameters:
+' параметров нет
+'Returns:
+' Boolean, семантика результата:
+'   true  -
+'   false -
+'See Also:
+'Example:
+' dim variable as boolean
+'  variable = me.CanLock() 
+public function CanLock() as boolean
+if application.WorkOffline then exit function
+On Error Resume Next
+CanLock = Application.MTZSession.CanLock(&quot;INSTANCE&quot;, parent.ID)
+end function
+
+
+
+'Настройка грида на вывод раздела
+'Parameters:
+'[IN][OUT]  YGrid , тип параметра: object  - ...
+'See Also:
+'Example:
+'  call me.PrepareGrid({параметры})
+public sub PrepareGrid(YGrid as object)
+YGrid.ItemCount = 0
+YGrid.Groups.Clear 
+YGrid.SortKeys.Clear
+YGrid.Columns.Clear
+  YGrid.Columns.Add(&quot;Номер документа&quot;, 0, 0, &quot;DocNum&quot;).SortType =2
+  YGrid.Columns.Add(&quot;Тип оптимизации&quot;, 0, 0, &quot;OptType&quot;).SortType =1
+  YGrid.Columns.Add(&quot;Параметры оптимизации&quot;, 0, 0, &quot;OptParam&quot;).SortType =1
+  YGrid.Columns.Add(&quot;Дата создания заявки&quot;, 0, 0, &quot;OPtDate&quot;).SortType =4
+  YGrid.Columns.Add(&quot;Плановая дата оптимизации&quot;, 0, 0, &quot;DateToOptimize&quot;).SortType =4
+  YGrid.Columns.Add(&quot;Правило формирования партий&quot;, 0, 0, &quot;TheRule&quot;).SortType =1
+YGrid.ItemCount = count
+end sub
+
+
+'Чтение данных строки раздела в грид
+'Parameters:
+'[IN][OUT]  YGrid , тип параметра: object, 
+'[IN]   RowIndex , тип параметра: Long, 
+'[IN]   Bookmark , тип параметра: Variant, 
+'[IN][OUT]    Values , тип параметра: Variant  - ...
+'See Also:
+'Example:
+'  call me.LoadRow({параметры})
+public sub LoadRow(YGrid as object, ByVal RowIndex As Long, ByVal Bookmark As Variant,  Values )
+ dim obj as ITT2OPT_DEF
+  If RowIndex &gt; 0 And RowIndex &lt;= Count Then
+    'If not IsEmpty(BookMArk) then
+    '  set obj = item(left(bookmark,38))
+    'else
+      set obj = item(rowindex)
+    'end If
+    if obj is nothing then exit sub
+    on error resume next
+    Values.Value(1) = Left(Replace(obj.DocNum, vbCrLf, &quot; &quot;), 255)
+   if obj.OptType is nothing then
+    Values.Value(2) = &quot;Не задано&quot;
+   else 
+    Values.Value(2) = Left(Replace(obj.OptType.brief, vbCrLf, &quot; &quot;), 255)
+   end if 
+    Values.Value(3) = Left(Replace(obj.OptParam, vbCrLf, &quot; &quot;), 255)
+    Values.Value(4) = Left(Replace(obj.OPtDate, vbCrLf, &quot; &quot;), 255)
+    Values.Value(5) = Left(Replace(obj.DateToOptimize, vbCrLf, &quot; &quot;), 255)
+   if obj.TheRule is nothing then
+    Values.Value(6) = &quot;Не задано&quot;
+   else 
+    Values.Value(6) = Left(Replace(obj.TheRule.brief, vbCrLf, &quot; &quot;), 255)
+   end if 
+   YGRID.RowBookmark(RowIndex) =  obj.id &amp; &quot;ITT2OPT_DEF&quot;
+  End If 'RowIndex
+end sub
+
+'Массовое обновление измененных строк коллекции
+'Parameters:
+' параметров нет
+'See Also:
+'Example:
+'  call me.BatchUpdate()
+friend sub BatchUpdate()
+ on error goto bye
+If not Application.WorkOffline Then
+ dim i as long
+ again: 
+ for i=1 to count 
+    If item(i) Is Nothing Then Exit For
+    If item(i).Deleted Then
+      If Delete(i) Then GoTo again
+    Else
+      on error resume next
+      item(i).BatchUpdate
+      on error goto bye
+    End If
+ next
+End If
+bye:
+End sub
+
+'Загрузка данных из базы
+'Parameters:
+' параметров нет
+'See Also:
+'Example:
+'  call me.LoadAll()
+friend sub LoadAll()
+on error goto bye
+If not Application.WorkOffline Then
+ dim i as long
+ Refresh
+ for i=1 to count 
+     item(i).LoadAll
+ next
+End If
+bye:
+End sub
+
+"><AttributeHolder Name="Type" Value="code"/><FormData Name=""/></BlockHolder></ModuleHolder></root>

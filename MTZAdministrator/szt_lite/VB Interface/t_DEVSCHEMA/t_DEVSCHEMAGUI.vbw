@@ -1,0 +1,10 @@
+GUI = 110, 145, 823, 544, 
+DEVSCHEMA = 0, 0, 0, 0, C, 0, 0, 713, 399, C
+DEVSCHEMAPARAM = 0, 0, 0, 0, C, 66, 87, 779, 486, C
+frmDEVSCHEMA_ = 0, 0, 0, 0, C, 132, 174, 845, 573, C
+frmDEVSCHEMAPARAM_ = 0, 0, 0, 0, C, 22, 29, 735, 428, C
+vpnDEVSCHEMA_ = 0, 0, 0, 0, C, 66, 87, 779, 486, C
+vpnDEVSCHEMAPARAM_ = 0, 0, 0, 0, C, 132, 174, 845, 573, C
+ctl_main = 0, 0, 0, 0, C, 44, 58, 757, 457, C
+frm_main = 0, 0, 0, 0, C, 110, 145, 823, 544, C
+Util = 0, 0, 713, 399, 

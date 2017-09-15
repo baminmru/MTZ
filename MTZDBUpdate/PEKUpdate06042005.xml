@@ -1,0 +1,115 @@
+﻿<?xml version="1.0"?>
+<root><ModuleHolder ModuleName="--Update" File=""><BlockHolder BlockName="--Alter  V_viewPEKAKT_PEKACT_DEF" BlockCode=" 
+ALTER    view V_viewPEKAKT_PEKACT_DEF as 
+select   PEKACT_DEFID
+, 
+ PEKACT_DEF.Client  
+PEKACT_DEF_Client_ID, 
+  isnull(convert(varchar(4000),cli.fullname ),cli.name)
+PEKACT_DEF_Client 
+, 
+PEKACT_DEF.Number_of_akt 
+PEKACT_DEF_Number_of_akt 
+, 
+PEKACT_DEF.Date_TO 
+PEKACT_DEF_Date_TO 
+, 
+PEKACT_DEF.Date_FROM 
+PEKACT_DEF_Date_FROM 
+, 
+ PEKACT_DEF.Podrazdelenie  
+PEKACT_DEF_Podrazdelenie_ID, 
+ dbo.PEKD_DEPT_BRIEF_F(PEKACT_DEF.Podrazdelenie) 
+PEKACT_DEF_Podrazdelenie 
+, PEKACT_DEF.InstanceID InstanceID 
+, PEKACT_DEF.PEKACT_DEFID ID 
+, 'PEKACT_DEF' VIEWBASE 
+, XXXMYSTATUSXXX.Name StatusName 
+, XXXMYSTATUSXXX.objstatusid INTSANCEStatusID
+
+ from PEKACT_DEF
+join vrccommoninfo cli on  PEKACT_DEF.Client =cli.instanceid
+ join INSTANCE on PEKACT_DEF.INSTANCEID=INSTANCE.INSTANCEID
+ left join objstatus XXXMYSTATUSXXX on instance.status=XXXMYSTATUSXXX.objstatusid
+GOgo
+"></BlockHolder>
+
+<BlockHolder BlockName="--Alter  V_viewPEKAKT_PEKACT_ITOG" BlockCode=" 
+ALTER      view V_viewPEKAKT_PEKACT_ITOG as 
+select   PEKACT_ITOGID
+, 
+PEKACT_DEF.Date_TO 
+PEKACT_DEF_Date_TO 
+, 
+PEKACT_DEF.Date_FROM 
+PEKACT_DEF_Date_FROM 
+, 
+PEKACT_ITOG.SupSUMM 
+PEKACT_ITOG_SupSUMM 
+, 
+PEKACT_DEF.Number_of_akt 
+PEKACT_DEF_Number_of_akt 
+, 
+PEKACT_ITOG.Quantity 
+PEKACT_ITOG_Quantity 
+, 
+ PEKACT_DEF.Podrazdelenie  
+PEKACT_DEF_Podrazdelenie_ID, 
+dbo.PEKD_DEPT_BRIEF_F(PEKACT_DEF.Podrazdelenie)
+PEKACT_DEF_Podrazdelenie 
+, 
+ PEKACT_DEF.Client  
+PEKACT_DEF_Client_ID, 
+  isnull(convert(varchar(4000),cli.fullname ),cli.name)
+PEKACT_DEF_Client 
+, 
+ PEKACT_ITOG.SRV  
+PEKACT_ITOG_SRV_ID, 
+ dbo.PEKD_SRV_BRIEF_F(PEKACT_ITOG.SRV) 
+PEKACT_ITOG_SRV 
+, 
+ PEKACT_ITOG.edizm  
+PEKACT_ITOG_EDIZM_ID, 
+ dbo.ENTDIC_EDIZM_BRIEF_F(PEKACT_ITOG.edizm) 
+PEKACT_ITOG_EDIZM 
+, 
+ PEKACT_DEF.TheDgovor  
+PEKACT_DEF_TheDogovor_ID, 
+ dbo.INSTANCE_BRIEF_F(PEKACT_DEF.TheDgovor) 
+PEKACT_DEF_TheDogovor 
+, 
+PEKACT_ITOG.SummNDS 
+PEKACT_ITOG_SummNDS 
+, 
+PEKACT_ITOG.Summ 
+PEKACT_ITOG_Summ 
+, 
+PEKACT_ITOG.SupSummNDS 
+PEKACT_ITOG_SupSummNDS 
+, PEKACT_ITOG.InstanceID InstanceID 
+, PEKACT_ITOG.PEKACT_ITOGID ID 
+, 'PEKACT_ITOG' VIEWBASE 
+, XXXMYSTATUSXXX.Name StatusName 
+, XXXMYSTATUSXXX.objstatusid INTSANCEStatusID
+
+ from PEKACT_ITOG
+
+ join INSTANCE on PEKACT_ITOG.INSTANCEID=INSTANCE.INSTANCEID
+ left join objstatus XXXMYSTATUSXXX on instance.status=XXXMYSTATUSXXX.objstatusid
+ left join PEKACT_DEF ON PEKACT_DEF.InstanceID=PEKACT_ITOG.InstanceID
+ left join vrccommoninfo cli on  PEKACT_DEF.Client =cli.instanceid
+
+
+go
+"></BlockHolder>
+<BlockHolder BlockName="--Clear NAL Numerators" BlockCode=" 
+
+delete from num_values where parentstructrowid in
+
+(
+select num_zonesid from num_zones where ZoneMask='peknal05'
+)
+go
+"></BlockHolder>
+
+</ModuleHolder></root>

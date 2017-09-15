@@ -1,0 +1,9 @@
+[SCC]
+SCC=This is a source code control file
+[MtzAdministrator.vbp]
+SCC_Project_Name = "$/MTZ/MTZ/MTZADMINISTRATOR/MTZADMINISTRATOR", QHFAAAAA
+SCC_Aux_Path = "C:\VSS"
+
+[MtzSignCoder.vbp]
+SCC_Aux_Path = "\\Pavel\VSS2\"
+SCC_Project_Name = "$/MTZ/MTZSigncode", DRXAAAAA

@@ -1,0 +1,425 @@
+﻿<?xml version="1.0"?>
+<root>
+	<ModuleHolder ModuleName="--Update 30.06.2005" File="">
+		<BlockHolder BlockName="-- Update Script" BlockCode="SET QUOTED_IDENTIFIER ON 
+GO
+SET ANSI_NULLS ON 
+GO
+
+
+
+ALTER   proc VRDDocType_SAVE /*Тип документа*/ (
+ @CURSESSION uniqueidentifier,
+@InstanceID uniqueidentifier =null,
+ @VRDDocTypeid uniqueidentifier
+,@Name
+ VARCHAR (255)/* Название *//* Название */
+) as  begin  
+set nocount on
+DECLARE @SysLogid uniqueidentifier
+ declare @UniqueRowCount integer
+ declare @tmpStr varchar(255)
+ declare @tmpID uniqueidentifier
+ declare @access int
+ declare @SysInstID uniqueidentifier
+ select @SysInstID =Instanceid from instance where objtype='MTZSYSTEM'
+ -- checking session  --
+if not exists( select 1 from the_session where the_sessionid=@cursession and closed=0 )
+  begin
+    raiserror('Сессия уже завершена.',16,1)
+    if @@trancount&gt;0 rollback tran
+    return
+  end
+ -- Insert / Update body -- 
+if exists(select 1 from VRDDocType where VRDDocTypeID=@VRDDocTypeID)
+ begin
+ --  UPDATE  --
+ --  verify access  --
+ select  @tmpID =SecurityStyleID from VRDDocType where VRDDocTypeid=@VRDDocTypeID
+ exec CheckVerbRight @cursession=@cursession,@Resource=@tmpID,@verb='EDITROW',@access=@access out 
+ if @access=0 
+  begin
+    exec CheckVerbRight @cursession=@cursession,@Resource=@tmpID,@verb='EDITROW:VRDDocType',@access=@access out 
+    if @access=0 
+    begin
+      raiserror('Нет прав на модификацию. Раздел=VRDDocType',16,1)
+      if @@trancount&gt;0 rollback tran
+      return
+    end
+  end
+ --  verify lock  --
+ exec VRDDocType_ISLOCKED @cursession=@cursession,@ROWID=@VRDDocTypeid,@IsLocked=@access out 
+ if @access&gt;2 
+  begin
+    raiserror('Строка заблокирована другим пльзователем. Раздел=VRDDocType',16,1)
+    if @@trancount&gt;0 rollback tran
+    return
+  end
+ begin tran  
+ -- update row  --
+set @SysLogid=newid()
+EXEC SysLog_SAVE @TheSession=@cursession,@CURSESSION=@cursession, @InstanceID=@sysinstid, @SysLogid=@SysLogid, @LogStructID = 'VRDDocType',
+ @VERB='EDITROW',  @the_Resource=@VRDDocTypeid, @LogInstanceID=@instanceID
+ update  VRDDocType set ChangeStamp=GetDate()
+,
+  Name=@Name
+  where  VRDDocTypeID = @VRDDocTypeID 
+ -- checking unique constraints  --
+/*
+select @UniqueRowCount=Count(*) from VRDDocType where 1=1  
+ and Name=@Name
+if @UniqueRowCount&gt;=2
+begin
+ raiserror('Нарущение уникальности сочетания полей. Раздел=VRDDocType',16,1)
+ if @@trancount&gt;0 rollback tran
+ return
+end
+*/
+  end
+ else
+ --  INSERT  --
+  begin
+ --  verify access  --
+ select @tmpid = SecurityStyleID from instance where instanceid=@instanceid
+ exec CheckVerbRight @cursession=@cursession,@Resource=@tmpID,@verb='CREATEROW',@access=@access out
+ if @access=0 
+  begin
+    exec CheckVerbRight @cursession=@cursession,@Resource=@tmpID,@verb='CREATEROW:VRDDocType',@access=@access out 
+    if @access=0 
+    begin
+      raiserror('Нет прав на создание строк. Раздел=VRDDocType',16,1)
+      if @@trancount&gt;0 rollback tran
+      return
+    end
+ end
+ exec instance_ISLOCKED @cursession=@cursession,@ROWID=@InstanceID,@IsLocked=@access out 
+ if @access&gt;2 
+  begin
+    raiserror('Строка заблокирована другим пльзователем. Раздел=VRDDocType',16,1)
+    if @@trancount&gt;0 rollback tran
+    return
+  end
+ begin tran  
+set @SysLogid=newid()
+EXEC SysLog_SAVE @TheSession=@cursession,@CURSESSION=@cursession, @InstanceID=@sysinstid, @SysLogid=@SysLogid, @LogStructID = 'VRDDocType',
+ @VERB='CREATEROW',  @the_Resource=@VRDDocTypeid, @LogInstanceID=@instanceID
+ insert into   VRDDocType
+ (  VRDDocTypeID 
+,InstanceID
+,Name
+
+ ) values ( @VRDDocTypeID 
+,@InstanceID
+,@Name
+
+ ) 
+ exec VRDDocType_SINIT @CURSESSION,@VRDDocTypeid,@tmpid
+ -- checking unique constraints  --
+/*
+select @UniqueRowCount=Count(*) from VRDDocType where 1=1  
+ and Name=@Name
+if @UniqueRowCount&gt;=2
+begin
+ raiserror('Нарущение уникальности сочетания полей. Раздел=VRDDocType',16,1)
+ if @@trancount&gt;0 rollback tran
+ return
+end
+*/
+ end
+ -- close transaction --
+ if @@error &lt;&gt;0  if @@trancount&gt;0 rollback tran  
+ if @@trancount&gt;0 commit tran  
+ end 
+
+
+
+GO
+SET QUOTED_IDENTIFIER OFF 
+GO
+SET ANSI_NULLS ON 
+GO
+
+SET QUOTED_IDENTIFIER ON 
+GO
+SET ANSI_NULLS ON 
+GO
+
+
+
+SET QUOTED_IDENTIFIER ON 
+GO
+SET ANSI_NULLS ON 
+GO
+
+
+
+ALTER   proc VRCCommonInfo_SAVE /*Общая информация*/ (
+ @CURSESSION uniqueidentifier,
+@InstanceID uniqueidentifier =null,
+ @VRCCommonInfoid uniqueidentifier
+,@Org
+ UNIQUEIDENTIFIER/* Наша организация *//* Наша организация */
+,@IsPhizical
+ INTEGER/* Физическое лицо *//* Физическое лицо */
+,@code
+ VARCHAR (30) = null /* Код клиента *//* Код клиента */
+,@Name
+ VARCHAR (255)/* Название *//* Название */
+,@fullname
+ TEXT = null /* Полное наименование *//* Полное наименование */
+,@Address
+ VARCHAR (255) = null /* Почтовый адрес *//* Почтовый адрес */
+,@fax
+ VARCHAR (20) = null /* Факс *//* Факс */
+,@Phone
+ VARCHAR (25) = null /* Телефон *//* Телефон */
+,@the_Comment
+ TEXT = null /* Примечание *//* Примечание */
+,@TRFTYPE
+ UNIQUEIDENTIFIER = null /* Тип тарифа *//* Тип тарифа */
+,@INN
+ VARCHAR (12) = null /* ИНН *//* ИНН */
+,@Curator
+ UNIQUEIDENTIFIER = null /* Ответственный *//* Ответственный */
+,@Interest
+ UNIQUEIDENTIFIER = null /* Заинтересованность *//* Заинтересованность */
+,@Transporter
+ INTEGER = null /* Поставщик тр. услуг *//* Поставщик тр. услуг */
+,@PassportInfo
+ TEXT = null /* Паспортные данные *//* Паспортные данные */
+,@Code1C
+ VARCHAR (40) = null /* Код1С *//* Код1С */
+) as  begin  
+set nocount on
+DECLARE @SysLogid uniqueidentifier
+ declare @UniqueRowCount integer
+ declare @tmpStr varchar(255)
+ declare @tmpID uniqueidentifier
+ declare @access int
+ declare @SysInstID uniqueidentifier
+ select @SysInstID =Instanceid from instance where objtype='MTZSYSTEM'
+ -- checking session  --
+if not exists( select 1 from the_session where the_sessionid=@cursession and closed=0 )
+  begin
+    raiserror('Сессия уже завершена.',16,1)
+    if @@trancount&gt;0 rollback tran
+    return
+  end
+ -- Insert / Update body -- 
+if exists(select 1 from VRCCommonInfo where VRCCommonInfoID=@VRCCommonInfoID)
+ begin
+ --  UPDATE  --
+ --  verify access  --
+ select  @tmpID =SecurityStyleID from VRCCommonInfo where VRCCommonInfoid=@VRCCommonInfoID
+ exec CheckVerbRight @cursession=@cursession,@Resource=@tmpID,@verb='EDITROW',@access=@access out 
+ if @access=0 
+  begin
+    exec CheckVerbRight @cursession=@cursession,@Resource=@tmpID,@verb='EDITROW:VRCCommonInfo',@access=@access out 
+    if @access=0 
+    begin
+      raiserror('Нет прав на модификацию. Раздел=VRCCommonInfo',16,1)
+      if @@trancount&gt;0 rollback tran
+      return
+    end
+  end
+ --  verify lock  --
+ exec VRCCommonInfo_ISLOCKED @cursession=@cursession,@ROWID=@VRCCommonInfoid,@IsLocked=@access out 
+ if @access&gt;2 
+  begin
+    raiserror('Строка заблокирована другим пльзователем. Раздел=VRCCommonInfo',16,1)
+    if @@trancount&gt;0 rollback tran
+    return
+  end
+ begin tran  
+ -- update row  --
+set @SysLogid=newid()
+EXEC SysLog_SAVE @TheSession=@cursession,@CURSESSION=@cursession, @InstanceID=@sysinstid, @SysLogid=@SysLogid, @LogStructID = 'VRCCommonInfo',
+ @VERB='EDITROW',  @the_Resource=@VRCCommonInfoid, @LogInstanceID=@instanceID
+ update  VRCCommonInfo set ChangeStamp=GetDate()
+,
+  Org=@Org
+,
+  IsPhizical=@IsPhizical
+,
+  code=@code
+,
+  Name=@Name
+,
+  fullname=@fullname
+,
+  Address=@Address
+,
+  fax=@fax
+,
+  Phone=@Phone
+,
+  the_Comment=@the_Comment
+,
+  TRFTYPE=@TRFTYPE
+,
+  INN=@INN
+,
+  Curator=@Curator
+,
+  Interest=@Interest
+,
+  Transporter=@Transporter
+,
+  PassportInfo=@PassportInfo
+,
+  Code1C=@Code1C
+  where  VRCCommonInfoID = @VRCCommonInfoID 
+ -- checking unique constraints  --
+/*
+select @UniqueRowCount=Count(*) from VRCCommonInfo where 1=1  
+ and Name=@Name
+if @UniqueRowCount&gt;=2
+begin
+ raiserror('Нарущение уникальности сочетания полей. Раздел=VRCCommonInfo',16,1)
+ if @@trancount&gt;0 rollback tran
+ return
+end
+*/
+
+  end
+ else
+ --  INSERT  --
+  begin
+ --  verify access  --
+ select @tmpid = SecurityStyleID from instance where instanceid=@instanceid
+ exec CheckVerbRight @cursession=@cursession,@Resource=@tmpID,@verb='CREATEROW',@access=@access out
+ if @access=0 
+  begin
+    exec CheckVerbRight @cursession=@cursession,@Resource=@tmpID,@verb='CREATEROW:VRCCommonInfo',@access=@access out 
+    if @access=0 
+    begin
+      raiserror('Нет прав на создание строк. Раздел=VRCCommonInfo',16,1)
+      if @@trancount&gt;0 rollback tran
+      return
+    end
+ end
+ exec instance_ISLOCKED @cursession=@cursession,@ROWID=@InstanceID,@IsLocked=@access out 
+ if @access&gt;2 
+  begin
+    raiserror('Строка заблокирована другим пльзователем. Раздел=VRCCommonInfo',16,1)
+    if @@trancount&gt;0 rollback tran
+    return
+  end
+if exists (select 1 from VRCCommonInfo where 
+InstanceID=@InstanceID)
+ begin
+    raiserror('Невозможно создать вторую строку в однострочной сессии. Раздел: &lt;VRCCommonInfo&gt;',16,1)
+    if @@trancount&gt;0 rollback tran
+    return
+ End
+ begin tran  
+set @SysLogid=newid()
+EXEC SysLog_SAVE @TheSession=@cursession,@CURSESSION=@cursession, @InstanceID=@sysinstid, @SysLogid=@SysLogid, @LogStructID = 'VRCCommonInfo',
+ @VERB='CREATEROW',  @the_Resource=@VRCCommonInfoid, @LogInstanceID=@instanceID
+ insert into   VRCCommonInfo
+ (  VRCCommonInfoID 
+,InstanceID
+,Org
+
+,IsPhizical
+
+,code
+
+,Name
+
+,fullname
+
+,Address
+
+,fax
+
+,Phone
+
+,the_Comment
+
+,TRFTYPE
+
+,INN
+
+,Curator
+
+,Interest
+
+,Transporter
+
+,PassportInfo
+
+,Code1C
+
+ ) values ( @VRCCommonInfoID 
+,@InstanceID
+,@Org
+
+,@IsPhizical
+
+,@code
+
+,@Name
+
+,@fullname
+
+,@Address
+
+,@fax
+
+,@Phone
+
+,@the_Comment
+
+,@TRFTYPE
+
+,@INN
+
+,@Curator
+
+,@Interest
+
+,@Transporter
+
+,@PassportInfo
+
+,@Code1C
+
+ ) 
+ exec VRCCommonInfo_SINIT @CURSESSION,@VRCCommonInfoid,@tmpid
+ -- checking unique constraints  --
+/*
+select @UniqueRowCount=Count(*) from VRCCommonInfo where 1=1  
+ and Name=@Name
+if @UniqueRowCount&gt;=2
+begin
+ raiserror('Нарущение уникальности сочетания полей. Раздел=VRCCommonInfo',16,1)
+ if @@trancount&gt;0 rollback tran
+ return
+end
+*/
+ end
+ -- close transaction --
+ if @@error &lt;&gt;0  if @@trancount&gt;0 rollback tran  
+ if @@trancount&gt;0 commit tran  
+ end 
+
+
+
+GO
+SET QUOTED_IDENTIFIER OFF 
+GO
+SET ANSI_NULLS ON 
+GO
+
+update REPD_SNDTO set LastScan = convert(datetime,'2005-06-01')
+go
+
+
+
+
+">
+			<FormData Name=""/>
+		</BlockHolder>
+	</ModuleHolder>
+</root>

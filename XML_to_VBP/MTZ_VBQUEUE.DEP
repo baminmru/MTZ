@@ -1,0 +1,23 @@
+[Version]
+Version=1.0.0.4
+
+[MTZ_VBQUEUE.dll <0009>]
+Dest=$(AppPath)
+Date=14.02.2002
+Time=21:52
+Version=1.0.0.4
+CABFilename=MTZ_VBQUEUE.CAB
+CABINFFile=MTZ_VBQUEUE.INF
+Uses1=msvbvm60.dll
+Uses2=OLEAUT32.DLL
+Uses3=OLEPRO32.DLL
+Uses4=ASYCFILT.DLL
+Uses5=STDOLE2.TLB
+Uses6=COMCAT.DLL
+Uses7=MTZGenerator.dll
+
+[MTZGenerator.dll <0009>]
+Dest=$(AppPath)
+Date=14.02.2002
+Time=21:34
+Version=1.0.0.0

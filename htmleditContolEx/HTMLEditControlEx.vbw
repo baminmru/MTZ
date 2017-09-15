@@ -1,0 +1,8 @@
+HTMLEditCtlEx = 75, 87, 753, 723, Z, 88, 88, 766, 724, C
+frmDloadSelect = 176, 176, 878, 812, C, 132, 132, 834, 768, C
+frmTableParameters = 0, 0, 0, 0, C, 154, 154, 856, 790, C
+Dloads = 88, 88, 822, 724, 
+Dload = 66, 66, 800, 702, 
+PageLink = 110, 110, 779, 746, 
+PageLinks = 132, 132, 798, 768, 
+frmLinkSelect = 198, 198, 932, 834, C, 154, 154, 888, 790, C

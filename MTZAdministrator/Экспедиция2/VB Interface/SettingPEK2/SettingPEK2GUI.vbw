@@ -1,0 +1,12 @@
+GUI = 22, 29, 743, 440, 
+BaseSetting = 0, 0, 0, 0, C, 66, 87, 787, 498, C
+BaseSettingmain = 0, 0, 0, 0, C, 132, 174, 853, 585, C
+frmBaseSetting_ = 0, 0, 0, 0, C, 44, 58, 765, 469, C
+frmBaseSetting_main = 0, 0, 0, 0, C, 88, 116, 809, 527, C
+vpnBaseSetting_main = 0, 0, 0, 0, C, 132, 174, 853, 585, C
+ctlmain_main = 0, 0, 0, 0, C, 44, 58, 765, 469, C
+frmmain_main = 0, 0, 0, 0, C, 110, 145, 831, 556, C
+vpnBaseSetting_ = 0, 0, 0, 0, C, 0, 0, 721, 411, C
+ctl_main = 0, 0, 0, 0, C, 66, 87, 787, 498, C
+frm_main = 0, 0, 0, 0, C, 132, 174, 853, 585, C
+Util = 22, 29, 743, 440, 

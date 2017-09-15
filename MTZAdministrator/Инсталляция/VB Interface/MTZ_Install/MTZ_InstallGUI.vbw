@@ -1,0 +1,17 @@
+GUI = 44, 58, 516, 460, 
+MTZ_Inst_Build = 0, 0, 0, 0, C, 88, 116, 560, 518, C
+MTZ_Inst_Build_Sec = 0, 0, 0, 0, C, 0, 0, 472, 402, C
+MTZ_Inst_Section = 0, 0, 0, 0, C, 66, 87, 538, 489, C
+MTZ_Inst_Sec_Files = 0, 0, 0, 0, C, 132, 174, 604, 576, C
+MTZ_Inst_Common = 0, 0, 0, 0, C, 44, 58, 516, 460, C
+frmMTZ_Inst_Build_ = 0, 0, 0, 0, C, 110, 145, 582, 547, C
+frmMTZ_Inst_Build_Sec_ = 0, 0, 0, 0, C, 0, 0, 472, 402, C
+frmMTZ_Inst_Section_ = 0, 0, 0, 0, C, 44, 58, 516, 460, C
+frmMTZ_Inst_Sec_Files_ = 0, 0, 0, 0, C, 88, 116, 560, 518, C
+frmMTZ_Inst_Common_ = 0, 0, 0, 0, C, 132, 174, 604, 576, C
+vpnMTZ_Inst_Build_ = 0, 0, 0, 0, C, 22, 29, 494, 431, C
+vpnMTZ_Inst_Common_ = 0, 0, 0, 0, C, 88, 116, 560, 518, C
+vpnMTZ_Inst_Section_ = 0, 0, 0, 0, C, 0, 0, 472, 402, C
+ctl_main = 0, 0, 0, 0, C, 66, 87, 538, 489, C
+frm_main = 0, 0, 0, 0, C, 132, 174, 604, 576, C
+Util = 22, 29, 494, 431, Z
